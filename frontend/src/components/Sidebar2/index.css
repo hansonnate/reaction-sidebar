@@ -1,0 +1,8 @@
+.homecontainer {
+    display: flex;
+    flex-direction: row;
+}
+
+.activeClickedme {
+  color: white;
+}
