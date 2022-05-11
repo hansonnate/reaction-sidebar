@@ -6,6 +6,7 @@ import SignUp from './pages/sign-up';
 import Home from './pages/home';
 import RecipeDashboard from './pages/my-recipes';
 import ErrorPage from './pages/error-page';
+import Projects from './pages/projects/projects-page.jsx';
 // import SideMenu, { menuItems } from "./components/SideMenu/SideMenu.js";
 import { useState } from "react";
 import SideMenu from "./components/SideMenu/SideMenu.js";
@@ -32,12 +33,13 @@ const App = () => {
               <Route exact path="/my-recipes" element={<RecipeDashboard />} />
               <Route exact path="/login" element={<Login />} />
               <Route exact path="/sign-up" element={<SignUp />} />
+              <Route exact path="/projects" element={<Projects />} />
               <Route exact={true} path="*" element={<ErrorPage />} />
             </Routes>
           </div>
         </div>
       </BrowserRouter>
-      <div className={`container ${inactive ? "inactive" : ""}`} hidden="true"></div>
+      <div className={`container ${inactive ? "inactive" : ""}`} hidden={true}></div>
 
       {/* <link rel="preconnect" href="https://fonts.googleapis.com"/>
       <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin/>

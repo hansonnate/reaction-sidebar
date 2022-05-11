@@ -23,7 +23,7 @@ export const menuItems = [
   {
     name: "Projects",
     exact: true,
-    to: `/`,
+    to: `/projects`,
     iconClassName: "bi bi-folder2",
     // subMenus: [
     //   { name: "Delivery", to: "/projects/courses" },

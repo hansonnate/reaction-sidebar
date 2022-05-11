@@ -1,0 +1,21 @@
+$lightblue: #A4C6D0;
+
+.reacttable {
+    font-family: 'Poppins', sans-serif;
+    border-collapse: collapse;
+    width: 800px;
+
+    tr.header {
+        background-color: lightblue;
+    }
+    tr {
+        text-align: left;
+    }
+
+    td {
+        // border: 1px solid #ddd;
+        padding: 5px 8px;
+    }
+}
+    
+
