@@ -3,6 +3,7 @@
     flex-direction: row;
 }
 
-.activeClicked {
-  
-}
+.homepage {
+    display: flex;
+    flex-direction: column;
+  }

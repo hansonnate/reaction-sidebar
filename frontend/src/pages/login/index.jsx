@@ -4,7 +4,7 @@ import FastAPIClient from '../../client';
 import config from '../../config';
 import Button from '../../components/Button/Button';
 import FormInput from '../../components/FormInput/FormInput';
-import Header from '../../components/Sidebar2/index';
+// import SideMenu from "../../components/SideMenu/SideMenu.js";
 
 const client = new FastAPIClient(config);
 
@@ -13,6 +13,7 @@ const Login = () => {
   const [loginForm, setLoginForm] = useState({ email: '', password: '' });
 
   const [loading, setLoading] = useState(false)
+  // const [inactive, setInactive] = useState(false);
 
   const navigate = useNavigate()
 
@@ -47,8 +48,13 @@ const Login = () => {
   return (
       <>
       <section className="logincontainer bg-black ">
-        <Header/>
-        <div className="loginpage flex items-center justify-center min-h-screen bg-gray-100 text-left ">
+        {/* <SideMenu
+            onCollapse={(inactive) => {
+            console.log(inactive);
+            setInactive(inactive);
+            }}
+        /> */}
+        <div className="loginpage flex items-center justify-center min-h-screen bg-white text-left ">
             <div className="w-full max-w-xs m-auto bg-indigo-100 rounded p-5 shadow-lg">  
               <header>
                 {/* <img className="w-20 mx-auto mb-5" src="https://img.icons8.com/fluent/344/year-of-tiger.png" /> */}
@@ -83,7 +89,9 @@ const Login = () => {
               </form>
               <footer>
                 <Link className="text-teal-700 hover:text-blue-900 text-sm float-right" to="/sign-up">Create Account</Link>
+                
               </footer> 
+              {/* <div className={`container ${inactive ? "inactive" : ""}`}></div> */}
             </div>
           </div>
       </section>

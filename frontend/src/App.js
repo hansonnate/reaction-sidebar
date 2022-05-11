@@ -7,24 +7,36 @@ import Home from './pages/home';
 import RecipeDashboard from './pages/my-recipes';
 import ErrorPage from './pages/error-page';
 // import SideMenu, { menuItems } from "./components/SideMenu/SideMenu.js";
-// import { useState } from "react";
+import { useState } from "react";
+import SideMenu from "./components/SideMenu/SideMenu.js";
 
 const App = () => {
-  // const [inactive, setInactive] = useState(false);
+  const [inactive, setInactive] = useState(false);
   return (
-    <div className="App bg-black">
+    <div className="App bg-white">
       <link rel="preconnect" href="https://fonts.googleapis.com"/>
       <link rel="preconnect" href="https://fonts.gstatic.com"/>
       <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@100;400&display=swap" rel="stylesheet"/>
+
       <BrowserRouter>
-        <Routes>
-          <Route path="/" element={<Home />} />
-          <Route exact path="/my-recipes" element={<RecipeDashboard />} />
-          <Route exact path="/login" element={<Login />} />
-          <Route exact path="/sign-up" element={<SignUp />} />
-          <Route exact={true} path="*" element={<ErrorPage />} />
-        </Routes>
+        <div className="fullpage">
+          <SideMenu
+            onCollapse={(inactive) => {
+            console.log(inactive);
+            setInactive(inactive);
+            }}
+          />
+          <Routes>
+            <Route path="/" element={<Home />} />
+            <Route exact path="/my-recipes" element={<RecipeDashboard />} />
+            <Route exact path="/login" element={<Login />} />
+            <Route exact path="/sign-up" element={<SignUp />} />
+            <Route exact={true} path="*" element={<ErrorPage />} />
+          </Routes>
+        </div>
       </BrowserRouter>
+      <div className={`container ${inactive ? "inactive" : ""}`}></div>
+
       {/* <link rel="preconnect" href="https://fonts.googleapis.com"/>
       <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin/>
       <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@100;400&display=swap" rel="stylesheet"/>

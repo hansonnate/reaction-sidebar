@@ -5,8 +5,9 @@ import RecipeTable from "../../components/RecipeTable"
 // import DashboardHeader from "../../components/DashboardHeader";
 import Footer from "../../components/Footer";
 import Loader from '../../components/Loader';
+import "./home.css"
 // import Header from '../../components/Sidebar3/index';
-import SideMenu from "../../components/SideMenu/SideMenu.js";
+// import SideMenu from "../../components/SideMenu/SideMenu.js";
 
 const client = new FastAPIClient(config);
 
@@ -16,7 +17,7 @@ const Home = () => {
      const [loading, setLoading] = useState(true)
      const [recipes, setRecipes] = useState([])
      const [searchValue, setSearchValue] = useState("chicken")
-     const [inactive, setInactive] = useState(false);
+     // const [inactive, setInactive] = useState(false);
 
      useEffect(() => {
           // FETCH THE RECIPIES
@@ -49,20 +50,19 @@ const Home = () => {
 
      return (
           <>
-               <SideMenu
+               {/* <SideMenu
                     onCollapse={(inactive) => {
                     console.log(inactive);
                     setInactive(inactive);
                     }}
-               />
-               <div className={`container ${inactive ? "inactive" : ""}`}></div>
+               /> */}
+               
                <section className="bg-white homecontainer">
-                    {/* <Header /> */}
                     <div className="homepage">
                          <div className="container px-5 py-12 mx-auto lg:px-20">
 
-                              <div className="flex flex-col flex-wrap pb-6 mb-12 text-white ">
-                                   <h1 className="mb-6 text-3xl font-medium text-white">
+                              <div className="flex flex-col flex-wrap pb-6 mb-12 text-black ">
+                                   <h1 className="mb-6 text-3xl font-medium text-black">
                                         Recipes - Better than all the REST
                                    </h1>
                                    {/* <!-- This is an example component --> */}
@@ -86,6 +86,7 @@ const Home = () => {
                               </div>
                          </div>
                          <Footer />
+                         {/* <div className={`container ${inactive ? "inactive" : ""}`}></div> */}
                     </div>
                </section>
           </>

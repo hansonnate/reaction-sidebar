@@ -17,13 +17,13 @@ export const menuItems = [
   {
     name: "Dashboard",
     exact: true,
-    to: "/",
+    to: "/login",
     iconClassName: "bi bi-speedometer2",
   },
   {
     name: "Projects",
     exact: true,
-    to: `/login`,
+    to: `/`,
     iconClassName: "bi bi-folder2",
     // subMenus: [
     //   { name: "Delivery", to: "/projects/courses" },
