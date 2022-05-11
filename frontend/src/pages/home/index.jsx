@@ -62,7 +62,7 @@ const Home = () => {
                          <div className="container px-5 py-12 mx-auto lg:px-20">
 
                               <div className="flex flex-col flex-wrap pb-6 mb-12 text-black ">
-                                   <h1 className="mb-6 text-3xl font-medium text-black">
+                                   <h1 className="mb-6 text-3xl font-medium text-black head">
                                         Recipes - Better than all the REST
                                    </h1>
                                    {/* <!-- This is an example component --> */}

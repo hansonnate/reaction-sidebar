@@ -17,7 +17,7 @@ body{
     position: fixed;
     background: #2A627C;
     width: 300px;
-    height: 100%;
+    height: 975px;
     box-sizing: border-box;
     padding: 30px 0px;
     transition: width .2s ease-in;
@@ -252,12 +252,15 @@ body{
     left: 0;
     padding: 30px 20px;
     box-sizing: border-box;
+    width: 80px;
 }
 
 .side-menu-footer.open {
     display: flex;
     flex-direction: row;
     justify-content: space-between;
+    width: 300px;
+    transition: .5s;
 }
 
 .side-menu-footer .user-container.open {

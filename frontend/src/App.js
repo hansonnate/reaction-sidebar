@@ -26,16 +26,18 @@ const App = () => {
             setInactive(inactive);
             }}
           />
-          <Routes>
-            <Route path="/" element={<Home />} />
-            <Route exact path="/my-recipes" element={<RecipeDashboard />} />
-            <Route exact path="/login" element={<Login />} />
-            <Route exact path="/sign-up" element={<SignUp />} />
-            <Route exact={true} path="*" element={<ErrorPage />} />
-          </Routes>
+          <div className="subpage">
+            <Routes>
+              <Route path="/" element={<Home />} />
+              <Route exact path="/my-recipes" element={<RecipeDashboard />} />
+              <Route exact path="/login" element={<Login />} />
+              <Route exact path="/sign-up" element={<SignUp />} />
+              <Route exact={true} path="*" element={<ErrorPage />} />
+            </Routes>
+          </div>
         </div>
       </BrowserRouter>
-      <div className={`container ${inactive ? "inactive" : ""}`}></div>
+      <div className={`container ${inactive ? "inactive" : ""}`} hidden="true"></div>
 
       {/* <link rel="preconnect" href="https://fonts.googleapis.com"/>
       <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin/>
