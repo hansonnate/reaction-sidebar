@@ -2,7 +2,7 @@ import React from 'react';
 import { slide as Menu } from 'react-burger-menu';
 import "./index.css";
 
-const Header = () => {
+export const Sidebar3 = () => {
  
 
   return (
@@ -34,5 +34,3 @@ const Header = () => {
     </Menu>
   );
 };
-
-export default Header;

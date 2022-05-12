@@ -1,11 +1,5 @@
 .App {
-  text-align: center;
-  height: 100%;
-}
-
-.App-logo {
-  height: 40vmin;
-  pointer-events: none;
+  height: 100vh;
 }
 
 @media (prefers-reduced-motion: no-preference) {
@@ -37,21 +31,4 @@
   to {
     transform: rotate(360deg);
   }
-}
-
-.logincontainer {
-  width: 100%
-}
-.loginpage {
-  width:100%;
-}
-.homepage {
-  display: flex;
-  flex-direction: column;
-  width: 100%;
-}
-
-.fullpage {
-  display: flex;
-  flex-direction: row;
 }

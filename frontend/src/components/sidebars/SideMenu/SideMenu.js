@@ -1,11 +1,11 @@
 import React, { useEffect, useState } from "react";
-import largelogo from "../../images/reactionlogolight.png";
-import smalllogo from "../../images/circlelogo.png";
-import user from "../../images/manlooking.png";
+import largelogo from "../../../images/reactionlogolight.png";
+import smalllogo from "../../../images/circlelogo.png";
+import user from "../../../images/manlooking.png";
 // import idashboard from "../../icons/1x/speedometer-white.png";
 import MenuItem from "./MenuItem";
 import "./sidemenu.css";
-import 'bootstrap-icons/font/bootstrap-icons.css';
+import "bootstrap-icons/font/bootstrap-icons.css";
 
 /**
  * @author
@@ -17,13 +17,13 @@ export const menuItems = [
   {
     name: "Dashboard",
     exact: true,
-    to: "/login",
+    to: "/",
     iconClassName: "bi bi-speedometer2",
   },
   {
     name: "Projects",
     exact: true,
-    to: `/`,
+    to: `/projects`,
     iconClassName: "bi bi-folder2",
     // subMenus: [
     //   { name: "Delivery", to: "/projects/courses" },
@@ -31,27 +31,26 @@ export const menuItems = [
     //   { name: "Results", to: "/projects/videos" },
     // ],
   },
-  { 
-    name: "Contacts", 
-    to: `/`, 
-    iconClassName: "bi bi-person" 
+  {
+    name: "Contacts",
+    to: `/contacts`,
+    iconClassName: "bi bi-person",
   },
   {
     name: "Organization",
     exact: true,
-    to: `/`,
+    to: `/organization`,
     iconClassName: "bi bi-building",
   },
   {
     name: "Help",
     exact: true,
-    to: `/`,
+    to: `/help`,
     iconClassName: "bi bi-question-circle",
   },
 ];
 
-const SideMenu = (props) => {
-  
+export const SideMenu = (props) => {
   const [inactive, setInactive] = useState(false);
 
   useEffect(() => {
@@ -93,7 +92,7 @@ const SideMenu = (props) => {
     <div className={`side-menu ${inactive ? "inactive" : "active"}`}>
       <div className="top-section">
         <div className={`logo ${inactive ? "small-logo" : "large-logo"}`}>
-          <img src={inactive ? smalllogo : largelogo } alt="ReactionData" />
+          <img src={inactive ? smalllogo : largelogo} alt="ReactionData" />
         </div>
       </div>
 
@@ -152,14 +151,17 @@ const SideMenu = (props) => {
       <div className={`side-menu-footer ${inactive ? "closed" : "open"}`}>
         <div className={`user-container ${inactive ? "closed" : "open"}`}>
           <div className="avatar">
-            <img src={user} alt="user" onClick={() => setInactive(!inactive)}/>
+            <img src={user} alt="user" onClick={() => setInactive(!inactive)} />
           </div>
           <div className="user-info">
             <h5>Jeremy Bikman</h5>
             <p>Reaction</p>
           </div>
         </div>
-        <div onClick={() => setInactive(!inactive)} className={`toggle-menu-btn ${inactive ? "closed" : "open"}`}>
+        <div
+          onClick={() => setInactive(!inactive)}
+          className={`toggle-menu-btn ${inactive ? "closed" : "open"}`}
+        >
           {inactive ? (
             <i className="bi bi-arrow-bar-right"></i>
           ) : (
@@ -170,5 +172,3 @@ const SideMenu = (props) => {
     </div>
   );
 };
-
-export default SideMenu;

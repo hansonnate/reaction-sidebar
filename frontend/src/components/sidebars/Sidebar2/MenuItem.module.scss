@@ -1,0 +1,19 @@
+.menuItem {
+    position: relative;
+    color: #2a627c;
+
+    &:hover .tooltip {
+        visibility: visible;
+    }
+}
+
+.tooltip {
+    visibility: hidden;
+    color: #ffffff;
+    background-color: #2a627c;
+    padding: 5px;
+    border-radius: 5px;
+    position: absolute;
+    top: 0%;
+    left: 200%;
+}
