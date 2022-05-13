@@ -1,16 +1,18 @@
+// External
 import React from "react";
-import "./App.css";
+import styles from "./App.module.scss";
 import "bootstrap/dist/css/bootstrap.min.css";
 import "bootstrap-icons/font/bootstrap-icons.css";
 import { BrowserRouter } from "react-router-dom";
-//import { useState } from "react";
-import { SideMenu } from "./components/sidebars";
-import { SplitHorizontal } from "./layouts";
-import { MainContentRoutes } from "./routes/MainContentRoutes";
+
+// Internal
+import { SideMenu } from "components/sidebars";
+import { SplitHorizontal } from "layouts";
+import { MainContentRoutes } from "routes";
 
 const App = () => {
   return (
-    <div className="App bg-white">
+    <div className={`${styles.App} bg-white`}>
       <link rel="preconnect" href="https://fonts.googleapis.com" />
       <link rel="preconnect" href="https://fonts.gstatic.com" />
       <link
@@ -20,12 +22,10 @@ const App = () => {
 
       <BrowserRouter>
         <SplitHorizontal leftShrink fullHeight>
-          <SideMenu
-            onCollapse={(inactive) => {
-              console.log(inactive);
-            }}
-          />
-          <MainContentRoutes />
+          <SideMenu onCollapse={() => {}} />
+          <div className={styles.mainContent}>
+            <MainContentRoutes />
+          </div>
         </SplitHorizontal>
       </BrowserRouter>
     </div>

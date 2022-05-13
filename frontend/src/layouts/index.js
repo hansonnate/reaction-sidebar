@@ -1,2 +1,3 @@
-export { SplitHorizontal } from './split-layouts/SplitHorizontal';
-export { Header } from './Header/Header';
+export { SplitHorizontal } from "layouts/SplitHorizontal/SplitHorizontal";
+export { Header } from "layouts/Header/Header";
+export { TabBar } from "layouts/TabBar/TabBar";

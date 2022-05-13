@@ -13,7 +13,6 @@ const MenuItem = (props) => {
   return (
     <li onClick={props.onClick}>
       <Link
-        exact
         to={to}
         // onClick={() => {
         //   setExpand((e) => !e);

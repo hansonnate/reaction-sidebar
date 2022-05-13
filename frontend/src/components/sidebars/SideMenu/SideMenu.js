@@ -16,13 +16,11 @@ import "bootstrap-icons/font/bootstrap-icons.css";
 export const menuItems = [
   {
     name: "Dashboard",
-    exact: true,
     to: "/",
     iconClassName: "bi bi-speedometer2",
   },
   {
     name: "Projects",
-    exact: true,
     to: `/projects`,
     iconClassName: "bi bi-folder2",
     // subMenus: [
@@ -38,13 +36,11 @@ export const menuItems = [
   },
   {
     name: "Organization",
-    exact: true,
     to: `/organization`,
     iconClassName: "bi bi-building",
   },
   {
     name: "Help",
-    exact: true,
     to: `/help`,
     iconClassName: "bi bi-question-circle",
   },
@@ -74,13 +70,11 @@ export const SideMenu = (props) => {
   useEffect(() => {
     let menuItems = document.querySelectorAll(".menu-item");
     menuItems.forEach((el) => {
-      el.addEventListener("click", (e) => {
+      el.addEventListener("click", () => {
         const next = el.nextElementSibling;
         removeActiveClassFromSubMenu();
-        console.log(e);
         menuItems.forEach((el) => el.classList.remove("active"));
         el.classList.toggle("active");
-        console.log(next);
         if (next !== null) {
           next.classList.toggle("active");
         }
@@ -112,12 +106,10 @@ export const SideMenu = (props) => {
             <MenuItem
               key={index}
               name={menuItem.name}
-              exact={menuItem.exact}
               to={menuItem.to}
               subMenus={menuItem.subMenus || []}
               iconClassName={menuItem.iconClassName}
-              onClick={(e) => {
-                console.log(e);
+              onClick={() => {
                 if (inactive) {
                   setInactive(true);
                 }

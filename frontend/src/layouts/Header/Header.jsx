@@ -1,11 +1,16 @@
 import React from "react";
-import "bootstrap-icons/font/bootstrap-icons.css";
+import { Link } from "react-router-dom";
+import styles from "./Header.module.scss";
 
 export const Header = ({ title, backPath }) => {
   return (
-    <>
-      {backPath && <i className="bi bi-arrow-left"></i>}
+    <div className={styles.header}>
+      {backPath && (
+        <Link to={backPath}>
+          <i className="bi bi-arrow-left"></i>
+        </Link>
+      )}
       <h1>{title}</h1>
-    </>
+    </div>
   );
 };

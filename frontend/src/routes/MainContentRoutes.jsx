@@ -1,31 +1,32 @@
+// External
 import React from "react";
 import { Routes, Route } from "react-router-dom";
+
+// Internal
 import {
   Dashboard,
   Projects,
+  Project,
   Contacts,
   Organization,
   Help,
   Account,
-  Login,
-  SignUp,
   ErrorPage,
-} from "../pages";
+} from "pages";
 
 export const MainContentRoutes = () => {
   return (
     <Routes>
       <Route path="/" element={<Dashboard />} />
-      <Route exact path="/projects" element={<Projects />} />
-      <Route exact path="/contacts" element={<Contacts />} />
-      <Route exact path="/organization" element={<Organization />} />
+      <Route path="/projects" element={<Projects />} />
+      <Route path="/projects/:id/*" element={<Project />} />
+      <Route path="/contacts/*" element={<Contacts />} />
+      <Route path="/organization/*" element={<Organization />} />
 
-      <Route exact path="/help" element={<Help />} />
-      <Route exact path="/account" element={<Account />} />
+      <Route path="/help/*" element={<Help />} />
+      <Route path="/account/*" element={<Account />} />
 
-      <Route exact path="/login" element={<Login />} />
-      <Route exact path="/sign-up" element={<SignUp />} />
-      <Route exact={true} path="*" element={<ErrorPage />} />
+      <Route path="*" element={<ErrorPage />} />
     </Routes>
   );
 };

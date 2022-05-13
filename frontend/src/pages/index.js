@@ -1,9 +1,9 @@
-export { Dashboard } from "./dashboard/Dashboard";
-export { Projects } from "./projects/Projects";
-export { Contacts } from "./contacts/Contacts";
-export { Organization } from "./organization/Organization";
-export { Help } from "./help/Help";
-export { Account } from "./account/Account";
-export { Login } from "./login/Login";
-export { SignUp } from "./sign-up/SignUp";
-export { ErrorPage } from "./error-page/ErrorPage";
+export { Dashboard } from "pages/dashboard/Dashboard";
+export * from "pages/projects"
+export * from "pages/contacts";
+export * from "pages/organization";
+export { Help } from "pages/help/Help";
+export { Account } from "pages/account/Account";
+export { Login } from "pages/login/Login";
+export { SignUp } from "pages/sign-up/SignUp";
+export { ErrorPage } from "pages/error-page/ErrorPage";
