@@ -1,0 +1,10 @@
+.tabBarItem {
+  color: #738c91;
+  font-weight: 700;
+  font-family: "Montserrat", sans-serif;
+  margin: 0 30px;
+
+  &.activeItem {
+    color: #ed9146;
+  }
+}

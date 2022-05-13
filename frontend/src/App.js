@@ -1,78 +1,33 @@
-import React from 'react';
-import './App.css';
-import {BrowserRouter, Routes, Route} from 'react-router-dom';
-import Login from './pages/login';
-import SignUp from './pages/sign-up';
-import Home from './pages/home';
-import RecipeDashboard from './pages/my-recipes';
-import ErrorPage from './pages/error-page';
-// import SideMenu, { menuItems } from "./components/SideMenu/SideMenu.js";
-import { useState } from "react";
-import SideMenu from "./components/SideMenu/SideMenu.js";
+// External
+import React from "react";
+import styles from "./App.module.scss";
+import "bootstrap/dist/css/bootstrap.min.css";
+import "bootstrap-icons/font/bootstrap-icons.css";
+import { BrowserRouter } from "react-router-dom";
+
+// Internal
+import { SideMenu } from "components/sidebars";
+import { SplitHorizontal } from "layouts";
+import { MainContentRoutes } from "routes";
 
 const App = () => {
-  const [inactive, setInactive] = useState(false);
   return (
-    <div className="App bg-white">
-      <link rel="preconnect" href="https://fonts.googleapis.com"/>
-      <link rel="preconnect" href="https://fonts.gstatic.com"/>
-      <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@100;400&display=swap" rel="stylesheet"/>
+    <div className={`${styles.App} bg-white`}>
+      <link rel="preconnect" href="https://fonts.googleapis.com" />
+      <link rel="preconnect" href="https://fonts.gstatic.com" />
+      <link
+        href="https://fonts.googleapis.com/css2?family=Poppins:wght@100;400&display=swap"
+        rel="stylesheet"
+      />
 
       <BrowserRouter>
-        <div className="fullpage">
-          <SideMenu
-            onCollapse={(inactive) => {
-            console.log(inactive);
-            setInactive(inactive);
-            }}
-          />
-          <div className="subpage">
-            <Routes>
-              <Route path="/" element={<Home />} />
-              <Route exact path="/my-recipes" element={<RecipeDashboard />} />
-              <Route exact path="/login" element={<Login />} />
-              <Route exact path="/sign-up" element={<SignUp />} />
-              <Route exact={true} path="*" element={<ErrorPage />} />
-            </Routes>
+        <SplitHorizontal leftShrink fullHeight>
+          <SideMenu onCollapse={() => {}} />
+          <div className={styles.mainContent}>
+            <MainContentRoutes />
           </div>
-        </div>
+        </SplitHorizontal>
       </BrowserRouter>
-      <div className={`container ${inactive ? "inactive" : ""}`} hidden="true"></div>
-
-      {/* <link rel="preconnect" href="https://fonts.googleapis.com"/>
-      <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin/>
-      <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@100;400&display=swap" rel="stylesheet"/>
-      <BrowserRouter>
-        <SideMenu
-          onCollapse={(inactive) => {
-            console.log(inactive);
-            setInactive(inactive);
-          }}
-        />
-          {/* <SubMenu
-          onCollapse={(inactive) => {
-            console.log(inactive);
-            setInactive(inactive);
-          }}
-        /> */}
-
-        {/* <div className={`container ${inactive ? "inactive" : ""}`}>
-          {menuItems.map((menu) => (
-            <>
-              <Route key={menu.name} exact={menu.exact} path={menu.to}>
-                <h1>{menu.name}</h1>
-              </Route>
-              {menu.subMenus && menu.subMenus.length > 0
-                ? menu.subMenus.map((subMenu) => (
-                    <Route key={subMenu.name} path={subMenu.to}>
-                      <h1>{subMenu.name}</h1>
-                    </Route>
-                  ))
-                : null}
-            </>
-          ))}
-        </div>
-      </BrowserRouter> */}
     </div>
   );
 };

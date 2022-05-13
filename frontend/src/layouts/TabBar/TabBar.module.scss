@@ -1,0 +1,12 @@
+.tabBar {
+    display: flex;
+}
+
+hr {
+  color: #efefef;
+  opacity: 1;
+
+  &:not([size]) {
+      height: 3px;
+  }
+}
