@@ -1,4 +1,5 @@
-$lightblue: #A4C6D0;
+$reactionlight: #A4C6D0;
+$reactiondark: #2A627C;
 
 .reacttable {
     font-family: 'Poppins', sans-serif;
@@ -6,7 +7,10 @@ $lightblue: #A4C6D0;
     width: 800px;
 
     tr.header {
-        background-color: lightblue;
+        background-color: $reactionlight;
+        font-size: 15px;
+        text-transform: uppercase;
+        color: $reactiondark;
     }
     tr {
         text-align: left;
@@ -15,6 +19,7 @@ $lightblue: #A4C6D0;
     td {
         // border: 1px solid #ddd;
         padding: 5px 8px;
+        // text-transform: uppercase;
     }
 }
     
