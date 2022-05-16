@@ -2,7 +2,7 @@
 import React, { useState } from "react";
 
 // Internal
-import { Header, SplitHorizontal } from "layouts";
+import { Header, SplitHorizontal } from "components/layouts";
 import { Sidebar2 } from "components/sidebars";
 import { OrganizationRoutes } from "routes";
 import styles from "./Organization.module.scss";

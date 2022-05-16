@@ -3,7 +3,7 @@ import React from "react";
 import { Link } from "react-router-dom";
 
 // Internal
-import { Header } from "../../layouts";
+import { Header } from "components/layouts";
 
 export const Projects = () => {
   return (

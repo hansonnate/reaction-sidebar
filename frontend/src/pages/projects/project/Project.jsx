@@ -4,7 +4,7 @@ import { useParams } from "react-router-dom";
 
 // Internal
 import fakeproject from "fakedata/projects/survey1.json";
-import { Header, SplitHorizontal } from "layouts";
+import { Header, SplitHorizontal } from "components/layouts";
 import { ProjectRoutes } from "routes";
 import { Sidebar2 } from "components/sidebars";
 import styles from "./Project.module.scss";

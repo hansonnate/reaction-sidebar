@@ -1,6 +1,6 @@
 // External
 import React, { useState } from "react";
-import { TabBar } from "layouts";
+import { TabBar } from "components/layouts";
 
 // Internal
 

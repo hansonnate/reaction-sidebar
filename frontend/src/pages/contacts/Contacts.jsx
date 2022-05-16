@@ -3,7 +3,7 @@ import React, { useState } from "react";
 
 // Internal
 import { Sidebar2 } from "components/sidebars";
-import { Header, SplitHorizontal } from "layouts";
+import { Header, SplitHorizontal } from "components/layouts";
 import { ContactRoutes } from "routes";
 import styles from "./Contacts.module.scss";
 

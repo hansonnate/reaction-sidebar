@@ -2,7 +2,7 @@
 import React, { useState } from "react";
 
 // Internal
-import { TabBar } from "layouts";
+import { TabBar } from "components/layouts";
 import { ResultsRoutes } from "routes";
 
 export const Results = () => {
