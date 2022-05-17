@@ -1,0 +1,14 @@
+{
+  "organizations": [
+    {
+      "id": 0,
+      "name": "Reaction, Inc.",
+      "display_name": "Reaction"
+    },
+    {
+      "id": 1,
+      "name": "Peer60",
+      "display_name": "Peer60"
+    }
+  ]
+}
