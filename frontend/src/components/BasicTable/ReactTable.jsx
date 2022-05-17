@@ -1,11 +1,10 @@
 import React from "react";
-import { useTable, useGlobalFilter } from "react-table";
-import SearchFilter from "../SearchFilter/SearchFilter.jsx"
+import { useTable, useGlobalFilter, useSortBy } from "react-table";
+import SearchFilter from "../SearchFilter/SearchFilter.jsx";
 // import { Link } from "react-router-dom";
 import styles from "./Table.module.scss";
 
 // Define a default UI for filtering
-
 
 function ReactTable({ columns, data }) {
   // Use the state and functions returned from useTable to build your UI
@@ -23,7 +22,8 @@ function ReactTable({ columns, data }) {
       columns,
       data,
     },
-    useGlobalFilter // new
+    useGlobalFilter,
+    useSortBy
   );
 
   // Render the UI for your table
@@ -43,8 +43,12 @@ function ReactTable({ columns, data }) {
               {...headerGroup.getHeaderGroupProps()}
             >
               {headerGroup.headers.map((column) => (
-                <th key="thing" {...column.getHeaderProps()}>
+                <th key="thing" {...column.getHeaderProps(column.getSortByToggleProps())}>
                   {column.render("Header")}
+                  {/* Add a sort direction indicator */}
+                  <span>
+                    {column.isSorted ? (column.isSortedDesc ? " ↓" : " ↑") : " -"}
+                  </span>
                 </th>
               ))}
             </tr>

@@ -37,6 +37,24 @@ const getData = () => [
     modified: "Mar 21, 2022",
     created: "Jan 2, 2022",
   },
+  {
+    name: "Anotha one",
+    link: "survey1",
+    owner: "Nate Hanson",
+    status: "Closed",
+    responses: 34,
+    modified: "May 2, 2022",
+    created: "April 5, 2022",
+  },
+  {
+    name: "Do you like Jokes?",
+    link: "survey1",
+    owner: "Jeremy Bikman",
+    status: "Closed",
+    responses: 3078,
+    modified: "April 12, 2022",
+    created: "April 1, 2022",
+  },
 
 
 ];
