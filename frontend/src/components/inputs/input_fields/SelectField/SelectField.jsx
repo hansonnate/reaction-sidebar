@@ -2,7 +2,26 @@ import React from "react";
 import makeAnimated from "react-select/animated";
 import CreatableSelect from "react-select/creatable";
 
-// import styles from "./SelectField.module.scss";
+//import styles from "./SelectField.module.scss";
+
+const customStyles = {
+  option: (provided) => ({
+    ...provided,
+    
+    padding: 20,
+  }),
+  control: (provided, state) => ({
+    ...provided,
+    borderColor: state.isFocused || state.hover ? 'green' : '',
+    boxShadow: "none"
+  }),
+  singleValue: (provided, state) => {
+    const opacity = state.isDisabled ? 0.5 : 1;
+    const transition = "opacity 300ms";
+
+    return { ...provided, opacity, transition };
+  },
+};
 
 const animatedComponents = makeAnimated();
 
@@ -26,6 +45,8 @@ export const SelectField = ({
 
   return (
     <CreatableSelect
+      styles={customStyles}
+      className={``}
       options={options}
       isMulti={selectMultiple}
       onChange={handleChange}
