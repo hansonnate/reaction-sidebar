@@ -1,7 +1,7 @@
 import { useState } from "react";
 import axios from "axios";
 
-export default (apiFunc) => {
+export const useApi = (apiFunc) => {
   const [data, setData] = useState(null);
   const [error, setError] = useState("");
   const [loading, setLoading] = useState(false);
@@ -27,5 +27,5 @@ export default (apiFunc) => {
 };
 
 export const apiClient = axios.create({
-  baseURL: "localhost:3001"
+  baseURL: "http://localhost:3001"
 });
