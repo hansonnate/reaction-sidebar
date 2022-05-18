@@ -11,7 +11,6 @@ export const Help = () => {
     getOrganizationsApi.request();
   }, []);
 
-  // eslint-disable-next-line
   const handlePostOrg = (orgname, orgdisplayname) => {
     console.log("in handle requeset");
     postOrganizationsApi.request({

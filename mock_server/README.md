@@ -4,7 +4,8 @@ Some basic instructions for starting the mock server. For more advanced instruct
 
 ## Running the mock server
 
-In the `mock_server` directory, run the command `npm run api`
+If you haven't already, install dependencies in the `mock_server` directory by running the command `npm install`.  
+In the `mock_server` directory, run the command `npm run api`.
 
 ## Adding endpoints
 
@@ -13,10 +14,10 @@ You can add endpoints to the server by adding another item to the json object in
 ```json
 {
     "organization": [
-        ...
+        {...}
     ],
     "projects": [
-        ...
+        {...}
     ]
 }
 ```
