@@ -1,6 +1,7 @@
 $reactlightblue: #d5f3fe;
 $reactdarkerblue: #2A627C;
 $reactdarkblue: #2a627c81;
+$reactorange: #EDB57E;
 
 .filtermenu {
     a {
@@ -8,6 +9,10 @@ $reactdarkblue: #2a627c81;
     }
     border-radius: 5px;
     padding: 5px 0px;
+    i {
+        font-size: 20px;
+    }
+    
 }
 
 .filtermenu:hover {
@@ -27,6 +32,8 @@ $reactdarkblue: #2a627c81;
     box-shadow: rgba(0, 0, 0, 0.16) 0px 1px 4px;
     // box-shadow: rgba(50, 50, 93, 0.25) 0px 2px 5px -1px, rgba(0, 0, 0, 0.3) 0px 1px 3px -1px;
     // box-shadow: rgba(0, 0, 0, 0.08) 0px 4px 12px;
+    display: flex;
+    flex-direction: column;
 }
 
 .menuitem {
@@ -43,4 +50,24 @@ $reactdarkblue: #2a627c81;
 .menuitem:hover {
     background-color: $reactlightblue;
     color: $reactdarkerblue;
+}
+
+.heading {
+    font-family: "Poppins", sans-serif;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    h5 {
+        font-weight: 600;
+    }
+}
+
+.saveview {
+    font-size: 12px;
+    color: $reactorange;
+}
+.saveview:hover {
+    color: $reactdarkblue;
+    cursor: pointer;
 }

@@ -68,7 +68,7 @@ function ReactTable({ columns, data }) {
     useSortBy
   );
 
-//   const [open, setOpen] = useState(false);
+  //   const [open, setOpen] = useState(false);
 
   // Render the UI for your table
   return (
@@ -79,18 +79,24 @@ function ReactTable({ columns, data }) {
           globalFilter={state.globalFilter}
           setGlobalFilter={setGlobalFilter}
         />
-        <FilterMenu><DropdownMenu></DropdownMenu></FilterMenu>
+        <FilterMenu>
+          <DropdownMenu>
+            {" "}
+            {headerGroups.map((headerGroup) =>
+              headerGroup.headers.map((column) =>
+                column.Filter ? (
+                  <div key={column.id}>
+                    <label htmlFor={column.id}>
+                      {column.render("Header")}:{" "}
+                    </label>
+                    {column.render("Filter")}
+                  </div>
+                ) : null
+              )
+            )}
+          </DropdownMenu>
+        </FilterMenu>
         {/* <i className="bi bi-sliders"></i> */}
-        {headerGroups.map((headerGroup) =>
-          headerGroup.headers.map((column) =>
-            column.Filter ? (
-              <div key={column.id}>
-                <label htmlFor={column.id}>{column.render("Header")}: </label>
-                {column.render("Filter")}
-              </div>
-            ) : null
-          )
-        )}
       </div>
       <table className={`${styles.fulltable}`} {...getTableProps()} border="1">
         <thead>
