@@ -2,7 +2,9 @@
 import React from "react";
 import { Link } from "react-router-dom";
 // import Table from "../../components/BasicTable/Table.jsx"
-import ReactTable from "../../components/BasicTable/ReactTable.jsx"
+import ReactTable, {
+  SelectColumnFilter,
+} from "../../components/BasicTable/ReactTable.jsx";
 import styles from "./Projects.module.scss";
 
 // Internal
@@ -55,18 +57,14 @@ const getData = () => [
     modified: "April 12, 2022",
     created: "April 1, 2022",
   },
-
-
 ];
 function isOpen(value) {
   if (value.value == "Open") {
-    return(true)
-  }
-  else {
-    return false
+    return true;
+  } else {
+    return false;
   }
 }
-
 
 export const Projects = () => {
   const columns = React.useMemo(
@@ -74,12 +72,26 @@ export const Projects = () => {
       {
         Header: "Project",
         accessor: "name",
-        Cell: e =><Link to={e.value} style={{color: "black" }}> {e.value} </Link>
+        Cell: (e) => (
+          <Link to={e.value} style={{ color: "black" }}>
+            {" "}
+            {e.value}{" "}
+          </Link>
+        ),
       },
       {
         Header: "Status",
         accessor: "status",
-        Cell: e =><span className={`${styles.status} ${isOpen(e) ? `${styles.isopen}` : `${styles.isclosed}`}`}>{e.value} </span>
+        Filter: SelectColumnFilter,
+        Cell: (e) => (
+          <span
+            className={`${styles.status} ${
+              isOpen(e) ? `${styles.isopen}` : `${styles.isclosed}`
+            }`}
+          >
+            {e.value}{" "}
+          </span>
+        ),
       },
       {
         Header: "Responses",
@@ -88,6 +100,8 @@ export const Projects = () => {
       {
         Header: "Owner",
         accessor: "owner",
+        Filter: SelectColumnFilter,
+        filter: "includes",
       },
       {
         Header: "Modified",
@@ -100,6 +114,7 @@ export const Projects = () => {
     ],
     []
   );
+
 
   const data = React.useMemo(() => getData(), []);
   return (

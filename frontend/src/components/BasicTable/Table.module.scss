@@ -24,13 +24,36 @@ $reactdarkblue: #2a627c81;
         font-weight: 700;
         font-size: 11pt;
     }
+    td:first-child{
+        border-radius:5px 0 0 5px;
+    }
+    
+    td:last-child {
+        border-radius: 0 5px 5px 0;
+    }
 
     td {
         padding: 8px 5px;
-        
+    }
+    tr:hover {
+        background-color: #EFEFEF;
+        border-radius:5px 0 0 5px;
+        cursor: pointer;
     }
  
 }
+
+.searchfilter {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: flex-end;
+    width: 100%;
+    gap: 30px;
+    margin-bottom: 20px;
+    font-family: "Poppins", sans-serif;
+}
+
 
 
 

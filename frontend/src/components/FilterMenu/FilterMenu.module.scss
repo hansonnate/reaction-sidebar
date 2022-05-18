@@ -1,0 +1,46 @@
+$reactlightblue: #d5f3fe;
+$reactdarkerblue: #2A627C;
+$reactdarkblue: #2a627c81;
+
+.filtermenu {
+    a {
+        padding: 10px 10px;
+    }
+    border-radius: 5px;
+    padding: 5px 0px;
+}
+
+.filtermenu:hover {
+    background-color: #EFEFEF;
+}
+
+.dropdown {
+    position: absolute;
+    top: 160px;
+    width: 300px;
+    transform: translateX(-5%);
+    background-color: white;
+    border: 1px solid #a0a0a09e;
+    border-radius: 5px;
+    overflow: hidden;
+    padding: 0px 3px;
+    box-shadow: rgba(0, 0, 0, 0.16) 0px 1px 4px;
+    // box-shadow: rgba(50, 50, 93, 0.25) 0px 2px 5px -1px, rgba(0, 0, 0, 0.3) 0px 1px 3px -1px;
+    // box-shadow: rgba(0, 0, 0, 0.08) 0px 4px 12px;
+}
+
+.menuitem {
+    height: 50px;
+    display: flex;
+    align-items: center;
+    border-radius: 5px;
+    transition: background-color .5s;
+    padding: 0px 3px;
+    margin: 5px 0px;
+    color: black;
+}
+
+.menuitem:hover {
+    background-color: $reactlightblue;
+    color: $reactdarkerblue;
+}
