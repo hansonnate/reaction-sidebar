@@ -19,13 +19,16 @@ import {
   Reports,
 } from "pages";
 
-export const ProjectRoutes = () => {
+export const ProjectRoutes = ({ project }) => {
   return (
     <Routes>
       <Route path="/" element={<Navigate to="survey-build" />} />
-      <Route path="survey-build/*" element={<SurveyBuild />} />
-      <Route path="delivery/*" element={<Delivery />} />
-      <Route path="results/*" element={<Results />} />
+      <Route
+        path="survey-build/*"
+        element={<SurveyBuild project={project} />}
+      />
+      <Route path="delivery/*" element={<Delivery project={project} />} />
+      <Route path="results/*" element={<Results project={project} />} />
     </Routes>
   );
 };

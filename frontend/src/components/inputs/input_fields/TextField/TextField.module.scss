@@ -1,0 +1,20 @@
+.textField {
+  background-color: #efefef;
+  color: #050606;
+  border-radius: 5px;
+  padding: 5px 20px;
+  outline: none;
+  width: 100%;
+
+  ::placeholder, /* Chrome, Firefox, Opera, Safari 10.1+ */
+  :-ms-input-placeholder, /* Internet Explorer 10-11 */
+  ::-ms-input-placeholder /* Microsoft Edge */ {
+    color: #a3a4a8;
+    opacity: 1; /* Firefox */
+  }
+
+  &.disabled {
+      cursor: not-allowed;
+      background-color: #ffffff00;
+  }
+}

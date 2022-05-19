@@ -1,0 +1,27 @@
+// Fix SideMenu css to use module then delete these... 
+.container {
+    margin-left: 0px;
+    transition: none;
+    padding: 0px;
+    box-sizing: border-box;
+  }
+  
+  .container.inactive {
+    margin-left: 0px;
+  }
+  // ...delete to here. remember to delete from className in the jsx (these classes counteract the global styles in side menu)
+
+
+  .fieldRow {
+    margin-bottom: 20px;
+    display: flex;
+    align-items: center;
+
+    .label {
+        text-transform: uppercase;
+        font-weight: 700;
+        font-size: .8em;
+        text-align: right;
+        
+    }
+  }

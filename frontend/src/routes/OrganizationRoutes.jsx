@@ -22,3 +22,13 @@ export const OrganizationRoutes = () => {
     </Routes>
   );
 };
+
+export const UserGroupsRoutes = () => {
+  return (
+    <Routes>
+      <Route path="/" element={<Navigate to="roles" />} />
+      <Route path="roles/*" element={<div>roles</div>} />
+      <Route path="teams/*" element={<div>teams</div>} />
+    </Routes>
+  )
+}

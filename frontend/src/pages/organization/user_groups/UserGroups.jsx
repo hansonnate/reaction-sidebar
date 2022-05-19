@@ -1,6 +1,7 @@
 // External
 import React, { useState } from "react";
-import { TabBar } from "layouts";
+import { TabBar } from "components/layouts";
+import { UserGroupsRoutes } from "routes";
 
 // Internal
 
@@ -28,6 +29,9 @@ export const UserGroups = () => {
         active={active}
         updateActive={handleActiveUpdate}
       />
+      <>
+        <UserGroupsRoutes />
+      </>
     </>
   );
 };

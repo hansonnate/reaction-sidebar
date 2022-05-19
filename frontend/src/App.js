@@ -7,7 +7,7 @@ import { BrowserRouter } from "react-router-dom";
 
 // Internal
 import { SideMenu } from "components/sidebars";
-import { SplitHorizontal } from "layouts";
+import { SplitHorizontal } from "components/layouts";
 import { MainContentRoutes } from "routes";
 
 const App = () => {
