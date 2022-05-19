@@ -53,6 +53,46 @@ $reactdarkblue: #2a627c81;
     margin-bottom: 20px;
     font-family: "Poppins", sans-serif;
 }
+.customaccordion {
+    // margin: 10px 0px;
+    width: 100%;
+}
+
+.customaccordion .accordionicon {
+    // position: absolute;
+    transition: all .3s;
+    i {
+        font-size: 15px;
+    }
+}
+
+.customaccordion .cardbody {
+    display: none;
+    transition: all .3s;
+    // background-color: #EFEFEF;
+    // height: 100px;
+}
+
+.customaccordion .accordionactive .cardbody {
+    display: block;
+    width: 100%;
+    word-wrap: break-word;
+}
+
+.accordionactive .accordionicon {
+    transform:rotate(-90deg)
+}
+
+.customaccordion .cardheader {
+    cursor: pointer;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    margin: 10px 0px;
+    background-color: #EFEFEF;
+    padding: 5px;
+    border-radius: 5px;
+}
 
 
 

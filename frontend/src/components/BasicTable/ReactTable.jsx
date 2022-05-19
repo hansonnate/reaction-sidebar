@@ -1,5 +1,5 @@
-// import React, {useState} from "react";
-import React from "react";
+import React, {useState} from "react";
+// import React from "react";
 import { useTable, useGlobalFilter, useSortBy, useFilters } from "react-table";
 import SearchFilter from "../SearchFilter/SearchFilter.jsx";
 // import { Link } from "react-router-dom";
@@ -42,6 +42,26 @@ export function SelectColumnFilter({
   );
 }
 
+//custom accordian
+const AccordionItem = ({ name, body }) => {
+  const [visibility, setVisibility] = useState(false);
+
+  const toggleVisibility = () => {
+    setVisibility((v) => !v);
+  };
+  return (
+    <div
+      className={`${styles.card} ${visibility ? styles.accordionactive : ""}`}
+    >
+      <div className={styles.cardheader} onClick={toggleVisibility}>
+        {name}
+        <span className={styles.accordionicon}><i className="bi bi-chevron-left"></i></span>
+      </div>
+      <div className={styles.cardbody}>{body}</div>
+    </div>
+  );
+};
+
 function ReactTable({ columns, data }) {
   // Use the state and functions returned from useTable to build your UI
   let navigate = useNavigate();
@@ -80,20 +100,23 @@ function ReactTable({ columns, data }) {
           setGlobalFilter={setGlobalFilter}
         />
         <FilterMenu>
-          <DropdownMenu>
-            {" "}
-            {headerGroups.map((headerGroup) =>
-              headerGroup.headers.map((column) =>
-                column.Filter ? (
-                  <div key={column.id}>
-                    <label htmlFor={column.id}>
-                      {column.render("Header")}:{" "}
-                    </label>
-                    {column.render("Filter")}
-                  </div>
-                ) : null
-              )
-            )}
+          {console.log(data)}
+          <DropdownMenu data={data}>
+            <div className={styles.customaccordion}>
+              {" "}
+              {headerGroups.map((headerGroup) =>
+                headerGroup.headers.map((column) =>
+                  column.Filter ? (
+                    <AccordionItem key={column.id} body={column.render("Filter")} name={column.render("Header")}>
+                      {/* <label htmlFor={column.id}>
+                        {column.render("Header")}:{" "}
+                      </label> */}
+                      {/* {column.render("Filter")} */}
+                    </AccordionItem>
+                  ) : null
+                )
+              )}
+            </div>
           </DropdownMenu>
         </FilterMenu>
         {/* <i className="bi bi-sliders"></i> */}
@@ -128,7 +151,7 @@ function ReactTable({ columns, data }) {
         <tbody {...getTableBodyProps()}>
           {rows.map((row, i) => {
             prepareRow(row);
-            console.log(row.values.name);
+            // console.log(row.values.name);
             return (
               <tr
                 onClick={() => routeChange(row.values.name)}

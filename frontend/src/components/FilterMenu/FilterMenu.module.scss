@@ -15,20 +15,20 @@ $reactorange: #EDB57E;
     
 }
 
-.filtermenu:hover {
+.filtermenuactive {
     background-color: #EFEFEF;
 }
 
 .dropdown {
     position: absolute;
     top: 160px;
-    width: 300px;
+    width: 400px;
     transform: translateX(-5%);
     background-color: white;
-    border: 1px solid #a0a0a09e;
+    // border: 1px solid #a0a0a09e;
     border-radius: 5px;
     overflow: hidden;
-    padding: 0px 3px;
+    padding: 5px 15px;
     box-shadow: rgba(0, 0, 0, 0.16) 0px 1px 4px;
     // box-shadow: rgba(50, 50, 93, 0.25) 0px 2px 5px -1px, rgba(0, 0, 0, 0.3) 0px 1px 3px -1px;
     // box-shadow: rgba(0, 0, 0, 0.08) 0px 4px 12px;
@@ -58,13 +58,12 @@ $reactorange: #EDB57E;
     flex-direction: row;
     justify-content: space-between;
     align-items: center;
-    h5 {
-        font-weight: 600;
-    }
+    padding: 10px 0px;
+    font-weight: 600;
 }
-
 .saveview {
     font-size: 12px;
+    font-weight: 400;
     color: $reactorange;
 }
 .saveview:hover {

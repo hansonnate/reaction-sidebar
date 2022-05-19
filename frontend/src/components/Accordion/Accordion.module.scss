@@ -1,0 +1,25 @@
+.customaccordion .accordionicon {
+    position: absolute;
+    right: 15px;
+    transition: all .3s;
+    font-size: 8px;
+}
+
+.customaccordion .cardbody {
+    display: none;
+    transition: all .3s;
+}
+
+.customaccordion .accordionactive .cardbody {
+    display: block;
+    width: 100%;
+    word-wrap: break-word;
+}
+
+.accordionactive .accordionicon {
+    transform:  rotate(90deg);
+}
+
+.customaccordion .cardheader {
+    cursor: pointer;
+}
