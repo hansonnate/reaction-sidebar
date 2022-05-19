@@ -66,6 +66,7 @@ function isOpen(value) {
   }
 }
 
+
 export const Projects = () => {
   const columns = React.useMemo(
     () => [
@@ -100,7 +101,7 @@ export const Projects = () => {
       {
         Header: "Owner",
         accessor: "owner",
-        Filter: SelectColumnFilter,
+        Filter: SelectColumnFilter, 
         filter: "includes",
       },
       {

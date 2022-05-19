@@ -1,4 +1,4 @@
-import React, {useState} from "react";
+import React, { useState } from "react";
 // import React from "react";
 import { useTable, useGlobalFilter, useSortBy, useFilters } from "react-table";
 import SearchFilter from "../SearchFilter/SearchFilter.jsx";
@@ -39,6 +39,33 @@ export function SelectColumnFilter({
         </option>
       ))}
     </select>
+    //testing for checkboxes
+    // <div>
+    //   {console.log(filterValue)}
+    //   {options.map((option) => {
+    //     return (
+    //         <div key={option}className="flex items-center">
+    //           <input
+    //             type="checkbox"
+    //             className="focus:ring-blue-500 h-4 w-4 text-blue-600 border-gray-300 rounded"
+    //             id={option}
+    //             name={option}
+    //             value={option}
+    //             onChange={(e) => {
+    //             //   setFilter(setFilteredParams(filterValue, e.target.value));
+    //             setFilter(e.target.value || undefined);
+    //             }}
+    //           ></input>
+    //           <label
+    //             htmlFor={option}
+    //             className="ml-1.5 font-medium text-gray-700"
+    //           >
+    //             {option}
+    //           </label>
+    //         </div>
+    //     );
+    //   })}
+    // </div>
   );
 }
 
@@ -55,7 +82,9 @@ const AccordionItem = ({ name, body }) => {
     >
       <div className={styles.cardheader} onClick={toggleVisibility}>
         {name}
-        <span className={styles.accordionicon}><i className="bi bi-chevron-left"></i></span>
+        <span className={styles.accordionicon}>
+          <i className="bi bi-chevron-left"></i>
+        </span>
       </div>
       <div className={styles.cardbody}>{body}</div>
     </div>
@@ -107,7 +136,11 @@ function ReactTable({ columns, data }) {
               {headerGroups.map((headerGroup) =>
                 headerGroup.headers.map((column) =>
                   column.Filter ? (
-                    <AccordionItem key={column.id} body={column.render("Filter")} name={column.render("Header")}>
+                    <AccordionItem
+                      key={column.id}
+                      body={column.render("Filter")}
+                      name={column.render("Header")}
+                    >
                       {/* <label htmlFor={column.id}>
                         {column.render("Header")}:{" "}
                       </label> */}
