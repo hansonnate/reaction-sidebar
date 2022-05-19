@@ -24,48 +24,48 @@ export function SelectColumnFilter({
 
   // Render a multi-select box
   return (
-    <select
-      name={id}
-      id={id}
-      value={filterValue}
-      onChange={(e) => {
-        setFilter(e.target.value || undefined);
-      }}
-    >
-      <option value="">All</option>
-      {options.map((option, i) => (
-        <option key={i} value={option}>
-          {option}
-        </option>
-      ))}
-    </select>
+    // <select
+    //   name={id}
+    //   id={id}
+    //   value={filterValue}
+    //   onChange={(e) => {
+    //     setFilter(e.target.value || undefined);
+    //   }}
+    // >
+    //   <option value="">All</option>
+    //   {options.map((option, i) => (
+    //     <option key={i} value={option}>
+    //       {option}
+    //     </option>
+    //   ))}
+    // </select>
     //testing for checkboxes
-    // <div>
-    //   {console.log(filterValue)}
-    //   {options.map((option) => {
-    //     return (
-    //         <div key={option}className="flex items-center">
-    //           <input
-    //             type="checkbox"
-    //             className="focus:ring-blue-500 h-4 w-4 text-blue-600 border-gray-300 rounded"
-    //             id={option}
-    //             name={option}
-    //             value={option}
-    //             onChange={(e) => {
-    //             //   setFilter(setFilteredParams(filterValue, e.target.value));
-    //             setFilter(e.target.value || undefined);
-    //             }}
-    //           ></input>
-    //           <label
-    //             htmlFor={option}
-    //             className="ml-1.5 font-medium text-gray-700"
-    //           >
-    //             {option}
-    //           </label>
-    //         </div>
-    //     );
-    //   })}
-    // </div>
+    <div>
+      {console.log(filterValue)}
+      {options.map((option) => {
+        return (
+            <div key={option}className="flex items-center">
+              <input
+                type="checkbox"
+                className="focus:ring-blue-500 h-4 w-4 text-blue-600 border-gray-300 rounded"
+                id={option}
+                name={option}
+                value={option}
+                onChange={(e) => {
+                //   setFilter(setFilteredParams(filterValue, e.target.value));
+                setFilter(e.target.value || undefined);
+                }}
+              ></input>
+              <label
+                htmlFor={option}
+                className="ml-1.5 font-medium text-gray-700"
+              >
+                {option}
+              </label>
+            </div>
+        );
+      })}
+    </div>
   );
 }
 
