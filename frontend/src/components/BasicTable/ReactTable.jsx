@@ -8,9 +8,36 @@ import { useNavigate } from "react-router-dom";
 import FilterMenu from "../FilterMenu/FilterMenu.jsx";
 import DropdownMenu from "../FilterMenu/DropdownMenu.jsx";
 
+export const MultipleFilter = (rows, filler, filterValue) => {
+  const arr = [];
+  rows.forEach((val) => {
+    console.log(filterValue);
+    let header = filler[0];
+    if (filterValue.includes(val.original[header])) arr.push(val);
+    console.log(filler);
+    console.log(val);
+  });
+//   console.log(arr);
+  return arr;
+};
+
+function setFilteredParams(filterArr, val) {
+//   console.log(filterArr);
+//   console.log(val);
+  // if (val === undefined) return undefined;
+  if (filterArr.includes(val)) {
+    filterArr = filterArr.filter((n) => {
+      return n !== val;
+    });
+  } else filterArr.push(val);
+
+  if (filterArr.length === 0) filterArr = undefined;
+  return filterArr;
+}
+
 // Define a default UI for filtering
 export function SelectColumnFilter({
-  column: { filterValue, setFilter, preFilteredRows, id },
+  column: { filterValue = [], setFilter, preFilteredRows, id },
 }) {
   // Calculate the options for filtering
   // using the preFilteredRows
@@ -21,6 +48,8 @@ export function SelectColumnFilter({
     });
     return [...options.values()];
   }, [id, preFilteredRows]);
+
+
 
   // Render a multi-select box
   return (
@@ -39,30 +68,33 @@ export function SelectColumnFilter({
     //     </option>
     //   ))}
     // </select>
+
     //testing for checkboxes
     <div>
-      {console.log(filterValue)}
+      
       {options.map((option) => {
         return (
-            <div key={option}className="flex items-center">
-              <input
-                type="checkbox"
-                className="focus:ring-blue-500 h-4 w-4 text-blue-600 border-gray-300 rounded"
-                id={option}
-                name={option}
-                value={option}
-                onChange={(e) => {
-                //   setFilter(setFilteredParams(filterValue, e.target.value));
-                setFilter(e.target.value || undefined);
-                }}
-              ></input>
-              <label
-                htmlFor={option}
-                className="ml-1.5 font-medium text-gray-700"
-              >
-                {option}
-              </label>
-            </div>
+          <div key={option} className="flex items-center">
+              {/* {console.log(e.target.value)} */}
+              {console.log(filterValue)}
+            <input
+              type="checkbox"
+              className="focus:ring-blue-500 h-4 w-4 text-blue-600 border-gray-300 rounded"
+              id={option}
+              name={option}
+              value={option}
+              onChange={(e) => {
+                  setFilter(setFilteredParams(filterValue, e.target.value));
+                // setFilter(e.target.value || undefined);
+              }}
+            ></input>
+            <label
+              htmlFor={option}
+              className="ml-1.5 font-medium text-gray-700"
+            >
+              {option}
+            </label>
+          </div>
         );
       })}
     </div>
@@ -129,7 +161,7 @@ function ReactTable({ columns, data }) {
           setGlobalFilter={setGlobalFilter}
         />
         <FilterMenu>
-          {console.log(data)}
+          {/* {console.log(data)} */}
           <DropdownMenu data={data}>
             <div className={styles.customaccordion}>
               {" "}

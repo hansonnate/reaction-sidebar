@@ -4,6 +4,7 @@ import { Link } from "react-router-dom";
 // import Table from "../../components/BasicTable/Table.jsx"
 import ReactTable, {
   SelectColumnFilter,
+  MultipleFilter,
 } from "../../components/BasicTable/ReactTable.jsx";
 import styles from "./Projects.module.scss";
 
@@ -73,6 +74,8 @@ export const Projects = () => {
       {
         Header: "Project",
         accessor: "name",
+        Filter: SelectColumnFilter,
+        filter: MultipleFilter,
         Cell: (e) => (
           <Link to={e.value} style={{ color: "black" }}>
             {" "}
@@ -84,6 +87,7 @@ export const Projects = () => {
         Header: "Status",
         accessor: "status",
         Filter: SelectColumnFilter,
+        filter: MultipleFilter,
         Cell: (e) => (
           <span
             className={`${styles.status} ${
@@ -102,15 +106,19 @@ export const Projects = () => {
         Header: "Owner",
         accessor: "owner",
         Filter: SelectColumnFilter,
-        filter: "includes",
+        filter: MultipleFilter,
       },
       {
         Header: "Modified",
         accessor: "modified",
+        Filter: SelectColumnFilter,
+        filter: MultipleFilter,
       },
       {
         Header: "created",
         accessor: "created",
+        Filter: SelectColumnFilter,
+        filter: MultipleFilter,
       },
     ],
     []
