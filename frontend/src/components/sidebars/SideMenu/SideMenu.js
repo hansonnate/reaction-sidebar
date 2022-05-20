@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
-import largelogo from "../../../images/reactionlogolight.png";
-import smalllogo from "../../../images/circlelogo.png";
-import user from "../../../images/manlooking.png";
+import largelogo from "assets/images/reactionlogolight.png";
+import smalllogo from "assets/images/circlelogo.png";
+import user from "assets/images/manlooking.png";
 // import idashboard from "../../icons/1x/speedometer-white.png";
 import MenuItem from "./MenuItem";
 import "./sidemenu.css";
