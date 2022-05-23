@@ -1,0 +1,22 @@
+@import "assets/styles/globals.scss";
+
+.questionContainer {
+  @include normal-text;
+  border: 2px solid $gray40;
+  border-radius: $container-radius;
+  padding: 20px;
+  margin-bottom: 10px;
+  cursor: pointer;
+
+  &:hover {
+    border-color: $blue20;
+  }
+
+  &.active {
+    border-color: $blue100;
+  }
+
+  .item {
+    margin-bottom: 10px;
+  }
+}

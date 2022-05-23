@@ -8,7 +8,7 @@ import "./sidemenu.css";
 import "bootstrap-icons/font/bootstrap-icons.css";
 
 /**
- * @author
+ * @author Nate Hanson
  * @function SideMenu
  **/
 

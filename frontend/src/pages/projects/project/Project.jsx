@@ -58,7 +58,7 @@ export const Project = () => {
               updateActive={handleActiveUpdate}
             />
             <div className={styles.content}>
-              <ProjectRoutes project={getProject.data} />
+              {getProject.data && <ProjectRoutes project={getProject.data} />}
             </div>
           </SplitHorizontal>
         </>

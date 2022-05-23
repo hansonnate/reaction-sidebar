@@ -1,0 +1,31 @@
+// Colors
+$blue100: #15bcc7;
+$blue60: #7fcfd3;
+$blue40: #b5e1df;
+$blue20: rgba(127, 207, 211, 0.15);
+
+$orange100: #ed9146;
+$orange60: #edb57e;
+$orange40: #f4e3c2;
+$orange20: rgba(237, 181, 126, 0.15);
+
+$sea-foam100: #738C91;
+$sea-foam60: #8DABB2;
+
+$sapphire100: #2A627C;
+$sapphire60: #A4C6D0;
+
+$black: #050606;
+$white: #ffffff;
+
+$gray100: #A3A4A8;
+$gray60: #D8D9D9;
+$gray40: #EFEFEF;
+
+// Text
+@mixin normal-text {
+    color: $black;
+}
+
+// Miscellaneous
+$container-radius: 5px;
