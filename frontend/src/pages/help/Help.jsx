@@ -2,6 +2,7 @@ import React, { useEffect } from "react";
 import { Header } from "components/layouts";
 import { TextField, SelectField } from "components/inputs";
 import { useApi, OrganizationApi } from "api";
+import { Loading } from "components/Loading/Loading"
 
 export const Help = () => {
   const getOrganizationsApi = useApi(OrganizationApi.getOrganizations);
@@ -56,6 +57,7 @@ export const Help = () => {
       <button onClick={() => handlePostOrg("New Org", "Display name")}>
         post
       </button>
+      <Loading />
     </>
   );
 };

@@ -5,6 +5,8 @@
   "dependencies": {
     "@emotion/react": "^11.7.1",
     "@emotion/styled": "^11.6.0",
+    "@lottiefiles/lottie-player": "^1.5.7",
+    "@lottiefiles/react-lottie-player": "^3.4.7",
     "@mars/heroku-js-runtime-env": "^3.0.2",
     "@testing-library/jest-dom": "^5.16.1",
     "@testing-library/react": "^12.1.2",

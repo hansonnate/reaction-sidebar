@@ -8,6 +8,7 @@ import { ProjectRoutes } from "routes";
 import { Sidebar2 } from "components/sidebars";
 import styles from "./Project.module.scss";
 import { useApi, ProjectsApi } from "api";
+import { Loading } from "components/Loading/Loading";
 
 const menuItems = [
   {
@@ -45,7 +46,7 @@ export const Project = () => {
   };
   return (
     <>
-      {getProject.loading && <p>Loading...</p>}
+      {getProject.loading && <Loading />}
       {getProject.error && <p>{getProject.error}</p>}
       {getProject.data && (
         <>

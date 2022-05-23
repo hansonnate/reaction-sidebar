@@ -4,7 +4,7 @@ import FastAPIClient from '../../client';
 import config from '../../config';
 import jwtDecode from "jwt-decode";
 import * as moment from "moment";
-import mainLogo from'../../images/reactionlogodark.png';
+import mainLogo from'assets/images/reactionlogodark.png';
 
 const client = new FastAPIClient(config);
 
