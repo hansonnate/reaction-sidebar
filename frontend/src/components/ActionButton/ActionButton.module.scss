@@ -1,0 +1,22 @@
+$reactlightblue: #d5f3fe;
+$reactdarkerblue: #2A627C;
+$reactdarkblue: #2a627c81;
+$reactorange: #EDB57E;
+
+.mainbutton {
+    font-family: "Poppins", sans-serif;
+    text-align: center;
+    button {
+        width: 110px;
+        height: 35px;
+        border-radius: 5px;;
+        background-color: $reactorange;
+        color: white;
+        transition: all .3s;
+    }
+
+    button:hover {
+        transition: all .3s;
+        background-color: #edb57ea6;
+    }
+}

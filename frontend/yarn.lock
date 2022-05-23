@@ -1026,15 +1026,9 @@
     regenerator-runtime "^0.13.4"
 
 "@babel/runtime@^7.1.2", "@babel/runtime@^7.10.2", "@babel/runtime@^7.11.2", "@babel/runtime@^7.12.0", "@babel/runtime@^7.12.1", "@babel/runtime@^7.12.13", "@babel/runtime@^7.12.5", "@babel/runtime@^7.13.10", "@babel/runtime@^7.13.8", "@babel/runtime@^7.14.0", "@babel/runtime@^7.16.3", "@babel/runtime@^7.3.1", "@babel/runtime@^7.5.5", "@babel/runtime@^7.6.3", "@babel/runtime@^7.7.2", "@babel/runtime@^7.7.6", "@babel/runtime@^7.8.4", "@babel/runtime@^7.8.7", "@babel/runtime@^7.9.2":
-<<<<<<< HEAD
   "integrity" "sha512-lSiBBvodq29uShpWGNbgFdKYNiFDo5/HIYsaCEY9ff4sb10x9jizo2+pRrSyF4jKZCXqgzuqBOQKbUm90gQwJg=="
   "resolved" "https://registry.npmjs.org/@babel/runtime/-/runtime-7.17.9.tgz"
   "version" "7.17.9"
-=======
-  version "7.17.9"
-  resolved "https://registry.npmjs.org/@babel/runtime/-/runtime-7.17.9.tgz"
-  integrity sha512-lSiBBvodq29uShpWGNbgFdKYNiFDo5/HIYsaCEY9ff4sb10x9jizo2+pRrSyF4jKZCXqgzuqBOQKbUm90gQwJg==
->>>>>>> main
   dependencies:
     regenerator-runtime "^0.13.4"
 
@@ -1177,15 +1171,9 @@
     stylis "4.0.13"
 
 "@emotion/cache@^11.4.0", "@emotion/cache@^11.7.1":
-<<<<<<< HEAD
   "integrity" "sha512-r65Zy4Iljb8oyjtLeCuBH8Qjiy107dOYC6SJq7g7GV5UCQWMObY4SJDPGFjiiVpPrOJ2hmJOoBiYTC7hwx9E2A=="
   "resolved" "https://registry.npmjs.org/@emotion/cache/-/cache-11.7.1.tgz"
   "version" "11.7.1"
-=======
-  version "11.7.1"
-  resolved "https://registry.npmjs.org/@emotion/cache/-/cache-11.7.1.tgz"
-  integrity sha512-r65Zy4Iljb8oyjtLeCuBH8Qjiy107dOYC6SJq7g7GV5UCQWMObY4SJDPGFjiiVpPrOJ2hmJOoBiYTC7hwx9E2A==
->>>>>>> main
   dependencies:
     "@emotion/memoize" "^0.7.4"
     "@emotion/sheet" "^1.1.0"
@@ -1210,17 +1198,10 @@
   resolved "https://registry.npmjs.org/@emotion/memoize/-/memoize-0.7.5.tgz"
   integrity sha512-igX9a37DR2ZPGYtV6suZ6whr8pTFtyHL3K/oLUotxpSVO2ASaprmAe2Dkq7tBo7CRY7MMDrAa9nuQP9/YG8FxQ==
 
-<<<<<<< HEAD
 "@emotion/react@^11.0.0-rc.0", "@emotion/react@^11.4.1", "@emotion/react@^11.7.1", "@emotion/react@^11.8.1":
   "integrity" "sha512-lBVSF5d0ceKtfKCDQJveNAtkC7ayxpVlgOohLgXqRwqWr9bOf4TZAFFyIcNngnV6xK6X4x2ZeXq7vliHkoVkxQ=="
   "resolved" "https://registry.npmjs.org/@emotion/react/-/react-11.9.0.tgz"
   "version" "11.9.0"
-=======
-"@emotion/react@^11.7.1", "@emotion/react@^11.8.1":
-  version "11.9.0"
-  resolved "https://registry.npmjs.org/@emotion/react/-/react-11.9.0.tgz"
-  integrity sha512-lBVSF5d0ceKtfKCDQJveNAtkC7ayxpVlgOohLgXqRwqWr9bOf4TZAFFyIcNngnV6xK6X4x2ZeXq7vliHkoVkxQ==
->>>>>>> main
   dependencies:
     "@babel/runtime" "^7.13.10"
     "@emotion/babel-plugin" "^11.7.1"
@@ -2202,15 +2183,9 @@
     "@types/react" "^17"
 
 "@types/react-transition-group@^4.4.0", "@types/react-transition-group@^4.4.1":
-<<<<<<< HEAD
   "integrity" "sha512-7gAPz7anVK5xzbeQW9wFBDg7G++aPLAFY0QaSMOou9rJZpbuI58WAuJrgu+qR92l61grlnCUe7AFX8KGahAgug=="
   "resolved" "https://registry.npmjs.org/@types/react-transition-group/-/react-transition-group-4.4.4.tgz"
   "version" "4.4.4"
-=======
-  version "4.4.4"
-  resolved "https://registry.npmjs.org/@types/react-transition-group/-/react-transition-group-4.4.4.tgz"
-  integrity sha512-7gAPz7anVK5xzbeQW9wFBDg7G++aPLAFY0QaSMOou9rJZpbuI58WAuJrgu+qR92l61grlnCUe7AFX8KGahAgug==
->>>>>>> main
   dependencies:
     "@types/react" "*"
 
@@ -6651,22 +6626,10 @@ memfs@^3.1.2, memfs@^3.4.1:
   dependencies:
     fs-monkey "1.0.3"
 
-<<<<<<< HEAD
-"memoize-one@^5.0.0":
-  "integrity" "sha512-zYiwtZUcYyXKo/np96AGZAckk+FWWsUdJ3cHGGmld7+AhvcWmQyGCYUh1hc4Q/pkOhb65dQR/pqCyK0cOaHz4Q=="
-  "resolved" "https://registry.npmjs.org/memoize-one/-/memoize-one-5.2.1.tgz"
-  "version" "5.2.1"
-
-"merge-descriptors@1.0.1":
-  "integrity" "sha1-sAqqVW3YtEVoFQ7J0blT8/kMu2E="
-  "resolved" "https://registry.npmjs.org/merge-descriptors/-/merge-descriptors-1.0.1.tgz"
-  "version" "1.0.1"
-=======
 memoize-one@^5.0.0:
   version "5.2.1"
   resolved "https://registry.yarnpkg.com/memoize-one/-/memoize-one-5.2.1.tgz#8337aa3c4335581839ec01c3d594090cebe8f00e"
   integrity sha512-zYiwtZUcYyXKo/np96AGZAckk+FWWsUdJ3cHGGmld7+AhvcWmQyGCYUh1hc4Q/pkOhb65dQR/pqCyK0cOaHz4Q==
->>>>>>> main
 
 merge-descriptors@1.0.1:
   version "1.0.1"
@@ -8229,35 +8192,10 @@ react-scroll@^1.8.1:
     lodash.throttle "^4.1.1"
     prop-types "^15.7.2"
 
-<<<<<<< HEAD
-"react-select@^5.3.2":
-  "integrity" "sha512-W6Irh7U6Ha7p5uQQ2ZnemoCQ8mcfgOtHfw3wuMzG6FAu0P+CYicgofSLOq97BhjMx8jS+h+wwWdCBeVVZ9VqlQ=="
-  "resolved" "https://registry.npmjs.org/react-select/-/react-select-5.3.2.tgz"
-  "version" "5.3.2"
-  dependencies:
-    "@babel/runtime" "^7.12.0"
-    "@emotion/cache" "^11.4.0"
-    "@emotion/react" "^11.8.1"
-    "@types/react-transition-group" "^4.4.0"
-    "memoize-one" "^5.0.0"
-    "prop-types" "^15.6.0"
-    "react-transition-group" "^4.3.0"
-
-"react-side-effect@^2.1.0":
-  "integrity" "sha512-2FoTQzRNTncBVtnzxFOk2mCpcfxQpenBMbk5kSVBg5UcPqV9fRbgY2zhb7GTWWOlpFmAxhClBDlIq8Rsubz1yQ=="
-  "resolved" "https://registry.npmjs.org/react-side-effect/-/react-side-effect-2.1.1.tgz"
-  "version" "2.1.1"
-
-"react-slidedown@^2.4.5":
-  "integrity" "sha512-HGDfrqo70r1WVE0DwrySPdCT27/2wcZaJYh5kOnmuPSCtjDDJrNkDdn4Ep/cma2VVfwupeAGhbc2pbrGThU6VQ=="
-  "resolved" "https://registry.npmjs.org/react-slidedown/-/react-slidedown-2.4.7.tgz"
-  "version" "2.4.7"
-=======
 react-select@^5.3.2:
   version "5.3.2"
   resolved "https://registry.yarnpkg.com/react-select/-/react-select-5.3.2.tgz#ecee0d5c59ed4acb7f567f7de3c75a488d93dacb"
   integrity sha512-W6Irh7U6Ha7p5uQQ2ZnemoCQ8mcfgOtHfw3wuMzG6FAu0P+CYicgofSLOq97BhjMx8jS+h+wwWdCBeVVZ9VqlQ==
->>>>>>> main
   dependencies:
     "@babel/runtime" "^7.12.0"
     "@emotion/cache" "^11.4.0"
@@ -8287,7 +8225,6 @@ react-spring@^8.0.27:
     "@babel/runtime" "^7.3.1"
     prop-types "^15.5.8"
 
-<<<<<<< HEAD
 "react-table@^7.8.0":
   "integrity" "sha512-hNaz4ygkZO4bESeFfnfOft73iBUj8K5oKi1EcSHPAibEydfsX2MyU6Z8KCr3mv3C9Kqqh71U+DhZkFvibbnPbA=="
   "resolved" "https://registry.npmjs.org/react-table/-/react-table-7.8.0.tgz"
@@ -8297,44 +8234,24 @@ react-spring@^8.0.27:
   "integrity" "sha512-zSLprMymBDowknr0KVDiJ05IjZn9mQhhg4PRsqln0OZtURAJ1snt1xi5daZfagsh6vfsziZrc9pErPTDY1ACig=="
   "resolved" "https://registry.npmjs.org/react-tooltip/-/react-tooltip-4.2.21.tgz"
   "version" "4.2.21"
-=======
-react-tooltip@^4.2.9:
-  version "4.2.21"
-  resolved "https://registry.npmjs.org/react-tooltip/-/react-tooltip-4.2.21.tgz"
-  integrity sha512-zSLprMymBDowknr0KVDiJ05IjZn9mQhhg4PRsqln0OZtURAJ1snt1xi5daZfagsh6vfsziZrc9pErPTDY1ACig==
->>>>>>> main
   dependencies:
     prop-types "^15.7.2"
     uuid "^7.0.3"
 
-<<<<<<< HEAD
 "react-transition-group@^4.3.0", "react-transition-group@^4.4.1":
   "integrity" "sha512-/RNYfRAMlZwDSr6z4zNKV6xu53/e2BuaBbGhbyYIXTrmgu/bGHzmqOs7mJSJBHy9Ud+ApHx3QjrkKSp1pxvlFg=="
   "resolved" "https://registry.npmjs.org/react-transition-group/-/react-transition-group-4.4.2.tgz"
   "version" "4.4.2"
-=======
-react-transition-group@^4.3.0, react-transition-group@^4.4.1:
-  version "4.4.2"
-  resolved "https://registry.npmjs.org/react-transition-group/-/react-transition-group-4.4.2.tgz"
-  integrity sha512-/RNYfRAMlZwDSr6z4zNKV6xu53/e2BuaBbGhbyYIXTrmgu/bGHzmqOs7mJSJBHy9Ud+ApHx3QjrkKSp1pxvlFg==
->>>>>>> main
   dependencies:
     "@babel/runtime" "^7.5.5"
     dom-helpers "^5.0.1"
     loose-envify "^1.4.0"
     prop-types "^15.6.2"
 
-<<<<<<< HEAD
-"react@*", "react@^0.14.0 || ^15.0.0 || ^16.0.0 || ^17.0.0", "react@^15.5.4 || ^16.0.0 || ^17.0.0 || ^18.0.0", "react@^16.0.0", "react@^16.3.0 || ^17.0.0", "react@^16.3.0 || 17", "react@^16.8.0", "react@^16.8.0 || ^17 || ^18", "react@^16.8.0 || ^17.0.0 || ^18.0.0", "react@^16.8.3 || ^17.0.0-0 || ^18.0.0", "react@^17.0.2", "react@<18.0.0", "react@>= 16", "react@>= 16.8.0", "react@>=0.14.0", "react@>=0.14.0 <18.0.0", "react@>=15", "react@>=15.0.0", "react@>=16.0.0", "react@>=16.13", "react@>=16.13.0", "react@>=16.3.0", "react@>=16.3.2", "react@>=16.6.0", "react@>=16.8", "react@>=16.8.0", "react@17.0.2":
-  "integrity" "sha512-gnhPt75i/dq/z3/6q/0asP78D0u592D5L1pd7M8P+dck6Fu/jJeL6iVVK23fptSUZj8Vjf++7wXA8UNclGQcbA=="
-  "resolved" "https://registry.npmjs.org/react/-/react-17.0.2.tgz"
-  "version" "17.0.2"
-=======
 react@^17.0.2:
   version "17.0.2"
   resolved "https://registry.npmjs.org/react/-/react-17.0.2.tgz"
   integrity sha512-gnhPt75i/dq/z3/6q/0asP78D0u592D5L1pd7M8P+dck6Fu/jJeL6iVVK23fptSUZj8Vjf++7wXA8UNclGQcbA==
->>>>>>> main
   dependencies:
     loose-envify "^1.1.0"
     object-assign "^4.1.1"

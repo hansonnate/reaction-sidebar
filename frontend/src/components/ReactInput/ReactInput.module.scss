@@ -1,0 +1,12 @@
+.formInput {
+    border-radius: 5px;
+    width: 100%;
+    height: 40px;
+    background-color: #EFEFEF;
+    font-family: "Poppins", sans-serif;
+    padding: 0px 5px;
+}
+.formInput:focus {
+    background-color: #c1c1c1;
+    outline: none;
+}

@@ -1,5 +1,5 @@
 // External
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 // import Table from "../../components/BasicTable/Table.jsx"
 import ReactTable, {
@@ -7,6 +7,10 @@ import ReactTable, {
   MultipleFilter,
 } from "../../components/BasicTable/ReactTable.jsx";
 import styles from "./Projects.module.scss";
+import ReactModal from "../../components/ReactModal/ReactModal.jsx";
+// import FormInput from "../../components/FormInput/FormInput.jsx";
+import ReactInput from "../../components/ReactInput/ReactInput.jsx";
+// import ActionButton from "../../components/ActionButton/ActionButton.jsx";
 
 // Internal
 import { Header } from "components/layouts";
@@ -125,10 +129,25 @@ export const Projects = () => {
   );
 
   const getProjects = useApi(ProjectsApi.getProjects);
+  const postProject = useApi(ProjectsApi.postProject);
 
   useEffect(() => {
     getProjects.request();
   }, []);
+
+  const [show, setShow] = useState(false);
+
+  const handlePostProject = (projectName, owner, status, responses, created, modified) => {
+    postProject.request({
+      name: projectName,
+      owner: owner,
+      status: status,
+      responses: responses,
+      created: created,
+      modified: modified
+    });
+  };
+
 
   return (
     <>
@@ -141,7 +160,17 @@ export const Projects = () => {
         </div>
         
       ))} */}
-      {getProjects.data && <ReactTable columns={columns} data={getProjects.data} />}
+      {getProjects.data && <ReactTable columns={columns} data={getProjects.data} buttonMethod={() => setShow(true)}/>}
+      <ReactModal show={show} onClose={() => setShow(false)} onSave={() => handlePostProject("New Project", "Jack Sparrow", "Closed", 0, Date.now(), Date.now())}>
+        <div className="content">
+          <h1>Create a New Project</h1>
+          <div className="text">
+            <ReactInput type="text" placeholder="Project Name"></ReactInput>
+            <ReactInput type="text" placeholder="Description (optional)"></ReactInput>
+            {/* <ActionButton functionality={() =>handlePostProject("New Project", "Jack Sparrow", "Closed", 0, Date.now(), Date.now())} title="Click me">Click me</ActionButton> */}
+          </div>
+        </div>
+      </ReactModal>
     </>
   );
 };

@@ -7,6 +7,7 @@ import styles from "./Table.module.scss";
 import { useNavigate } from "react-router-dom";
 import FilterMenu from "../FilterMenu/FilterMenu.jsx";
 import DropdownMenu from "../FilterMenu/DropdownMenu.jsx";
+import ActionButton from "../ActionButton/ActionButton.jsx";
 
 export const MultipleFilter = (rows, filler, filterValue) => {
   const arr = [];
@@ -17,13 +18,13 @@ export const MultipleFilter = (rows, filler, filterValue) => {
     console.log(filler);
     console.log(val);
   });
-//   console.log(arr);
+  //   console.log(arr);
   return arr;
 };
 
 function setFilteredParams(filterArr, val) {
-//   console.log(filterArr);
-//   console.log(val);
+  //   console.log(filterArr);
+  //   console.log(val);
   // if (val === undefined) return undefined;
   if (filterArr.includes(val)) {
     filterArr = filterArr.filter((n) => {
@@ -49,10 +50,8 @@ export function SelectColumnFilter({
     return [...options.values()];
   }, [id, preFilteredRows]);
 
-
-
-  // Render a multi-select box
   return (
+    //Code for select box if it is wanted
     // <select
     //   name={id}
     //   id={id}
@@ -69,14 +68,12 @@ export function SelectColumnFilter({
     //   ))}
     // </select>
 
-    //testing for checkboxes
+    //Filter checkkboxes
     <div>
-      
       {options.map((option) => {
         return (
           <div key={option} className="flex items-center">
-              {/* {console.log(e.target.value)} */}
-              {console.log(filterValue)}
+            {console.log(filterValue)}
             <input
               type="checkbox"
               className="focus:ring-blue-500 h-4 w-4 text-blue-600 border-gray-300 rounded"
@@ -84,7 +81,7 @@ export function SelectColumnFilter({
               name={option}
               value={option}
               onChange={(e) => {
-                  setFilter(setFilteredParams(filterValue, e.target.value));
+                setFilter(setFilteredParams(filterValue, e.target.value));
                 // setFilter(e.target.value || undefined);
               }}
             ></input>
@@ -123,7 +120,7 @@ const AccordionItem = ({ name, body }) => {
   );
 };
 
-function ReactTable({ columns, data }) {
+function ReactTable({ columns, data, buttonMethod}) {
   // Use the state and functions returned from useTable to build your UI
   let navigate = useNavigate();
   const routeChange = (path) => {
@@ -149,42 +146,95 @@ function ReactTable({ columns, data }) {
     useSortBy
   );
 
-  //   const [open, setOpen] = useState(false);
+  const [isCheckAll, setIsCheckAll] = useState(false);
+  const [isCheck, setIsCheck] = useState([]);
+
+  const handleSelectAll = () => {
+    setIsCheckAll(!isCheckAll);
+    setIsCheck(data.map(li => li.id));
+    if (isCheckAll) {
+      setIsCheck([]);
+    }
+  };
+  const handleClick = e => {
+    const { id, checked } = e.target;
+    {console.log(id)}
+    setIsCheck([...isCheck, id]);
+    if (!checked) {
+      setIsCheck(isCheck.filter(item => item !== id));
+    }
+  };
+
+  //Date calculations
+  var monthNames = [
+    "January",
+    "February",
+    "March",
+    "April",
+    "May",
+    "June",
+    "July",
+    "August",
+    "September",
+    "October",
+    "November",
+    "December",
+  ];
+  function checkDate(value) {
+    if (value > 100000000000) {
+      const date = new Date(value); //new Intl.DateTimeFormat('en-US', { year: '2-digit', month: '2-digit', day: '2-digit', hour: '2-digit', minute: '2-digit'}).format(value)
+      return (
+        monthNames[date.getMonth()] +
+        " " +
+        date.getDate() +
+        ", " +
+        date.getFullYear()
+      );
+    } else {
+      return value;
+    }
+  }
+  //   let currentTimestamp = Date.now()
+  //   console.log(currentTimestamp);
+  //   let date = new Intl.DateTimeFormat('en-US', { year: 'numeric', month: '2-digit', day: '2-digit', hour: '2-digit', minute: '2-digit', second: '2-digit' }).format(currentTimestamp)
+  //   console.log(date);
 
   // Render the UI for your table
   return (
     <div>
-      <div className={styles.searchfilter}>
-        <SearchFilter
-          preGlobalFilteredRows={preGlobalFilteredRows}
-          globalFilter={state.globalFilter}
-          setGlobalFilter={setGlobalFilter}
-        />
-        <FilterMenu>
-          {/* {console.log(data)} */}
-          <DropdownMenu data={data}>
-            <div className={styles.customaccordion}>
-              {" "}
-              {headerGroups.map((headerGroup) =>
-                headerGroup.headers.map((column) =>
-                  column.Filter ? (
-                    <AccordionItem
-                      key={column.id}
-                      body={column.render("Filter")}
-                      name={column.render("Header")}
-                    >
-                      {/* <label htmlFor={column.id}>
+      <div className={styles.topcontainer}>
+        <div className={styles.searchfilter}>
+          <SearchFilter
+            preGlobalFilteredRows={preGlobalFilteredRows}
+            globalFilter={state.globalFilter}
+            setGlobalFilter={setGlobalFilter}
+          />
+          <FilterMenu>
+            {/* {console.log(data)} */}
+            <DropdownMenu data={data}>
+              <div className={styles.customaccordion}>
+                {" "}
+                {headerGroups.map((headerGroup) =>
+                  headerGroup.headers.map((column) =>
+                    column.Filter ? (
+                      <AccordionItem
+                        key={column.id}
+                        body={column.render("Filter")}
+                        name={column.render("Header")}
+                      >
+                        {/* <label htmlFor={column.id}>
                         {column.render("Header")}:{" "}
                       </label> */}
-                      {/* {column.render("Filter")} */}
-                    </AccordionItem>
-                  ) : null
-                )
-              )}
-            </div>
-          </DropdownMenu>
-        </FilterMenu>
-        {/* <i className="bi bi-sliders"></i> */}
+                        {/* {column.render("Filter")} */}
+                      </AccordionItem>
+                    ) : null
+                  )
+                )}
+              </div>
+            </DropdownMenu>
+          </FilterMenu>
+        </div>
+        <ActionButton title="New Project" functionality={buttonMethod}></ActionButton>
       </div>
       <table className={`${styles.fulltable}`} {...getTableProps()} border="1">
         <thead>
@@ -194,6 +244,7 @@ function ReactTable({ columns, data }) {
               key="thing"
               {...headerGroup.getHeaderGroupProps()}
             >
+            <th><input type="checkbox" className={styles.headercheckbox} id="selectAll" onChange={handleSelectAll} checked={isCheckAll}></input></th>    
               {headerGroup.headers.map((column) => (
                 <th
                   key="thing"
@@ -210,6 +261,7 @@ function ReactTable({ columns, data }) {
                   </span>
                 </th>
               ))}
+              <th></th>
             </tr>
           ))}
         </thead>
@@ -219,18 +271,23 @@ function ReactTable({ columns, data }) {
             // console.log(row.values.name);
             return (
               <tr
-                onClick={() => routeChange(row.values.name)}
                 className="tbodyrow"
                 key={i}
                 {...row.getRowProps()}
               >
+                
+                <td><input type="checkbox" className={styles.rowcheckbox} id={row.original.id} onChange={handleClick} checked={isCheck.includes(row.original.id)}></input></td>
                 {row.cells.map((cell) => {
                   return (
-                    <td key={i} {...cell.getCellProps()}>
-                      {cell.render("Cell")}
+                    <td onClick={() => routeChange(row.values.name)} key={i} {...cell.getCellProps()}>
+                      {/* {cell.render("Cell")} */}
+                      {!isNaN(cell.value)
+                        ? checkDate(cell.value)
+                        : cell.render("Cell")}
                     </td>
                   );
                 })}
+                <td><i className="bi bi-three-dots-vertical"></i></td>
               </tr>
             );
           })}
