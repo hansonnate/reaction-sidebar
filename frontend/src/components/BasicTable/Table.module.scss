@@ -12,6 +12,7 @@ $reactdarkblue: #2a627c81;
     th:first-child{
         border-radius:5px 0 0 5px;
         color: $reactdarkerblue;
+        padding-left: 20px;
     }
     
     th:last-child {
@@ -26,6 +27,7 @@ $reactdarkblue: #2a627c81;
         font-size: 11pt;
     }
     td:first-child{
+        padding-left: 20px;
         border-radius:5px 0 0 5px;
     }
     
@@ -49,9 +51,10 @@ $reactdarkblue: #2a627c81;
     flex-direction: row;
     align-items: center;
     justify-content: flex-start;
-    width: 100%;
     gap: 30px;
     font-family: "Poppins", sans-serif;
+    // border: 2px solid black;
+
 }
 .customaccordion {
     // margin: 10px 0px;
@@ -100,9 +103,13 @@ $reactdarkblue: #2a627c81;
     justify-content: space-between;
     // border: 2px solid black;
     padding-bottom: 0px;
+    padding-left: 19px;
     align-items: center;
     margin-bottom: 20px;
     font-family: "Poppins", sans-serif;
+    gap: 30px;
+
+
 }
 
 

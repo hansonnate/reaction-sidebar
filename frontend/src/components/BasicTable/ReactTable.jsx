@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 // import React from "react";
 import { useTable, useGlobalFilter, useSortBy, useFilters } from "react-table";
 import SearchFilter from "../SearchFilter/SearchFilter.jsx";
@@ -8,6 +8,9 @@ import { useNavigate } from "react-router-dom";
 import FilterMenu from "../FilterMenu/FilterMenu.jsx";
 import DropdownMenu from "../FilterMenu/DropdownMenu.jsx";
 import ActionButton from "../ActionButton/ActionButton.jsx";
+import BulkActionButton from "../BulkActionButton/BulkActionButton.jsx";
+import Accordion from "../Accordion/Accordion.jsx";
+import Select from "react-select";
 
 export const MultipleFilter = (rows, filler, filterValue) => {
   const arr = [];
@@ -120,7 +123,20 @@ const AccordionItem = ({ name, body }) => {
   );
 };
 
-function ReactTable({ columns, data, buttonMethod}) {
+function ReactTable({ columns, data, buttonMethod }) {
+
+    //dropdown menu views
+    const isDisabled = false;
+    const isLoading = false;
+    const isSearchable = true;
+    const isClearable = true;
+    const isRtl = false;
+    const options = [
+      { value: "view1", label: "View 1" },
+      { value: "view2", label: "View 2" },
+      { value: "view3", label: "View 3" },
+    ];
+
   // Use the state and functions returned from useTable to build your UI
   let navigate = useNavigate();
   const routeChange = (path) => {
@@ -131,8 +147,8 @@ function ReactTable({ columns, data, buttonMethod}) {
     getTableProps,
     getTableBodyProps,
     headerGroups,
-    rows,
     prepareRow,
+    rows,
     state,
     preGlobalFilteredRows,
     setGlobalFilter,
@@ -146,22 +162,27 @@ function ReactTable({ columns, data, buttonMethod}) {
     useSortBy
   );
 
-  const [isCheckAll, setIsCheckAll] = useState(false);
-  const [isCheck, setIsCheck] = useState([]);
+  //   const [isSelected, select] = useState();
+  const [checkList, setCheckList] = useState([]);
 
-  const handleSelectAll = () => {
-    setIsCheckAll(!isCheckAll);
-    setIsCheck(data.map(li => li.id));
-    if (isCheckAll) {
-      setIsCheck([]);
-    }
-  };
-  const handleClick = e => {
+  useEffect(() => {
+    setCheckList(rows);
+  }, []);
+
+  const handleChange = (e) => {
     const { id, checked } = e.target;
-    {console.log(id)}
-    setIsCheck([...isCheck, id]);
-    if (!checked) {
-      setIsCheck(isCheck.filter(item => item !== id));
+    if (id === "selectAll") {
+      let tempList = checkList.map((row) => {
+        return { ...row, isChecked: checked };
+      });
+      setCheckList(tempList);
+      console.log(checkList);
+    } else {
+      let tempList = checkList.map((row) =>
+        row.id === id ? { ...row, isChecked: checked } : row
+      );
+      setCheckList(tempList);
+      console.log(checkList);
     }
   };
 
@@ -203,6 +224,7 @@ function ReactTable({ columns, data, buttonMethod}) {
   return (
     <div>
       <div className={styles.topcontainer}>
+        <BulkActionButton title="Actions"></BulkActionButton>
         <div className={styles.searchfilter}>
           <SearchFilter
             preGlobalFilteredRows={preGlobalFilteredRows}
@@ -212,29 +234,50 @@ function ReactTable({ columns, data, buttonMethod}) {
           <FilterMenu>
             {/* {console.log(data)} */}
             <DropdownMenu data={data}>
-              <div className={styles.customaccordion}>
-                {" "}
-                {headerGroups.map((headerGroup) =>
-                  headerGroup.headers.map((column) =>
-                    column.Filter ? (
-                      <AccordionItem
-                        key={column.id}
-                        body={column.render("Filter")}
-                        name={column.render("Header")}
-                      >
-                        {/* <label htmlFor={column.id}>
+              <div className={styles.heading}>
+                <span className={styles.header}>Filters</span>
+                <span className={styles.saveview}>Save view</span>
+              </div>
+              <Select
+                className="basic-single"
+                classNamePrefix="select"
+                defaultValue={options[0]}
+                isDisabled={isDisabled}
+                isLoading={isLoading}
+                isClearable={isClearable}
+                isRtl={isRtl}
+                isSearchable={isSearchable}
+                name="color"
+                options={options}
+              />
+              <Accordion>
+                <div className={styles.customaccordion}>
+                  {" "}
+                  {headerGroups.map((headerGroup) =>
+                    headerGroup.headers.map((column) =>
+                      column.Filter ? (
+                        <AccordionItem
+                          key={column.id}
+                          body={column.render("Filter")}
+                          name={column.render("Header")}
+                        >
+                          {/* <label htmlFor={column.id}>
                         {column.render("Header")}:{" "}
                       </label> */}
-                        {/* {column.render("Filter")} */}
-                      </AccordionItem>
-                    ) : null
-                  )
-                )}
-              </div>
+                          {/* {column.render("Filter")} */}
+                        </AccordionItem>
+                      ) : null
+                    )
+                  )}
+                </div>
+              </Accordion>
             </DropdownMenu>
           </FilterMenu>
+          <ActionButton
+            title="New Project"
+            functionality={buttonMethod}
+          ></ActionButton>
         </div>
-        <ActionButton title="New Project" functionality={buttonMethod}></ActionButton>
       </div>
       <table className={`${styles.fulltable}`} {...getTableProps()} border="1">
         <thead>
@@ -244,7 +287,15 @@ function ReactTable({ columns, data, buttonMethod}) {
               key="thing"
               {...headerGroup.getHeaderGroupProps()}
             >
-            <th><input type="checkbox" className={styles.headercheckbox} id="selectAll" onChange={handleSelectAll} checked={isCheckAll}></input></th>    
+              <th>
+                <input
+                  type="checkbox"
+                  className={styles.headercheckbox}
+                  id="selectAll"
+                  onChange={handleChange}
+                  checked={!checkList.some((row) => row?.isChecked !== true)}
+                ></input>
+              </th>
               {headerGroup.headers.map((column) => (
                 <th
                   key="thing"
@@ -268,18 +319,23 @@ function ReactTable({ columns, data, buttonMethod}) {
         <tbody {...getTableBodyProps()}>
           {rows.map((row, i) => {
             prepareRow(row);
-            // console.log(row.values.name);
             return (
-              <tr
-                className="tbodyrow"
-                key={i}
-                {...row.getRowProps()}
-              >
-                
-                <td><input type="checkbox" className={styles.rowcheckbox} id={row.original.id} onChange={handleClick} checked={isCheck.includes(row.original.id)}></input></td>
+              <tr className="tbodyrow" key={i} {...row.getRowProps()}>
+                <td>
+                  <input
+                    type="checkbox"
+                    id={row.index}
+                    onChange={handleChange}
+                    checked={checkList[row.index]?.isChecked || false}
+                  ></input>
+                </td>
                 {row.cells.map((cell) => {
                   return (
-                    <td onClick={() => routeChange(row.values.name)} key={i} {...cell.getCellProps()}>
+                    <td
+                      onClick={() => routeChange(row.original.name)}
+                      key={i}
+                      {...cell.getCellProps()}
+                    >
                       {/* {cell.render("Cell")} */}
                       {!isNaN(cell.value)
                         ? checkDate(cell.value)
@@ -287,7 +343,9 @@ function ReactTable({ columns, data, buttonMethod}) {
                     </td>
                   );
                 })}
-                <td><i className="bi bi-three-dots-vertical"></i></td>
+                <td>
+                  <i className="bi bi-three-dots-vertical"></i>
+                </td>
               </tr>
             );
           })}
@@ -298,3 +356,5 @@ function ReactTable({ columns, data, buttonMethod}) {
 }
 
 export default ReactTable;
+
+//eslint-disable-next-line

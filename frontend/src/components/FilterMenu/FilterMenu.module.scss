@@ -28,6 +28,7 @@ $reactorange: #EDB57E;
 .dropdown {
     position: absolute;
     top: 160px;
+    right: 160px;
     width: 400px;
     transform: translateX(-5%);
     background-color: white;
@@ -40,6 +41,7 @@ $reactorange: #EDB57E;
     // box-shadow: rgba(0, 0, 0, 0.08) 0px 4px 12px;
     display: flex;
     flex-direction: column;
+    
 }
 
 .menuitem {
