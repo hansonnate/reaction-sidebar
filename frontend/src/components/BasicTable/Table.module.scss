@@ -122,5 +122,14 @@ $reactdarkblue: #2a627c81;
     cursor: pointer;
 }
 
+.pagination {
+    width: 100%;
+    // border: 2px solid black;
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-end;
+    gap: 10px;
+}
+
 
 

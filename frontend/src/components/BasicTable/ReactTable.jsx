@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 // import React from "react";
-import { useTable, useGlobalFilter, useSortBy, useFilters } from "react-table";
+import { useTable, useGlobalFilter, useSortBy, useFilters, usePagination } from "react-table";
 import SearchFilter from "../SearchFilter/SearchFilter.jsx";
 // import { Link } from "react-router-dom";
 import styles from "./Table.module.scss";
@@ -149,6 +149,15 @@ function ReactTable({ columns, data, buttonMethod }) {
     headerGroups,
     prepareRow,
     rows,
+    page,
+    canPreviousPage,
+    canNextPage,
+    pageOptions,
+    pageCount,
+    gotoPage,
+    nextPage,
+    previousPage,
+    setPageSize,
     state,
     preGlobalFilteredRows,
     setGlobalFilter,
@@ -159,7 +168,8 @@ function ReactTable({ columns, data, buttonMethod }) {
     },
     useFilters,
     useGlobalFilter,
-    useSortBy
+    useSortBy,
+    usePagination,
   );
 
   //   const [isSelected, select] = useState();
@@ -227,10 +237,10 @@ function ReactTable({ columns, data, buttonMethod }) {
         <BulkActionButton>
           <ActionDropdown>
             <span className={styles.actionitem}>
-              Delete <i className="bi bi-trash"></i>
+              Delete Selected <i className="bi bi-trash"></i>
             </span>
             <span className={styles.actionitem}>
-              Owner <i className="bi bi-person"></i>
+              Change Owners <i className="bi bi-person"></i>
             </span>
           </ActionDropdown>
         </BulkActionButton>
@@ -326,7 +336,7 @@ function ReactTable({ columns, data, buttonMethod }) {
           ))}
         </thead>
         <tbody {...getTableBodyProps()}>
-          {rows.map((row, i) => {
+          {page.map((row, i) => {
             prepareRow(row);
             return (
               <tr className="tbodyrow" key={i} {...row.getRowProps()}>
@@ -361,6 +371,38 @@ function ReactTable({ columns, data, buttonMethod }) {
           })}
         </tbody>
       </table>
+      <div className={styles.pagination}>
+        <button onClick={() => gotoPage(0)} disabled={!canPreviousPage}>
+          {'<<'}
+        </button>{' '}
+        <button onClick={() => previousPage()} disabled={!canPreviousPage}>
+          {'<'}
+        </button>{' '}
+        <button onClick={() => nextPage()} disabled={!canNextPage}>
+          {'>'}
+        </button>{' '}
+        <button onClick={() => gotoPage(pageCount - 1)} disabled={!canNextPage}>
+          {'>>'}
+        </button>{' '}
+        <span>
+          Page{' '}
+          <strong>
+            {state.pageIndex + 1} of {pageOptions.length}
+          </strong>{' '}
+        </span>
+        <select
+          value={state.pageSize}
+          onChange={e => {
+              setPageSize(Number(e.target.value))
+          }}
+        >
+          {[5, 10, 20].map(pageSize => (
+              <option key={pageSize} value={pageSize}>
+              Show {pageSize}
+            </option>
+          ))}
+        </select>
+      </div>
     </div>
   );
 }
