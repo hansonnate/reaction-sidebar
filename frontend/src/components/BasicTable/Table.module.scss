@@ -112,6 +112,15 @@ $reactdarkblue: #2a627c81;
 
 }
 
+.actionitem:hover {
+    background-color: #EFEFEF;
+    
+}
+.actionitem {
+    padding: 5px 10px;
+    border-radius: 5px;
+    cursor: pointer;
+}
 
 
 

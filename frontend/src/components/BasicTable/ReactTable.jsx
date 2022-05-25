@@ -11,6 +11,7 @@ import ActionButton from "../ActionButton/ActionButton.jsx";
 import BulkActionButton from "../BulkActionButton/BulkActionButton.jsx";
 import Accordion from "../Accordion/Accordion.jsx";
 import Select from "react-select";
+import ActionDropdown from "../BulkActionButton/ActionDropdown.jsx";
 
 export const MultipleFilter = (rows, filler, filterValue) => {
   const arr = [];
@@ -124,18 +125,17 @@ const AccordionItem = ({ name, body }) => {
 };
 
 function ReactTable({ columns, data, buttonMethod }) {
-
-    //dropdown menu views
-    const isDisabled = false;
-    const isLoading = false;
-    const isSearchable = true;
-    const isClearable = true;
-    const isRtl = false;
-    const options = [
-      { value: "view1", label: "View 1" },
-      { value: "view2", label: "View 2" },
-      { value: "view3", label: "View 3" },
-    ];
+  //dropdown menu views
+  const isDisabled = false;
+  const isLoading = false;
+  const isSearchable = true;
+  const isClearable = true;
+  const isRtl = false;
+  const options = [
+    { value: "view1", label: "View 1" },
+    { value: "view2", label: "View 2" },
+    { value: "view3", label: "View 3" },
+  ];
 
   // Use the state and functions returned from useTable to build your UI
   let navigate = useNavigate();
@@ -224,7 +224,16 @@ function ReactTable({ columns, data, buttonMethod }) {
   return (
     <div>
       <div className={styles.topcontainer}>
-        <BulkActionButton title="Actions"></BulkActionButton>
+        <BulkActionButton>
+          <ActionDropdown>
+            <span className={styles.actionitem}>
+              Delete <i className="bi bi-trash"></i>
+            </span>
+            <span className={styles.actionitem}>
+              Owner <i className="bi bi-person"></i>
+            </span>
+          </ActionDropdown>
+        </BulkActionButton>
         <div className={styles.searchfilter}>
           <SearchFilter
             preGlobalFilteredRows={preGlobalFilteredRows}
@@ -321,8 +330,9 @@ function ReactTable({ columns, data, buttonMethod }) {
             prepareRow(row);
             return (
               <tr className="tbodyrow" key={i} {...row.getRowProps()}>
-                <td>
+                <td className={styles.tabledimension}>
                   <input
+                    className={styles.checkbox}
                     type="checkbox"
                     id={row.index}
                     onChange={handleChange}

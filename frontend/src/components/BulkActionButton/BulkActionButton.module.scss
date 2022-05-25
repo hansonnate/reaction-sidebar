@@ -28,19 +28,26 @@ $reactorange: #EDB57E;
 }
 
 .dropdown {
-    position: absolute;
-    top: 160px;
-    right: 160px;
-    width: 400px;
+    position: relative;
+    top: 5px;
+    left: 10px;
+    width: 150px;
     transform: translateX(-5%);
     background-color: white;
     // border: 1px solid #a0a0a09e;
     border-radius: 5px;
     overflow: hidden;
-    padding: 5px 15px;
+    padding: 5px 5px;
     box-shadow: rgba(0, 0, 0, 0.16) 0px 1px 4px;
     // box-shadow: rgba(50, 50, 93, 0.25) 0px 2px 5px -1px, rgba(0, 0, 0, 0.3) 0px 1px 3px -1px;
     // box-shadow: rgba(0, 0, 0, 0.08) 0px 4px 12px;
     display: flex;
     flex-direction: column;
+    margin-bottom: -78px;
+}
+
+.mainbuttonactive {
+    button {
+        background-color: #edb57ea6;
+    }
 }

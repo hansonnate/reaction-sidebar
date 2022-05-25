@@ -14,6 +14,9 @@ $reactorange: #EDB57E;
     }
 
     transition: all .3s;
+
+    width: 40px;
+    height: 40px;
     
 }
 
@@ -26,9 +29,9 @@ $reactorange: #EDB57E;
 }
 
 .dropdown {
-    position: absolute;
-    top: 160px;
-    right: 160px;
+    position: relative;
+    top: 10px;
+    right: 340px;
     width: 400px;
     transform: translateX(-5%);
     background-color: white;
@@ -41,6 +44,7 @@ $reactorange: #EDB57E;
     // box-shadow: rgba(0, 0, 0, 0.08) 0px 4px 12px;
     display: flex;
     flex-direction: column;
+    margin-bottom: -305px;
     
 }
 

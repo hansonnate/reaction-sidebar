@@ -1,16 +1,31 @@
-import React from "react";
+import React, {useState, useRef, useEffect} from "react";
 import styles from "./BulkActionButton.module.scss";
-// import ActionDropdown from "./ActionDropdown.jsx";
 
-function BulkActionButton({ title, functionality, body }) {
+
+function BulkActionButton(props) {
+    const [open, setOpen] = useState(false);
+    const ref = useRef(null);
+
+    const handleClickOutside = (event) => {
+        if (ref.current && !ref.current.contains(event.target)) {
+          setOpen(false);
+        }
+      };
+    
+      useEffect(() => {
+        document.addEventListener("click", handleClickOutside, true);
+        return () => {
+          document.removeEventListener("click", handleClickOutside, true);
+        };
+      }, []);
+      
   return (
-    <div className={styles.mainbutton}>
-      <button onClick={functionality}>
-        {title}
-        {body}{" "}
+    <div className={`${styles.mainbutton} ${open ? styles.mainbuttonactive : ""}`} ref={ref}>
+      <button onClick={() => setOpen((open) => !open)}>
+        Actions
         <i className="bi bi-chevron-down"></i>
-        {/* <ActionDropdown>This is a dropdown</ActionDropdown> */}
       </button>
+      {open && props.children}
     </div>
   );
 }

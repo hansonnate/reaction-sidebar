@@ -29,13 +29,13 @@
   position: relative;
   display: block;
   width: 25vw;
-  height: 40%;
-  min-height: 400px;
+  height: 30%;
+  min-height: 100px;
   min-width: 400px;
   margin: 0 auto;
   margin-top: 20px;
   margin-bottom: 20px;
-  border-radius: 5px;
+  border-radius: 4px;
   padding: 20px 20px;
   background-color: #fff;
   align-self: center;
@@ -54,11 +54,11 @@
 
 .buttonclose {
   position: absolute;
-  top:87%;
+  top:80%;
 }
 .buttonsave {
     position: absolute;
-    top:87%;
+    top:80%;
     right: 4%;
 }
   
