@@ -12,6 +12,7 @@ import {
   Help,
   Account,
   ErrorPage,
+  AddContacts
 } from "pages";
 
 export const MainContentRoutes = () => {
@@ -22,6 +23,7 @@ export const MainContentRoutes = () => {
       <Route path="/projects/:id/*" element={<Project />} />
       <Route path="/contacts/*" element={<Contacts />} />
       <Route path="/organization/*" element={<Organization />} />
+      <Route path="/addcontacts/*" element={<AddContacts/> } />
 
       <Route path="/help/*" element={<Help />} />
       <Route path="/account/*" element={<Account />} />

@@ -1,6 +1,12 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 // import React from "react";
-import { useTable, useGlobalFilter, useSortBy, useFilters, usePagination } from "react-table";
+import {
+  useTable,
+  useGlobalFilter,
+  useSortBy,
+  useFilters,
+  usePagination,
+} from "react-table";
 import SearchFilter from "../SearchFilter/SearchFilter.jsx";
 // import { Link } from "react-router-dom";
 import styles from "./Table.module.scss";
@@ -10,17 +16,48 @@ import DropdownMenu from "../FilterMenu/DropdownMenu.jsx";
 import ActionButton from "../ActionButton/ActionButton.jsx";
 import BulkActionButton from "../BulkActionButton/BulkActionButton.jsx";
 import Accordion from "../Accordion/Accordion.jsx";
+import AccordionItem from "../Accordion/AccordionItem.jsx";
 import Select from "react-select";
 import ActionDropdown from "../BulkActionButton/ActionDropdown.jsx";
+
+//Date calculations
+var monthNames = [
+  "January",
+  "February",
+  "March",
+  "April",
+  "May",
+  "June",
+  "July",
+  "August",
+  "September",
+  "October",
+  "November",
+  "December",
+];
+function checkDate(value) {
+  if (value > 100000000000) {
+    const date = new Date(value); //new Intl.DateTimeFormat('en-US', { year: '2-digit', month: '2-digit', day: '2-digit', hour: '2-digit', minute: '2-digit'}).format(value)
+    return (
+      monthNames[date.getMonth()] +
+      " " +
+      date.getDate() +
+      ", " +
+      date.getFullYear()
+    );
+  } else {
+    return value;
+  }
+}
 
 export const MultipleFilter = (rows, filler, filterValue) => {
   const arr = [];
   rows.forEach((val) => {
-    console.log(filterValue);
+    // console.log(filterValue);
     let header = filler[0];
     if (filterValue.includes(val.original[header])) arr.push(val);
-    console.log(filler);
-    console.log(val);
+    // console.log(filler);
+    // console.log(val);
   });
   //   console.log(arr);
   return arr;
@@ -77,7 +114,6 @@ export function SelectColumnFilter({
       {options.map((option) => {
         return (
           <div key={option} className="flex items-center">
-            {console.log(filterValue)}
             <input
               type="checkbox"
               className="focus:ring-blue-500 h-4 w-4 text-blue-600 border-gray-300 rounded"
@@ -88,12 +124,13 @@ export function SelectColumnFilter({
                 setFilter(setFilteredParams(filterValue, e.target.value));
                 // setFilter(e.target.value || undefined);
               }}
+              checked={filterValue.includes(option) ? true : false}
             ></input>
             <label
               htmlFor={option}
               className="ml-1.5 font-medium text-gray-700"
             >
-              {option}
+              {checkDate(option)}
             </label>
           </div>
         );
@@ -102,29 +139,7 @@ export function SelectColumnFilter({
   );
 }
 
-//custom accordian
-const AccordionItem = ({ name, body }) => {
-  const [visibility, setVisibility] = useState(false);
-
-  const toggleVisibility = () => {
-    setVisibility((v) => !v);
-  };
-  return (
-    <div
-      className={`${styles.card} ${visibility ? styles.accordionactive : ""}`}
-    >
-      <div className={styles.cardheader} onClick={toggleVisibility}>
-        {name}
-        <span className={styles.accordionicon}>
-          <i className="bi bi-chevron-left"></i>
-        </span>
-      </div>
-      <div className={styles.cardbody}>{body}</div>
-    </div>
-  );
-};
-
-function ReactTable({ columns, data, buttonMethod }) {
+function ReactTable({ columns, data, buttonMethod, modalTitle }) {
   //dropdown menu views
   const isDisabled = false;
   const isLoading = false;
@@ -148,7 +163,6 @@ function ReactTable({ columns, data, buttonMethod }) {
     getTableBodyProps,
     headerGroups,
     prepareRow,
-    rows,
     page,
     canPreviousPage,
     canNextPage,
@@ -169,67 +183,113 @@ function ReactTable({ columns, data, buttonMethod }) {
     useFilters,
     useGlobalFilter,
     useSortBy,
-    usePagination,
+    usePagination
   );
 
   //   const [isSelected, select] = useState();
   const [checkList, setCheckList] = useState([]);
 
-  useEffect(() => {
-    setCheckList(rows);
-  }, []);
+  //   useEffect(() => {
+  //     setCheckList(page);
+  //   }, []);
 
+  //   let list = page;
+  //   function setList(newList) {
+  //       list = newList;
+  //   }
+
+  //   const handleChange = (e) => {
+  //     const { id, checked } = e.target;
+  //     setList(page);
+  //     console.log(list);
+  //     console.log(checkList);
+  //     // console.log(page));
+  //     setCheckList(page);
+  //     // console.log(checkList);
+  //     if (id === "selectAll") {
+  //       let tempList = list.map((row) => {
+  //         return { ...row, isChecked: checked };
+  //       });
+  //       setCheckList(tempList);
+  //       setList(tempList);
+  //       //   console.log(checkList);
+  //     } else {
+  //       let tempList = list.map((row) =>
+  //         row.id === id ? { ...row, isChecked: checked } : row
+  //       );
+  //       setCheckList(tempList);
+  //       setList(tempList);
+  //         // console.log(tempList);
+  //     }
+  //   };
   const handleChange = (e) => {
     const { id, checked } = e.target;
+    // setList(page);
+    setCheckList(page);
+    // console.log(checkList);
     if (id === "selectAll") {
-      let tempList = checkList.map((row) => {
-        return { ...row, isChecked: checked };
-      });
-      setCheckList(tempList);
+      if (checked) {
+        setCheckList(page);
+      } else {
+        setCheckList([]);
+      }
+      console.log("Checked: ");
       console.log(checkList);
+      //   setList(tempList);
+      //   console.log(checkList);
     } else {
-      let tempList = checkList.map((row) =>
-        row.id === id ? { ...row, isChecked: checked } : row
-      );
-      setCheckList(tempList);
-      console.log(checkList);
+      if (checked) {
+        // let tempList = page.map((row) =>
+        //   row.id === id ? row : console.log("nope")
+        // );
+        console.log(checkList);
+        let tempList = checkList;
+        for (let i = 0; i < page.length; i++) {
+          if (page[i].id === id) {
+            tempList.push(page[i]);
+          }
+        }
+        console.log("Checked: ");
+        setCheckList(tempList);
+        console.log(checkList);
+        // console.log(id);
+        // console.log(page);
+        // console.log(tempList);
+      } else {
+        console.log(checkList);
+        let tempList = [];
+        for (let i = 0; i < checkList.length; i++) {
+          if (checkList[i].id === id) {
+            //do nothing
+          }
+          else {
+            tempList.push(checkList[i]);
+          }
+        }
+        console.log("Not Checked: ");
+        setCheckList(tempList);
+        console.log(checkList);
+      }
+
+      //   setList(tempList);
+      // console.log(checked);
+      //   console.log(tempList);
     }
   };
 
-  //Date calculations
-  var monthNames = [
-    "January",
-    "February",
-    "March",
-    "April",
-    "May",
-    "June",
-    "July",
-    "August",
-    "September",
-    "October",
-    "November",
-    "December",
-  ];
-  function checkDate(value) {
-    if (value > 100000000000) {
-      const date = new Date(value); //new Intl.DateTimeFormat('en-US', { year: '2-digit', month: '2-digit', day: '2-digit', hour: '2-digit', minute: '2-digit'}).format(value)
-      return (
-        monthNames[date.getMonth()] +
-        " " +
-        date.getDate() +
-        ", " +
-        date.getFullYear()
-      );
-    } else {
-      return value;
-    }
+  function isInList(id) {
+    let isThere = false;
+    checkList.forEach(function (item){
+      // console.log(id);
+      // console.log(item.original.id);
+      if (item.original.id === id) {
+        // console.log("Return Here")
+        isThere = true;
+      }
+    });
+    console.log(isThere);
+    return isThere;
   }
-  //   let currentTimestamp = Date.now()
-  //   console.log(currentTimestamp);
-  //   let date = new Intl.DateTimeFormat('en-US', { year: 'numeric', month: '2-digit', day: '2-digit', hour: '2-digit', minute: '2-digit', second: '2-digit' }).format(currentTimestamp)
-  //   console.log(date);
-
   // Render the UI for your table
   return (
     <div>
@@ -293,7 +353,7 @@ function ReactTable({ columns, data, buttonMethod }) {
             </DropdownMenu>
           </FilterMenu>
           <ActionButton
-            title="New Project"
+            title={modalTitle}
             functionality={buttonMethod}
           ></ActionButton>
         </div>
@@ -312,7 +372,7 @@ function ReactTable({ columns, data, buttonMethod }) {
                   className={styles.headercheckbox}
                   id="selectAll"
                   onChange={handleChange}
-                  checked={!checkList.some((row) => row?.isChecked !== true)}
+                  checked={checkList.length === page.length}
                 ></input>
               </th>
               {headerGroup.headers.map((column) => (
@@ -346,8 +406,9 @@ function ReactTable({ columns, data, buttonMethod }) {
                     type="checkbox"
                     id={row.index}
                     onChange={handleChange}
-                    checked={checkList[row.index]?.isChecked || false}
+                    checked={isInList(row.original.id)}
                   ></input>
+                  {/* {console.log(row.original.id)} */}
                 </td>
                 {row.cells.map((cell) => {
                   return (
@@ -373,31 +434,45 @@ function ReactTable({ columns, data, buttonMethod }) {
       </table>
       <div className={styles.pagination}>
         <button onClick={() => gotoPage(0)} disabled={!canPreviousPage}>
-          {'<<'}
-        </button>{' '}
-        <button onClick={() => previousPage()} disabled={!canPreviousPage}>
-          {'<'}
-        </button>{' '}
-        <button onClick={() => nextPage()} disabled={!canNextPage}>
-          {'>'}
-        </button>{' '}
+          {"<<"}
+        </button>{" "}
+        <button
+          onClick={() => {
+            previousPage();
+            // setCheckList(page);
+          }}
+          disabled={!canPreviousPage}
+        >
+          {"<"}
+        </button>{" "}
+        <button
+          onClick={() => {
+            // setCheckList(page);
+            nextPage();
+            // setCheckList(page);
+            // console.log(checkList);
+          }}
+          disabled={!canNextPage}
+        >
+          {">"}
+        </button>{" "}
         <button onClick={() => gotoPage(pageCount - 1)} disabled={!canNextPage}>
-          {'>>'}
-        </button>{' '}
+          {">>"}
+        </button>{" "}
         <span>
-          Page{' '}
+          Page{" "}
           <strong>
             {state.pageIndex + 1} of {pageOptions.length}
-          </strong>{' '}
+          </strong>{" "}
         </span>
         <select
           value={state.pageSize}
-          onChange={e => {
-              setPageSize(Number(e.target.value))
+          onChange={(e) => {
+            setPageSize(Number(e.target.value));
           }}
         >
-          {[5, 10, 20].map(pageSize => (
-              <option key={pageSize} value={pageSize}>
+          {[5, 10, 15].map((pageSize) => (
+            <option key={pageSize} value={pageSize}>
               Show {pageSize}
             </option>
           ))}

@@ -160,7 +160,7 @@ export const Projects = () => {
         </div>
         
       ))} */}
-      {getProjects.data && <ReactTable columns={columns} data={getProjects.data} buttonMethod={() => setShow(true)}/>}
+      {getProjects.data && <ReactTable columns={columns} data={getProjects.data} buttonMethod={() => setShow(true)} modalTitle="New Project"/>}
       <ReactModal show={show} onClose={() => setShow(false)} onSave={() => handlePostProject("New Project", "Jack Sparrow", "Closed", 0, Date.now(), Date.now())}>
         <div className="content">
           <h1>Create a New Project</h1>

@@ -9,6 +9,7 @@ export const TabBar = ({ tabBarItems, active, updateActive }) => {
   return (
     <div>
       <ul className={styles.tabBar}>
+        {console.log(tabBarItems)}
         {tabBarItems.map((tabBarItem) => (
           <TabBarItem
             key={tabBarItem.id}
