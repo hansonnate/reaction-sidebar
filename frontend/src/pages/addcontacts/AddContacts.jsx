@@ -4,16 +4,16 @@ import React, { useState } from "react";
 // Internal
 // import { Sidebar2 } from "components/sidebars";
 import { Header, TabBar } from "components/layouts";
-// import { AddContactRoutes } from "routes";
+import { AddContactRoutes } from "routes";
 // import { ContactRoutes } from "routes";
-// import styles from "./AddContacts.module.scss";
+import styles from "./AddContacts.module.scss";
 
 export const AddContacts = () => {
   const menuItems = [
     {
       id: 0,
       name: "Import From File",
-      to: `upload`,
+      to: `uploadcontacts`,
       iconClassName: "bi bi-person",
     },
     {
@@ -28,7 +28,7 @@ export const AddContacts = () => {
     setActive(item);
   };
   return (
-    <>
+    <div className={styles.body}>
       <Header title={menuItems[active]["name"]} />
 
       <TabBar
@@ -36,9 +36,9 @@ export const AddContacts = () => {
         active={active}
         updateActive={handleActiveUpdate}
       ></TabBar>
-      {/* <div className={styles.content}>
+      <div className={styles.content}>
         <AddContactRoutes />
-      </div> */}
-    </>
+      </div>
+    </div>
   );
 };

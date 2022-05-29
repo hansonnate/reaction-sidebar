@@ -1,6 +1,7 @@
 // External
 import React from "react";
 import { Routes, Route } from "react-router-dom";
+import styles from "./routes.module.scss";
 
 // Internal
 import {
@@ -12,23 +13,25 @@ import {
   Help,
   Account,
   ErrorPage,
-  AddContacts
+  AddContacts,
 } from "pages";
 
 export const MainContentRoutes = () => {
   return (
-    <Routes>
-      <Route path="/" element={<Dashboard />} />
-      <Route path="/projects" element={<Projects />} />
-      <Route path="/projects/:id/*" element={<Project />} />
-      <Route path="/contacts/*" element={<Contacts />} />
-      <Route path="/organization/*" element={<Organization />} />
-      <Route path="/addcontacts/*" element={<AddContacts/> } />
+    <div className={styles.content}>
+      <Routes>
+        <Route path="/" element={<Dashboard />} />
+        <Route path="/projects" element={<Projects />} />
+        <Route path="/projects/:id/*" element={<Project />} />
+        <Route path="/contacts/*" element={<Contacts />} />
+        <Route path="/organization/*" element={<Organization />} />
+        <Route path="/addcontacts/*" element={<AddContacts />} />
 
-      <Route path="/help/*" element={<Help />} />
-      <Route path="/account/*" element={<Account />} />
+        <Route path="/help/*" element={<Help />} />
+        <Route path="/account/*" element={<Account />} />
 
-      <Route path="*" element={<ErrorPage />} />
-    </Routes>
+        <Route path="*" element={<ErrorPage />} />
+      </Routes>
+    </div>
   );
 };
