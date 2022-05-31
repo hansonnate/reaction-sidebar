@@ -1,6 +1,6 @@
 import React from "react";
 import styles from "./ContactCleaner.module.scss";
-import exampleFile from "./Images/fileFormat.png";
+// import exampleFile from "./Images/fileFormat.png";
 // import {submitted} from "./CleanerFunctionality.js"
 
 function ContactCleaner() {
@@ -38,7 +38,7 @@ function ContactCleaner() {
             final clean audience until those issues are fixed
           </p>
         </div>
-        <div className={styles.container2}>
+        {/* <div className={styles.container2}>
           <p>Example in excel: </p>
           <img
             src={exampleFile}
@@ -48,12 +48,12 @@ function ContactCleaner() {
           <p>
             Click <a href="#">here</a> to see full explations of each setting.
           </p>
-        </div>
-      </div>
-      <div id="menubox" className={styles.menubox}>
+        </div> */}
         <div className={styles.settingsbox} id="settingsboxid">
           <div id="switchbox" className={styles.switchbox}>
-            <h5>Settings:</h5>
+            <h5>
+              Contact Cleaner <i className="bi bi-question-circle"> </i>
+            </h5>
             <div className={styles.charlengthbox}>
               <div className="form-check form-switch" id="charlength">
                 <input
@@ -183,16 +183,30 @@ function ContactCleaner() {
             </div>
           </div>
         </div>
+      </div>
+      <div id="menubox" className={styles.menubox}>
         <div className={styles.uploadbox} id="uploadBoxid">
           <p>Upload File Here</p>
-          <form id="myForm">
+          <form id="myForm" className={styles.myForm}>
             <input
               type="file"
               id="csvFile"
               accept=".csv"
               className={styles.csvFile}
             />
-            <br />
+            <div className="form-switch form-check">
+              <label
+                className="form-check-label"
+                htmlFor="flexSwitchCheckDefault"
+              >
+                Use Contact Cleaner
+              </label>
+              <input
+                className="form-check-input"
+                type="checkbox"
+                id="useCleaner"
+              />
+            </div>
             <input
               type="submit"
               value="Submit"

@@ -1,0 +1,130 @@
+$reactlightblue: #d5f3fe;
+$reactdarkerblue: #2A627C;
+$reactdarkblue: #2a627c81;
+
+.fulltable {
+    // border-collapse: collapse;
+    // border: 1px solid black;
+    // border-radius: 5px;
+    font-family: "Poppins", sans-serif;
+    width: 100%;
+    
+    th:first-child{
+        border-radius:5px 0 0 5px;
+        color: $reactdarkerblue;
+        padding-left: 20px;
+    }
+    
+    th:last-child {
+        border-radius: 0 5px 5px 0;
+    }
+    th {
+        background-color: $reactlightblue;
+        padding: 5px;
+        color: $reactdarkblue;
+        text-transform: uppercase;
+        font-weight: 700;
+        font-size: 11pt;
+    }
+    td:first-child{
+        padding-left: 20px;
+        border-radius:5px 0 0 5px;
+        
+    }
+    
+    td:last-child {
+        border-radius: 0 5px 5px 0;
+        // border: 2px solid black;
+        width: 115px;
+        text-align: center;
+    }
+
+    td {
+        padding: 8px 5px;
+    }
+    tr:hover {
+        // background-color: #EFEFEF;
+        // border-radius:5px 0 0 5px;
+        // cursor: pointer;
+    }
+ 
+}
+
+.searchfilter {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: flex-start;
+    gap: 30px;
+    font-family: "Poppins", sans-serif;
+    // border: 2px solid black;
+
+}
+
+
+.topcontainer {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    // border: 2px solid black;
+    padding-bottom: 0px;
+    padding-left: 19px;
+    align-items: center;
+    margin-bottom: 20px;
+    font-family: "Poppins", sans-serif;
+    gap: 30px;
+
+
+}
+
+.actionitem:hover {
+    background-color: #EFEFEF;
+    
+}
+.actionitem {
+    padding: 5px 10px;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.pagination {
+    width: 100%;
+    font-family: "Poppins", sans-serif;
+    // border: 2px solid black;
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-end;
+    gap: 10px;
+}
+
+.addInputBox {
+    border: 2px solid #EFEFEF;
+    border-radius: 5px;
+    background-color: #EFEFEF;
+    color: gray;
+    padding: 2px 0;
+
+}
+.addInputBox:focus {
+    outline-color: #a0a0a0;
+    
+}
+// .addfieldbox {
+//     width: 100%;
+//     text-align: right;
+//     padding-right: 25px;
+//     button {
+//         background-color: $reactlightblue;
+//         border-radius: 5px;
+//         padding: 5px 10px;
+//         color: $reactdarkblue;
+//     }
+    
+// }
+.newrow {
+    background-color: $reactlightblue;
+    border-radius: 5px;
+    padding: 5px 10px;
+    color: $reactdarkblue;
+}
+

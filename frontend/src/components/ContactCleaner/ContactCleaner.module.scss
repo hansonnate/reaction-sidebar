@@ -9,13 +9,13 @@ $reactdarkorange: #ed9146;
 }
 
 .aboutbox {
-  max-width: 1000px;
-  margin: auto;
+  width: 100%;
+//   margin: auto;
   display: flex;
   flex-direction: row;
   justify-content: space-around;
   padding: 10px 10px;
-  border-bottom: 2px solid #e3f2fd;
+//   border-bottom: 2px solid #e3f2fd;
 }
 .container1 {
   display: flex;
@@ -28,30 +28,38 @@ $reactdarkorange: #ed9146;
 }
 .menubox {
   /* container for settings and upload file buttons*/
-  display: flex;
-  flex-direction: row;
-  max-width: 1200px;
-  margin: auto;
-  justify-content: space-around;
+display: flex;
+flex-direction: row;
+justify-content: center;
+text-align: left;
+
+  
 }
 .uploadbox {
   /* background-color: #fff; */
-  width: auto;
+ width: fit-content;
   margin: 50px 0px;
   /* box-shadow: 2px 5px 10px rgba(0, 0, 0, 0.5);
     border-radius: 10px; */
   display: flex;
   flex-direction: column;
   justify-content: center;
+//   border: 2px solid black;
+  
+}
+.myForm {
+    // border: 2px solid black;
 }
 .submitButton {
     cursor: pointer;
     background-color: $reactorange;
     border-style: none;
-    border-radius: 10px;
+    border-radius: 5px;
     border-color: $reactorange;
     color: white;
-    padding:  8px 8px;
+    padding:  8px 30px;
+    font-size: 20px;
+    margin-top: 20px;
     /* box-shadow: 2px 5px 10px rgba(0, 0, 0, 0.5); */
   }
   .submitButton:hover {
@@ -64,12 +72,13 @@ $reactdarkorange: #ed9146;
   cursor: pointer;
   background-color: $reactorange;
   border-style: none;
-  border-radius: 10px;
+  border-radius: 5px;
   border-color: $reactorange;
   color: white;
-  padding: 8px 8px;
-  margin-bottom: 15px;
+  padding: 3px 8px;
+  margin-bottom: 20px;
   margin-right: 10px;
+
   /* box-shadow: 2px 5px 10px rgba(0, 0, 0, 0.5); */
 }
 .csvFile::-webkit-file-upload-button:hover {
@@ -80,16 +89,24 @@ $reactdarkorange: #ed9146;
 .settingsbox {
   background-color: #fff;
   width: fit-content;
-  margin: 50px 0px;
+  margin: 0px 0px;
   padding: 5px 20px;
-  box-shadow: 0px 0px 15px rgba(0, 0, 0, 0.25);
-  border-radius: 12px;
+//   box-shadow: 0px 0px 15px rgba(0, 0, 0, 0.25);
+  border-radius: 5px;
+  border: 2px solid #efefef;
+  min-width: 330px;
+  height: fit-content;
 }
 .warningBox {
   padding: 10px 10px;
 }
 .switchbox {
   padding: 20px 0px;
+  h5 {
+      display: flex;
+      flex-direction: row;
+      gap: 100px;
+  }
 }
 .bodybox {
   background-color: #fff;
@@ -155,3 +172,7 @@ $reactdarkorange: #ed9146;
   .alert.success {background-color: #04AA6D;}
   .alert.info {background-color: #2196F3;}
   .alert.warning {background-color: #ff9800;}
+
+.myForm {
+
+}
