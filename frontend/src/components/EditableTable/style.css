@@ -1,3 +1,8 @@
+/* $reactlightblue: #d5f3fe;
+$reactdarkerblue: #2A627C;
+$reactdarkblue: #2a627c81;
+$reactorange: #EDB57E; */
+
 @import url("https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap");
 html {
   box-sizing: border-box;
@@ -172,9 +177,11 @@ html {
 
 .th {
   color: #9e9e9e;
+  background-color: #EDB57E;
   font-weight: 500;
   font-size: 0.875rem;
   cursor: pointer;
+
 }
 
 .th:hover {
@@ -187,6 +194,7 @@ html {
   padding: 0.5rem;
   display: flex;
   align-items: center;
+  
 }
 
 .td {
@@ -234,7 +242,14 @@ html {
   background-color: #8ecae6;
 }
 
-.th,
+.th {
+  white-space: nowrap;
+  margin: 0;
+  /* border-bottom: 1px solid #e0e0e0; */
+  /* border-right: 1px solid #e0e0e0; */
+  position: relative;
+}
+
 .td {
   white-space: nowrap;
   margin: 0;

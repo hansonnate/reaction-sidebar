@@ -1,0 +1,66 @@
+$reactlightblue: #d5f3fe;
+$reactlighterblue: #d5f3feaa;
+$reactdarkerblue: #2a627c;
+$reactdarkblue: #2a627c81;
+$reactorange: #edb57e;
+$reactdarkorange: #ed9146;
+$reactbluegray: #738c91;
+
+.table {
+  border-spacing: 0;
+//   border-top: 1px solid #e0e0e0;
+  border-bottom: 1px solid #e0e0e0;
+  width: fit-content;
+}
+
+.firstrow {
+    border-radius: 5px;
+    background-color: $reactlightblue;
+    width: 100%;
+}
+
+.noselect {
+  -webkit-touch-callout: none;
+  -webkit-user-select: none;
+  -khtml-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+}
+
+.tr:last-child .td {
+  border-bottom: 0;
+  
+}
+
+.td {
+  overflow: hidden;
+  color: #424242;
+  align-items: stretch;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+}
+
+.add_row {
+  color: #9e9e9e;
+  padding: 0.5rem;
+  display: flex;
+  align-items: center;
+  font-size: 0.875rem;
+  cursor: pointer;
+}
+
+.add_row:hover {
+  background-color: #f5f5f5;
+}
+
+.svg_icon svg {
+  position: relative;
+  height: 1.5em;
+  width: 1.5em;
+}
+
+.svg_gray svg {
+  stroke: #9e9e9e;
+}

@@ -4,6 +4,7 @@ import {useTable, useFlexLayout, useResizeColumns, useSortBy} from "react-table"
 import Cell from "./Cell";
 import Header from "./Header";
 import PlusIcon from "./img/Plus";
+import styles from "./Table.module.scss"
 
 const defaultColumn = {
   minWidth: 50,
@@ -68,29 +69,29 @@ export default function Table({columns, data, dispatch: dataDispatch, skipReset}
 
   return (
     <>
-      <div {...getTableProps()} className={clsx("table", isTableResizing() && "noselect")}>
+      <div {...getTableProps()} className={clsx(styles.table, isTableResizing() && styles.noselect)}>
         <div>
-          {headerGroups.map((headerGroup) => (
-            <div {...headerGroup.getHeaderGroupProps()} key="this" className='tr'>
+          {headerGroups.map((headerGroup, i) => (
+            <div {...headerGroup.getHeaderGroupProps()}  key={i} className={styles.firstrow}>
               {headerGroup.headers.map((column) => column.render("Header"))}
             </div>
           ))}
         </div>
-        <div {...getTableBodyProps()}>
+        <div {...getTableBodyProps()} className={styles.tablebody}>
           {rows.map((row, i) => {
             prepareRow(row);
             return (
-              <div {...row.getRowProps()} key={i} className='tr'>
+              <div {...row.getRowProps()} key={i} className={styles.tr}>
                 {row.cells.map((cell) => (
-                  <div {...cell.getCellProps()} key={i} className='td'>
+                  <div {...cell.getCellProps()} key={i} className={styles.td}>
                     {cell.render("Cell")}
                   </div>
                 ))}
               </div>
             );
           })}
-          <div className='tr add-row' onClick={() => dataDispatch({type: "add_row"})}>
-            <span className='svg-icon svg-gray' style={{marginRight: 4}}>
+          <div className={`${styles.tr} ${styles.add_row}`} onClick={() => dataDispatch({type: "add_row"})}>
+            <span className={`${styles.svg_icon} ${styles.svg_gray}`} style={{marginRight: 4}}>
               <PlusIcon />
             </span>
             New
