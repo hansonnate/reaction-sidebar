@@ -215,7 +215,7 @@ function reducer(state, action) {
 }
 
 function Editor() {
-  const [state, dispatch] = useReducer(reducer, makeData(10));
+  const [state, dispatch] = useReducer(reducer, makeData(0));
 
   useEffect(() => {
     dispatch({ type: "enable_reset" });

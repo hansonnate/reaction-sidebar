@@ -20,6 +20,14 @@ export default function makeData(count) {
 
   let columns = [
     {
+      id: "email",
+      label: "E-Mail",
+      accessor: "email",
+      width: 300,
+      dataType: "text",
+      options: []
+    },
+    {
       id: "firstName",
       label: "First Name",
       accessor: "firstName",
@@ -36,28 +44,20 @@ export default function makeData(count) {
       options: []
     },
     {
-      id: "age",
-      label: "Age",
-      accessor: "age",
-      width: 80,
-      dataType: "number",
-      options: []
-    },
-    {
-      id: "email",
-      label: "E-Mail",
-      accessor: "email",
-      width: 300,
-      dataType: "text",
-      options: []
-    },
-    {
-      id: "music",
-      label: "Music Preference",
-      accessor: "music",
+      id: "position",
+      label: "Position",
+      accessor: "position",
       dataType: "select",
       width: 200,
       options: options
+    },
+    {
+      id: "company",
+      label: "Company",
+      accessor: "company",
+      minWidth: 100,
+      dataType: "text",
+      options: []
     },
     {
       id: 999999,
