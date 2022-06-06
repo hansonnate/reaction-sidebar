@@ -70,9 +70,19 @@ $outlinegray: #a0a0a0;
     cursor: pointer;
     display: flex;
     flex-direction: row;
-    justify-content: space-between;
-    margin: 10px 0px;
-    background-color: #EFEFEF;
-    padding: 5px 10px;
+    justify-content:flex-start;
+    width: 100%;
     border-radius: 5px;
+    gap: 10px;
+    align-items: center;
+}
+.cardcontainer {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    border-radius: 5px;
+    background-color: #EFEFEF;
+    margin: 10px 0px;
+    padding: 5px 10px;
+    gap: 10px;
 }

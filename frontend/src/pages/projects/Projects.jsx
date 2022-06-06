@@ -78,6 +78,7 @@ export const Projects = () => {
       {
         Header: "Project",
         accessor: "name",
+        show: true,
         Filter: SelectColumnFilter,
         filter: MultipleFilter,
         Cell: (e) => (
@@ -90,6 +91,7 @@ export const Projects = () => {
       {
         Header: "Status",
         accessor: "status",
+        show: true,
         Filter: SelectColumnFilter,
         filter: MultipleFilter,
         Cell: (e) => (
@@ -105,22 +107,28 @@ export const Projects = () => {
       {
         Header: "Responses",
         accessor: "responses",
+        show: true,
+        Filter: SelectColumnFilter,
+        filter: MultipleFilter,
       },
       {
         Header: "Owner",
         accessor: "owner",
+        show: true,
         Filter: SelectColumnFilter,
         filter: MultipleFilter,
       },
       {
         Header: "Modified",
         accessor: "modified",
+        show: true,
         Filter: SelectColumnFilter,
         filter: MultipleFilter,
       },
       {
-        Header: "created",
+        Header: "Created",
         accessor: "created",
+        show: true,
         Filter: SelectColumnFilter,
         filter: MultipleFilter,
       },

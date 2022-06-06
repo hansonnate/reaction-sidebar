@@ -19,6 +19,7 @@ import Accordion from "../Accordion/Accordion.jsx";
 import AccordionItem from "../Accordion/AccordionItem.jsx";
 import Select from "react-select";
 import ActionDropdown from "../BulkActionButton/ActionDropdown.jsx";
+// import Checkbox from "components/Checkbox/Checkbox.jsx";
 
 //Date calculations
 var monthNames = [
@@ -50,23 +51,18 @@ function checkDate(value) {
   }
 }
 
+// let setHiddenColumns = ["Project", "Modified"]
+
 export const MultipleFilter = (rows, filler, filterValue) => {
   const arr = [];
   rows.forEach((val) => {
-    // console.log(filterValue);
     let header = filler[0];
     if (filterValue.includes(val.original[header])) arr.push(val);
-    // console.log(filler);
-    // console.log(val);
   });
-  //   console.log(arr);
   return arr;
 };
 
 function setFilteredParams(filterArr, val) {
-  //   console.log(filterArr);
-  //   console.log(val);
-  // if (val === undefined) return undefined;
   if (filterArr.includes(val)) {
     filterArr = filterArr.filter((n) => {
       return n !== val;
@@ -152,7 +148,7 @@ function ReactTable({ columns, data, buttonMethod, modalTitle }) {
     { value: "view3", label: "View 3" },
   ];
 
-  // Use the state and functions returned from useTable to build your UI
+  // Use the state and functions returned from useTable to build UI
   let navigate = useNavigate();
   const routeChange = (path) => {
     // console.log(path);
@@ -175,8 +171,10 @@ function ReactTable({ columns, data, buttonMethod, modalTitle }) {
     state,
     preGlobalFilteredRows,
     setGlobalFilter,
+    allColumns,
   } = useTable(
     {
+      initialState: { pageIndex: 0 },
       columns,
       data,
     },
@@ -186,110 +184,130 @@ function ReactTable({ columns, data, buttonMethod, modalTitle }) {
     usePagination
   );
 
-  //   const [isSelected, select] = useState();
-  const [checkList, setCheckList] = useState([]);
+  const [List, setList] = useState(page);
+  const [MasterChecked, setMasterChecked] = useState(false);
+  const [SelectedList, setSelectedList] = useState([]);
 
-  //   useEffect(() => {
-  //     setCheckList(page);
-  //   }, []);
+  // Select/ UnSelect Table rows
+  const onMasterCheck = (e) => {
+    let tempList = page;
+    // console.log(tempList);
+    // Check/ UnCheck All Items
+    tempList.map((row) => (row.selected = e.target.checked));
+    
+    //Update State
+    setList(tempList);
+    setMasterChecked(e.target.checked);
+    setSelectedList(page.filter((e) => e.selected));
 
-  //   let list = page;
-  //   function setList(newList) {
-  //       list = newList;
-  //   }
-
-  //   const handleChange = (e) => {
-  //     const { id, checked } = e.target;
-  //     setList(page);
-  //     console.log(list);
-  //     console.log(checkList);
-  //     // console.log(page));
-  //     setCheckList(page);
-  //     // console.log(checkList);
-  //     if (id === "selectAll") {
-  //       let tempList = list.map((row) => {
-  //         return { ...row, isChecked: checked };
-  //       });
-  //       setCheckList(tempList);
-  //       setList(tempList);
-  //       //   console.log(checkList);
-  //     } else {
-  //       let tempList = list.map((row) =>
-  //         row.id === id ? { ...row, isChecked: checked } : row
-  //       );
-  //       setCheckList(tempList);
-  //       setList(tempList);
-  //         // console.log(tempList);
-  //     }
-  //   };
-  const handleChange = (e) => {
-    const { id, checked } = e.target;
-    // setList(page);
-    setCheckList(page);
-    // console.log(checkList);
-    if (id === "selectAll") {
-      if (checked) {
-        setCheckList(page);
-      } else {
-        setCheckList([]);
-      }
-      console.log("Checked: ");
-      console.log(checkList);
-      //   setList(tempList);
-      //   console.log(checkList);
-    } else {
-      if (checked) {
-        // let tempList = page.map((row) =>
-        //   row.id === id ? row : console.log("nope")
-        // );
-        console.log(checkList);
-        let tempList = checkList;
-        for (let i = 0; i < page.length; i++) {
-          if (page[i].id === id) {
-            tempList.push(page[i]);
-          }
-        }
-        console.log("Checked: ");
-        setCheckList(tempList);
-        console.log(checkList);
-        // console.log(id);
-        // console.log(page);
-        // console.log(tempList);
-      } else {
-        console.log(checkList);
-        let tempList = [];
-        for (let i = 0; i < checkList.length; i++) {
-          if (checkList[i].id === id) {
-            //do nothing
-          }
-          else {
-            tempList.push(checkList[i]);
-          }
-        }
-        console.log("Not Checked: ");
-        setCheckList(tempList);
-        console.log(checkList);
-      }
-
-      //   setList(tempList);
-      // console.log(checked);
-      //   console.log(tempList);
-    }
+    // this.setState({
+    //   MasterChecked: e.target.checked,
+    //   List: tempList,
+    //   SelectedList: this.state.List.filter((e) => e.selected),
+    // });
   };
 
-  function isInList(id) {
-    let isThere = false;
-    checkList.forEach(function (item){
-      // console.log(id);
-      // console.log(item.original.id);
-      if (item.original.id === id) {
-        // console.log("Return Here")
-        isThere = true;
-      }
-    });
-    console.log(isThere);
-    return isThere;
+  //Manually uncheck all
+  function nextPageUncheck() {
+    let tempList = page;
+    // console.log(tempList);
+    // Check/ UnCheck All Items
+    tempList.map((row) => (row.selected = false));
+    
+    //Update State
+    setList(tempList);
+    setMasterChecked(false);
+    setSelectedList([]);
   }
+  // Update List Item's state and Master Checkbox State
+  const onItemCheck = (e, item) => {
+    let tempList = page;
+    tempList.map((row) => {
+      if (row.id === item.id) {
+        row.selected = e.target.checked;
+      }
+      return row;
+    });
+
+    //To Control Master Checkbox State
+    const totalItems = List.length;
+    const totalCheckedItems = tempList.filter((e) => e.selected).length;
+    
+    // Update State
+    setList(tempList);
+    setMasterChecked(totalItems === totalCheckedItems);
+    setSelectedList(tempList.filter((e) => e.selected));
+    console.log(SelectedList)
+    // this.setState({
+    //   MasterChecked: totalItems === totalCheckedItems,
+    //   List: tempList,
+    //   SelectedList: this.state.List.filter((e) => e.selected),
+    // });
+  };
+  // // Event to get selected rows(Optional)
+  // const getSelectedRows = () => {
+  //   this.setState({
+  //     SelectedList: this.state.List.filter((e) => e.selected),
+  //   });
+  // }
+
+  // const [checkList, setCheckList] = useState([]);
+
+  // const handleChange = (e) => {
+  //   const { id, checked } = e.target;
+  //   // setList(page);
+  //   // setCheckList(page);
+  //   // console.log(checkList);
+  //   if (id === "selectAll") {
+  //     if (checked) {
+  //       setCheckList(page);
+  //     } else {
+  //       setCheckList([]);
+  //     }
+  //     console.log("Checked: ");
+  //     console.log(checkList);
+  //   } else {
+  //     if (checked) {
+  //       console.log(checkList);
+  //       let tempList = checkList;
+  //       for (let i = 0; i < page.length; i++) {
+  //         if (page[i].id === id) {
+  //           tempList.push(page[i]);
+  //         }
+  //       }
+  //       console.log("Checked: ");
+  //       setCheckList(tempList);
+  //       console.log(checkList);
+  //     } else {
+  //       console.log(checkList);
+  //       let tempList = [];
+  //       for (let i = 0; i < checkList.length; i++) {
+  //         if (checkList[i].id === id) {
+  //           //do nothing
+  //         } else {
+  //           tempList.push(checkList[i]);
+  //         }
+  //       }
+  //       console.log("Not Checked: ");
+  //       setCheckList(tempList);
+  //       console.log(checkList);
+  //     }
+  //   }
+  // };
+
+  // function isInList(id) {
+  //   let isThere = false;
+  //   checkList.forEach(function (item) {
+  //     // console.log(id);
+  //     // console.log(item.original.id);
+  //     if (item.original.id === id) {
+  //       // console.log("Return Here")
+  //       isThere = true;
+  //     }
+  //   });
+  // console.log(isThere);
+  //   return isThere;
+  // }
   // Render the UI for your table
   return (
     <div>
@@ -332,21 +350,21 @@ function ReactTable({ columns, data, buttonMethod, modalTitle }) {
               <Accordion>
                 <div className={styles.customaccordion}>
                   {" "}
-                  {headerGroups.map((headerGroup) =>
-                    headerGroup.headers.map((column) =>
-                      column.Filter ? (
-                        <AccordionItem
-                          key={column.id}
-                          body={column.render("Filter")}
-                          name={column.render("Header")}
-                        >
-                          {/* <label htmlFor={column.id}>
-                        {column.render("Header")}:{" "}
-                      </label> */}
-                          {/* {column.render("Filter")} */}
-                        </AccordionItem>
-                      ) : null
-                    )
+                  {allColumns.map((column) =>
+                    column.Filter ? (
+                      <AccordionItem
+                        key={column.id}
+                        body={column.render("Filter")}
+                        column={column}
+                        checkbox={
+                          <input
+                            type="checkbox"
+                            className={styles.accordioncheckbox}
+                            {...column.getToggleHiddenProps()}
+                          />
+                        }
+                      ></AccordionItem>
+                    ) : null
                   )}
                 </div>
               </Accordion>
@@ -363,7 +381,7 @@ function ReactTable({ columns, data, buttonMethod, modalTitle }) {
           {headerGroups.map((headerGroup) => (
             <tr
               className={`${styles.header}`}
-              key="thing"
+              key={headerGroup.id}
               {...headerGroup.getHeaderGroupProps()}
             >
               <th>
@@ -371,24 +389,32 @@ function ReactTable({ columns, data, buttonMethod, modalTitle }) {
                   type="checkbox"
                   className={styles.headercheckbox}
                   id="selectAll"
-                  onChange={handleChange}
-                  checked={checkList.length === page.length}
+                  // onChange={handleChange}
+                  // checked={checkList.length === page.length}
+                  onChange={(e) => onMasterCheck(e)}
+                  checked={MasterChecked}
                 ></input>
               </th>
               {headerGroup.headers.map((column) => (
                 <th
-                  key="thing"
+                  key={column.id}
                   {...column.getHeaderProps(column.getSortByToggleProps())}
+                  className={styles.th}
                 >
-                  {column.render("Header")}
-                  {/* Add a sort direction indicator */}
                   <span>
-                    {column.isSorted
-                      ? column.isSortedDesc
-                        ? " ↓"
-                        : " ↑"
-                      : " -"}
+                    {column.render("Header")}{" "}
+                    {column.isSorted ? (
+                      column.isSortedDesc ? (
+                        <i className="bi bi-chevron-down"></i>
+                      ) : (
+                        <i className="bi bi-chevron-up"></i>
+                      )
+                    ) : (
+                      "-"
+                    )}
                   </span>
+
+                  {/* Add a sort direction indicator */}
                 </th>
               ))}
               <th></th>
@@ -396,17 +422,19 @@ function ReactTable({ columns, data, buttonMethod, modalTitle }) {
           ))}
         </thead>
         <tbody {...getTableBodyProps()}>
-          {page.map((row, i) => {
+          {page.map((row) => {
             prepareRow(row);
             return (
-              <tr className="tbodyrow" key={i} {...row.getRowProps()}>
+              <tr className="tbodyrow" key={row.id} {...row.getRowProps()}>
                 <td className={styles.tabledimension}>
                   <input
                     className={styles.checkbox}
                     type="checkbox"
                     id={row.index}
-                    onChange={handleChange}
-                    checked={isInList(row.original.id)}
+                    // onChange={handleChange}
+                    // checked={checkList.includes(row)}
+                    onChange={(e) => onItemCheck(e, row)}
+                    checked={row.selected}
                   ></input>
                   {/* {console.log(row.original.id)} */}
                 </td>
@@ -414,8 +442,9 @@ function ReactTable({ columns, data, buttonMethod, modalTitle }) {
                   return (
                     <td
                       onClick={() => routeChange(row.original.name)}
-                      key={i}
+                      key={cell.id}
                       {...cell.getCellProps()}
+                      className={styles.td}
                     >
                       {/* {cell.render("Cell")} */}
                       {!isNaN(cell.value)
@@ -424,7 +453,7 @@ function ReactTable({ columns, data, buttonMethod, modalTitle }) {
                     </td>
                   );
                 })}
-                <td>
+                <td className={styles.editDots}>
                   <i className="bi bi-three-dots-vertical"></i>
                 </td>
               </tr>
@@ -439,6 +468,8 @@ function ReactTable({ columns, data, buttonMethod, modalTitle }) {
         <button
           onClick={() => {
             previousPage();
+            nextPageUncheck();
+            // setList(page);
             // setCheckList(page);
           }}
           disabled={!canPreviousPage}
@@ -449,6 +480,8 @@ function ReactTable({ columns, data, buttonMethod, modalTitle }) {
           onClick={() => {
             // setCheckList(page);
             nextPage();
+            nextPageUncheck();
+            // setList(page);
             // setCheckList(page);
             // console.log(checkList);
           }}
