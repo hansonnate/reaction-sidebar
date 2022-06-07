@@ -3,9 +3,9 @@ import React, { useState } from "react";
 
 // Internal
 import { TabBar } from "components/layouts";
-import { SurveyBuildRoutes } from "routes"
+import { SurveyBuildRoutes } from "routes";
 
-export const SurveyBuild = () => {
+export const SurveyBuild = ({ project }) => {
   const tabBarItems = [
     {
       id: 0,
@@ -34,7 +34,7 @@ export const SurveyBuild = () => {
         active={active}
         updateActive={handleActiveUpdate}
       ></TabBar>
-      <SurveyBuildRoutes />
+      <SurveyBuildRoutes project={project} />
     </>
   );
 };

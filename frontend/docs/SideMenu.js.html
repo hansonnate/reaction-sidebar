@@ -1,0 +1,217 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>JSDoc: Source: SideMenu.js</title>
+
+    <script src="scripts/prettify/prettify.js"> </script>
+    <script src="scripts/prettify/lang-css.js"> </script>
+    <!--[if lt IE 9]>
+      <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+    <link type="text/css" rel="stylesheet" href="styles/prettify-tomorrow.css">
+    <link type="text/css" rel="stylesheet" href="styles/jsdoc-default.css">
+</head>
+
+<body>
+
+<div id="main">
+
+    <h1 class="page-title">Source: SideMenu.js</h1>
+
+    
+
+
+
+    
+    <section>
+        <article>
+            <pre class="prettyprint source linenums"><code>import React, { useEffect, useState } from "react";
+import largelogo from "assets/images/reactionlogolight.png";
+import smalllogo from "assets/images/circlelogo.png";
+import user from "assets/images/manlooking.png";
+// import idashboard from "../../icons/1x/speedometer-white.png";
+import MenuItem from "./MenuItem";
+import "./sidemenu.css";
+import "bootstrap-icons/font/bootstrap-icons.css";
+
+/**
+ * @author Nate Hanson
+ * @function SideMenu
+ **/
+
+// added more menuItems for testing
+export const menuItems = [
+  {
+    name: "Dashboard",
+    to: "/",
+    iconClassName: "bi bi-speedometer2",
+  },
+  {
+    name: "Projects",
+    to: `/projects`,
+    iconClassName: "bi bi-folder2",
+    // subMenus: [
+    //   { name: "Delivery", to: "/projects/courses" },
+    //   { name: "Survey Build", to: "/projects/videos" },
+    //   { name: "Results", to: "/projects/videos" },
+    // ],
+  },
+  {
+    name: "Contacts",
+    to: `/contacts`,
+    iconClassName: "bi bi-person",
+  },
+  {
+    name: "Organization",
+    to: `/organization`,
+    iconClassName: "bi bi-building",
+  },
+  {
+    name: "Help",
+    to: `/help`,
+    iconClassName: "bi bi-question-circle",
+  },
+];
+
+export const SideMenu = (props) => {
+  const [inactive, setInactive] = useState(false);
+
+  useEffect(() => {
+    if (inactive) {
+      removeActiveClassFromSubMenu();
+    }
+
+    props.onCollapse(inactive);
+  }, [inactive]);
+
+  //just an improvment and it is not recorded in video :(
+  const removeActiveClassFromSubMenu = () => {
+    document.querySelectorAll(".sub-menu").forEach((el) => {
+      el.classList.remove("active");
+    });
+  };
+
+  /*just a little improvement over click function of menuItem
+    Now no need to use expand state variable in MenuItem component
+  */
+  useEffect(() => {
+    let menuItems = document.querySelectorAll(".menu-item");
+    menuItems.forEach((el) => {
+      el.addEventListener("click", () => {
+        const next = el.nextElementSibling;
+        removeActiveClassFromSubMenu();
+        menuItems.forEach((el) => el.classList.remove("active"));
+        el.classList.toggle("active");
+        if (next !== null) {
+          next.classList.toggle("active");
+        }
+      });
+    });
+  }, []);
+
+  return (
+    &lt;div className={`side-menu ${inactive ? "inactive" : "active"}`}>
+      &lt;div className="top-section">
+        &lt;div className={`logo ${inactive ? "small-logo" : "large-logo"}`}>
+          &lt;img src={inactive ? smalllogo : largelogo} alt="ReactionData" />
+        &lt;/div>
+      &lt;/div>
+
+      {/* &lt;div className="search-controller">
+        &lt;button className="search-btn">
+          &lt;i class="bi bi-search">&lt;/i>
+        &lt;/button>
+
+        &lt;input type="text" placeholder="search" />
+      &lt;/div> */}
+
+      {/* &lt;div className="divider">&lt;/div> */}
+
+      &lt;div className={`main-menu ${inactive ? "closed-menu" : "open-menu"}`}>
+        &lt;ul className={`list ${inactive ? "closed-menu" : "open-menu"}`}>
+          {menuItems.map((menuItem, index) => (
+            &lt;MenuItem
+              key={index}
+              name={menuItem.name}
+              to={menuItem.to}
+              subMenus={menuItem.subMenus || []}
+              iconClassName={menuItem.iconClassName}
+              onClick={() => {
+                if (inactive) {
+                  setInactive(true);
+                }
+              }}
+            />
+          ))}
+
+          {/* &lt;li>
+            &lt;a className="menu-item">
+              &lt;div className="menu-icon">
+                &lt;i class="bi bi-speedometer2">&lt;/i>
+              &lt;/div>
+              &lt;span>Dashboard&lt;/span>
+            &lt;/a>
+          &lt;/li>
+          &lt;MenuItem
+            name={"Content"}
+            subMenus={[{ name: "Courses" }, { name: "Videos" }]}
+          />
+          &lt;li>
+            &lt;a className="menu-item">
+              &lt;div className="menu-icon">
+                &lt;i class="bi bi-vector-pen">&lt;/i>
+              &lt;/div>
+              &lt;span>Design&lt;/span>
+            &lt;/a>
+          &lt;/li> */}
+        &lt;/ul>
+      &lt;/div>
+
+      &lt;div className={`side-menu-footer ${inactive ? "closed" : "open"}`}>
+        &lt;div className={`user-container ${inactive ? "closed" : "open"}`}>
+          &lt;div className="avatar">
+            &lt;img src={user} alt="user" onClick={() => setInactive(!inactive)} />
+          &lt;/div>
+          &lt;div className="user-info">
+            &lt;h5>Jeremy Bikman&lt;/h5>
+            &lt;p>Reaction&lt;/p>
+          &lt;/div>
+        &lt;/div>
+        &lt;div
+          onClick={() => setInactive(!inactive)}
+          className={`toggle-menu-btn ${inactive ? "closed" : "open"}`}
+        >
+          {inactive ? (
+            &lt;i className="bi bi-arrow-bar-right">&lt;/i>
+          ) : (
+            &lt;i className="bi bi-arrow-bar-left">&lt;/i>
+          )}
+        &lt;/div>
+      &lt;/div>
+    &lt;/div>
+  );
+};
+</code></pre>
+        </article>
+    </section>
+
+
+
+
+</div>
+
+<nav>
+    <h2><a href="index.html">Home</a></h2><h3>Global</h3><ul><li><a href="global.html#MenuItem">MenuItem</a></li><li><a href="global.html#SideMenu">SideMenu</a></li></ul>
+</nav>
+
+<br class="clear">
+
+<footer>
+    Documentation generated by <a href="https://github.com/jsdoc/jsdoc">JSDoc 3.6.10</a> on Mon May 23 2022 11:21:35 GMT-0600 (Mountain Daylight Time)
+</footer>
+
+<script> prettyPrint(); </script>
+<script src="scripts/linenumber.js"> </script>
+</body>
+</html>

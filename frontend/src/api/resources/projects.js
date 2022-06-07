@@ -3,7 +3,7 @@ import { apiClient } from "../Api";
 const uri = "/projects"
 
 const getProjects = () => apiClient.get(`${uri}`);
-const getProject = id => apiClient.get(`${uri}/${id}`);
+const getProject = projectId => apiClient.get(`${uri}/${projectId}`);
 const postProject = (body) => {
   console.log("calling post");
   console.log(body);

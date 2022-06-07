@@ -59,6 +59,7 @@
   "projects": [
     {
       "id": 0,
+<<<<<<< HEAD
       "name": "Doctors Opinion",
       "link": "survey1",
       "owner": "Mark Wagner",
@@ -273,6 +274,31 @@
       "members": 223,
       "created": 1653497659988,
       "modified": 1653497659988
+=======
+      "name": "Survey1",
+      "created_at": "2022-04-23T18:25:43.511Z",
+      "status": "open"
+    },
+    {
+      "id": 1,
+      "name": "Survey2",
+      "created_at": "2022-05-23T18:25:43.511Z",
+      "status": "closed"
+>>>>>>> origin/main
+    }
+  ],
+  "questions": [
+    {
+      "id": 0,
+      "projectId": 0,
+      "name": "How are you?",
+      "type": "MultipleChoice"
+    },
+    {
+      "id": 1,
+      "projectId": 0,
+      "name": "Where are you from?",
+      "type": 1
     }
   ]
 }
