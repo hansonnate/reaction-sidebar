@@ -4,6 +4,8 @@ export { useApi } from "./Api";
 /*************** AVAILABLE APIS ***************/
 // Organizations
 export { default as OrganizationApi } from "./resources/organization";
+export { default as ContactsApi } from "./resources/contacts";
+export { default as AudiencesApi } from "./resources/audiences";
 
 // Projects
 // export { default as ProjectsApi } from "./resources/projects/projects";

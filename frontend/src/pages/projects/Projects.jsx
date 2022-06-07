@@ -87,6 +87,7 @@ export const Projects = () => {
         Cell: (e) => (
           <Link to={e.value} style={{ color: "black" }}>
             {" "}
+            {console.log(e)}
             {e.value}{" "}
           </Link>
         ),
