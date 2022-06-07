@@ -286,7 +286,7 @@
       "id": 1,
       "projectId": 0,
       "name": "Where are you from?",
-      "type": 1
+      "type": "Ranking"
     }
   ]
 }

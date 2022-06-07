@@ -9,8 +9,8 @@ export const Results = () => {
   const tabBarItems = [
     {
       id: 0,
-      name: "Vizualizations",
-      to: `vizualizations`,
+      name: "Visualizations",
+      to: `visualizations`,
     },
     {
       id: 1,

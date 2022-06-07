@@ -10,4 +10,4 @@ export { Distributions } from "./project/delivery/distributions/Distributions";
 export { Results } from "./project/results/Results";
 export { Participations } from "./project/results/participations/Participations";
 export { Reports } from "./project/results/reports/Reports";
-export { Vizualizations } from "./project/results/vizualizations/Vizualizations";
+export { Visualizations } from "./project/results/visualizations/Visualizations";

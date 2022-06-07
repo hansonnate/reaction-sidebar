@@ -1,5 +1,6 @@
 // External
-import React, { useEffect, useState } from "react";
+//eslint-disable-next-line
+import React, { useEffect, useContext, useState } from "react";
 import { useParams } from "react-router-dom";
 
 // Internal
@@ -7,8 +8,9 @@ import { Header, SplitHorizontal } from "components/layouts";
 import { ProjectRoutes } from "routes";
 import { Sidebar2 } from "components/sidebars";
 import styles from "./Project.module.scss";
-import { useApi, ProjectsApi } from "api";
 import { Loading } from "components/Loading/Loading";
+//eslint-disable-next-line
+import { useFetchProject } from "api/resources/projects/projects";
 
 const menuItems = [
   {
@@ -33,12 +35,7 @@ const menuItems = [
 
 export const Project = () => {
   const { id } = useParams();
-
-  const getProject = useApi(ProjectsApi.getProject);
-
-  useEffect(() => {
-    getProject.request(id);
-  }, []);
+  const projectQuery = useFetchProject(id);
 
   const [active, setActive] = useState(0);
   const handleActiveUpdate = (item) => {
@@ -46,20 +43,18 @@ export const Project = () => {
   };
   return (
     <>
-      {getProject.loading && <Loading />}
-      {getProject.error && <p>{getProject.error}</p>}
-      {getProject.data && (
+      {projectQuery.isLoading && <Loading />}
+      {projectQuery.isError && <p>{projectQuery.error}</p>}
+      {projectQuery.isSuccess && (
         <>
-          <Header title={getProject.data.name} backPath="/projects" />
+          <Header title={projectQuery.data.name || "Untitled Project"} backPath="/projects" />
           <SplitHorizontal leftShrink divider fullHeight>
             <Sidebar2
               menuItems={menuItems}
               active={active}
               updateActive={handleActiveUpdate}
             />
-            <div className={styles.content}>
-              {getProject.data && <ProjectRoutes project={getProject.data} />}
-            </div>
+            <div className={styles.content}>{projectQuery.data && <ProjectRoutes />}</div>
           </SplitHorizontal>
         </>
       )}

@@ -1,26 +1,45 @@
-import React, { useEffect } from "react";
-import { useApi, QuestionsApi } from "api";
+import React, { useState } from "react";
+import { useParams } from "react-router-dom";
 import { Question } from "./Question";
+import { EditQuestionDialog } from "./EditQuestionDialog";
 import { SplitHorizontal } from "components/layouts";
+import { useFetchQuestions } from "api/resources/projects/questions";
 
-export const QuestionBuilder = ({ projectId }) => {
-  const getQuestions = useApi(QuestionsApi.getQuestions);
+/* eslint-disable no-unused-vars */
+export const QuestionBuilder = () => {
+  const { id } = useParams();
+  const fetchQuestionsQuery = useFetchQuestions(id);
+  const [active, setActive] = useState();
 
-  useEffect(() => {
-    getQuestions.request(projectId);
-  }, []);
+  const handleActivate = (id) => {
+    setActive(id);
+  };
+
+  const activeQuestion = () => {
+    return fetchQuestionsQuery.data?.find((q) => q.id == active);
+  };
+
+  // const handleQuestionTypeChange = (type) => {
+  //   question.type = type;
+  // };
 
   return (
     <>
       <SplitHorizontal>
         <>
-          {getQuestions.loading && <p>Loading...</p>}
-          {getQuestions.error && <p>{getQuestions.error}</p>}
-          {getQuestions.data?.questions.map((question) => (
-            <Question key={question.id} question={question} />
-          ))}
+          {fetchQuestionsQuery.isSuccess &&
+            fetchQuestionsQuery.data.map((question) => (
+              <Question
+                key={question.id}
+                question={question}
+                active={active == question.id}
+                activate={handleActivate}
+              />
+            ))}
         </>
-        <div>Menu</div>
+        {fetchQuestionsQuery.isSuccess && active != null && (
+          <EditQuestionDialog question={activeQuestion()} />
+        )}
       </SplitHorizontal>
     </>
   );
