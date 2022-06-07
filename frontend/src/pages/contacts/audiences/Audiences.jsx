@@ -1,5 +1,5 @@
 // External
-import React, { useEffect, useState } from "react"; 
+import React, { useState } from "react"; 
 import ReactTable, {
   SelectColumnFilter,
   MultipleFilter,
@@ -10,7 +10,7 @@ import ReactModal from "../../../components/ReactModal/ReactModal.jsx";
 
 // Internal
 // import { Header } from "components/layouts";
-import { useApi, AudiencesApi } from "api";
+import { useFetchAudiences } from "api/resources/contacts/audiences";
 
 // Internal
 
@@ -45,20 +45,15 @@ export const Audiences = () => {
         []
       );
     
-      const getAudiences = useApi(AudiencesApi.getAudiences);
-    //   const postProject = useApi(ProjectsApi.postProject);
-    
-      useEffect(() => {
-        getAudiences.request();
-      }, []);
+      const fetchAudiencesQuery = useFetchAudiences();
     
       const [show, setShow] = useState(false);
     
       return (
         <>
-          {getAudiences.loading && <p>Loading...</p>}
-          {getAudiences.error && <p>{getAudiences.error}</p>}
-          {getAudiences.data && <ReactTable columns={columns} data={getAudiences.data} buttonMethod={() => setShow(true)} modalTitle="New Audience"/>}
+          {fetchAudiencesQuery.isLoading && <p>Loading...</p>}
+          {fetchAudiencesQuery.isError && <p>{fetchAudiencesQuery.error}</p>}
+          {fetchAudiencesQuery.isSuccess && <ReactTable columns={columns} data={fetchAudiencesQuery.data} buttonMethod={() => setShow(true)} modalTitle="New Audience"/>}
           <ReactModal show={show} onClose={() => setShow(false)}>
             <div className="content">
               <h1>Create Audience</h1>

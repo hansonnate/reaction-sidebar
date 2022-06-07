@@ -60,13 +60,6 @@ export const useUpdateProject = () => {
   );
 };
 
-export default {
-  useFetchProjects,
-  useFetchProject,
-  useCreateProject,
-  useUpdateProject,
-};
-
 // // before using react-query
 // const getProjects = () => apiClient.get(`${uri}`);
 // // get project details, questions, design stuff, deliveries, first page distributions, visualizations,
