@@ -1,19 +1,18 @@
 // External
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import ReactTable, {
   SelectColumnFilter,
   MultipleFilter,
-} from "../../../components/BasicTable/ReactTable.jsx";
+} from "components/BasicTable/ReactTable.jsx";
 // import styles from "./AllContacts.module.scss";
-import ReactModal from "../../../components/ReactModal/ReactModal.jsx";
+import ReactModal from "components/ReactModal/ReactModal.jsx";
 // import ReactInput from "../../components/ReactInput/ReactInput.jsx";
 import { useNavigate } from "react-router-dom";
 
 // Internal
 import { TabBar } from "components/layouts";
-import { useApi, ContactsApi } from "api";
+import { useFetchContacts } from "api/resources/contacts/contacts";
 
-// Internal
 
 export const AllContacts = () => {
 
@@ -59,12 +58,7 @@ export const AllContacts = () => {
     []
   );
 
-  const getContacts = useApi(ContactsApi.getContacts);
-  //   const postProject = useApi(ProjectsApi.postProject);
-
-  useEffect(() => {
-    getContacts.request();
-  }, []);
+  const fetchContactsQuery = useFetchContacts();
 
   const [show, setShow] = useState(false);
   const menuItems = [
@@ -86,18 +80,17 @@ export const AllContacts = () => {
 
   return (
     <>
-      {getContacts.loading && <p>Loading...</p>}
-      {getContacts.error && <p>{getContacts.error}</p>}
-      {getContacts.data && (
+      {fetchContactsQuery.isLoading && <p>Loading...</p>}
+      {fetchContactsQuery.isError && <p>{fetchContactsQuery.error}</p>}
+      {fetchContactsQuery.isSuccess && (
         <ReactTable
           columns={columns}
-          data={getContacts.data}
+          data={fetchContactsQuery.data}
           buttonMethod={routeChange}
           modalTitle="New Contact(s)"
         />
       )}
       <ReactModal show={show} onClose={() => setShow(false)}>
-          {console.log(menuItems)}
         <TabBar tabBarItems={menuItems} active={active} updateActive={handleActiveUpdate}></TabBar>
         <div className="content">
           <h1>Import Contacts</h1>

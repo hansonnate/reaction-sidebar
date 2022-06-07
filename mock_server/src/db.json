@@ -59,7 +59,7 @@
   "projects": [
     {
       "id": 0,
-      "name": "Doctors Opinion",
+      "name": "Doctors Opinion1",
       "link": "survey1",
       "owner": "Mark Wagner",
       "status": "Open",
@@ -233,6 +233,15 @@
       "created": 1653497659988,
       "modified": 1653497659988,
       "id": 19
+    },
+    {
+      "name": "New Project",
+      "owner": "Jack Sparrow",
+      "status": "Closed",
+      "responses": 0,
+      "created": 1654628505997,
+      "modified": 1654628505997,
+      "id": 20
     }
   ],
   "contacts": [
