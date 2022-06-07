@@ -1,4 +1,3 @@
-import faker from 'faker';
 import {randomColor} from "./utils";
 
 export default function makeData(count) {
@@ -6,12 +5,12 @@ export default function makeData(count) {
   let options = [];
   for (let i = 0; i < count; i++) {
     let row = {
-      ID: faker.mersenne.rand(),
-      firstName: faker.name.firstName(),
-      lastName: faker.name.lastName(),
-      email: faker.internet.email(),
+      ID: "faker.mersenne.rand()",
+      firstName: "faker.name.firstName()",
+      lastName: "faker.name.lastName()",
+      email: "faker.internet.email()",
       age: Math.floor(20 + Math.random() * 20),
-      music: faker.music.genre()
+      music: "faker.music.genre()"
     };
     options.push({label: row.music, backgroundColor: randomColor()});
 

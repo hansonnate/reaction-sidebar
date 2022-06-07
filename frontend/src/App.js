@@ -12,18 +12,8 @@ import { MainContentRoutes } from "routes";
 import { Loading } from "./components/Loading/Loading";
 
 const App = () => {
-<<<<<<< HEAD
-  return (
-    <div className={`${styles.App} bg-white`}>
-      <link rel="preconnect" href="https://fonts.googleapis.com" />
-      <link rel="preconnect" href="https://fonts.gstatic.com" />
-      <link
-        href="https://fonts.googleapis.com/css2?family=Poppins:wght@100;400;600;700;800;900&display=swap"
-        rel="stylesheet"
-      />
-=======
+
   const [loading, setLoading] = useState(true);
->>>>>>> origin/main
 
   useEffect(() => {
     setLoading(false);
