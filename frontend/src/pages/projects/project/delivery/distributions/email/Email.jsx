@@ -1,51 +1,68 @@
 // External
 import React, { useState } from "react";
-import { Link } from "react-router-dom";
-// import Table from "../../components/BasicTable/Table.jsx"
 import ReactTable, {
   SelectColumnFilter,
   MultipleFilter,
-} from "../../components/BasicTable/ReactTable.jsx";
-import styles from "./Projects.module.scss";
-import ReactModal from "../../components/ReactModal/ReactModal.jsx";
-// import FormInput from "../../components/FormInput/FormInput.jsx";
-import ReactInput from "../../components/ReactInput/ReactInput.jsx";
-// import ActionButton from "../../components/ActionButton/ActionButton.jsx";
+} from "components/BasicTable/ReactTable.jsx";
+import styles from "./Email.module.scss";
+import ReactModal from "components/ReactModal/ReactModal.jsx";
+import ReactInput from "components/ReactInput/ReactInput.jsx";
+import { useParams } from "react-router-dom";
+import { useFetchProject } from "api/resources/projects/projects";
 
 // Internal
-import { Header } from "components/layouts";
-//import { useApi, ProjectsApi } from "api";
 import {
   useCreateProject,
   useFetchProjects,
 } from "api/resources/projects/projects";
 
 function isOpen(value) {
-  if (value.value == "Open") {
+  if (value.value == "Bad") {
     return true;
   } else {
     return false;
   }
 }
 
-export const Projects = () => {
+export const Email = () => {
+  const { id } = useParams();
+  const projectQuery = useFetchProject(id);
+  console.log(projectQuery.data);
   const columns = React.useMemo(
     () => [
       {
-        Header: "Project",
-        accessor: "name",
+        Header: "Subject",
+        accessor: "subject",
         Filter: SelectColumnFilter,
         filter: MultipleFilter,
-        Cell: (e) => (
-          <Link to={e.cell.row.id} style={{ color: "black" }}>
-            {" "}
-            {e.value}{" "}
-          </Link>
-        ),
+      },
+      {
+        Header: "Audience",
+        accessor: "audience",
+        Filter: SelectColumnFilter,
+        filter: MultipleFilter,
+      },
+      {
+        Header: "From",
+        accessor: "from",
+        Filter: SelectColumnFilter,
+        filter: MultipleFilter,
       },
       {
         Header: "Status",
         accessor: "status",
+        Filter: SelectColumnFilter,
+        filter: MultipleFilter,
+      },
+      {
+        Header: "Date",
+        accessor: "date",
+        Filter: SelectColumnFilter,
+        filter: MultipleFilter,
+      },
+      {
+        Header: "Strength",
+        accessor: "strength",
         Filter: SelectColumnFilter,
         filter: MultipleFilter,
         Cell: (e) => (
@@ -58,36 +75,22 @@ export const Projects = () => {
           </span>
         ),
       },
-      {
-        Header: "Responses",
-        accessor: "responses",
-        Filter: SelectColumnFilter,
-        filter: MultipleFilter,
-      },
-      {
-        Header: "Owner",
-        accessor: "owner",
-        Filter: SelectColumnFilter,
-        filter: MultipleFilter,
-      },
-      {
-        Header: "Modified",
-        accessor: "modified",
-        Filter: SelectColumnFilter,
-        filter: MultipleFilter,
-      },
-      {
-        Header: "Created",
-        accessor: "created",
-        Filter: SelectColumnFilter,
-        filter: MultipleFilter,
-      },
     ],
     []
   );
 
+  // const getProjects = useApi(ProjectsApi.getProjects);
+  // const postProject = useApi(ProjectsApi.postProject);
+
   const fetchProjectsQuery = useFetchProjects();
   const createProjectQuery = useCreateProject();
+  console.log(fetchProjectsQuery.data);
+  
+
+  // useEffect(() => {
+  //   getProjects.request();
+  // }, []);
+
   const [show, setShow] = useState(false);
   const [projectName, setProjectName] = useState("New Project");
   const [description, setDescription] = useState("");
@@ -114,15 +117,23 @@ export const Projects = () => {
 
   return (
     <>
-      <Header title="Projects" />
       {fetchProjectsQuery.isLoading && <p>Loading...</p>}
       {fetchProjectsQuery.isError && <p>{fetchProjectsQuery.error}</p>}
+      {/* {getProjects.data?.map((project) => (
+      {projectsQuery.isLoading && <p>Loading...</p>}
+      {projectsQuery.isError && <p>{projectsQuery.error}</p>}
+      {projectsQuery.data?.map((project) => (
+        <div key={project.id}>
+          <Link to={`${project.id}/`}>{project.name}</Link>
+        </div>
+        
+      ))} */}
       {fetchProjectsQuery.isSuccess && (
         <ReactTable
           columns={columns}
-          data={fetchProjectsQuery.data}
+          data={projectQuery.data.emails}
           buttonMethod={() => setShow(true)}
-          modalTitle="New Project"
+          modalTitle="Compose Email"
         />
       )}
       <ReactModal

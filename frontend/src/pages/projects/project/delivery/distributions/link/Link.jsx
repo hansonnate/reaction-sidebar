@@ -3,10 +3,10 @@ import React from "react";
 
 // Internal
 
-export const Deliveries = () => {
+export const Link = () => {
   return (
     <>
-      <div>Deliveries Page</div>
+      <div>Link Page</div>
     </>
   );
 };
