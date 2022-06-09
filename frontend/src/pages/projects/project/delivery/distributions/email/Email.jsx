@@ -9,7 +9,7 @@ import DistributionModal from "components/ReactModal/DistributionModal.jsx";
 import ReactInput from "components/ReactInput/ReactInput.jsx";
 import { useParams } from "react-router-dom";
 import { useFetchProject } from "api/resources/projects/projects";
-import { SelectField } from "components/inputs/input_fields";
+import Select from "react-select";
 
 // Internal
 import {
@@ -68,8 +68,9 @@ export const Email = () => {
         filter: MultipleFilter,
         Cell: (e) => (
           <span
-            className={`${styles.status} ${isOpen(e) ? `${styles.isopen}` : `${styles.isclosed}`
-              }`}
+            className={`${styles.status} ${
+              isOpen(e) ? `${styles.isopen}` : `${styles.isclosed}`
+            }`}
           >
             {e.value}{" "}
           </span>
@@ -85,7 +86,6 @@ export const Email = () => {
   const fetchProjectsQuery = useFetchProjects();
   // const createProjectQuery = useCreateProject();
   console.log(fetchProjectsQuery.data);
-
 
   // useEffect(() => {
   //   getProjects.request();
@@ -150,43 +150,45 @@ export const Email = () => {
         //   setShow(false);
         // }}
       >
-        <div className="content">
+        <div className={styles.content}>
           <h1>Compose Email</h1>
           <div className={styles.distibutionform}>
             <div className={styles.formfield}>
               <label>Audience</label>
               <div className={styles.selectfield}>
-                <SelectField options=""></SelectField>
+                <Select options=""></Select>
               </div>
             </div>
             <div className={styles.formfield}>
               <label>From</label>
               <div className={styles.selectfield}>
-                <SelectField options=""></SelectField>
+                <Select options=""></Select>
               </div>
             </div>
             <div className={styles.formfield}>
               <label>Subject</label>
               <div className={styles.textfield}>
-                <ReactInput
-                  type="text"
-                  placeholder="New Subject"
-                ></ReactInput>
+                <ReactInput type="text" placeholder="New Subject"></ReactInput>
               </div>
             </div>
             <div className={styles.formfield}>
               <label>Email Body</label>
               <div className={styles.textfield}>
-                <ReactInput
-                  type="text"
-                  placeholder="Message"
-                ></ReactInput>
+                <ReactInput type="text" placeholder="Message"></ReactInput>
               </div>
             </div>
             <div className={styles.formfield}>
               <label>Schedule Send</label>
               <div className={styles.selectfield}>
-                <SelectField options="" placeholder="Schedule Options"></SelectField>
+                <Select options="" placeholder="Schedule Options..."></Select>
+              </div>
+            </div>
+            <div className={styles.footer}>
+              <button className={styles.darkbutton} onClick={() => setShow(false)}>Close</button>
+
+              <div className={styles.specialbuttons}>
+                <button className={styles.lightbutton}>Save as draft</button>
+                <button className={styles.darkbutton}>Schedule Send</button>
               </div>
             </div>
           </div>
