@@ -40,7 +40,8 @@ export const SelectField = ({
   options,
   value,
   selectMultiple,
-  handleSelection
+  handleSelection,
+  placeholder,
   //   autosave = false,
 }) => {
   const handleChange = (newValue, actionMeta) => {
@@ -66,6 +67,7 @@ export const SelectField = ({
       onChange={handleChange}
       onInputChange={handleInputChange}
       components={animatedComponents}
+      placeholder={placeholder}
     />
   );
 };

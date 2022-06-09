@@ -103,7 +103,29 @@
       "responses": 300,
       "created": 1652339672318,
       "modified": 1653339672318,
-      "id": 2
+      "id": 2,
+      "distributions": [
+        {
+          "id": 0,
+          "type": "sms",
+          "subject": "Opinion",
+          "audience": "Doctors",
+          "from": "jbikman@reaction.com",
+          "status": "Delivered",
+          "date": 1653340059929,
+          "strength": "Bad"
+        },
+        {
+          "id": 1, 
+          "type": "sms",
+          "subject": "More Opinion",
+          "audience": "Doctors",
+          "from": "jbikman@reaction.com",
+          "status": "Draft",
+          "date": null,
+          "strength": "Good"
+        }
+    ]
     },
     {
       "name": "Are Patients Sick?",
