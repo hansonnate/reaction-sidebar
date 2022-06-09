@@ -16,7 +16,6 @@ import { Loading } from "./components/Loading/Loading";
 const queryClient = new QueryClient();
 
 const App = () => {
-
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
@@ -33,6 +32,7 @@ const App = () => {
           />
         )}
         <div className={`${styles.App} bg-white`}>
+          
           <link rel="preconnect" href="https://fonts.googleapis.com" />
           <link rel="preconnect" href="https://fonts.gstatic.com" />
           <link

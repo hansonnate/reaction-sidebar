@@ -1,5 +1,6 @@
 // External
 import React, { useState } from "react";
+// import JoditEditor from "jodit-react";
 import ReactTable, {
   SelectColumnFilter,
   MultipleFilter,
@@ -10,6 +11,8 @@ import ReactInput from "components/ReactInput/ReactInput.jsx";
 import { useParams } from "react-router-dom";
 import { useFetchProject } from "api/resources/projects/projects";
 import Select from "react-select";
+import { TextEdit } from "components/inputs/input_fields/TextEdit/TextEdit";
+import "draft-js/dist/Draft.css";
 
 // Internal
 import {
@@ -26,6 +29,8 @@ function isOpen(value) {
 }
 
 export const Email = () => {
+
+
   const { id } = useParams();
   const projectQuery = useFetchProject(id);
   console.log(projectQuery.data);
@@ -80,52 +85,15 @@ export const Email = () => {
     []
   );
 
-  // const getProjects = useApi(ProjectsApi.getProjects);
-  // const postProject = useApi(ProjectsApi.postProject);
-
   const fetchProjectsQuery = useFetchProjects();
-  // const createProjectQuery = useCreateProject();
   console.log(fetchProjectsQuery.data);
 
-  // useEffect(() => {
-  //   getProjects.request();
-  // }, []);
-
   const [show, setShow] = useState(false);
-
-  // const handlePostProject = (
-  //   projectName,
-  //   owner,
-  //   status,
-  //   responses,
-  //   created,
-  //   modified,
-  //   description
-  // ) => {
-  //   createProjectQuery.mutate({
-  //     name: projectName,
-  //     owner: owner,
-  //     status: status,
-  //     responses: responses,
-  //     created: created,
-  //     modified: modified,
-  //     description: description,
-  //   });
-  // };
 
   return (
     <>
       {fetchProjectsQuery.isLoading && <p>Loading...</p>}
       {fetchProjectsQuery.isError && <p>{fetchProjectsQuery.error}</p>}
-      {/* {getProjects.data?.map((project) => (
-      {projectsQuery.isLoading && <p>Loading...</p>}
-      {projectsQuery.isError && <p>{projectsQuery.error}</p>}
-      {projectsQuery.data?.map((project) => (
-        <div key={project.id}>
-          <Link to={`${project.id}/`}>{project.name}</Link>
-        </div>
-        
-      ))} */}
       {fetchProjectsQuery.isSuccess && (
         <ReactTable
           columns={columns}
@@ -174,7 +142,7 @@ export const Email = () => {
             <div className={styles.formfield}>
               <label>Email Body</label>
               <div className={styles.textfield}>
-                <ReactInput type="text" placeholder="Message"></ReactInput>
+                <TextEdit></TextEdit>
               </div>
             </div>
             <div className={styles.formfield}>
@@ -184,7 +152,12 @@ export const Email = () => {
               </div>
             </div>
             <div className={styles.footer}>
-              <button className={styles.darkbutton} onClick={() => setShow(false)}>Close</button>
+              <button
+                className={styles.darkbutton}
+                onClick={() => setShow(false)}
+              >
+                Close
+              </button>
 
               <div className={styles.specialbuttons}>
                 <button className={styles.lightbutton}>Save as draft</button>
