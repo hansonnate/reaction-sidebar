@@ -32,7 +32,7 @@ $reactdarkorange: #ed9146;
     height: 100%;
     gap: 15px;
     // border: 2px solid black;
-    align-items: center;
+    align-items: flex-start;
     
     // justify-content: space-between;
     
@@ -41,6 +41,7 @@ $reactdarkorange: #ed9146;
         text-transform: uppercase;
         font-weight: 900;
         width: 150px;
+        padding-top: 8px;
     }
 
 }

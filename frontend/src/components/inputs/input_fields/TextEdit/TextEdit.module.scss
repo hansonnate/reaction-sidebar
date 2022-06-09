@@ -7,9 +7,26 @@ $reactdarkorange: #ed9146;
 .editor {
     border: 2px solid #EEEE;
     border-radius: 5px;
+}
 
-    button {
-        // border: 2px solid black;
+.editbuttons {
+    border-bottom: 2px solid #EEEE;
+    display: flex;
+    flex-direction: row;
+    gap: 5px;
+    padding: 5px 3px;
+}
 
-    }
+.singleletter {
+    border: 2px solid $reactdarkblue;
+    background-color: #EEE;
+    border-radius: 5px;
+    padding: 1px 7px;
+    width: 30px;
+    transition: all .3s;
+}
+.singleletter:hover {
+    border-radius: 5px;
+    background-color: #2a627c81;
+    color: white;
 }
