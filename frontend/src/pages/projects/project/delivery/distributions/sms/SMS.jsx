@@ -31,20 +31,14 @@ export const SMS = () => {
   const columns = React.useMemo(
     () => [
       {
-        Header: "Subject",
-        accessor: "subject",
-        Filter: SelectColumnFilter,
-        filter: MultipleFilter,
-      },
-      {
         Header: "Audience",
         accessor: "audience",
         Filter: SelectColumnFilter,
         filter: MultipleFilter,
       },
       {
-        Header: "From",
-        accessor: "from",
+        Header: "Message",
+        accessor: "message",
         Filter: SelectColumnFilter,
         filter: MultipleFilter,
       },
@@ -131,9 +125,9 @@ export const SMS = () => {
       {fetchProjectsQuery.isSuccess && (
         <ReactTable
           columns={columns}
-          data={projectQuery.data.emails}
+          data={projectQuery.data.sms}
           buttonMethod={() => setShow(true)}
-          modalTitle="Compose Email"
+          modalTitle="Compose Text"
         />
       )}
       <ReactModal

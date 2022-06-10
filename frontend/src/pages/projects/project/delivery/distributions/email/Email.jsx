@@ -105,18 +105,6 @@ export const Email = () => {
       <DistributionModal
         show={show}
         onClose={() => setShow(false)}
-        // onSave={() => {
-        //   handlePostProject(
-        //     projectName,
-        //     "Jack Sparrow",
-        //     "Closed",
-        //     0,
-        //     Date.now(),
-        //     Date.now(),
-        //     description
-        //   );
-        //   setShow(false);
-        // }}
       >
         <div className={styles.content}>
           <h1>Compose Email</h1>

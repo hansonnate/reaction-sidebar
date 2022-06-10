@@ -85,6 +85,28 @@
             "date": null,
             "strength": "Good"
           }
+      ],
+      "sms": [
+        {
+          "id": 0,
+          "subject": "Opinion",
+          "audience": "Doctors",
+          "from": "jbikman@reaction.com",
+          "status": "Delivered",
+          "messaeg": "",
+          "date": 1653340059929,
+          "strength": "Bad"
+        },
+        {
+          "id": 1, 
+          "subject": "More Opinion",
+          "audience": "Doctors",
+          "from": "jbikman@reaction.com",
+          "status": "Draft",
+          "message": "",
+          "date": null,
+          "strength": "Good"
+        }
       ]
     },
     {
