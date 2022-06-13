@@ -25,13 +25,12 @@
 
 .modal__wrap {
   overflow-y: scroll;
-  overflow-x: hidden;
+  overflow-x: scroll;
   position: relative;
   display: block;
-  height: 60%;
+  height: 70%;
   min-height: 300px;
-  min-width: 400px;
-  width: 800px;
+  width: 60%;
   margin: 0 auto;
   margin-top: 20px;
   margin-bottom: 20px;

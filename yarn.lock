@@ -229,6 +229,14 @@
     "immutable" "~3.7.4"
     "invariant" "^2.2.1"
 
+"draft-js-custom-styles@^2.1.1":
+  "integrity" "sha512-i/lTBRuiGQxPybMERRgGAzdx3WcJtshqlBnMgdi+YLVXF82K8zqLvvsXRGGR57TbmzfnnoHRZlDyBlkit22e/Q=="
+  "resolved" "https://registry.npmjs.org/draft-js-custom-styles/-/draft-js-custom-styles-2.1.1.tgz"
+  "version" "2.1.1"
+  dependencies:
+    "lodash.camelcase" "^4.3.0"
+    "lodash.snakecase" "^4.1.1"
+
 "draft-js-export-html@^1.4.1", "draft-js-export-html@>=0.6.0":
   "integrity" "sha512-G4VGBSalPowktIE4wp3rFbhjs+Ln9IZ2FhXeHjsZDSw0a2+h+BjKu5Enq+mcsyVb51RW740GBK8Xbf7Iic51tw=="
   "resolved" "https://registry.npmjs.org/draft-js-export-html/-/draft-js-export-html-1.4.1.tgz"
@@ -271,7 +279,7 @@
   "resolved" "https://registry.npmjs.org/draft-js-utils/-/draft-js-utils-1.4.1.tgz"
   "version" "1.4.1"
 
-"draft-js@^0.11.7", "draft-js@>=0.10.0", "draft-js@>=0.7.0":
+"draft-js@^0.11.7", "draft-js@>=0.10.0", "draft-js@>=0.7.0", "draft-js@0.10.x":
   "integrity" "sha512-ne7yFfN4sEL82QPQEn80xnADR8/Q6ALVworbC5UOSzOvjffmYfFsr3xSZtxbIirti14R7Y33EZC5rivpLgIbsg=="
   "resolved" "https://registry.npmjs.org/draft-js/-/draft-js-0.11.7.tgz"
   "version" "0.11.7"
@@ -489,7 +497,7 @@
   "resolved" "https://registry.npmjs.org/ignore/-/ignore-5.2.0.tgz"
   "version" "5.2.0"
 
-"immutable@^3.8.1", "immutable@3.x.x":
+"immutable@^3.8.1", "immutable@^3.x", "immutable@3.x.x":
   "integrity" "sha512-15gZoQ38eYjEjxkorfbcgBKBL6R7T459OuK+CpcWt7O3KF4uPCx2tD0uFETlUDIyo+1789crbMhTvQBSR5yBMg=="
   "resolved" "https://registry.npmjs.org/immutable/-/immutable-3.8.2.tgz"
   "version" "3.8.2"
@@ -600,10 +608,20 @@
     "prelude-ls" "^1.2.1"
     "type-check" "~0.4.0"
 
+"lodash.camelcase@^4.3.0":
+  "integrity" "sha512-TwuEnCnxbc3rAvhf/LbG7tJUDzhqXyFnv3dtzLOPgCG/hODL7WFnsbwktkD7yUV0RrreP/l1PALq/YSg6VvjlA=="
+  "resolved" "https://registry.npmjs.org/lodash.camelcase/-/lodash.camelcase-4.3.0.tgz"
+  "version" "4.3.0"
+
 "lodash.merge@^4.6.2":
   "integrity" "sha512-0KpjqXRVvrYyCsX1swR/XTK0va6VQkQM6MNo7PqW77ByjAhoARA8EfrP1N4+KlKj8YS0ZUCtRT/YUuhyYDujIQ=="
   "resolved" "https://registry.npmjs.org/lodash.merge/-/lodash.merge-4.6.2.tgz"
   "version" "4.6.2"
+
+"lodash.snakecase@^4.1.1":
+  "integrity" "sha512-QZ1d4xoBHYUeuouhEq3lk3Uq7ldgyFXGBhg04+oRLnIz8o9T65Eh+8YdroUwn846zchkA9yDsDl5CVVaV2nqYw=="
+  "resolved" "https://registry.npmjs.org/lodash.snakecase/-/lodash.snakecase-4.1.1.tgz"
+  "version" "4.1.1"
 
 "loose-envify@^1.0.0", "loose-envify@^1.1.0":
   "integrity" "sha512-lyuxPGr/Wfhrlem2CL/UcnUc1zcqKAImBDzukY7Y5F/yQiNdko6+fRLevlw1HgMySw7f611UIY408EtxRSoK3Q=="

@@ -1,0 +1,37 @@
+
+.font_size_dropdown {
+    display: inline-block;
+    button {
+        border: 1px solid gray;
+        background-color: white;
+        border-radius: 5px;
+        padding: 1px 7px;
+        width: 30px;
+        transition: all 0.3s;
+    }
+    z-index: 150;
+}
+
+.font_size_menu {
+    display: inline-block;
+    position: absolute;
+    background: #FFFFFF;
+    box-shadow: 0 0 2px;
+    max-height: 100px;
+    overflow-y: scroll;
+    z-index: 1111111;
+
+}
+
+.font_size_menu::-webkit-scrollbar {
+    display: none
+}
+
+.font_size_option {
+    padding: 3px;
+}
+
+.font_size_option:hover {
+    background: #F0F0F0;
+    cursor: pointer;
+}
