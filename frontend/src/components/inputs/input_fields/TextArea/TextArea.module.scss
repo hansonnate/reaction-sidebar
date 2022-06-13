@@ -1,12 +1,13 @@
 @import "assets/styles/globals.scss";
 
-.textField {
+.textarea {
   background-color: $gray40;
   color: $black;
   border-radius: 5px;
+  width: 100%;
+  min-height: 2.5em;
   padding: 5px 20px;
   outline: none;
-  width: 100%;
 
   ::placeholder, /* Chrome, Firefox, Opera, Safari 10.1+ */
   :-ms-input-placeholder, /* Internet Explorer 10-11 */
@@ -16,6 +17,6 @@
   }
 
   &.disabled {
-    background-color: #ffffff00;
+      color: $gray100
   }
 }

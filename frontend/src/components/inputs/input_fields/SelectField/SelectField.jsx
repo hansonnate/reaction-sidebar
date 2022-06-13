@@ -43,14 +43,13 @@ export const SelectField = ({
   handleSelection
   //   autosave = false,
 }) => {
-  const handleChange = (newValue, actionMeta) => {
-    value = newValue;
+  const handleChange = (option, actionMeta) => {
+    console.log(option.value)
+    handleSelection(option.value);
     console.log(actionMeta);
   };
-  const handleInputChange = (inputValue, actionMeta) => {
+  const handleInputChange = (inputValue) => {
     console.log("inputValue=" + inputValue)
-    handleSelection(inputValue)
-    console.log(`action: ${actionMeta}`);
   };
 
   //console.log(options);

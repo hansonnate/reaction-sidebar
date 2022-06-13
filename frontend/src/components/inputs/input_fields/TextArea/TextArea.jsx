@@ -1,15 +1,8 @@
 import React, { useState } from "react";
 
-import styles from "./TextField.module.scss";
+import styles from "./TextArea.module.scss";
 
-export const TextField = ({
-  value,
-  placeholder,
-  onSave,
-  autosave,
-  disabled,
-  inactive,
-}) => {
+export const TextArea = ({ value, placeholder, onSave, autosave, active, disabled }) => {
   const [val, setVal] = useState(value);
 
   const saveTimer = null;
@@ -30,10 +23,8 @@ export const TextField = ({
   };
 
   return (
-    <input
-      className={`${styles.textField} ${
-        disabled || (inactive && styles.disabled)
-      }`}
+    <textarea
+      className={`${styles.textarea} ${active && styles.active} ${disabled && styles.disabled}`}
       type="text"
       value={val}
       placeholder={placeholder}

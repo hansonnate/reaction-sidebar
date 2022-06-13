@@ -1,5 +1,5 @@
 import { apiClient } from "../../Api";
-import { useQuery, useMutation, queryCache } from "react-query";
+import { useQuery, useMutation, useQueryClient } from "react-query";
 
 const uri = "/questions";
 
@@ -9,7 +9,7 @@ export const useFetchQuestions = (projectId) => {
     ["projects", projectId, "questions"],                   // Cache key
     () => apiClient.get(`${uri}`).then((res) => res.data),  // Query function
     {                                                       // Query config    
-      
+
     }               
   );
 };
@@ -22,7 +22,8 @@ export const useFetchQuestion = (questionId) => {
   );
 };
 
-export const useCreateQuestion = () => {
+export const useCreateQuestion = (projectId) => {
+  const queryClient = useQueryClient();
   return useMutation(
     (values) => apiClient.post(`${uri}`, values).then((res) => res.data),
     {
@@ -35,7 +36,27 @@ export const useCreateQuestion = () => {
         if (rollback) rollback();
       },
       onSettled: () => {
-        queryCache.invalidateQueries("questions");
+        queryClient.invalidateQueries(["projects", projectId, "questions"]);
+      },
+    }
+  );
+};
+
+export const useUpdateQuestion = (projectId) => {
+  const queryClient = useQueryClient();
+  return useMutation(
+    (values) =>
+      apiClient.patch(`${uri}/${values.id}`, values).then((res) => res.data),
+    {
+      onMutate: (values) => {
+        queryClient.setQueriesData(["projects", projectId, "questions", values.id], values);
+      },
+      onError: (err, _project, rollback) => {
+        console.log(err);
+        if (rollback) rollback();
+      },
+      onSuccess: () => {
+        queryClient.invalidateQueries(["projects", projectId, "questions"]);
       },
     }
   );
