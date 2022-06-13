@@ -1,5 +1,7 @@
+import { useUpdateQuestion } from "api/resources/projects/questions";
 import { TextField } from "components/inputs";
 import React from "react";
+import { useParams } from "react-router-dom";
 
 import styles from "./Question.module.scss";
 import {
@@ -10,14 +12,6 @@ import {
   MatrixQuestion,
 } from "./types";
 
-export const QuestionType = {
-  MultipleChoice: <MultipleChoiceQuestion />,
-  Matrix: <MatrixQuestion />,
-  Text: <TextQuestion />,
-  NumberScale: <NumberScaleQuestion />,
-  Ranking: <RankingQuestion />,
-};
-
 /**
  *
  * @class
@@ -26,6 +20,27 @@ export const QuestionType = {
  * @returns {React.ReactElement} A question component
  */
 export const Question = ({ question, active, activate }) => {
+  const { id } = useParams();
+  const updateQuestionQuery = useUpdateQuestion(id);
+
+  const showInstructions = () => {
+    return question.instructions || active;
+  };
+
+  const handleUpdateName = (name) => {
+    updateQuestionQuery.mutate({
+      id: question.id,
+      name: name,
+    });
+  };
+
+  const handleUpdateInstructions = (instructions) => {
+    updateQuestionQuery.mutate({
+      id: question.id,
+      instructions: instructions,
+    });
+  };
+
   return (
     <div
       className={`${styles.questionContainer} ${active && styles.active}`}
@@ -35,15 +50,30 @@ export const Question = ({ question, active, activate }) => {
         <TextField
           value={question.name}
           placeholder="Enter question title"
+          inactive={!active}
+          onSave={handleUpdateName}
+          autoFocus
         />
       </div>
-      <div className={styles.item}>
-        <TextField
-          value={question.instructions}
-          placeholder="Enter question instructions"
-        />
-      </div>
-      {QuestionType[question.type]}
+      {showInstructions() && (
+        <div className={styles.item}>
+          <TextField
+            value={question.instructions}
+            placeholder="Enter question instructions"
+            inactive={!active}
+            onSave={handleUpdateInstructions}
+          />
+        </div>
+      )}
+      {question.type === "MultipleChoice" && (
+        <MultipleChoiceQuestion active={active} />
+      )}
+      {question.type === "Matrix" && <MatrixQuestion active={active} />}
+      {question.type === "NumberScale" && (
+        <NumberScaleQuestion active={active} />
+      )}
+      {question.type === "Ranking" && <RankingQuestion active={active} />}
+      {question.type === "Text" && <TextQuestion active={active} />}
     </div>
   );
 };

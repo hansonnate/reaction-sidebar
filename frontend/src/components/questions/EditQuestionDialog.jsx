@@ -3,7 +3,7 @@ import React from "react";
 
 import styles from "./EditQuestionDialog.module.scss";
 
-export const EditQuestionDialog = ({ question }) => {
+export const EditQuestionDialog = ({ question, onTypeChange }) => {
   const questionTypes = {
     MultipleChoice: { label: "Multiple Choice", value: "MultipleChoice" },
     Text: { label: "Text", value: "Text" },
@@ -12,17 +12,12 @@ export const EditQuestionDialog = ({ question }) => {
     Matrix: { label: "Matrix", value: "Matrix" },
   };
 
-  console.log(question);
-  const handleQuestionTypeChange = (type) => {
-    question.type = type;
-  };
-
   return (
     <div className={`${styles.dialog}`}>
       <SelectField
         options={Object.values(questionTypes)}
         value={questionTypes[question.type]}
-        handleSelection={handleQuestionTypeChange}
+        handleSelection={onTypeChange}
       />
     </div>
   );
