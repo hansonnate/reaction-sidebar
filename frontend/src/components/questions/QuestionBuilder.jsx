@@ -39,7 +39,7 @@ export const QuestionBuilder = () => {
 
   return (
     <>
-      <SplitHorizontal fullHeight leftWidth={70}>
+      <SplitHorizontal fullHeight leftWidth={8}>
         <>
           {fetchQuestionsQuery.isSuccess && (
             <div className={`overflow-y-scroll ${styles.scrollPane}`}>

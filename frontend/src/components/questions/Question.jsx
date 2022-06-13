@@ -49,7 +49,7 @@ export const Question = ({ question, active, activate }) => {
       <div className={styles.item}>
         <TextField
           value={question.name}
-          placeholder="Enter question title"
+          placeholder="Enter question"
           inactive={!active}
           onSave={handleUpdateName}
           autoFocus
