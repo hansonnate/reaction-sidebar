@@ -15,9 +15,10 @@ import ReactInput from "../../components/ReactInput/ReactInput.jsx";
 // Internal
 import { Header } from "components/layouts";
 //import { useApi, ProjectsApi } from "api";
-import { useCreateProject, useFetchProjects } from "api/resources/projects/projects";
-
-
+import {
+  useCreateProject,
+  useFetchProjects,
+} from "api/resources/projects/projects";
 
 //sample data
 // const getData = () => [
@@ -81,11 +82,10 @@ export const Projects = () => {
       {
         Header: "Project",
         accessor: "name",
-        show: true,
         Filter: SelectColumnFilter,
         filter: MultipleFilter,
         Cell: (e) => (
-          <Link to={e.value} style={{ color: "black" }}>
+          <Link to={e.cell.row.id} style={{ color: "black" }}>
             {" "}
             {e.value}{" "}
           </Link>
@@ -94,7 +94,6 @@ export const Projects = () => {
       {
         Header: "Status",
         accessor: "status",
-        show: true,
         Filter: SelectColumnFilter,
         filter: MultipleFilter,
         Cell: (e) => (
@@ -110,28 +109,24 @@ export const Projects = () => {
       {
         Header: "Responses",
         accessor: "responses",
-        show: true,
         Filter: SelectColumnFilter,
         filter: MultipleFilter,
       },
       {
         Header: "Owner",
         accessor: "owner",
-        show: true,
         Filter: SelectColumnFilter,
         filter: MultipleFilter,
       },
       {
         Header: "Modified",
         accessor: "modified",
-        show: true,
         Filter: SelectColumnFilter,
         filter: MultipleFilter,
       },
       {
         Header: "Created",
         accessor: "created",
-        show: true,
         Filter: SelectColumnFilter,
         filter: MultipleFilter,
       },
@@ -148,21 +143,30 @@ export const Projects = () => {
   // useEffect(() => {
   //   getProjects.request();
   // }, []);
-  
 
   const [show, setShow] = useState(false);
+  const [projectName, setProjectName] = useState("New Project");
+  const [description, setDescription] = useState("");
 
-  const handlePostProject = (projectName, owner, status, responses, created, modified) => {
+  const handlePostProject = (
+    projectName,
+    owner,
+    status,
+    responses,
+    created,
+    modified,
+    description
+  ) => {
     createProjectQuery.mutate({
       name: projectName,
       owner: owner,
       status: status,
       responses: responses,
       created: created,
-      modified: modified
+      modified: modified,
+      description: description,
     });
   };
-
 
   return (
     <>
@@ -178,13 +182,43 @@ export const Projects = () => {
         </div>
         
       ))} */}
-      {fetchProjectsQuery.isSuccess && <ReactTable columns={columns} data={fetchProjectsQuery.data} buttonMethod={() => setShow(true)} modalTitle="New Project"/>}
-      <ReactModal show={show} onClose={() => setShow(false)} onSave={() => handlePostProject("New Project", "Jack Sparrow", "Closed", 0, Date.now(), Date.now())}>
+      {fetchProjectsQuery.isSuccess && (
+        <ReactTable
+          columns={columns}
+          data={fetchProjectsQuery.data}
+          buttonMethod={() => setShow(true)}
+          modalTitle="New Project"
+        />
+      )}
+      <ReactModal
+        show={show}
+        onClose={() => setShow(false)}
+        onSave={() => {
+          handlePostProject(
+            projectName,
+            "Jack Sparrow",
+            "Closed",
+            0,
+            Date.now(),
+            Date.now(),
+            description
+          );
+          setShow(false);
+        }}
+      >
         <div className="content">
           <h1>Create a New Project</h1>
           <div className="text">
-            <ReactInput type="text" placeholder="Project Name"></ReactInput>
-            <ReactInput type="text" placeholder="Description (optional)"></ReactInput>
+            <ReactInput
+              type="text"
+              placeholder="Project Name"
+              onChange={(e) => setProjectName(e.target.value)}
+            ></ReactInput>
+            <ReactInput
+              type="text"
+              placeholder="Description (optional)"
+              onChange={(e) => setDescription(e.target.value)}
+            ></ReactInput>
             {/* <ActionButton functionality={() =>handlePostProject("New Project", "Jack Sparrow", "Closed", 0, Date.now(), Date.now())} title="Click me">Click me</ActionButton> */}
           </div>
         </div>

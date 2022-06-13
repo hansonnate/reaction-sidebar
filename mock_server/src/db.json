@@ -191,13 +191,14 @@
       "created": 1643310574000
     },
     {
-      "name": "New Project",
+      "name": "This is a project",
       "owner": "Jack Sparrow",
       "status": "Closed",
       "responses": 0,
       "created": 1653497655617,
       "modified": 1653497655617,
-      "id": 15
+      "id": 15,
+      "description": "Good description"
     },
     {
       "name": "New Project",
@@ -236,6 +237,46 @@
       "id": 19
     },
     {
+<<<<<<< HEAD
+      "name": "Who are the aluminati?",
+      "owner": "Jack Sparrow",
+      "status": "Closed",
+      "responses": 0,
+      "created": 1654630430915,
+      "modified": 1654630430915,
+      "description": "We want your opinion",
+      "id": 20
+    },
+    {
+      "name": "Theres more?",
+      "owner": "Jack Sparrow",
+      "status": "Closed",
+      "responses": 0,
+      "created": 1654630485975,
+      "modified": 1654630485975,
+      "description": "Description",
+      "id": 21
+    },
+    {
+      "name": "Surveys suck",
+      "owner": "Jack Sparrow",
+      "status": "Closed",
+      "responses": 0,
+      "created": 1654630724511,
+      "modified": 1654630724511,
+      "description": "this is important",
+      "id": 22
+    },
+    {
+      "name": "Surveys are lame",
+      "owner": "Jack Sparrow",
+      "status": "Closed",
+      "responses": 0,
+      "created": 1654630756857,
+      "modified": 1654630756857,
+      "description": "this is a description",
+      "id": 23
+=======
       "name": "New Project",
       "owner": "Jack Sparrow",
       "status": "Closed",
@@ -243,6 +284,7 @@
       "created": 1654628505997,
       "modified": 1654628505997,
       "id": 20
+>>>>>>> refs/remotes/origin/main
     }
   ],
   "contacts": [

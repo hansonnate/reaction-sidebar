@@ -430,7 +430,7 @@ function ReactTable({ columns, data, buttonMethod, modalTitle }) {
                   <input
                     className={styles.checkbox}
                     type="checkbox"
-                    id={row.index}
+                    id={row.id}
                     // onChange={handleChange}
                     // checked={checkList.includes(row)}
                     onChange={(e) => onItemCheck(e, row)}
@@ -441,12 +441,11 @@ function ReactTable({ columns, data, buttonMethod, modalTitle }) {
                 {row.cells.map((cell) => {
                   return (
                     <td
-                      onClick={() => routeChange(row.original.name)}
-                      key={cell.id}
+                      onClick={() => routeChange(row.original.id.toString())}
+                      key={row.original.id.toString()}
                       {...cell.getCellProps()}
                       className={styles.td}
                     >
-                      {/* {cell.render("Cell")} */}
                       {!isNaN(cell.value)
                         ? checkDate(cell.value)
                         : cell.render("Cell")}
