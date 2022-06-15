@@ -11,9 +11,9 @@ import ReactInput from "components/ReactInput/ReactInput.jsx";
 import { useParams } from "react-router-dom";
 import { useFetchProject } from "api/resources/projects/projects";
 import Select from "react-select";
-import { TextEdit } from "components/inputs/input_fields/TextEdit/TextEdit";
+// import { TextEdit } from "components/inputs/input_fields/TextEdit/TextEdit";
+import TextEditor from "components/inputs/input_fields/TextEditor";
 import "draft-js/dist/Draft.css";
-
 // Internal
 import {
   // useCreateProject,
@@ -130,7 +130,8 @@ export const Email = () => {
             <div className={styles.formfield}>
               <label>Email Body</label>
               <div className={styles.textfield}>
-                <TextEdit></TextEdit>
+                <TextEditor></TextEditor>
+
               </div>
             </div>
             <div className={styles.formfield}>

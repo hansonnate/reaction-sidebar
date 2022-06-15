@@ -5,14 +5,18 @@ import ReactTable, {
   MultipleFilter,
 } from "components/BasicTable/ReactTable.jsx";
 import styles from "./SMS.module.scss";
-import ReactModal from "components/ReactModal/ReactModal.jsx";
+// import ReactModal from "components/ReactModal/ReactModal.jsx";
 import ReactInput from "components/ReactInput/ReactInput.jsx";
 import { useParams } from "react-router-dom";
 import { useFetchProject } from "api/resources/projects/projects";
+import Select from "react-select";
+// import { TextEdit } from "components/inputs/input_fields/TextEdit/TextEdit";
+// import TextEditor from "components/inputs/input_fields/TextEditor";
+import DistributionModal from "components/ReactModal/DistributionModal.jsx";
 
 // Internal
 import {
-  useCreateProject,
+  // useCreateProject,
   useFetchProjects,
 } from "api/resources/projects/projects";
 
@@ -77,37 +81,36 @@ export const SMS = () => {
   // const postProject = useApi(ProjectsApi.postProject);
 
   const fetchProjectsQuery = useFetchProjects();
-  const createProjectQuery = useCreateProject();
+  // const createProjectQuery = useCreateProject();
   console.log(fetchProjectsQuery.data);
-  
 
   // useEffect(() => {
   //   getProjects.request();
   // }, []);
 
   const [show, setShow] = useState(false);
-  const [projectName, setProjectName] = useState("New Project");
-  const [description, setDescription] = useState("");
+  // const [projectName, setProjectName] = useState("New Project");
+  // const [description, setDescription] = useState("");
 
-  const handlePostProject = (
-    projectName,
-    owner,
-    status,
-    responses,
-    created,
-    modified,
-    description
-  ) => {
-    createProjectQuery.mutate({
-      name: projectName,
-      owner: owner,
-      status: status,
-      responses: responses,
-      created: created,
-      modified: modified,
-      description: description,
-    });
-  };
+  // const handlePostProject = (
+  //   projectName,
+  //   owner,
+  //   status,
+  //   responses,
+  //   created,
+  //   modified,
+  //   description
+  // ) => {
+  //   createProjectQuery.mutate({
+  //     name: projectName,
+  //     owner: owner,
+  //     status: status,
+  //     responses: responses,
+  //     created: created,
+  //     modified: modified,
+  //     description: description,
+  //   });
+  // };
 
   return (
     <>
@@ -130,39 +133,56 @@ export const SMS = () => {
           modalTitle="Compose Text"
         />
       )}
-      <ReactModal
-        show={show}
-        onClose={() => setShow(false)}
-        onSave={() => {
-          handlePostProject(
-            projectName,
-            "Jack Sparrow",
-            "Closed",
-            0,
-            Date.now(),
-            Date.now(),
-            description
-          );
-          setShow(false);
-        }}
-      >
-        <div className="content">
-          <h1>Create a New Project</h1>
-          <div className="text">
-            <ReactInput
-              type="text"
-              placeholder="Project Name"
-              onChange={(e) => setProjectName(e.target.value)}
-            ></ReactInput>
-            <ReactInput
-              type="text"
-              placeholder="Description (optional)"
-              onChange={(e) => setDescription(e.target.value)}
-            ></ReactInput>
-            {/* <ActionButton functionality={() =>handlePostProject("New Project", "Jack Sparrow", "Closed", 0, Date.now(), Date.now())} title="Click me">Click me</ActionButton> */}
+      <DistributionModal show={show} onClose={() => setShow(false)}>
+        <div className={styles.content}>
+          <h1>Compose Email</h1>
+          <div className={styles.distibutionform}>
+            <div className={styles.formfield}>
+              <label>Audience</label>
+              <div className={styles.selectfield}>
+                <Select options=""></Select>
+              </div>
+            </div>
+            <div className={styles.formfield}>
+              <label>From</label>
+              <div className={styles.selectfield}>
+                <Select options=""></Select>
+              </div>
+            </div>
+            <div className={styles.formfield}>
+              <label>Subject</label>
+              <div className={styles.textfield}>
+                <ReactInput type="text" placeholder="New Subject"></ReactInput>
+              </div>
+            </div>
+            <div className={styles.formfield}>
+              <label>Email Body</label>
+              <div className={styles.textfield}>
+                <textarea placeholder="Type Message here..."></textarea>
+              </div>
+            </div>
+            <div className={styles.formfield}>
+              <label>Schedule Send</label>
+              <div className={styles.selectfield}>
+                <Select options="" placeholder="Schedule Options..."></Select>
+              </div>
+            </div>
+            <div className={styles.footer}>
+              <button
+                className={styles.darkbutton}
+                onClick={() => setShow(false)}
+              >
+                Close
+              </button>
+
+              <div className={styles.specialbuttons}>
+                <button className={styles.lightbutton}>Save as draft</button>
+                <button className={styles.darkbutton}>Schedule Send</button>
+              </div>
+            </div>
           </div>
         </div>
-      </ReactModal>
+      </DistributionModal>
     </>
   );
 };

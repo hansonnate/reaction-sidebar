@@ -59,13 +59,14 @@
   "projects": [
     {
       "id": 0,
-      "name": "Doctors Opinion1",
+      "name": "Doctors Opinion1koasdfasd",
       "link": "survey1",
       "owner": "Mark Wagner",
       "status": "Open",
       "responses": 25,
       "modified": 1650310574000,
       "created": 1643310574000,
+<<<<<<< HEAD
       "emails": [
           {
             "id": 0,
@@ -108,6 +109,9 @@
           "strength": "Good"
         }
       ]
+=======
+      "description": ""
+>>>>>>> main
     },
     {
       "name": "New Project",
@@ -300,6 +304,7 @@
       "id": 19
     },
     {
+<<<<<<< HEAD
       "name": "Who are the aluminati?",
       "owner": "Jack Sparrow",
       "status": "Closed",
@@ -338,6 +343,15 @@
       "modified": 1654630756857,
       "description": "this is a description",
       "id": 23
+=======
+      "name": "New Project",
+      "owner": "Jack Sparrow",
+      "status": "Closed",
+      "responses": 0,
+      "created": 1654628505997,
+      "modified": 1654628505997,
+      "id": 20
+>>>>>>> main
     }
   ],
   "contacts": [
@@ -384,14 +398,60 @@
     {
       "id": 0,
       "projectId": 0,
-      "name": "How are you?",
-      "type": "MultipleChoice"
+      "name": "Hey how are you?",
+      "type": "Text",
+      "instructions": "asdfsadf"
     },
     {
       "id": 1,
       "projectId": 0,
-      "name": "Where are you from?",
-      "type": "Ranking"
+      "name": "Where are you from?asdf",
+      "type": "NumberScale",
+      "instructions": "asdfdfg"
+    },
+    {
+      "projectId": "0",
+      "type": "MultipleChoice",
+      "id": 2
+    },
+    {
+      "projectId": "0",
+      "type": "Text",
+      "id": 3
+    },
+    {
+      "projectId": "0",
+      "type": "Text",
+      "id": 4,
+      "name": "sadfasd",
+      "instructions": "sdfg"
+    },
+    {
+      "projectId": "0",
+      "type": "Text",
+      "id": 5
+    },
+    {
+      "projectId": "0",
+      "type": "Ranking",
+      "id": 6
+    },
+    {
+      "projectId": "0",
+      "type": "Text",
+      "id": 7,
+      "name": "Hey there",
+      "instructions": "asdf"
+    },
+    {
+      "projectId": "0",
+      "type": "Text",
+      "id": 8
+    },
+    {
+      "projectId": "0",
+      "type": "Text",
+      "id": 9
     }
   ]
 }

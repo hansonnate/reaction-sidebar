@@ -11,6 +11,7 @@ import styles from "./Project.module.scss";
 import { Loading } from "components/Loading/Loading";
 //eslint-disable-next-line
 import { useFetchProject } from "api/resources/projects/projects";
+import { ErrorPage } from "pages";
 
 const menuItems = [
   {
@@ -44,7 +45,7 @@ export const Project = () => {
   return (
     <>
       {projectQuery.isLoading && <Loading />}
-      {projectQuery.isError && <p>{projectQuery.error}</p>}
+      {projectQuery.isError && <ErrorPage />}
       {projectQuery.isSuccess && (
         <>
           <Header title={projectQuery.data.name || "Untitled Project"} backPath="/projects" />

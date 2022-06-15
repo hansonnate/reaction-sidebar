@@ -1,3 +1,9 @@
+$reactlightblue: #d5f3fe;
+$reactdarkerblue: #2A627C;
+$reactdarkblue: #2a627c81;
+$reactorange: #EDB57E;
+$reactdarkorange: #ed9146;
+
 .status {
     border-radius: 5px;
     padding: 3px 5px 3px 5px;
@@ -10,4 +16,97 @@
 .status.isclosed {
     background-color: #7fcfd35b;
     color: #7FCFD3;
+}
+.distibutionform {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.formfield {
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-start;
+    width: 100%;
+    height: 100%;
+    gap: 15px;
+    // border: 2px solid black;
+    align-items: flex-start;
+    
+    // justify-content: space-between;
+    
+    label {
+        font-family: "Poppins", sans-serif;
+        text-transform: uppercase;
+        font-weight: 900;
+        width: 150px;
+        padding-top: 8px;
+    }
+
+}
+
+.selectfield {
+    width: 250px;
+    // border: 2px solid black;
+}
+.textfield {
+    // width: 100%;
+    width: 900px;
+    
+    // border: 2px solid black;
+}
+
+.footer {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    width: 100%;
+    gap: 15px;
+    // border: 2px solid black;
+    align-items: center;
+
+}
+
+.specialbuttons {
+    display: flex;
+    flex-direction: row;
+    gap: 20px;
+
+}
+.lightbutton {
+    font-family: "Poppins", sans-serif;
+    width: fit-content;
+    background-color: white;
+    color: $reactorange;
+    border-radius: 5px;
+    border: 2px solid  $reactorange;
+    padding: 5px 10px;
+    transition: all .3s;
+}
+.lightbutton:hover {
+    width: fit-content;
+    padding: 5px 10px;
+    border-radius: 5px;
+    background-color: $reactorange;
+    color: white;
+    font-family: "Poppins", sans-serif;
+}
+.darkbutton {
+    width: fit-content;
+    padding: 5px 10px;
+    border-radius: 5px;
+    border: 2px solid $reactorange;
+    background-color: $reactorange;
+    color: white;
+    transition: all .3s;
+    font-family: "Poppins", sans-serif;
+}    
+.darkbutton:hover {
+    font-family: "Poppins", sans-serif;
+    width: fit-content;
+    background-color: white;
+    color: $reactorange;
+    border-radius: 5px;
+    border: 2px solid  $reactorange;
+    padding: 5px 10px;
 }

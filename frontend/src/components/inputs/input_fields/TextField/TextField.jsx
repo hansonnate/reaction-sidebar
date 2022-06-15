@@ -2,7 +2,14 @@ import React, { useState } from "react";
 
 import styles from "./TextField.module.scss";
 
-export const TextField = ({ value, placeholder, onSave, autosave, disabled }) => {
+export const TextField = ({
+  value,
+  placeholder,
+  onSave,
+  autosave,
+  disabled,
+  inactive,
+}) => {
   const [val, setVal] = useState(value);
 
   const saveTimer = null;
@@ -24,7 +31,9 @@ export const TextField = ({ value, placeholder, onSave, autosave, disabled }) =>
 
   return (
     <input
-      className={`${styles.textField} ${disabled && styles.disabled}`}
+      className={`${styles.textField} ${
+        disabled || (inactive && styles.disabled)
+      }`}
       type="text"
       value={val}
       placeholder={placeholder}
