@@ -10,12 +10,12 @@ export const UserGroups = () => {
     {
       id: 0,
       name: "Roles",
-      to: `roles`,
+      to: `Roles`,
     },
     {
       id: 1,
       name: "Teams",
-      to: `teams`,
+      to: `Teams`,
     },
   ];
   const [active, setActive] = useState(0);

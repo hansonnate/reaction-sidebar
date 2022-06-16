@@ -5,14 +5,12 @@ import ReactTable, {
   MultipleFilter,
 } from "components/BasicTable/ReactTable.jsx";
 import styles from "./SMS.module.scss";
-// import ReactModal from "components/ReactModal/ReactModal.jsx";
-import ReactInput from "components/ReactInput/ReactInput.jsx";
 import { useParams } from "react-router-dom";
 import { useFetchProject } from "api/resources/projects/projects";
 import Select from "react-select";
-// import { TextEdit } from "components/inputs/input_fields/TextEdit/TextEdit";
-// import TextEditor from "components/inputs/input_fields/TextEditor";
 import DistributionModal from "components/ReactModal/DistributionModal.jsx";
+import { TextArea } from "components/inputs/input_fields/TextArea/TextArea";
+
 
 // Internal
 import {
@@ -135,7 +133,7 @@ export const SMS = () => {
       )}
       <DistributionModal show={show} onClose={() => setShow(false)}>
         <div className={styles.content}>
-          <h1>Compose Email</h1>
+          <h1>Compose Text</h1>
           <div className={styles.distibutionform}>
             <div className={styles.formfield}>
               <label>Audience</label>
@@ -150,15 +148,10 @@ export const SMS = () => {
               </div>
             </div>
             <div className={styles.formfield}>
-              <label>Subject</label>
+              <label>Text Body</label>
               <div className={styles.textfield}>
-                <ReactInput type="text" placeholder="New Subject"></ReactInput>
-              </div>
-            </div>
-            <div className={styles.formfield}>
-              <label>Email Body</label>
-              <div className={styles.textfield}>
-                <textarea placeholder="Type Message here..."></textarea>
+                {/* <textarea placeholder="Type Message here..."></textarea> */}
+                <TextArea placeholder="Type Message here..."></TextArea>
               </div>
             </div>
             <div className={styles.formfield}>

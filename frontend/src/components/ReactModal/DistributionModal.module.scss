@@ -28,8 +28,9 @@
   overflow-x: scroll;
   position: relative;
   display: block;
-  height: 70%;
+  height: fit-content;
   min-height: 300px;
+  max-height: 80%;
   width: 60%;
   margin: 0 auto;
   margin-top: 20px;

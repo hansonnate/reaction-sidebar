@@ -7,7 +7,7 @@ import ReactTable, {
 } from "components/BasicTable/ReactTable.jsx";
 import styles from "./Email.module.scss";
 import DistributionModal from "components/ReactModal/DistributionModal.jsx";
-import ReactInput from "components/ReactInput/ReactInput.jsx";
+import { TextField } from "components/inputs";
 import { useParams } from "react-router-dom";
 import { useFetchProject } from "api/resources/projects/projects";
 import Select from "react-select";
@@ -19,6 +19,7 @@ import {
   // useCreateProject,
   useFetchProjects,
 } from "api/resources/projects/projects";
+import { useFetchAudiences } from "api/resources/contacts/audiences";
 
 function isOpen(value) {
   if (value.value == "Bad") {
@@ -29,7 +30,12 @@ function isOpen(value) {
 }
 
 export const Email = () => {
-
+  const options = [
+    { value: "chocolate", label: "Chocolate" },
+    { value: "strawberry", label: "Strawberry" },
+    { value: "vanilla", label: "Vanilla" },
+  ];
+  const fetchAudiencesQuery = useFetchAudiences();
 
   const { id } = useParams();
   const projectQuery = useFetchProject(id);
@@ -92,6 +98,8 @@ export const Email = () => {
 
   return (
     <>
+      {fetchAudiencesQuery.isLoading && <p>Loading...</p>}
+      {fetchAudiencesQuery.isError && <p>{fetchAudiencesQuery.error}</p>}
       {fetchProjectsQuery.isLoading && <p>Loading...</p>}
       {fetchProjectsQuery.isError && <p>{fetchProjectsQuery.error}</p>}
       {fetchProjectsQuery.isSuccess && (
@@ -102,42 +110,43 @@ export const Email = () => {
           modalTitle="Compose Email"
         />
       )}
-      <DistributionModal
-        show={show}
-        onClose={() => setShow(false)}
-      >
+      <DistributionModal show={show} onClose={() => setShow(false)}>
         <div className={styles.content}>
           <h1>Compose Email</h1>
           <div className={styles.distibutionform}>
             <div className={styles.formfield}>
               <label>Audience</label>
               <div className={styles.selectfield}>
-                <Select options=""></Select>
+              {fetchAudiencesQuery.isSuccess &&
+                <Select options={fetchAudiencesQuery.data}></Select>
+              }
               </div>
             </div>
             <div className={styles.formfield}>
               <label>From</label>
-              <div className={styles.selectfield}>
-                <Select options=""></Select>
+              <div className={styles.selectfield2}>
+                <Select options={options}></Select>
               </div>
             </div>
             <div className={styles.formfield}>
               <label>Subject</label>
               <div className={styles.textfield}>
-                <ReactInput type="text" placeholder="New Subject"></ReactInput>
+                <TextField placeholder="New Subject"></TextField>
               </div>
             </div>
             <div className={styles.formfield}>
               <label>Email Body</label>
               <div className={styles.textfield}>
                 <TextEditor></TextEditor>
-
               </div>
             </div>
             <div className={styles.formfield}>
               <label>Schedule Send</label>
               <div className={styles.selectfield}>
-                <Select options="" placeholder="Schedule Options..."></Select>
+                <Select
+                  options={options}
+                  placeholder="Schedule Options..."
+                ></Select>
               </div>
             </div>
             <div className={styles.footer}>

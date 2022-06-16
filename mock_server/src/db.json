@@ -66,7 +66,6 @@
       "responses": 25,
       "modified": 1650310574000,
       "created": 1643310574000,
-<<<<<<< HEAD
       "emails": [
           {
             "id": 0,
@@ -109,9 +108,6 @@
           "strength": "Good"
         }
       ]
-=======
-      "description": ""
->>>>>>> main
     },
     {
       "name": "New Project",
@@ -304,7 +300,6 @@
       "id": 19
     },
     {
-<<<<<<< HEAD
       "name": "Who are the aluminati?",
       "owner": "Jack Sparrow",
       "status": "Closed",
@@ -343,15 +338,6 @@
       "modified": 1654630756857,
       "description": "this is a description",
       "id": 23
-=======
-      "name": "New Project",
-      "owner": "Jack Sparrow",
-      "status": "Closed",
-      "responses": 0,
-      "created": 1654628505997,
-      "modified": 1654628505997,
-      "id": 20
->>>>>>> main
     }
   ],
   "contacts": [
@@ -368,6 +354,8 @@
     {
       "id": 0,
       "name": "Patients",
+      "value": "patients",
+      "label": "Patients",
       "members": 350,
       "created": 1653497659988,
       "modified": 1653497659988
@@ -375,6 +363,8 @@
     {
       "id": 1,
       "name": "Doctors",
+      "value": "doctors",
+      "label": "Doctors",
       "members": 25,
       "created": 1653497659988,
       "modified": 1653497659988
@@ -382,6 +372,8 @@
     {
       "id": 2,
       "name": "Clients",
+      "value": "clients",
+      "label": "Clients",
       "members": 656,
       "created": 1653497659988,
       "modified": 1653497659988
@@ -389,6 +381,8 @@
     {
       "id": 3,
       "name": "Employees",
+      "value": "employees",
+      "label": "Employees",
       "members": 223,
       "created": 1653497659988,
       "modified": 1653497659988
