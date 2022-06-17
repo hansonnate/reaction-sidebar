@@ -12,6 +12,21 @@ export const useFetchProjects = () => {
   );
 };
 
+// export const useFetchProjectsGql = () => {
+//   const query = gql`
+//     query {
+//       projects {
+//         id
+//         name
+//         status
+//         responseCount
+//         createAt
+//       }
+//     }`;
+
+//   return useGqlQuery(["projects", projectId, "questions"], query, []);
+// };
+
 export const useFetchProject = (projectId) => {
   return useQuery(
     ["projects", projectId],
@@ -47,7 +62,8 @@ export const useUpdateProject = () => {
       apiClient.patch(`${uri}/${values.id}`, values).then((res) => res.data),
     {
       onMutate: (values) => {
-        queryClient.setQueriesData(["projects", values.id], values);
+        // queryClient.setQueriesData(["projects", values.id], values);
+        console.log("updating project", values);
       },
       onError: (err, _project, rollback) => {
         console.log(err);
@@ -59,23 +75,3 @@ export const useUpdateProject = () => {
     }
   );
 };
-
-// // before using react-query
-// const getProjects = () => apiClient.get(`${uri}`);
-// // get project details, questions, design stuff, deliveries, first page distributions, visualizations,
-// const getProject = (projectId) =>
-//   apiClient.get(`${uri}/${projectId}?_embed=questions`);
-// const postProject = (body) => {
-//   apiClient.post(`${uri}`, body);
-// };
-// const patchProject = (projectId, body) => {
-//   console.log("patching projects");
-//   apiClient.patch(`${uri}/${projectId}`, body);
-// };
-
-// export default {
-//   getProjects,
-//   getProject,
-//   postProject,
-//   patchProject,
-// };

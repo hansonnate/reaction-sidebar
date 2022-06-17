@@ -1,17 +1,39 @@
 import { apiClient } from "../../Api";
 import { useQuery, useMutation, useQueryClient } from "react-query";
+import { gql } from "graphql-request";
 
-const uri = "/questions";
+import { useGqlQuery, useGqlMutation } from "api/Api";
+
+const uri = "/questions"
 
 // Using react-query to cache the questions
 export const useFetchQuestions = (projectId) => {
   return useQuery(
-    ["projects", projectId, "questions"],                   // Cache key
-    () => apiClient.get(`${uri}`).then((res) => res.data),  // Query function
-    {                                                       // Query config    
-
-    }               
+    ["projects", projectId, "questions"], // Cache key
+    () =>
+      apiClient
+        .get(`/projects/${projectId}?_embed=questions`)
+        .then((res) => res.data.questions), // Query function
+    {
+      // Query config
+    }
   );
+};
+
+export const useFetchQuestionsGql = (projectId) => {
+  const query = gql`
+    query {
+      surveyById(id: ${projectId}) {
+        questions {
+          id
+          title
+          description
+          projectId
+        }
+      }
+    }`;
+
+  return useGqlQuery(["projects", projectId, "questions"], query, []);
 };
 
 export const useFetchQuestion = (questionId) => {
@@ -20,6 +42,32 @@ export const useFetchQuestion = (questionId) => {
     () => apiClient.get(`${uri}/${questionId}`).then((res) => res.data),
     {}
   );
+};
+
+export const useFetchQuestionGql = (questionId, projectId=null) => {
+  const query = gql`
+    query {
+      question(where: { id: ${questionId} }) {
+        id
+        title
+        description
+        projectId
+      }
+    }`;
+
+  let options = {}
+  if (projectId) {
+    const queryClient = useQueryClient();
+    options = {
+      initialData: () => {
+        return queryClient
+          .getQueryData(["projects", projectId, "questions"])
+          ?.find((d) => d.id == questionId);
+      },
+    };
+  }
+
+  return useGqlQuery(["questions", questionId], query, [], options);
 };
 
 export const useCreateQuestion = (projectId) => {
@@ -42,6 +90,30 @@ export const useCreateQuestion = (projectId) => {
   );
 };
 
+export const useCreateQuestionGql = (projectId) => {
+  const mutation = gql`
+    mutation createQuestion($values: QuestionCreateInput!) {
+      create_question_one(object: $values) {
+        title
+        instructions
+      }
+    }
+  `;
+
+  const queryClient = useQueryClient();
+  const options = {
+    onError: (err, _project, rollback) => {
+      console.log(err);
+      if (rollback) rollback();
+    },
+    onSettled: () => {
+      queryClient.invalidateQueries(["projects", projectId, "questions"]);
+    },
+  };
+
+  return useGqlMutation(mutation, [], options);
+};
+
 export const useUpdateQuestion = (projectId) => {
   const queryClient = useQueryClient();
   return useMutation(
@@ -49,7 +121,12 @@ export const useUpdateQuestion = (projectId) => {
       apiClient.patch(`${uri}/${values.id}`, values).then((res) => res.data),
     {
       onMutate: (values) => {
-        queryClient.setQueriesData(["projects", projectId, "questions", values.id], values);
+        console.log("updating question", values);
+        // queryClient.setQueriesData(
+        //   // ["projects", projectId, "questions", values.id],
+        //   // values
+
+        // );
       },
       onError: (err, _project, rollback) => {
         console.log(err);
@@ -62,18 +139,112 @@ export const useUpdateQuestion = (projectId) => {
   );
 };
 
+export const useUpdateQuestionGql = (projectId) => {
+  const mutation = gql`
+    mutation updateQuestion($values: QuestionUpdateInput!) {
+      update_question_one(object: $values) {
+        title
+        instructions
+      }
+    }
+  `;
 
+  const queryClient = useQueryClient();
+  const options = {
+    onError: (err, _project, rollback) => {
+      console.log(err);
+      if (rollback) rollback();
+    },
+    onSuccess: () => {
+      queryClient.invalidateQueries(["projects", projectId, "questions"]);
+    },
+  };
 
+  return useGqlMutation(mutation, [], options);
+};
 
-// const getQuestion = (questionId) => apiClient.get(`${uri}/${questionId}`);
-// const getQuestions = (projectId) => apiClient.get(`/projects/${projectId}?_embed=questions`);
-// const postQuestion = (body) => {
-//   apiClient.post(`${uri}`, body);
-// };
-// export default {
-//   getQuestion,
-//   getQuestions,
-//   postQuestion,
-// };
+export const useFetchQuestionChoices = (projectId, questionId) => {
+  return useQuery(
+    ["projects", projectId, "questions", questionId, "choices"],
+    () =>
+      apiClient
+        .get(`/questions/${questionId}?_embed=choices&projectId=${projectId}`)
+        .then((res) => res.data.choices),
+    {}
+  );
+};
 
+export const useUpdateQuestionChoices = (projectId, questionId) => {
+  const queryClient = useQueryClient();
+  return useMutation(
+    (values) =>
+      apiClient.patch(`/choices/${values.id}`, values).then((res) => res.data),
+    {
+      onMutate: (values) => {
+        // queryClient.setQueriesData(
+        //   ["projects", projectId, "questions", questionId, "choices"],
 
+        // );
+        console.log(values, questionId);
+      },
+      onError: (err, _project, rollback) => {
+        console.log(err);
+        if (rollback) rollback();
+      },
+      onSuccess: () => {
+        queryClient.invalidateQueries(["projects", projectId, "questions"]);
+      },
+    }
+  );
+};
+
+export const useCreateQuestionChoice = (projectId, questionId) => {
+  const queryClient = useQueryClient();
+  return useMutation(
+    (values) => apiClient.post(`/choices`, values).then((res) => res.data),
+    {
+      onMutate: (values) => {
+        console.log("creating question", values);
+      },
+      onError: (err, _project, rollback) => {
+        console.log(err);
+        if (rollback) rollback();
+      },
+      onSettled: () => {
+        queryClient.invalidateQueries([
+          "projects",
+          projectId,
+          "questions",
+          questionId,
+          "choices",
+        ]);
+      },
+    }
+  );
+};
+
+export const useDeleteQuestionChoice = (projectId, questionId) => {
+  const queryClient = useQueryClient();
+  return useMutation(
+    (values) =>
+      apiClient.delete(`/choices/${values.id}`).then((res) => res.data),
+    {
+      onMutate: () => {
+        console.log("deleting question");
+      },
+      onError: (err, _project, rollback) => {
+        console.log(err);
+        if (rollback) rollback();
+      },
+      onSettled: () => {
+        queryClient.invalidateQueries([
+          "projects",
+          projectId,
+          "questions",
+          questionId,
+          "choices",
+        ]);
+      },
+    }
+  );
+};

@@ -1,5 +1,5 @@
 /************ API SERVICE FUNCTION ************/
-export { useApi } from "./Api";
+export { useGqlQuery, useApi } from "./Api";
 
 /*************** AVAILABLE APIS ***************/
 // Organizations

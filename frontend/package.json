@@ -17,6 +17,8 @@
     "bootstrap-icons": "^1.8.1",
     "cdbreact": "^1.5.1",
     "docdash": "^1.2.0",
+    "graphql": "^16.5.0",
+    "graphql-request": "^4.3.0",
     "jsdoc": "^3.6.10",
     "jwt-decode": "^3.1.2",
     "moment": "^2.29.1",
