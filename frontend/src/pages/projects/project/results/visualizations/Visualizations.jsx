@@ -99,8 +99,9 @@ export const Visualizations = () => {
   // const draggableMarkup = <Draggable>Drag me</Draggable>;
   const display = [
     {
+      
+      numParticipants: 260,
       url: "https://source.unsplash.com/WLUHO9A_xik/900x900",
-      numParticipants: 260
     },
     {
       url: "https://source.unsplash.com/R4K8S77qtwI/900x900",
@@ -148,10 +149,10 @@ export const Visualizations = () => {
       <SortableContext items={items} strategy={rectSortingStrategy}>
         <Grid columns={4}>
         
-          {items.map((url, index) => (
+          {items.map((item, index) => (
             <>
-            {console.log(url)}
-            <SortablePhoto key={url.url} url={url} index={index} numParticipants={url.numParticipants}/>
+            {console.log(item)}
+            <SortablePhoto key={item.url} item={item} index={index} numParticipants={item.numParticipants}/>
             </>
           ))}
           {/* <SortablePhoto key={"beef"} url={"beef"} index={items.length + 1} numParticipants={250} /> */}
@@ -160,7 +161,7 @@ export const Visualizations = () => {
 
       <DragOverlay adjustScale={true}>
         {activeId ? (
-          <Photo url={activeId} index={items.indexOf(activeId)} />
+          <Photo item={activeId} index={items.indexOf(activeId)} numParticipants={activeId.numParticipants}/>
         ) : null}
       </DragOverlay>
     </DndContext>
