@@ -6,6 +6,11 @@ import { TextField } from "components/inputs";
 import styles from "./Teams.module.scss";
 import { InputContainer } from "components/layouts/InputContainer/InputContainer";
 import { Label } from "components/layouts/Label/Label";
+import TeamsList, {
+  SelectColumnFilter,
+  MultipleFilter,
+} from "components/TeamsList/TeamsList.jsx";
+import { useFetchContacts } from "api/resources/contacts/contacts";
 
 // Internal
 
@@ -32,6 +37,44 @@ export const Teams = () => {
     currRole.name = name;
     console.log(currRole);
   };
+
+  const columns = React.useMemo(
+    () => [
+      {
+        Header: "Email",
+        accessor: "email",
+        Filter: SelectColumnFilter,
+        filter: MultipleFilter,
+      },
+      {
+        Header: "First Name",
+        accessor: "firstname",
+        Filter: SelectColumnFilter,
+        filter: MultipleFilter,
+      },
+      {
+        Header: "Last Name",
+        accessor: "lastname",
+        Filter: SelectColumnFilter,
+        filter: MultipleFilter,
+      },
+      {
+        Header: "Position",
+        accessor: "position",
+        Filter: SelectColumnFilter,
+        filter: MultipleFilter,
+      },
+      {
+        Header: "Company",
+        accessor: "company",
+        Filter: SelectColumnFilter,
+        filter: MultipleFilter,
+      },
+    ],
+    []
+  );
+
+  const fetchContactsQuery = useFetchContacts();
 
   return (
     <>
@@ -62,6 +105,22 @@ export const Teams = () => {
               ></TextField>
             </InputContainer>
           </div>
+          {fetchContactsQuery.isLoading && <p>Loading...</p>}
+          {fetchContactsQuery.isError && <p>{fetchContactsQuery.error}</p>}
+          {fetchContactsQuery.isSuccess && (
+            <>
+              <TeamsList
+                columns={columns}
+                data={fetchContactsQuery.data}
+                title="White List"
+              />
+              <TeamsList
+                columns={columns}
+                data={fetchContactsQuery.data}
+                title="Black List"
+              />
+            </>
+          )}
         </div>
       </SplitHorizontal>
     </>

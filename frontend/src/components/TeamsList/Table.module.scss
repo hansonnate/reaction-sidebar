@@ -5,6 +5,7 @@ $reactdarkblue: #2a627c81;
 $reactorange: #edb57e;
 $reactdarkorange: #ed9146;
 $reactbluegray: #738c91;
+@import "assets/styles/globals.scss";
 
 .fulltable {
   // border-collapse: collapse;
@@ -27,9 +28,9 @@ $reactbluegray: #738c91;
     border-radius: 0 5px 5px 0;
   }
   th {
-    background-color: $reactlightblue;
+    background-color: $sapphire20;
     padding: 5px;
-    color: $reactdarkblue;
+    color: $sapphire100;
     text-transform: uppercase;
     font-weight: 700;
     font-size: 11pt;
@@ -57,7 +58,6 @@ $reactbluegray: #738c91;
   // border-radius: 5px;
   cursor: pointer;
 }
-
 .editDots {
   text-align: left;
   width: 30px;
@@ -84,9 +84,17 @@ $reactbluegray: #738c91;
   padding-bottom: 0px;
   padding-left: 19px;
   align-items: center;
-  margin-bottom: 20px;
   font-family: "Poppins", sans-serif;
   gap: 30px;
+  h6 {
+    color: $sapphire100;
+    text-transform: uppercase;
+    font-weight: 900;
+  }
+}
+
+.textfield {
+  
 }
 
 .actionitem:hover {

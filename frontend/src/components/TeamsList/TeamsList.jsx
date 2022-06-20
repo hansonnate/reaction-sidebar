@@ -7,19 +7,13 @@ import {
   useFilters,
   usePagination,
 } from "react-table";
-import SearchFilter from "../SearchFilter/SearchFilter.jsx";
+// import SearchFilter from "../SearchFilter/SearchFilter.jsx";
 // import { Link } from "react-router-dom";
 import styles from "./Table.module.scss";
 import { useNavigate } from "react-router-dom";
-import FilterMenu from "../FilterMenu/FilterMenu.jsx";
-import DropdownMenu from "../FilterMenu/DropdownMenu.jsx";
-import ActionButton from "../ActionButton/ActionButton.jsx";
-import BulkActionButton from "../BulkActionButton/BulkActionButton.jsx";
-import Accordion from "../Accordion/Accordion.jsx";
-import AccordionItem from "../Accordion/AccordionItem.jsx";
-import Select from "react-select";
-import ActionDropdown from "../BulkActionButton/ActionDropdown.jsx";
-// import Checkbox from "components/Checkbox/Checkbox.jsx";
+import { TextField } from "components/inputs/index.js";
+// import ActionButton from "../ActionButton/ActionButton.jsx";
+
 
 //Date calculations
 var monthNames = [
@@ -135,18 +129,7 @@ export function SelectColumnFilter({
   );
 }
 
-function ReactTable({ columns, data, buttonMethod, modalTitle }) {
-  //dropdown menu views
-  const isDisabled = false;
-  const isLoading = false;
-  const isSearchable = true;
-  const isClearable = true;
-  const isRtl = false;
-  const options = [
-    { value: "view1", label: "View 1" },
-    { value: "view2", label: "View 2" },
-    { value: "view3", label: "View 3" },
-  ];
+function TeamsList({ columns, data, title }) {
 
   // Use the state and functions returned from useTable to build UI
   let navigate = useNavigate();
@@ -169,9 +152,8 @@ function ReactTable({ columns, data, buttonMethod, modalTitle }) {
     previousPage,
     setPageSize,
     state,
-    preGlobalFilteredRows,
-    setGlobalFilter,
-    allColumns,
+    // preGlobalFilteredRows,
+    // setGlobalFilter,
   } = useTable(
     {
       initialState: { pageIndex: 0 },
@@ -244,137 +226,23 @@ function ReactTable({ columns, data, buttonMethod, modalTitle }) {
     //   SelectedList: this.state.List.filter((e) => e.selected),
     // });
   };
-  // // Event to get selected rows(Optional)
-  // const getSelectedRows = () => {
-  //   this.setState({
-  //     SelectedList: this.state.List.filter((e) => e.selected),
-  //   });
-  // }
-
-  // const [checkList, setCheckList] = useState([]);
-
-  // const handleChange = (e) => {
-  //   const { id, checked } = e.target;
-  //   // setList(page);
-  //   // setCheckList(page);
-  //   // console.log(checkList);
-  //   if (id === "selectAll") {
-  //     if (checked) {
-  //       setCheckList(page);
-  //     } else {
-  //       setCheckList([]);
-  //     }
-  //     console.log("Checked: ");
-  //     console.log(checkList);
-  //   } else {
-  //     if (checked) {
-  //       console.log(checkList);
-  //       let tempList = checkList;
-  //       for (let i = 0; i < page.length; i++) {
-  //         if (page[i].id === id) {
-  //           tempList.push(page[i]);
-  //         }
-  //       }
-  //       console.log("Checked: ");
-  //       setCheckList(tempList);
-  //       console.log(checkList);
-  //     } else {
-  //       console.log(checkList);
-  //       let tempList = [];
-  //       for (let i = 0; i < checkList.length; i++) {
-  //         if (checkList[i].id === id) {
-  //           //do nothing
-  //         } else {
-  //           tempList.push(checkList[i]);
-  //         }
-  //       }
-  //       console.log("Not Checked: ");
-  //       setCheckList(tempList);
-  //       console.log(checkList);
-  //     }
-  //   }
-  // };
-
-  // function isInList(id) {
-  //   let isThere = false;
-  //   checkList.forEach(function (item) {
-  //     // console.log(id);
-  //     // console.log(item.original.id);
-  //     if (item.original.id === id) {
-  //       // console.log("Return Here")
-  //       isThere = true;
-  //     }
-  //   });
-  // console.log(isThere);
-  //   return isThere;
-  // }
   // Render the UI for your table
   return (
     <div>
       <div className={styles.topcontainer}>
-        <BulkActionButton>
-          <ActionDropdown>
-            <span className={styles.actionitem}>
-              Delete Selected <i className="bi bi-trash"></i>
-            </span>
-            <span className={styles.actionitem}>
-              Change Owners <i className="bi bi-person"></i>
-            </span>
-          </ActionDropdown>
-        </BulkActionButton>
-        <div className={styles.searchfilter}>
+        {/* <div className={styles.searchfilter}>
+          <h4>White List {title}</h4>
           <SearchFilter
             preGlobalFilteredRows={preGlobalFilteredRows}
             globalFilter={state.globalFilter}
             setGlobalFilter={setGlobalFilter}
           />
-          <FilterMenu>
-            {/* {console.log(data)} */}
-            <DropdownMenu data={data}>
-              <div className={styles.heading}>
-                <span className={styles.header}>Filters</span>
-                <span className={styles.saveview}>Save view</span>
-              </div>
-              <Select
-                className="basic-single"
-                classNamePrefix="select"
-                defaultValue={options[0]}
-                isDisabled={isDisabled}
-                isLoading={isLoading}
-                isClearable={isClearable}
-                isRtl={isRtl}
-                isSearchable={isSearchable}
-                name="color"
-                options={options}
-              />
-              <Accordion>
-                <div className={styles.customaccordion}>
-                  {" "}
-                  {allColumns.map((column) =>
-                    column.Filter ? (
-                      <AccordionItem
-                        key={column.id}
-                        body={column.render("Filter")}
-                        column={column}
-                        checkbox={
-                          <input
-                            type="checkbox"
-                            className={styles.accordioncheckbox}
-                            {...column.getToggleHiddenProps()}
-                          />
-                        }
-                      ></AccordionItem>
-                    ) : null
-                  )}
-                </div>
-              </Accordion>
-            </DropdownMenu>
-          </FilterMenu>
           <ActionButton
             title={modalTitle}
             functionality={buttonMethod}
           ></ActionButton>
-        </div>
+        </div> */}
+        <h6>{title}</h6>
       </div>
       <table className={`${styles.fulltable}`} {...getTableProps()} border="1">
         <thead>
@@ -458,6 +326,14 @@ function ReactTable({ columns, data, buttonMethod, modalTitle }) {
               </tr>
             );
           })}
+          <tr>
+            <td></td>
+            <td><div className={styles.textfield}><TextField placeholder="Email"></TextField></div></td>
+            <td><div className={styles.textfield}><TextField placeholder="First Name"></TextField></div></td>
+            <td><div className={styles.textfield}><TextField placeholder="Last Name"></TextField></div></td>
+            <td></td>
+            <td></td>
+          </tr>
         </tbody>
       </table>
       <div className={styles.pagination}>
@@ -514,6 +390,6 @@ function ReactTable({ columns, data, buttonMethod, modalTitle }) {
   );
 }
 
-export default ReactTable;
+export default TeamsList;
 
 //eslint-disable-next-line

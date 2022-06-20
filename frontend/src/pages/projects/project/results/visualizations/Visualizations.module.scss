@@ -1,0 +1,21 @@
+@import "assets/styles/globals.scss";
+.vizpage {
+    overflow-y: scroll;
+    font-family: "Poppins", sans-serif;
+}
+
+.participants {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    font-family: "Poppins", sans-serif;
+    h1 {
+        font-family: "Poppins", sans-serif;
+        font-weight: 900;
+        color: $sapphire100;
+    }
+    h6 {
+        font-family: "Poppins", sans-serif;
+    }
+}

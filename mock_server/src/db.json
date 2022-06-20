@@ -59,7 +59,7 @@
   "projects": [
     {
       "id": 0,
-      "name": "Doctors Opinion1koasdfasd",
+      "name": "Doctors Opinion",
       "link": "survey1",
       "owner": "Mark Wagner",
       "status": "Open",
@@ -67,24 +67,24 @@
       "modified": 1650310574000,
       "created": 1643310574000,
       "emails": [
-          {
-            "id": 0,
-            "subject": "Opinion",
-            "audience": "Doctors",
-            "from": "jbikman@reaction.com",
-            "status": "Delivered",
-            "date": 1653340059929,
-            "strength": "Bad"
-          },
-          {
-            "id": 1, 
-            "subject": "More Opinion",
-            "audience": "Doctors",
-            "from": "jbikman@reaction.com",
-            "status": "Draft",
-            "date": null,
-            "strength": "Good"
-          }
+        {
+          "id": 0,
+          "subject": "Opinion",
+          "audience": "Doctors",
+          "from": "jbikman@reaction.com",
+          "status": "Delivered",
+          "date": 1653340059929,
+          "strength": "Bad"
+        },
+        {
+          "id": 1,
+          "subject": "More Opinion",
+          "audience": "Doctors",
+          "from": "jbikman@reaction.com",
+          "status": "Draft",
+          "date": null,
+          "strength": "Good"
+        }
       ],
       "sms": [
         {
@@ -98,7 +98,7 @@
           "strength": "Bad"
         },
         {
-          "id": 1, 
+          "id": 1,
           "subject": "More Opinion",
           "audience": "Doctors",
           "from": "jbikman@reaction.com",
@@ -138,7 +138,7 @@
           "strength": "Bad"
         },
         {
-          "id": 1, 
+          "id": 1,
           "type": "sms",
           "subject": "More Opinion",
           "audience": "Doctors",
@@ -147,7 +147,7 @@
           "date": null,
           "strength": "Good"
         }
-    ]
+      ]
     },
     {
       "name": "Are Patients Sick?",

@@ -22,3 +22,9 @@
     font-weight: 900;
     justify-content: space-between;
 }
+
+.page {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
