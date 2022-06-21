@@ -29,3 +29,35 @@
     padding: 0px 8px;
     // border: 2px solid black;
 }
+
+.editbutton {
+    display: block;
+    z-index: 10000;
+}
+.editbutton:hover {
+    color: $orange100;
+}
+
+.dropdown {
+    display: flex;
+    flex-direction: column;
+    position: absolute;
+    left: 30%;
+    bottom: 10%;
+    z-index: 1000000;
+    background-color: #EEE;
+    border-radius: 5px;
+    padding: 5px 10px;
+    span {
+        padding: 0px 5px;
+    }
+    span:hover {
+        background-color: white;
+        border-radius: 5px;
+        padding: 0px 5px;
+        cursor: pointer;
+    }
+}
+.chartholder {
+    height: 100%;
+}

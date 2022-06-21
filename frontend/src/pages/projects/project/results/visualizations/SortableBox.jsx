@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import {useSortable} from '@dnd-kit/sortable';
 import {CSS} from '@dnd-kit/utilities';
 
@@ -19,11 +19,14 @@ export const SortableBox = (props) => {
     transform: CSS.Transform.toString(transform),
     transition,
   };
+  const [currChartType, setCurrChartType] = useState(props.item.type);
 
   return (
     <ChartBox
       ref={setNodeRef}
       style={style}
+      currType={currChartType}
+      setType={setCurrChartType}
       {...props}
       {...attributes}
       {...listeners}
