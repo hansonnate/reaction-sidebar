@@ -118,6 +118,17 @@ export const Visualizations = () => {
       },
     ],
   };
+  const trendedNPSData= {
+    labels: ["Q1", "Q2", "Q3", "Q4"],
+    datasets: [
+      {
+        label: "Score",
+        data: [54.76, 52.32, 54.72, 61.29],
+        borderColor: "#15bcc7",
+        backgroundColor: "#15bcc7",
+      },
+    ],
+  };
 
   const numParticipants = () => {
     return (
@@ -138,6 +149,13 @@ export const Visualizations = () => {
     return (
       <div className={styles.chart}>
         <LineChart data={lineData} title="Trending Score" />
+      </div>
+    );
+  };
+  const trendedNPSScore = () => {
+    return (
+      <div className={styles.chart}>
+        <LineChart data={trendedNPSData} title="Trended NPS" />
       </div>
     );
   };
@@ -178,6 +196,9 @@ export const Visualizations = () => {
     },
     {
       data: rankingQuestion1(),
+    },
+    {
+      data: trendedNPSScore(),
     },
   ];
 
