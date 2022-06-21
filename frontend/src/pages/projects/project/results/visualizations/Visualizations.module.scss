@@ -10,12 +10,22 @@
     justify-content: center;
     align-items: center;
     font-family: "Poppins", sans-serif;
-    h1 {
+    height:100%;
+    span {
         font-family: "Poppins", sans-serif;
         font-weight: 900;
         color: $sapphire100;
+        font-size: 500%;
     }
     h6 {
         font-family: "Poppins", sans-serif;
+        font-size: 1.5em;
     }
+}
+
+.chart {
+    height:100%;
+    width: 100%;
+    padding: 0px 8px;
+    // border: 2px solid black;
 }

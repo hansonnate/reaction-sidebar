@@ -1,11 +1,13 @@
 // External
-import React, {useState} from "react";
-import { BarChart } from "components/BarChart/BarChart";
+import React, { useState } from "react";
+import { BarChartVertical } from "components/BarChartVertical/BarChartVertical";
+import { BarChartHorizontal } from "components/BarChartHorizontal/BarChartHorizontal";
 import { DoughnutChart } from "components/DoughnutChart/DoughnutChart";
 import styles from "./Visualizations.module.scss";
-import {Grid} from './Grid';
-import {SortablePhoto} from './SortablePhoto';
-import {Photo} from './Photo';
+import { Grid } from "./Grid";
+import { SortableBox } from "./SortableBox";
+import { ChartBox } from "./ChartBox";
+import { LineChart } from "components/LineChart/LineChart";
 // import photos from './photos.json';
 // import { Droppable } from "./Droppable.jsx";
 // import { Draggable } from "./Draggable.jsx";
@@ -17,12 +19,12 @@ import {
   DragOverlay,
   useSensor,
   useSensors,
-} from '@dnd-kit/core';
+} from "@dnd-kit/core";
 import {
   arrayMove,
   SortableContext,
   rectSortingStrategy,
-} from '@dnd-kit/sortable';
+} from "@dnd-kit/sortable";
 
 // Internal
 
@@ -54,6 +56,19 @@ export const Visualizations = () => {
   // const [chartData, setChartData] = useState({})
   // console.log(chartData);
 
+  const rankingQuestionData = {
+    labels: ["0", "1", "2", "3", "4", "5", "6", "7", "8", "9", "10"],
+    // datasets is an array of objects where each object represents a set of data to display corresponding to the labels above. for brevity, we'll keep it at one object
+    datasets: [
+      {
+        label: "Score",
+        data: [0, 3, 2, 5, 6, 3, 2, 5, 8, 10, 40],
+        // you can set indiviual colors for each bar
+        backgroundColor: "#ED9146",
+        borderWidth: 1,
+      },
+    ],
+  };
   const data = {
     labels: ["Completed", "Open", "Unopen", "Bounced"],
     // datasets is an array of objects where each object represents a set of data to display corresponding to the labels above. for brevity, we'll keep it at one object
@@ -69,112 +84,137 @@ export const Visualizations = () => {
   };
 
   const doughnutdata = {
-    labels: ["Red", "Blue", "Yellow", "Green", "Purple", "Orange"],
+    labels: ["9", "14", "6", "None", "Does it matter?", "As much as he could"],
     datasets: [
       {
         label: "# of Votes",
         data: [12, 19, 3, 5, 2, 3],
         backgroundColor: [
-          "rgba(255, 99, 132, 0.2)",
-          "rgba(54, 162, 235, 0.2)",
-          "rgba(255, 206, 86, 0.2)",
-          "rgba(75, 192, 192, 0.2)",
-          "rgba(153, 102, 255, 0.2)",
-          "rgba(255, 159, 64, 0.2)",
-        ],
-        borderColor: [
-          "rgba(255, 99, 132, 1)",
-          "rgba(54, 162, 235, 1)",
-          "rgba(255, 206, 86, 1)",
-          "rgba(75, 192, 192, 1)",
-          "rgba(153, 102, 255, 1)",
-          "rgba(255, 159, 64, 1)",
+          "#15bcc7",
+          "#7fcfd3",
+          "#b5e1df",
+          "#ed9146",
+          "#edb57e",
+          "#f4e3c2",
         ],
         borderWidth: 1,
       },
     ],
   };
+  const lineData = {
+    labels: ["January", "February", "March", "April", "May", "June"],
+    datasets: [
+      {
+        label: "RFMG",
+        data: [12, 145, 345, 314, 132, 344],
+        borderColor: "#15bcc7",
+        backgroundColor: "#15bcc7",
+      },
+      {
+        label: "PMG",
+        data: [555, 685, 412, 235, 124, 236],
+        borderColor: "#ed9146",
+        backgroundColor: "#ed9146",
+      },
+    ],
+  };
 
+  const numParticipants = () => {
+    return (
+      <div className={styles.participants}>
+        <span>250</span>
+        <h6>Participants</h6>
+      </div>
+    );
+  };
+  const participantPercentage = () => {
+    return (
+      <div className={styles.chart}>
+        <BarChartVertical data={data} title="Participant Percentage" />
+      </div>
+    );
+  };
+  const lineChart = () => {
+    return (
+      <div className={styles.chart}>
+        <LineChart data={lineData} title="Trending Score" />
+      </div>
+    );
+  };
+  const rankingQuestion1 = () => {
+    return (
+      <div className={styles.chart}>
+        <BarChartHorizontal
+          data={rankingQuestionData}
+          title="How likely are you to recommend Primary Medical Group to a friend or to a family member?"
+        />
+      </div>
+    );
+  };
+  const pieChart = () => {
+    return (
+      <div className={styles.chart}>
+        <DoughnutChart
+          data={doughnutdata}
+          title="How much wood could a wood chuck chuck?"
+        />
+      </div>
+    );
+  };
   // const [isDropped, setIsDropped] = useState(false);
   // const draggableMarkup = <Draggable>Drag me</Draggable>;
   const display = [
     {
-      
-      numParticipants: 260,
-      url: "https://source.unsplash.com/WLUHO9A_xik/900x900",
+      data: participantPercentage(),
     },
     {
-      url: "https://source.unsplash.com/R4K8S77qtwI/900x900",
-      numParticipants: 280
+      data: numParticipants(),
     },
     {
-      url: "https://source.unsplash.com/jJGc21mEh8Q/900x900",
-      numParticipants: 270
+      data: lineChart(),
     },
     {
-      url:  "https://source.unsplash.com/omNxg6JP6Fo/900x900",
-      numParticipants: 290
+      data: pieChart(),
     },
     {
-      url: "https://source.unsplash.com/-M1gkucIqkQ/900x900",
-      numParticipants: 250
+      data: rankingQuestion1(),
     },
-
-    {
-      url: "https://source.unsplash.com/czOuPVsfHDw/900x900",
-      numParticipants: 240
-    },
-    {
-      url: "https://source.unsplash.com/-vr0gMUM6Fk/900x900",
-      numParticipants: 230
-    },
-    {
-      url: "https://source.unsplash.com/TsMuMM_qVec/900x900",
-      numParticipants: 220
-    }
-  ]
+  ];
 
   const [items, setItems] = useState(display);
   const [activeId, setActiveId] = useState(null);
   const sensors = useSensors(useSensor(MouseSensor), useSensor(TouchSensor));
   return (
     <div className={styles.vizpage}>
-    <DndContext
-      sensors={sensors}
-      collisionDetection={closestCenter}
-      onDragStart={handleDragStart}
-      onDragEnd={handleDragEnd}
-      onDragCancel={handleDragCancel}
-    >
-      <SortableContext items={items} strategy={rectSortingStrategy}>
-        <Grid columns={4}>
-        
-          {items.map((item, index) => (
-            <>
-            {console.log(item)}
-            <SortablePhoto key={item.url} item={item} index={index} numParticipants={item.numParticipants}/>
-            </>
-          ))}
-          {/* <SortablePhoto key={"beef"} url={"beef"} index={items.length + 1} numParticipants={250} /> */}
-        </Grid>
-      </SortableContext>
+      <DndContext
+        sensors={sensors}
+        collisionDetection={closestCenter}
+        onDragStart={handleDragStart}
+        onDragEnd={handleDragEnd}
+        onDragCancel={handleDragCancel}
+      >
+        <SortableContext items={items} strategy={rectSortingStrategy}>
+          <Grid columns={4}>
+            {items.map((item, index) => (
+              <>
+                {console.log(item)}
+                <SortableBox key={item.url} item={item} index={index} />
+              </>
+            ))}
+            {/* <SortablePhoto key={"beef"} url={"beef"} index={items.length + 1} numParticipants={250} /> */}
+          </Grid>
+        </SortableContext>
 
-      <DragOverlay adjustScale={true}>
-        {activeId ? (
-          <Photo item={activeId} index={items.indexOf(activeId)} numParticipants={activeId.numParticipants}/>
-        ) : null}
-      </DragOverlay>
-    </DndContext>
-
-
-      <div className={styles.basicdata}>
-        <div className={styles.participants}>
-          <h1>250</h1>
-          <h6>Participants</h6>
-        </div>
-        <BarChart data={data} />
-      </div>
-      <DoughnutChart data={doughnutdata} />
+        <DragOverlay adjustScale={true}>
+          {activeId ? (
+            <ChartBox
+              item={activeId}
+              index={items.indexOf(activeId)}
+              numParticipants={activeId.numParticipants}
+            />
+          ) : null}
+        </DragOverlay>
+      </DndContext>
     </div>
   );
 
@@ -189,7 +229,7 @@ export const Visualizations = () => {
   }
 
   function handleDragEnd(event) {
-    const {active, over} = event;
+    const { active, over } = event;
 
     if (active.id !== over.id) {
       setItems((items) => {
