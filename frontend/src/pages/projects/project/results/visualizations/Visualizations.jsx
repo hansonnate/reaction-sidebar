@@ -25,11 +25,11 @@ import {
   SortableContext,
   rectSortingStrategy,
 } from "@dnd-kit/sortable";
+import { SplitHorizontal } from "components/layouts";
 
 // Internal
 
 export const Visualizations = () => {
-
   const rankingQuestionData = {
     labels: ["0", "1", "2", "3", "4", "5", "6", "7", "8", "9", "10"],
     // datasets is an array of objects where each object represents a set of data to display corresponding to the labels above. for brevity, we'll keep it at one object
@@ -92,7 +92,7 @@ export const Visualizations = () => {
       },
     ],
   };
-  const trendedNPSData= {
+  const trendedNPSData = {
     labels: ["Q1", "Q2", "Q3", "Q4"],
     datasets: [
       {
@@ -108,75 +108,170 @@ export const Visualizations = () => {
     {
       data: data,
       title: "Participant Percentage",
+      titleLabel: "Participant Percentage",
       type: "verticalbarchart",
+      design_settings: {
+        hasDataLabels: true,
+        dataLabelFontSize: 20,
+        dataLabelPosition: "end",
+        dataLabelAlignment: "right",
+        dataLabelSigFig: 1,
+        titleLabel: "Participant Percentage",
+        titleFontSize: 12,
+        titleAlignment: "center",
+        hasLegend: false,
+        legendPosition: "top",
+      },
       id: 0,
     },
     {
       data: 250,
       type: "numbercount",
       title: "Participants",
+      titleLabel: "Participants",
+      design_settings: {
+        hasDataLabels: true,
+        dataLabelFontSize: 12,
+        dataLabelPosition: "center",
+        dataLabelAlignment: "center",
+        dataLabelSigFig: 1,
+        titleLabel: "Participants",
+        titleFontSize: 12,
+        titleAlignment: "center",
+        hasLegend: true,
+        legendPosition: "top",
+      },
       id: 1,
     },
     {
       data: lineData,
       title: "Trending Score",
+      titleLabel: "Trending Score",
       type: "linechart",
+      design_settings: {
+        hasDataLabels: false,
+        dataLabelFontSize: 12,
+        dataLabelPosition: "center",
+        dataLabelAlignment: "center",
+        dataLabelSigFig: 1,
+        titleLabel: "Trending Score",
+        titleFontSize: 12,
+        titleAlignment: "center",
+        hasLegend: true,
+        legendPosition: "top",
+      },
       id: 2,
     },
     {
       data: doughnutdata,
       type: "doughnutchart",
       title: "How much wood could a wood chuck chuck?",
+      titleLabel: "How much wood could a wood chuck chuck?",
+      design_settings: {
+        hasDataLabels: true,
+        dataLabelFontSize: 12,
+        dataLabelPosition: "center",
+        dataLabelAlignment: "center",
+        dataLabelSigFig: 1,
+        titleLabel: "How much wood could a wood chuck chuck?",
+        titleFontSize: 12,
+        titleAlignment: "center",
+        hasLegend: true,
+        legendPosition: "top",
+      },
       id: 3,
     },
     {
       data: rankingQuestionData,
-      type: "verticalbarchart",
-      title: "How likely are you to recommend Primary Medical Group to a friend or to a family member?",
+      type: "horizontalbarchart",
+      title:
+        "How likely are you to recommend Primary Medical Group to a friend or to a family member?",
+      titleLabel:
+        "How likely are you to recommend Primary Medical Group to a friend or to a family member?",
+      design_settings: {
+        hasDataLabels: true,
+        dataLabelFontSize: 12,
+        dataLabelPosition: "center",
+        dataLabelAlignment: "center",
+        dataLabelSigFig: 1,
+        titleLabel:
+          "How likely are you to recommend Primary Medical Group to a friend or to a family member?",
+        titleFontSize: 12,
+        titleAlignment: "center",
+        hasLegend: true,
+        legendPosition: "top",
+      },
       id: 4,
     },
     {
       data: trendedNPSData,
       type: "linechart",
       title: "Trended NPS",
+      titleLabel: "Trended NPS",
+      design_settings: {
+        hasDataLabels: false,
+        dataLabelFontSize: 12,
+        dataLabelPosition: "center",
+        dataLabelAlignment: "center",
+        dataLabelSigFig: 1,
+        titleLabel: "Trended NPS",
+        titleFontSize: 12,
+        titleAlignment: "center",
+        hasLegend: true,
+        legendPosition: "top",
+      },
       id: 5,
     },
   ];
 
   const [items, setItems] = useState(display);
   const [activeId, setActiveId] = useState(null);
+  const [settingsVisible, setSettingsVisible] = useState(false);
   const sensors = useSensors(useSensor(MouseSensor), useSensor(TouchSensor));
   return (
     <div className={styles.vizpage}>
-      <DndContext
-        sensors={sensors}
-        collisionDetection={closestCenter}
-        onDragStart={handleDragStart}
-        onDragEnd={handleDragEnd}
-        onDragCancel={handleDragCancel}
-      >
-        <SortableContext items={items} strategy={rectSortingStrategy}>
-          <Grid columns={4}>
-            {items.map((item, index) => (
-              <>
-                {/* {console.log(item)} */}
-                <SortableBox key={item.url} item={item} index={index} />
-              </>
-            ))}
-            {/* <SortablePhoto key={"beef"} url={"beef"} index={items.length + 1} numParticipants={250} /> */}
-          </Grid>
-        </SortableContext>
+      <SplitHorizontal>
+        <div className={styles.visualizations}>
+          <DndContext
+            sensors={sensors}
+            collisionDetection={closestCenter}
+            onDragStart={handleDragStart}
+            onDragEnd={handleDragEnd}
+            onDragCancel={handleDragCancel}
+          >
+            <SortableContext items={items} strategy={rectSortingStrategy}>
+              <Grid columns={4}>
+                {items.map((item, index) => (
+                  <>
+                    {/* {console.log(item)} */}
+                    <SortableBox
+                      key={item.url}
+                      item={item}
+                      index={index}
+                      openSettings={setSettingsVisible}
+                    />
+                  </>
+                ))}
+                {/* <SortablePhoto key={"beef"} url={"beef"} index={items.length + 1} numParticipants={250} /> */}
+              </Grid>
+            </SortableContext>
 
-        <DragOverlay adjustScale={true}>
-          {/* {console.log(items.indexOf(activeId))} */}
-          {activeId ? (
-            <ChartBox
-              item={activeId}
-              index={items.indexOf(activeId)}
-            />
-          ) : null}
-        </DragOverlay>
-      </DndContext>
+            <DragOverlay adjustScale={true}>
+              {/* {console.log(items.indexOf(activeId))} */}
+              {activeId ? (
+                <ChartBox item={activeId} index={items.indexOf(activeId)} />
+              ) : null}
+            </DragOverlay>
+          </DndContext>
+        </div>
+        {settingsVisible ? (
+          <div className={styles.settingscontainer}>
+            <div className={styles.settings}>yeet</div>
+          </div>
+        ) : (
+          <div></div>
+        )}
+      </SplitHorizontal>
     </div>
   );
 

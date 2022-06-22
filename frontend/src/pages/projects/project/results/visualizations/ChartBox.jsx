@@ -1,4 +1,4 @@
-import React, { forwardRef, useState } from "react";
+import React, { forwardRef, useState, useRef, useEffect } from "react";
 import styles from "./Visualizations.module.scss";
 import { BarChartVertical } from "components/BarChartVertical/BarChartVertical";
 import { BarChartHorizontal } from "components/BarChartHorizontal/BarChartHorizontal";
@@ -27,8 +27,8 @@ const options = [
 ];
 
 export const ChartBox = forwardRef(
-  ({ item, index, faded, style, setType, currType, ...props }, ref) => {
-    let type = "trending";
+  ({ item, index, faded, style, ...props }, ref) => {
+    const [selected, setSelected] = useState(false);
     const inlineStyles = {
       opacity: faded ? "0.2" : "1",
       transformOrigin: "0 0",
@@ -38,7 +38,7 @@ export const ChartBox = forwardRef(
       backgroundSize: "cover",
       backgroundPosition: "center",
       backgroundColor: "white",
-      border: "2px solid #EFEFEF",
+      border: selected ? "2px solid #15bcc7" : "2px solid #EFEFEF",
       borderRadius: "5px",
       overflow: "hidden",
       paddingTop: "5px",
@@ -47,59 +47,37 @@ export const ChartBox = forwardRef(
       position: "relative",
       ...style,
     };
-    if (item.type === "sentinfo") {
-      type = "verticalbarchart";
-    }
 
-    // const [currChartType, setCurrChartType] = useState(item.type);
-    const [clicked, setClicked] = useState(false);
-    // function chartType(charttype) {
-    //   console.log(charttype);
-    //   switch (charttype) {
-    //     case charttype === "verticalbarchart":
-    //       return (
-    //         <div className={styles.chart}>
-    //           <BarChartVertical data={item.data} title="Participant Percentage" />
-    //         </div>
-    //       );
-    //     case charttype === "horizontalbarchart":
-    //       return (
-    //         <BarChartHorizontal
-    //           data={item.data}
-    //           title="How likely are you to recommend Primary Medical Group to a friend or to a family member?"
-    //         />
-    //       );
-    //     case charttype === "linechart":
-    //       return (
-    //         <div className={styles.chart}>
-    //           <LineChart data={item.data} title="Trending Score" />
-    //         </div>
-    //       );
-    //     case charttype === "doughnutchart":
-    //       return (
-    //         <div className={styles.chart}>
-    //           <DoughnutChart
-    //             data={item.data}
-    //             title="How much wood could a wood chuck chuck?"
-    //           />
-    //         </div>
-    //       );
-    //     default:
-    //       return (<p>Hmm nope</p>);
-    //   }
-    // };
+    
+    const [chartClicked, setchartClicked] = useState(false);
+    const [editClicked, setEditClicked] = useState(false);
+    const [hasLabels, setHasLabels] = useState(
+      item.design_settings.hasDataLabels
+    );
 
     const participantPercentage = () => {
       return (
         <div className={styles.chart}>
-          <BarChartVertical data={item.data} title="Participant Percentage" />
+          <BarChartVertical
+            data={item.data}
+            title="Participant Percentage"
+            settings={item.design_settings}
+            dataLabels={item.design_settings.hasDataLabels}
+            dataLabelFontSize={item.design_settings.dataLabelFontSize}
+          />
         </div>
       );
     };
     const lineChart = () => {
       return (
         <div className={styles.chart}>
-          <LineChart data={item.data} title="Trending Score" />
+          <LineChart
+            data={item.data}
+            title="Trending Score"
+            settings={item.design_settings}
+            dataLabels={item.design_settings.hasDataLabels}
+            dataLabelFontSize={item.design_settings.dataLabelFontSize}
+          />
         </div>
       );
     };
@@ -116,6 +94,9 @@ export const ChartBox = forwardRef(
           <BarChartHorizontal
             data={item.data}
             title="How likely are you to recommend Primary Medical Group to a friend or to a family member?"
+            settings={item.design_settings}
+            dataLabels={item.design_settings.hasDataLabels}
+            dataLabelFontSize={item.design_settings.dataLabelFontSize}
           />
         </div>
       );
@@ -126,6 +107,9 @@ export const ChartBox = forwardRef(
           <DoughnutChart
             data={item.data}
             title="How much wood could a wood chuck chuck?"
+            settings={item.design_settings}
+            dataLabels={item.design_settings.hasDataLabels}
+            dataLabelFontSize={item.design_settings.dataLabelFontSize}
           />
         </div>
       );
@@ -140,35 +124,117 @@ export const ChartBox = forwardRef(
       );
     };
 
+    function changeType(value) {
+      item.type = value;
+      setchartClicked(false);
+      // console.log(item.type);
+      // setCurrChartType(value);
+    }
+
+    function handleLabels(value) {
+      item.design_settings.hasDataLabels = !value;
+      // console.log(item.design_settings.hasDataLabels);
+    }
+
+    const refer = useRef(null);
+
+    const handleClickOutside = (event) => {
+      if (refer.current && !refer.current.contains(event.target)) {
+        setchartClicked(false);
+        setEditClicked(false);
+        setSelected(false);
+        props.openSettings(false);
+      }
+    };
+
+    useEffect(() => {
+      document.addEventListener("click", handleClickOutside, true);
+      return () => {
+        document.removeEventListener("click", handleClickOutside, true);
+      };
+    }, []);
+
     return (
-      <div ref={ref} style={inlineStyles}>
-        {" "}
-        <div className={styles.chartholder} {...props}>
-          {currType === "verticalbarchart" && participantPercentage()}
-          {currType === "linechart" && lineChart()}
-          {currType === "horizontalbarchart" && rankingQuestion1()}
-          {currType === "doughnutchart" && pieChart()}
-          {currType === "numbercount" && numParticipants()}
-        </div>
-        <button
-          onClick={() => setClicked(!clicked)}
-          className={styles.editbutton}
+      <div ref={ref} style={inlineStyles} >
+        <div
+          ref={refer}
+          style={{ height: "100%", display: "flex", flexDirection: "column" }}
         >
-          <i className="bi bi-three-dots"></i>
-        </button>
-        {clicked && (
-          <>
-            {currType !== "numbercount" && (
-              <div className={styles.dropdown}>
-                {options.map((option) => (
-                  <span onClick={() => setCurrType(option.value)}>
-                    {option.label}
-                  </span>
-                ))}
-              </div>
-            )}
-          </>
-        )}
+          {" "}
+          <div className={styles.chartholder} {...props}>
+            {item.type === "verticalbarchart" && participantPercentage()}
+            {item.type === "linechart" && lineChart()}
+            {item.type === "horizontalbarchart" && rankingQuestion1()}
+            {item.type === "doughnutchart" && pieChart()}
+            {item.type === "numbercount" && numParticipants()}
+          </div>
+          <div className={styles.editbuttons}>
+            <button
+              onClick={() => {
+                setchartClicked(!chartClicked);
+                setEditClicked(false);
+              }}
+              className={styles.editchart}
+            >
+              <i className="bi bi-bar-chart"></i>
+            </button>
+            <button
+              onClick={() => {
+                // setEditClicked(!editClicked);
+                setchartClicked(false);
+                setSelected(!selected);
+                props.openSettings(!selected);
+              }}
+              className={styles.editchart}
+            >
+              <i className="bi bi-pencil-square"></i>
+            </button>
+          </div>
+          {chartClicked && (
+            <>
+              {item.type !== "numbercount" && (
+                <div className={styles.chartdropdown}>
+                  {options.map((option) => (
+                    <span
+                      key={option.value}
+                      onClick={() => changeType(option.value)}
+                    >
+                      {option.label}
+                    </span>
+                  ))}
+                </div>
+              )}
+            </>
+          )}
+          {editClicked && (
+            <>
+              {item.type !== "numbercount" && (
+                <div className={styles.editdropdown}>
+                  <div className="setting">
+                    <span>Font:</span>
+                    <select>
+                      <option value="12pt">12pt</option>
+                      <option value="18pt">18pt</option>
+                      <option value="24pt">24pt</option>
+                      <option value="36pt">36pt</option>
+                    </select>
+                  </div>
+                  <div className="setting">
+                    <input
+                      type="checkbox"
+                      checked={hasLabels}
+                      onChange={() => {
+                        handleLabels(item.design_settings.hasDataLabels);
+                        setHasLabels(!hasLabels);
+                      }}
+                    ></input>
+                    <span>DataLabels</span>
+                  </div>
+                </div>
+              )}
+            </>
+          )}
+        </div>
       </div>
     );
   }

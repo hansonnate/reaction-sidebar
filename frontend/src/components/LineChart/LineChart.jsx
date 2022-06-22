@@ -20,7 +20,7 @@ ChartJS.register(
   Legend
 );
 
-export const LineChart = ({ data, title }) => {
+export const LineChart = ({ data, title, settings}) => {
   const options = {
     responsive: true,
     maintainAspectRatio: false,
@@ -31,13 +31,19 @@ export const LineChart = ({ data, title }) => {
       title: {
         display: true,
         text: title,
+        font: {
+          weight: "bold",
+          size: settings.titleFontSize,
+          family: "'Poppins', sans-serif"
+        },
       },
       datalabels: {
-        display: false,
+        display: settings.hasDataLabels,
         anchor: "end",
         align: 'center',
         font: {
           weight: "bold",
+          size: settings.dataLabelFontSize,
         },
         color: "black",
       },

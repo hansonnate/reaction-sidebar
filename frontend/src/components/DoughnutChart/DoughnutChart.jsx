@@ -5,7 +5,7 @@ import { Chart as ChartJS, ArcElement, Tooltip, Legend } from "chart.js";
 
 ChartJS.register(ArcElement, Tooltip, Legend, ChartDataLabels);
 
-export const DoughnutChart = ({ data, title }) => {
+export const DoughnutChart = ({ data, title, settings }) => {
   const options = {
     responsive: true,
     maintainAspectRatio: false,
@@ -21,13 +21,19 @@ export const DoughnutChart = ({ data, title }) => {
         text: title,
         position: 'top',
         align: 'start',
+        font: {
+          weight: "bold",
+          size: settings.titleFontSize,
+          family: "'Poppins', sans-serif"
+        },
       },
       datalabels: {
-        display: true,
+        display: settings.hasDataLabels,
         anchor: "center",
         align: 'center',
         font: {
           weight: "bold",
+          size: settings.dataLabelFontSize,
         },
         color: "black",
         formatter: (value, ctx) => {
