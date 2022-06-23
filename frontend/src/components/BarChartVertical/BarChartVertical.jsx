@@ -50,8 +50,8 @@ export const BarChartVertical = ({ data, title, settings }) => {
       },
       datalabels: {
         display: settings.hasDataLabels,
-        anchor: "end",
-        align: "right",
+        anchor: settings.dataLabelPosition,
+        align: settings.dataLabelAlignment,
         font: {
           weight: "bold",
           size: settings.dataLabelFontSize,
@@ -63,7 +63,7 @@ export const BarChartVertical = ({ data, title, settings }) => {
           dataArr.map((data) => {
             sum += data;
           });
-          let percentage = ((value * 100) / sum).toFixed(1) + "%";
+          let percentage = ((value * 100) / sum).toFixed(settings.dataLabelSigFig) + "%";
           return percentage;
         },
       },

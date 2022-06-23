@@ -31,11 +31,6 @@ export const VizSettings = ({ item }) => {
           }}
           options={options}
         >
-          {/* {options.map((option) => (
-          <option key={option.value} value={option.value}>
-            {option.label}
-          </option>
-        ))} */}
         </SelectField>
       </div>
       <SettingsAccordion item={item}></SettingsAccordion>

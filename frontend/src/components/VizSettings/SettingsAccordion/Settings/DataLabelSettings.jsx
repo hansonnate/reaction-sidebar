@@ -1,23 +1,38 @@
+import { NumberInput } from "components/inputs/input_fields/NumberInput/NumberInput";
+import { ToggleSwitch } from "components/inputs/input_fields/ToggleSwitch/ToggleSwitch";
+import { SelectField } from "components/inputs";
 import React, { useState } from "react";
 import styles from "../SettingsAccordion.module.scss";
 
 //custom accordian
 export const DataLabelSettings = ({ item, title }) => {
   const [visibility, setVisibility] = useState(false);
-  const [dataLabels, setDataLabels] = useState(
-    item.design_settings.hasDataLabels
-  );
-  const [dataLabelsFontSize, setDataLabelsFontSize] = useState(
-    item.design_settings.dataLabelFontSize
-  );
-  
 
   const toggleVisibility = () => {
     setVisibility((v) => !v);
   };
   const dataLabelFontSize = (value) => {
     item.design_settings.dataLabelFontSize = value;
-  }
+  };
+  const handleSignificantFigures = (value) => {
+    console.log(value);
+    item.design_settings.dataLabelSigFig = value;
+  };
+
+  const handleHasDataLabels = () => {
+    item.design_settings.hasDataLabels = !item.design_settings.hasDataLabels;
+  };
+
+  const positionOptions = [
+    { value: "start", label: "Start" },
+    { value: "center", label: "Center" },
+    { value: "end", label: "End" },
+  ];
+  const alignmentOptions = [
+    { value: "right", label: "Right" },
+    { value: "center", label: "Center" },
+    { value: "left", label: "Left" },
+  ];
 
   return (
     <>
@@ -35,37 +50,47 @@ export const DataLabelSettings = ({ item, title }) => {
       </div>
       {visibility && (
         <div className={styles.body}>
-          {console.log(item)}
-          {/* {Object.keys(item).map((key) => <div key={key}>
-          {console.log(key)}
-          <span>{item[key].toString()}</span>
-        </div>)} */}
           <div className={styles.setting}>
             <span>Data Labels</span>
-            <input
-              type="checkbox"
-              onChange={() => {
-                setDataLabels(!dataLabels);
-                item.design_settings.hasDataLabels =
-                  !item.design_settings.hasDataLabels;
+            <ToggleSwitch
+              startChecked={item.design_settings.hasDataLabels}
+              handleCheck={handleHasDataLabels}
+            ></ToggleSwitch>
+          </div>
+          <div className={styles.settingwithlabel}>
+            <span>Position</span>
+            <SelectField
+              onChange={(value) => {
+                item.design_settings.dataLabelPosition = value;
               }}
-              checked={dataLabels}
-            ></input>
+              options={positionOptions}
+            ></SelectField>
+          </div>
+          <div className={styles.settingwithlabel}>
+            <span>Alignment</span>
+            <SelectField
+              onChange={(value) => {
+                item.design_settings.dataLabelAlignment = value;
+              }}
+              options={alignmentOptions}
+            ></SelectField>
           </div>
           <div className={styles.setting}>
-            <span>Font Size: </span>
-            <input
-              type="number"
-              onChange={(e) => {
-                dataLabelFontSize(e.target.value)
-                setDataLabelsFontSize(e.target.value)
-              }}
-              value={dataLabelsFontSize}
-            ></input>
+            <span>Font Size </span>
+            <NumberInput
+              startNumber={item.design_settings.dataLabelFontSize}
+              handleNumberChange={dataLabelFontSize}
+            ></NumberInput>
+          </div>
+          <div className={styles.setting}>
+            <span>Sig Figs </span>
+            <NumberInput
+              startNumber={item.design_settings.dataLabelSigFig}
+              handleNumberChange={handleSignificantFigures}
+            ></NumberInput>
           </div>
         </div>
       )}
     </>
   );
 };
-

@@ -1,4 +1,4 @@
-import React, { forwardRef, useState, useRef, useEffect } from "react";
+import React, { forwardRef, useRef, useEffect } from "react";
 import styles from "./Visualizations.module.scss";
 import { BarChartVertical } from "components/BarChartVertical/BarChartVertical";
 import { BarChartHorizontal } from "components/BarChartHorizontal/BarChartHorizontal";
@@ -38,19 +38,19 @@ export const ChartBox = forwardRef(
       backgroundSize: "cover",
       backgroundPosition: "center",
       backgroundColor: "white",
-      border: item.selected ? "2px solid #15bcc7" : "2px solid #EFEFEF",
+      border: item.selected ? "2px solid #15bcc7" : "2px solid white",
       borderRadius: "5px",
       overflow: "hidden",
       paddingTop: "5px",
       display: "flex",
       flexDirection: "column",
       position: "relative",
+      boxShadow: "rgba(0, 0, 0, 0.12) 0px 1px 3px, rgba(0, 0, 0, 0.24) 0px 1px 2px",
       ...style,
     };
 
     const refer = useRef(null);
 
-    const [chartClicked, setchartClicked] = useState(false);
 
     const participantPercentage = () => {
       return (
@@ -113,16 +113,8 @@ export const ChartBox = forwardRef(
       );
     };
 
-    function changeType(value) {
-      item.type = value;
-      setchartClicked(false);
-      // console.log(item.type);
-      // setCurrChartType(value);
-    }
-
     const handleClickOutside = (event) => {
       if (refer.current && !refer.current.contains(event.target)) {
-        setchartClicked(false);
         item.selected = false;
         // if (props.insidesettings === false) {
         //   setSelected(false);
@@ -156,16 +148,6 @@ export const ChartBox = forwardRef(
           <div className={styles.editbuttons}>
             <button
               onClick={() => {
-                setchartClicked(!chartClicked);
-                setEditClicked(false);
-              }}
-              className={styles.editchart}
-            >
-              <i className="bi bi-bar-chart"></i>
-            </button>
-            <button
-              onClick={() => {
-                setchartClicked(false);
                 props.opensettings(!item.selected);
                 item.selected = !item.selected;
               }}
@@ -174,22 +156,6 @@ export const ChartBox = forwardRef(
               <i className="bi bi-pencil-square"></i>
             </button>
           </div>
-          {chartClicked && (
-            <>
-              {item.type !== "numbercount" && (
-                <div className={styles.chartdropdown}>
-                  {options.map((option) => (
-                    <span
-                      key={option.value}
-                      onClick={() => changeType(option.value)}
-                    >
-                      {option.label}
-                    </span>
-                  ))}
-                </div>
-              )}
-            </>
-          )}
         </div>
       </div>
     );

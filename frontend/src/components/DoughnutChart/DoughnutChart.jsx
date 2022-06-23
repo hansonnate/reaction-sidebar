@@ -29,8 +29,8 @@ export const DoughnutChart = ({ data, title, settings }) => {
       },
       datalabels: {
         display: settings.hasDataLabels,
-        anchor: "center",
-        align: 'center',
+        anchor: settings.dataLabelPosition,
+        align: settings.dataLabelAlignment,
         font: {
           weight: "bold",
           size: settings.dataLabelFontSize,
@@ -42,7 +42,7 @@ export const DoughnutChart = ({ data, title, settings }) => {
           dataArr.map((data) => {
             sum += data;
           });
-          let percentage = ((value * 100) / sum).toFixed(1) + "%";
+          let percentage = ((value * 100) / sum).toFixed(settings.dataLabelSigFig) + "%";
           return percentage;
         },
       },

@@ -212,7 +212,7 @@ export const Visualizations = () => {
         dataLabelFontSize: 12,
         dataLabelPosition: "center",
         dataLabelAlignment: "center",
-        dataLabelSigFig: 1,
+        dataLabelSigFig: 0,
         titleLabel:
           "How likely are you to recommend Primary Medical Group to a friend or to a family member?",
         titleFontSize: 12,

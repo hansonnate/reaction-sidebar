@@ -39,8 +39,8 @@ export const LineChart = ({ data, title, settings}) => {
       },
       datalabels: {
         display: settings.hasDataLabels,
-        anchor: "end",
-        align: 'center',
+        anchor: settings.dataLabelPosition,
+        align: settings.dataLabelAlignment,
         font: {
           weight: "bold",
           size: settings.dataLabelFontSize,
