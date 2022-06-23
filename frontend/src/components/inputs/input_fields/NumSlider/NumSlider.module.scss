@@ -1,0 +1,207 @@
+@import "assets/styles/globals.scss";
+
+.slider {
+  color: $blue100;
+  height: 8;
+
+  &.MuiSlider-track {
+    border: none;
+  }
+
+  &.MuiSlider-thumb {
+    height: 24;
+    width: 24;
+    background-color: #fff;
+    border: 3px solid $blue100;
+    &:focus,
+    &:hover,
+    &.Mui-active,
+    &.Mui-focusVisible {
+      box-shadow: inherit;
+    }
+    &:before {
+      display: none;
+    }
+  }
+
+  &.MuiSlider-valueLabel {
+    line-height: 1.2;
+    font-size: 12;
+    background: unset;
+    padding: 0;
+    width: 32;
+    height: 32;
+    border-radius: 50% 50% 50% 0;
+    background-color: $blue100;
+    transform-origin: bottom left;
+    transform: translate(50%, -100%) rotate(-45deg) scale(0);
+    &:before {
+      display: "none";
+    }
+    &.MuiSlider-valueLabelOpen {
+      transform: "translate(50%, -100%) rotate(-45deg) scale(1)";
+    }
+    & > * {
+      transform: "rotate(45deg)";
+    }
+  }
+}
+
+// $track-color: $gray60 !default;
+// $thumb-color: $gray60 !default;
+
+// $thumb-radius: 50% !default;
+// $thumb-height: 24px !default;
+// $thumb-width: 24px !default;
+// $thumb-shadow-size: 1px !default;
+// $thumb-shadow-blur: 4px !default;
+// $thumb-shadow-color: rgba(0, 0, 0, 0.2) !default;
+// $thumb-border-width: 8px !default;
+// $thumb-border-color: $blue100 !default;
+
+// $track-width: 100% !default;
+// $track-height: 8px !default;
+// $track-shadow-size: 0px !default;
+// $track-shadow-blur: 0px !default;
+// $track-shadow-color: rgba(0, 0, 0, 0.2) !default;
+// $track-border-width: 0px !default;
+// $track-border-color: #cfd8dc !default;
+
+// $track-radius: 5px !default;
+// $contrast: 5% !default;
+
+// // $ie-bottom-track-color: darken($track-color, $contrast) !default;
+
+// // // @mixin shadow($shadow-size, $shadow-blur, $shadow-color) {
+// // //   box-shadow: $shadow-size $shadow-size $shadow-blur $shadow-color,
+// // //     0 0 $shadow-size lighten($shadow-color, 5%);
+// // // }
+
+// // @mixin track {
+// //   cursor: default;
+// //   height: $track-height;
+// //   transition: all 0.2s ease;
+// //   width: $track-width;
+// // }
+
+// // @mixin thumb {
+// //   // @include shadow($thumb-shadow-size, $thumb-shadow-blur, $thumb-shadow-color);
+// //   background: $thumb-color;
+// //   border: $thumb-border-width solid $thumb-border-color;
+// //   border-radius: $thumb-radius;
+// //   box-sizing: border-box;
+// //   cursor: default;
+// //   height: $thumb-height;
+// //   width: $thumb-width;
+// // }
+
+// [type="range"] {
+//   -webkit-appearance: none;
+//   background: $track-color;
+//   height: 70% 100%;
+//   margin: $thumb-height / 2 0;
+//   width: $track-width;
+
+//   &::-moz-focus-outer {
+//     border: 0;
+//   }
+
+//   &:focus {
+//     outline: 0;
+
+//     &::-webkit-slider-runnable-track {
+//       background: $track-color
+//     }
+
+//     &::-ms-fill-lower {
+//       //background: $blue100;
+//     }
+
+//     &::-ms-fill-upper {
+//       //background: lighten($track-color, $contrast);
+//     }
+//   }
+
+// //   &::-webkit-slider-runnable-track {
+// //     @include track;
+// //     // @include shadow(
+// //     //   $track-shadow-size,
+// //     //   $track-shadow-blur,
+// //     //   $track-shadow-color
+// //     // );
+// //     //background: $track-color;
+// //     //border: $track-border-width solid $track-border-color;
+// //     //border-radius: $track-radius;
+// //   }
+
+// //   &::-webkit-slider-thumb {
+// //     @include thumb;
+// //     -webkit-appearance: none;
+// //     margin-top: (
+// //       (-$track-border-width * 2 + $track-height) / 2 - $thumb-height / 2
+// //     );
+// //   }
+
+// //   &::-moz-range-track {
+// //     // @include shadow(
+// //     //   $track-shadow-size,
+// //     //   $track-shadow-blur,
+// //     //   $track-shadow-color
+// //     // );
+// //     @include track;
+// //     //background: $track-color;
+// //     //border: $track-border-width solid $track-border-color;
+// //     //border-radius: $track-radius;
+// //     //height: $track-height / 2;
+// //   }
+
+// //   &::-moz-range-thumb {
+// //     @include thumb;
+// //   }
+
+// //   &::-ms-track {
+// //     @include track;
+// //     //background: transparent;
+// //     //border-color: transparent;
+// //     //border-width: ($thumb-height / 2) 0;
+// //     color: transparent;
+// //   }
+
+// //   &::-ms-fill-lower {
+// //     // @include shadow(
+// //     //   $track-shadow-size,
+// //     //   $track-shadow-blur,
+// //     //   $track-shadow-color
+// //     // );
+// //     //background: $blue100;
+// //     //border: $track-border-width solid $track-border-color;
+// //     //border-radius: ($track-radius * 2);
+// //   }
+
+// //   &::-ms-fill-upper {
+// //     // @include shadow(
+// //     //   $track-shadow-size,
+// //     //   $track-shadow-blur,
+// //     //   $track-shadow-color
+// //     // );
+// //     //background: $track-color;
+// //     //border: $track-border-width solid $track-border-color;
+// //     border-radius: ($track-radius * 2);
+// //   }
+
+// //   &::-ms-thumb {
+// //     @include thumb;
+// //     margin-top: $track-height / 4;
+// //   }
+
+// //   &:disabled {
+// //     &::-webkit-slider-thumb,
+// //     &::-moz-range-thumb,
+// //     &::-ms-thumb,
+// //     &::-webkit-slider-runnable-track,
+// //     &::-ms-fill-lower,
+// //     &::-ms-fill-upper {
+// //       cursor: not-allowed;
+// //     }
+// //   }
+// }
