@@ -1,16 +1,11 @@
 // External
-import React, { useState } from "react";
-// import { BarChartVertical } from "components/BarChartVertical/BarChartVertical";
-// import { BarChartHorizontal } from "components/BarChartHorizontal/BarChartHorizontal";
-// import { DoughnutChart } from "components/DoughnutChart/DoughnutChart";
+import React, { useState, useRef, useEffect } from "react";
 import styles from "./Visualizations.module.scss";
 import { Grid } from "./Grid";
 import { SortableBox } from "./SortableBox";
 import { ChartBox } from "./ChartBox";
-// import { LineChart } from "components/LineChart/LineChart";
-// import photos from './photos.json';
-// import { Droppable } from "./Droppable.jsx";
-// import { Draggable } from "./Draggable.jsx";
+// import { reference } from "./ChartBox";
+
 import {
   DndContext,
   closestCenter,
@@ -26,10 +21,29 @@ import {
   rectSortingStrategy,
 } from "@dnd-kit/sortable";
 import { SplitHorizontal } from "components/layouts";
+import { VizSettings } from "components/VizSettings/VizSettings";
 
 // Internal
 
 export const Visualizations = () => {
+  const ref = useRef(null);
+  const [activeId, setActiveId] = useState(null);
+  const [settingsVisible, setSettingsVisible] = useState(false);
+  const sensors = useSensors(useSensor(MouseSensor), useSensor(TouchSensor));
+
+
+  const handleClickOutside = (event) => {
+    if (ref.current && !ref.current.contains(event.target)) {
+      setSettingsVisible(false);
+    }
+  };
+
+  useEffect(() => {
+    document.addEventListener("click", handleClickOutside, true);
+    return () => {
+      document.removeEventListener("click", handleClickOutside, true);
+    };
+  }, []);
   const rankingQuestionData = {
     labels: ["0", "1", "2", "3", "4", "5", "6", "7", "8", "9", "10"],
     // datasets is an array of objects where each object represents a set of data to display corresponding to the labels above. for brevity, we'll keep it at one object
@@ -110,6 +124,7 @@ export const Visualizations = () => {
       title: "Participant Percentage",
       titleLabel: "Participant Percentage",
       type: "verticalbarchart",
+      selected: false,
       design_settings: {
         hasDataLabels: true,
         dataLabelFontSize: 20,
@@ -129,6 +144,7 @@ export const Visualizations = () => {
       type: "numbercount",
       title: "Participants",
       titleLabel: "Participants",
+      selected: false,
       design_settings: {
         hasDataLabels: true,
         dataLabelFontSize: 12,
@@ -148,6 +164,7 @@ export const Visualizations = () => {
       title: "Trending Score",
       titleLabel: "Trending Score",
       type: "linechart",
+      selected: false,
       design_settings: {
         hasDataLabels: false,
         dataLabelFontSize: 12,
@@ -167,6 +184,7 @@ export const Visualizations = () => {
       type: "doughnutchart",
       title: "How much wood could a wood chuck chuck?",
       titleLabel: "How much wood could a wood chuck chuck?",
+      selected: false,
       design_settings: {
         hasDataLabels: true,
         dataLabelFontSize: 12,
@@ -188,6 +206,7 @@ export const Visualizations = () => {
         "How likely are you to recommend Primary Medical Group to a friend or to a family member?",
       titleLabel:
         "How likely are you to recommend Primary Medical Group to a friend or to a family member?",
+      selected: false,
       design_settings: {
         hasDataLabels: true,
         dataLabelFontSize: 12,
@@ -208,6 +227,7 @@ export const Visualizations = () => {
       type: "linechart",
       title: "Trended NPS",
       titleLabel: "Trended NPS",
+      selected: false,
       design_settings: {
         hasDataLabels: false,
         dataLabelFontSize: 12,
@@ -223,11 +243,8 @@ export const Visualizations = () => {
       id: 5,
     },
   ];
-
   const [items, setItems] = useState(display);
-  const [activeId, setActiveId] = useState(null);
-  const [settingsVisible, setSettingsVisible] = useState(false);
-  const sensors = useSensors(useSensor(MouseSensor), useSensor(TouchSensor));
+
   return (
     <div className={styles.vizpage}>
       <SplitHorizontal>
@@ -248,7 +265,7 @@ export const Visualizations = () => {
                       key={item.url}
                       item={item}
                       index={index}
-                      openSettings={setSettingsVisible}
+                      opensettings={setSettingsVisible}
                     />
                   </>
                 ))}
@@ -265,8 +282,12 @@ export const Visualizations = () => {
           </DndContext>
         </div>
         {settingsVisible ? (
-          <div className={styles.settingscontainer}>
-            <div className={styles.settings}>yeet</div>
+          <div ref={ref} className={styles.settingscontainer}>
+            {items.map((item, index) => (
+              <div key={index}>
+                {item.selected == true && <VizSettings item={item}></VizSettings>}
+              </div>
+            ))}
           </div>
         ) : (
           <div></div>

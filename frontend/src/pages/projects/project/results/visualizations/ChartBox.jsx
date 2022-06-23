@@ -28,7 +28,7 @@ const options = [
 
 export const ChartBox = forwardRef(
   ({ item, index, faded, style, ...props }, ref) => {
-    const [selected, setSelected] = useState(false);
+    // const [selected, setSelected] = useState(false);
     const inlineStyles = {
       opacity: faded ? "0.2" : "1",
       transformOrigin: "0 0",
@@ -38,7 +38,7 @@ export const ChartBox = forwardRef(
       backgroundSize: "cover",
       backgroundPosition: "center",
       backgroundColor: "white",
-      border: selected ? "2px solid #15bcc7" : "2px solid #EFEFEF",
+      border: item.selected ? "2px solid #15bcc7" : "2px solid #EFEFEF",
       borderRadius: "5px",
       overflow: "hidden",
       paddingTop: "5px",
@@ -48,12 +48,9 @@ export const ChartBox = forwardRef(
       ...style,
     };
 
-    
+    const refer = useRef(null);
+
     const [chartClicked, setchartClicked] = useState(false);
-    const [editClicked, setEditClicked] = useState(false);
-    const [hasLabels, setHasLabels] = useState(
-      item.design_settings.hasDataLabels
-    );
 
     const participantPercentage = () => {
       return (
@@ -62,8 +59,6 @@ export const ChartBox = forwardRef(
             data={item.data}
             title="Participant Percentage"
             settings={item.design_settings}
-            dataLabels={item.design_settings.hasDataLabels}
-            dataLabelFontSize={item.design_settings.dataLabelFontSize}
           />
         </div>
       );
@@ -75,8 +70,6 @@ export const ChartBox = forwardRef(
             data={item.data}
             title="Trending Score"
             settings={item.design_settings}
-            dataLabels={item.design_settings.hasDataLabels}
-            dataLabelFontSize={item.design_settings.dataLabelFontSize}
           />
         </div>
       );
@@ -95,8 +88,6 @@ export const ChartBox = forwardRef(
             data={item.data}
             title="How likely are you to recommend Primary Medical Group to a friend or to a family member?"
             settings={item.design_settings}
-            dataLabels={item.design_settings.hasDataLabels}
-            dataLabelFontSize={item.design_settings.dataLabelFontSize}
           />
         </div>
       );
@@ -108,8 +99,6 @@ export const ChartBox = forwardRef(
             data={item.data}
             title="How much wood could a wood chuck chuck?"
             settings={item.design_settings}
-            dataLabels={item.design_settings.hasDataLabels}
-            dataLabelFontSize={item.design_settings.dataLabelFontSize}
           />
         </div>
       );
@@ -131,19 +120,15 @@ export const ChartBox = forwardRef(
       // setCurrChartType(value);
     }
 
-    function handleLabels(value) {
-      item.design_settings.hasDataLabels = !value;
-      // console.log(item.design_settings.hasDataLabels);
-    }
-
-    const refer = useRef(null);
-
     const handleClickOutside = (event) => {
       if (refer.current && !refer.current.contains(event.target)) {
         setchartClicked(false);
-        setEditClicked(false);
-        setSelected(false);
-        props.openSettings(false);
+        item.selected = false;
+        // if (props.insidesettings === false) {
+        //   setSelected(false);
+        //   // setSelected(true);
+        //   // props.opensettings(false);
+        // }
       }
     };
 
@@ -155,7 +140,7 @@ export const ChartBox = forwardRef(
     }, []);
 
     return (
-      <div ref={ref} style={inlineStyles} >
+      <div ref={ref} style={inlineStyles}>
         <div
           ref={refer}
           style={{ height: "100%", display: "flex", flexDirection: "column" }}
@@ -180,10 +165,9 @@ export const ChartBox = forwardRef(
             </button>
             <button
               onClick={() => {
-                // setEditClicked(!editClicked);
                 setchartClicked(false);
-                setSelected(!selected);
-                props.openSettings(!selected);
+                props.opensettings(!item.selected);
+                item.selected = !item.selected;
               }}
               className={styles.editchart}
             >
@@ -202,34 +186,6 @@ export const ChartBox = forwardRef(
                       {option.label}
                     </span>
                   ))}
-                </div>
-              )}
-            </>
-          )}
-          {editClicked && (
-            <>
-              {item.type !== "numbercount" && (
-                <div className={styles.editdropdown}>
-                  <div className="setting">
-                    <span>Font:</span>
-                    <select>
-                      <option value="12pt">12pt</option>
-                      <option value="18pt">18pt</option>
-                      <option value="24pt">24pt</option>
-                      <option value="36pt">36pt</option>
-                    </select>
-                  </div>
-                  <div className="setting">
-                    <input
-                      type="checkbox"
-                      checked={hasLabels}
-                      onChange={() => {
-                        handleLabels(item.design_settings.hasDataLabels);
-                        setHasLabels(!hasLabels);
-                      }}
-                    ></input>
-                    <span>DataLabels</span>
-                  </div>
                 </div>
               )}
             </>
