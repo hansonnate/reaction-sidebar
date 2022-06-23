@@ -42,7 +42,8 @@ export const SelectField = ({
   options,
   defaultValue,
   selectMultiple,
-  onChange
+  onChange,
+  placeholder,
 }) => {
   const [val, setVal] = useState(defaultValue);
 

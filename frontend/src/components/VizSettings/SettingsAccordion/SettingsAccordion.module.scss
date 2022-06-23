@@ -43,4 +43,9 @@
   justify-content: flex-start;
   align-items: center;
   gap: 5px;
+  input {
+      width: 50px;
+      border: 2px solid $gray40;
+      border-radius: 5px;
+  }
 }
