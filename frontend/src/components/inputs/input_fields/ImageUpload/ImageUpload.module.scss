@@ -1,0 +1,40 @@
+@import 'assets/styles/globals.scss';
+
+.button {
+    @include button-text($contrast: true);
+    background-color: $orange100;
+    padding: 8px 10px;
+    border-radius: 5px;
+    white-space: nowrap;
+    cursor: pointer;
+    @include transition(all .3s);
+
+    &:hover {
+        background-color: $orange60;
+    }
+}
+
+.fileNameContainer {
+    @include normal-text;
+    font-size: 0.9em;
+    display: flex;
+    justify-content: space-between;
+    overflow: hidden;
+    white-space: nowrap;
+    flex-grow: 1;
+
+    .fileName {
+        overflow: hidden;
+        text-overflow: ellipsis;
+    }
+}
+
+.deleteButton {
+    align-self: flex-end;
+    cursor: pointer;
+    @include transition(all .3s);
+    color: $gray60;
+    &:hover {
+        color: $gray100;
+    }
+}
