@@ -1,6 +1,6 @@
 // External
 //eslint-disable-next-line
-import React, { useEffect, useContext, useState } from "react";
+import React, { useState } from "react";
 import { useParams } from "react-router-dom";
 
 // Internal
@@ -9,7 +9,6 @@ import { ProjectRoutes } from "routes";
 import { Sidebar2 } from "components/sidebars";
 import styles from "./Project.module.scss";
 import { Loading } from "components/Loading/Loading";
-//eslint-disable-next-line
 import { useFetchProject } from "api/resources/projects/projects";
 import { ErrorPage } from "pages";
 
@@ -48,14 +47,19 @@ export const Project = () => {
       {projectQuery.isError && <ErrorPage />}
       {projectQuery.isSuccess && (
         <>
-          <Header title={projectQuery.data.name || "Untitled Project"} backPath="/projects" />
-          <SplitHorizontal leftShrink divider fullHeight>
+          <Header
+            title={projectQuery.data.name || "Untitled Project"}
+            backPath="/projects"
+          />
+          <SplitHorizontal className="flex-grow" leftShrink divider fullHeight>
             <Sidebar2
               menuItems={menuItems}
               active={active}
               updateActive={handleActiveUpdate}
             />
-            <div className={styles.content}>{projectQuery.data && <ProjectRoutes />}</div>
+            <div className={styles.content}>
+              {projectQuery.data && <ProjectRoutes />}
+            </div>
           </SplitHorizontal>
         </>
       )}
