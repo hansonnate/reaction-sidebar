@@ -7,7 +7,6 @@ export const ImageUpload = ({ onUpload, imageFile }) => {
   const imageInput = useRef();
 
   const handleFileChange = (event) => {
-    console.log("setting file to ", event.target.files[0].name);
     setFile(event.target.files[0]);
     if (onUpload) {
       onUpload(file);
@@ -26,12 +25,11 @@ export const ImageUpload = ({ onUpload, imageFile }) => {
     <Stack direction="row" className="align-items-center" spacing={1}>
       <label>
         <input
-            ref={imageInput}
+          ref={imageInput}
           accept="image/*"
           type="file"
           style={{ display: "none" }}
           onChange={handleFileChange}
-          
         />
         <span className={styles.button}>
           <i className="bi bi-upload" />
