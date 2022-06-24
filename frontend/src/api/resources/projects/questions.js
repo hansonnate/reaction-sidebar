@@ -7,7 +7,7 @@ const uri = "/questions";
 export const useFetchQuestions = (projectId) => {
   return useQuery(
     ["projects", projectId, "questions"],                   // Cache key
-    () => apiClient.get(`${uri}`).then((res) => res.data),  // Query function
+    () => apiClient.get(`${uri}?projectId=${projectId}`).then((res) => res.data),  // Query function
     {                                                       // Query config    
 
     }               
@@ -48,8 +48,57 @@ export const useUpdateQuestion = (projectId) => {
     (values) =>
       apiClient.patch(`${uri}/${values.id}`, values).then((res) => res.data),
     {
+      onError: (err, _project, rollback) => {
+        console.log(err);
+        if (rollback) rollback();
+      },
+      onSuccess: () => {
+        queryClient.invalidateQueries(["projects", projectId, "questions"]);
+      },
+    }
+  );
+};
+
+export const useDeleteQuestion = (projectId) => {
+  const queryClient = useQueryClient();
+  return useMutation(
+    (questionId) =>
+      apiClient.delete(`${uri}/${questionId}`).then((res) => res.data),
+    {
+      onError: (err, _project, rollback) => {
+        console.log(err);
+        if (rollback) rollback();
+      },
+      onSuccess: () => {
+        queryClient.invalidateQueries(["projects", projectId, "questions"]);
+      },
+    }
+  );
+};
+
+export const useFetchQuestionChoices = (projectId, questionId) => {
+  return useQuery(
+    ["projects", projectId, "questions", questionId, "choices"],
+    () =>
+      apiClient
+        .get(`/questions/${questionId}?_embed=choices&projectId=${projectId}`)
+        .then((res) => res.data.choices),
+    {}
+  );
+};
+
+export const useUpdateQuestionChoices = (projectId, questionId) => {
+  const queryClient = useQueryClient();
+  return useMutation(
+    (values) =>
+      apiClient.patch(`/choices/${values.id}`, values).then((res) => res.data),
+    {
       onMutate: (values) => {
-        queryClient.setQueriesData(["projects", projectId, "questions", values.id], values);
+        // queryClient.setQueriesData(
+        //   ["projects", projectId, "questions", questionId, "choices"],
+
+        // );
+        console.log(values, questionId);
       },
       onError: (err, _project, rollback) => {
         console.log(err);
@@ -62,18 +111,55 @@ export const useUpdateQuestion = (projectId) => {
   );
 };
 
+export const useCreateQuestionChoice = (projectId, questionId) => {
+  const queryClient = useQueryClient();
+  return useMutation(
+    (values) => apiClient.post(`/choices`, values).then((res) => res.data),
+    {
+      onMutate: (values) => {
+        console.log("creating question", values);
+      },
+      onError: (err, _project, rollback) => {
+        console.log(err);
+        if (rollback) rollback();
+      },
+      onSettled: () => {
+        queryClient.invalidateQueries([
+          "projects",
+          projectId,
+          "questions",
+          questionId,
+          "choices",
+        ]);
+      },
+    }
+  );
+};
 
-
-
-// const getQuestion = (questionId) => apiClient.get(`${uri}/${questionId}`);
-// const getQuestions = (projectId) => apiClient.get(`/projects/${projectId}?_embed=questions`);
-// const postQuestion = (body) => {
-//   apiClient.post(`${uri}`, body);
-// };
-// export default {
-//   getQuestion,
-//   getQuestions,
-//   postQuestion,
-// };
+export const useDeleteQuestionChoice = (projectId, questionId) => {
+  const queryClient = useQueryClient();
+  return useMutation(
+    (choiceId) =>
+      apiClient.delete(`/choices/${choiceId}`).then((res) => res.data),
+    {
+      onMutate: () => {
+        console.log("deleting question");
+      },
+      onError: (err, _project, rollback) => {
+        console.log(err);
+        if (rollback) rollback();
+      },
+      onSettled: () => {
+        queryClient.invalidateQueries([
+          "projects",
+          projectId,
+          "questions",
+          questionId,
+          "choices",
+        ]);
+      },
+    }
+  );
+};
 
 

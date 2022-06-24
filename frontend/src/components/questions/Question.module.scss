@@ -12,11 +12,30 @@
     border-color: $blue20;
   }
 
-  &.active {
-    border-color: $blue100;
+  .item {
+    margin-bottom: 0px;
   }
 
-  .item {
-    margin-bottom: 10px;
+  &.active {
+    border-color: $blue100;
+
+    .item {
+      margin-bottom: 10px;
+    }
   }
+}
+
+.headerText {
+  font-size: 1.3em !important;
+  font-weight: bold !important;
+  @include normal-text;
+}
+
+.instructionsText {
+  font-size: 0.9em !important;
+  font-style: italic;
+}
+
+.spacer {
+  margin-bottom: 30px;
 }
