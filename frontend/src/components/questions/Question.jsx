@@ -1,4 +1,8 @@
-import { useUpdateQuestion } from "api/resources/projects/questions";
+import {
+  useDeleteQuestion,
+  useUpdateQuestion,
+} from "api/resources/projects/questions";
+import { IconButton } from "components/IconButton/IconButton";
 import { TextField } from "components/inputs";
 import React from "react";
 import { useParams } from "react-router-dom";
@@ -8,6 +12,7 @@ import {
   MultipleChoiceQuestion,
   TextQuestion,
   NumberScaleQuestion,
+  NumberSliderQuestion,
   RankingQuestion,
   MatrixQuestion,
 } from "./types";
@@ -22,6 +27,7 @@ import {
 export const Question = ({ question, active, activate }) => {
   const { id } = useParams();
   const updateQuestionQuery = useUpdateQuestion(id);
+  const deleteQuestionQuery = useDeleteQuestion(id);
 
   const showInstructions = () => {
     return question.instructions || active;
@@ -41,6 +47,11 @@ export const Question = ({ question, active, activate }) => {
     });
   };
 
+  const handleDeleteQuestion = () => {
+    activate(null);
+    deleteQuestionQuery.mutate(question.id);
+  };
+
   return (
     <div
       className={`${styles.questionContainer} ${active && styles.active}`}
@@ -50,9 +61,11 @@ export const Question = ({ question, active, activate }) => {
         <TextField
           value={question.name}
           placeholder="Enter question"
+          label="Question"
           inactive={!active}
           onSave={handleUpdateName}
           autoFocus
+          customStyles={!active && styles.headerText}
         />
       </div>
       {showInstructions() && (
@@ -60,20 +73,45 @@ export const Question = ({ question, active, activate }) => {
           <TextField
             value={question.instructions}
             placeholder="Enter question instructions"
+            label="Instructions"
             inactive={!active}
             onSave={handleUpdateInstructions}
+            customStyles={!active && styles.instructionsText}
           />
         </div>
       )}
+      <div className={styles.spacer} />
       {question.type === "MultipleChoice" && (
-        <MultipleChoiceQuestion active={active} />
+        <MultipleChoiceQuestion
+          question_id={question.id}
+          active={active}
+          isMultiSelect={question.isMultiSelect}
+          otherOption={question.otherOption ? question.otherOptionText : null}
+        />
       )}
-      {question.type === "Matrix" && <MatrixQuestion active={active} />}
+      {question.type === "Matrix" && (
+        <MatrixQuestion question_id={question.id} active={active} />
+      )}
       {question.type === "NumberScale" && (
-        <NumberScaleQuestion active={active} />
+        <NumberScaleQuestion question={question} active={active} />
       )}
-      {question.type === "Ranking" && <RankingQuestion active={active} />}
-      {question.type === "Text" && <TextQuestion active={active} />}
+      {question.type === "NumberSlider" && (
+        <NumberSliderQuestion question={question} active={active} />
+      )}
+      {question.type === "Ranking" && (
+        <RankingQuestion question_id={question.id} active={active} />
+      )}
+      {question.type === "Text" && (
+        <TextQuestion question_id={question.id} active={active} />
+      )}
+      {active && (
+        <div className="d-flex justify-content-end mt-3">
+          <IconButton onClick={handleDeleteQuestion}>
+            <i className="bi bi-trash3"></i>
+            <span> Delete Question</span>
+          </IconButton>
+        </div>
+      )}
     </div>
   );
 };

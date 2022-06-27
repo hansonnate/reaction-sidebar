@@ -7,6 +7,8 @@
   padding: 5px 20px;
   outline: none;
   width: 100%;
+  flex-grow:1;
+  @include transition(background-color 0.2s ease-in);
 
   ::placeholder, /* Chrome, Firefox, Opera, Safari 10.1+ */
   :-ms-input-placeholder, /* Internet Explorer 10-11 */
@@ -17,5 +19,12 @@
 
   &.disabled {
     background-color: #ffffff00;
+    @include transition(background-color 0.2s ease-in);
+    padding-left: 0;
+    padding-right: 0;
   }
+}
+
+.editableTextField {
+  outline: none;
 }

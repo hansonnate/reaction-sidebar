@@ -31,10 +31,10 @@ export const QuestionBuilder = () => {
 
   const handleCreateQuestion = (question) => {
     createQuestionQuery.mutate({
-      projectId: id,
+      projectId: parseInt(id),
       type: "Text",
     });
-    setActive(createQuestionQuery.data.id)
+    setActive(createQuestionQuery.data.id);
   };
 
   return (
@@ -42,7 +42,7 @@ export const QuestionBuilder = () => {
       <SplitHorizontal fullHeight leftWidth={8}>
         <>
           {fetchQuestionsQuery.isSuccess && (
-            <div className={`overflow-y-scroll ${styles.scrollPane}`}>
+            <div className={`${styles.scrollPane}`}>
               {fetchQuestionsQuery.data.map((question) => (
                 <Question
                   key={question.id}
@@ -51,8 +51,13 @@ export const QuestionBuilder = () => {
                   activate={(id) => setActive(id)}
                 />
               ))}
-              <button onClick={handleCreateQuestion}>
-                <i className="bi bi-plus-square"></i>
+              <button
+                className={`ml-2`}
+                style={{ color: "#A3A4A8" }}
+                onClick={handleCreateQuestion}
+              >
+                <i className="bi bi-plus-lg mr-3"></i>
+                Add Question
               </button>
             </div>
           )}

@@ -1,0 +1,9 @@
+@import 'assets/styles/globals.scss';
+
+.button {
+    background-color: $seafoam100;
+    color: $white;
+    font-size: .8em;
+    padding: 7px;
+    border-radius: $container-radius;
+}

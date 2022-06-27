@@ -1,0 +1,5 @@
+@import "assets/styles/globals.scss";
+
+.label {
+    @include label-text;
+}

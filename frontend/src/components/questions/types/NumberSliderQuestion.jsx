@@ -1,9 +1,9 @@
 import React from "react";
-import { NumChoices } from "components/inputs/input_fields/NumChoices/NumChoices";
+import { NumSlider } from "components/inputs/input_fields/NumSlider/NumSlider";
 import { TextField } from "components/inputs";
 import { useUpdateQuestion } from "api/resources/projects/questions";
 
-export const NumberScaleQuestion = ({ question, active }) => {
+export const NumberSliderQuestion = ({ question, active }) => {
   const updateQuestionQuery = useUpdateQuestion();
 
   const showMinDescription = () => {
@@ -31,11 +31,11 @@ export const NumberScaleQuestion = ({ question, active }) => {
   return (
     <>
       <div className="d-flex mb-3">
-        <NumChoices
+        <NumSlider
           value={0}
-          min={Number(question.min)}
-          max={Number(question.max)}
-          step={Number(question.step)}
+          min={question.min}
+          max={question.max}
+          step={question.step}
         />
       </div>
 
@@ -44,7 +44,8 @@ export const NumberScaleQuestion = ({ question, active }) => {
           {showMinDescription() && (
             <TextField
               value={question.minDescription}
-              placeholder={"Min Description"}
+              placeholder={"Enter min description"}
+              label="Min Description"
               inactive={!active}
               onSave={handleMinDescriptionChange}
             />
@@ -54,7 +55,8 @@ export const NumberScaleQuestion = ({ question, active }) => {
           {showMaxDescription() && (
             <TextField
               value={question.maxDescription}
-              placeholder={"Max Description"}
+              placeholder={"Enter max description"}
+              label={"Max Description"}
               inactive={!active}
               align="right"
               onSave={handleMaxDescriptionChange}
