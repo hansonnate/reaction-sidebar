@@ -3,7 +3,7 @@ import React, { useState } from "react";
 import ReactTable, {
   SelectColumnFilter,
   MultipleFilter,
-} from "components/BasicTable/ReactTable.jsx";
+} from "components/tables/BasicTable/ReactTable.jsx";
 // import styles from "./AllContacts.module.scss";
 import ReactModal from "components/ReactModal/ReactModal.jsx";
 // import ReactInput from "../../components/ReactInput/ReactInput.jsx";

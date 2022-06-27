@@ -7,18 +7,18 @@ import {
   useFilters,
   usePagination,
 } from "react-table";
-import SearchFilter from "../SearchFilter/SearchFilter.jsx";
+import SearchFilter from "../../SearchFilter/SearchFilter.jsx";
 // import { Link } from "react-router-dom";
 import styles from "./Table.module.scss";
 import { useNavigate } from "react-router-dom";
-import FilterMenu from "../FilterMenu/FilterMenu.jsx";
-import DropdownMenu from "../FilterMenu/DropdownMenu.jsx";
-import ActionButton from "../ActionButton/ActionButton.jsx";
-import BulkActionButton from "../BulkActionButton/BulkActionButton.jsx";
-import Accordion from "../Accordion/Accordion.jsx";
-import AccordionItem from "../Accordion/AccordionItem.jsx";
+import FilterMenu from "../../FilterMenu/FilterMenu.jsx";
+import DropdownMenu from "../../FilterMenu/DropdownMenu.jsx";
+import ActionButton from "../../buttons/ActionButton/ActionButton.jsx";
+import BulkActionButton from "../../buttons/BulkActionButton/BulkActionButton.jsx";
+import { Accordion } from "components/layouts";
+import { AccordionItem } from "components/layouts";
 import Select from "react-select";
-import ActionDropdown from "../BulkActionButton/ActionDropdown.jsx";
+import ActionDropdown from "../../buttons/BulkActionButton/ActionDropdown.jsx";
 // import Checkbox from "components/Checkbox/Checkbox.jsx";
 
 //Date calculations
@@ -194,7 +194,7 @@ function ReactTable({ columns, data, buttonMethod, modalTitle }) {
     // console.log(tempList);
     // Check/ UnCheck All Items
     tempList.map((row) => (row.selected = e.target.checked));
-    
+
     //Update State
     setList(tempList);
     setMasterChecked(e.target.checked);
@@ -213,7 +213,7 @@ function ReactTable({ columns, data, buttonMethod, modalTitle }) {
     // console.log(tempList);
     // Check/ UnCheck All Items
     tempList.map((row) => (row.selected = false));
-    
+
     //Update State
     setList(tempList);
     setMasterChecked(false);
@@ -232,12 +232,12 @@ function ReactTable({ columns, data, buttonMethod, modalTitle }) {
     //To Control Master Checkbox State
     const totalItems = List.length;
     const totalCheckedItems = tempList.filter((e) => e.selected).length;
-    
+
     // Update State
     setList(tempList);
     setMasterChecked(totalItems === totalCheckedItems);
     setSelectedList(tempList.filter((e) => e.selected));
-    console.log(SelectedList)
+    console.log(SelectedList);
     // this.setState({
     //   MasterChecked: totalItems === totalCheckedItems,
     //   List: tempList,

@@ -5,7 +5,7 @@ import { Link } from "react-router-dom";
 import ReactTable, {
   SelectColumnFilter,
   MultipleFilter,
-} from "../../components/BasicTable/ReactTable.jsx";
+} from "../../components/tables/BasicTable/ReactTable.jsx";
 import styles from "./Projects.module.scss";
 import ReactModal from "../../components/ReactModal/ReactModal.jsx";
 // import FormInput from "../../components/FormInput/FormInput.jsx";

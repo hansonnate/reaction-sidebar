@@ -1,5 +1,5 @@
 import React, { useEffect, useRef } from "react";
-import ActionButton from "../ActionButton/ActionButton.jsx";
+import ActionButton from "../buttons/ActionButton/ActionButton.jsx";
 // import CloseIcon from "../CloseIcon";
 import styles from "./ReactModal.module.scss";
 
