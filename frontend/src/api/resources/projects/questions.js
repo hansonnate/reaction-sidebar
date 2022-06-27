@@ -4,20 +4,7 @@ import { gql } from "graphql-request";
 
 import { useGqlQuery, useGqlMutation } from "api/Api";
 
-const uri = "/questions";
-
-// Using react-query to cache the questions
-export const useFetchQuestions = (projectId) => {
-  return useQuery(
-    ["projects", projectId, "questions"], // Cache key
-    () =>
-      apiClient.get(`${uri}?projectId=${projectId}`).then((res) => res.data), // Query function
-    {
-      // Query config
-    }
-  );
-};
-
+// GQL API METHODS
 export const useFetchQuestionsGql = (projectId) => {
   const query = gql`
     query {
@@ -32,14 +19,6 @@ export const useFetchQuestionsGql = (projectId) => {
     }`;
 
   return useGqlQuery(["projects", projectId, "questions"], query, []);
-};
-
-export const useFetchQuestion = (questionId) => {
-  return useQuery(
-    ["questions", questionId],
-    () => apiClient.get(`${uri}/${questionId}`).then((res) => res.data),
-    {}
-  );
 };
 
 export const useFetchQuestionGql = (questionId, projectId = null) => {
@@ -68,26 +47,6 @@ export const useFetchQuestionGql = (questionId, projectId = null) => {
   return useGqlQuery(["questions", questionId], query, [], options);
 };
 
-export const useCreateQuestion = (projectId) => {
-  const queryClient = useQueryClient();
-  return useMutation(
-    (values) => apiClient.post(`${uri}`, values).then((res) => res.data),
-    {
-      onMutate: (values) => {
-        console.log("creating question");
-        console.log(values);
-      },
-      onError: (err, _project, rollback) => {
-        console.log(err);
-        if (rollback) rollback();
-      },
-      onSettled: () => {
-        queryClient.invalidateQueries(["projects", projectId, "questions"]);
-      },
-    }
-  );
-};
-
 export const useCreateQuestionGql = (projectId) => {
   const mutation = gql`
     mutation createQuestion($values: QuestionCreateInput!) {
@@ -110,6 +69,75 @@ export const useCreateQuestionGql = (projectId) => {
   };
 
   return useGqlMutation(mutation, [], options);
+};
+
+export const useUpdateQuestionGql = (projectId) => {
+  const mutation = gql`
+    mutation updateQuestion($values: QuestionUpdateInput!) {
+      update_question_one(object: $values) {
+        title
+        instructions
+      }
+    }
+  `;
+
+  const queryClient = useQueryClient();
+  const options = {
+    onError: (err, _project, rollback) => {
+      console.log(err);
+      if (rollback) rollback();
+    },
+    onSuccess: () => {
+      queryClient.invalidateQueries(["projects", projectId, "questions"]);
+    },
+  };
+
+  return useGqlMutation(mutation, [], options);
+};
+
+
+
+
+// REST API METHODS
+const uri = "/questions";
+
+export const useFetchQuestions = (projectId) => {
+  return useQuery(
+    ["projects", projectId, "questions"], // Cache key
+    () =>
+      apiClient.get(`${uri}?projectId=${projectId}`).then((res) => res.data), // Query function
+    {
+      // Query config
+    }
+  );
+};
+
+export const useFetchQuestion = (questionId) => {
+  return useQuery(
+    ["questions", questionId],
+    () => apiClient.get(`${uri}/${questionId}`).then((res) => res.data),
+    {}
+  );
+};
+
+export const useCreateQuestion = (projectId) => {
+  const queryClient = useQueryClient();
+  return useMutation(
+    (values) => apiClient.post(`${uri}`, values).then((res) => res.data),
+    {
+      onMutate: (values) => {
+        console.log("creating question");
+        console.log(values);
+      },
+      onError: (err, _project, rollback) => {
+        console.log(err);
+        if (rollback) rollback();
+      },
+      onSettled: () => {
+        queryClient.invalidateQueries(["projects", projectId, "questions"]);
+      },
+    }
+  );
 };
 
 export const useUpdateQuestion = (projectId) => {
@@ -181,30 +209,6 @@ export const useUpdateQuestionChoices = (projectId, questionId) => {
   );
 };
 
-export const useUpdateQuestionGql = (projectId) => {
-  const mutation = gql`
-    mutation updateQuestion($values: QuestionUpdateInput!) {
-      update_question_one(object: $values) {
-        title
-        instructions
-      }
-    }
-  `;
-
-  const queryClient = useQueryClient();
-  const options = {
-    onError: (err, _project, rollback) => {
-      console.log(err);
-      if (rollback) rollback();
-    },
-    onSuccess: () => {
-      queryClient.invalidateQueries(["projects", projectId, "questions"]);
-    },
-  };
-
-  return useGqlMutation(mutation, [], options);
-};
-
 export const useCreateQuestionChoice = (projectId, questionId) => {
   const queryClient = useQueryClient();
   return useMutation(
@@ -255,3 +259,5 @@ export const useDeleteQuestionChoice = (projectId, questionId) => {
     }
   );
 };
+
+

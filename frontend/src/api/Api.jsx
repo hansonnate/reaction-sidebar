@@ -1,25 +1,30 @@
 import { GraphQLClient } from "graphql-request";
-import { useQuery, useMutation } from "react-query";
+import { useQuery, useMutation, useSubscription } from "react-query";
 
 
 // GRAPHQL - REACTION SERVER
 const endpoint = "http://localhost:8001/graphql";
 
+const getGqlRequestFn = (request, variables) => {
+  const headers = {};
+  const graphQLClient = new GraphQLClient(endpoint, headers);
+  return async () => await graphQLClient.request(request, variables);
+}
+
 export const useGqlQuery = (key, query, variables, options = {}) => {
-  const headers = {};
-  const graphQLClient = new GraphQLClient(endpoint, headers);
-
-  const fetchData = async () => await graphQLClient.request(query, variables);
-  return useQuery(key, fetchData, options);
+  const queryFn = getGqlRequestFn(query, variables);
+  return useQuery(key, queryFn, options);
 };
 
-export const useGqlMutation = (query, variables, options = {}) => {
-  const headers = {};
-  const graphQLClient = new GraphQLClient(endpoint, headers);
-
-  const mutate = async () => await graphQLClient.request(query, variables);
-  return useMutation(mutate, options);
+export const useGqlMutation = (mutation, variables, options = {}) => {
+  const mutationFn = getGqlRequestFn(mutation, variables);
+  return useMutation(mutationFn, options);
 };
+
+export const useGqlSubscription = (subscription, variables, options = {}) => {
+  const subscriptionFn = getGqlRequestFn(subscription, variables);
+  return useSubscription(subscriptionFn, options);
+}
 
 
 
@@ -55,3 +60,5 @@ export const useApi = (apiFunc) => {
 export const apiClient = axios.create({
   baseURL: "http://localhost:3001"
 });
+
+
