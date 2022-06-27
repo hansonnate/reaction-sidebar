@@ -135,7 +135,7 @@ export function SelectColumnFilter({
   );
 }
 
-function ReactTable({ columns, data, buttonMethod, modalTitle }) {
+export const ReactTable = ({ columns, data, buttonMethod, modalTitle }) => {
   //dropdown menu views
   const isDisabled = false;
   const isLoading = false;
