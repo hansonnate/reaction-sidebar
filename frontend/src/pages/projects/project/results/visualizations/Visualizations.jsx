@@ -4,7 +4,6 @@ import styles from "./Visualizations.module.scss";
 import { Grid } from "./Grid";
 import { SortableBox } from "./SortableBox";
 import { ChartBox } from "./ChartBox";
-// import { reference } from "./ChartBox";
 
 import {
   DndContext,
@@ -31,7 +30,6 @@ export const Visualizations = () => {
   const [settingsVisible, setSettingsVisible] = useState(false);
   const sensors = useSensors(useSensor(MouseSensor), useSensor(TouchSensor));
 
-
   const handleClickOutside = (event) => {
     if (ref.current && !ref.current.contains(event.target)) {
       setSettingsVisible(false);
@@ -44,6 +42,7 @@ export const Visualizations = () => {
       document.removeEventListener("click", handleClickOutside, true);
     };
   }, []);
+
   const rankingQuestionData = {
     labels: ["0", "1", "2", "3", "4", "5", "6", "7", "8", "9", "10"],
     // datasets is an array of objects where each object represents a set of data to display corresponding to the labels above. for brevity, we'll keep it at one object
@@ -121,6 +120,8 @@ export const Visualizations = () => {
   const display = [
     {
       data: data,
+      total: 250,
+      index: 0,
       title: "Participant Percentage",
       titleLabel: "Participant Percentage",
       type: "verticalbarchart",
@@ -131,16 +132,22 @@ export const Visualizations = () => {
         dataLabelPosition: "end",
         dataLabelAlignment: "right",
         dataLabelSigFig: 1,
+        dataLabelPercentages: true,
+        hasTitle: true,
         titleLabel: "Participant Percentage",
         titleFontSize: 12,
         titleAlignment: "center",
         hasLegend: false,
         legendPosition: "top",
+        legendFontSize: 12,
+        legendPointStyle: true,
       },
       id: 0,
     },
     {
-      data: 250,
+      data: data,
+      total: 250,
+      index: 0,
       type: "numbercount",
       title: "Participants",
       titleLabel: "Participants",
@@ -151,16 +158,22 @@ export const Visualizations = () => {
         dataLabelPosition: "center",
         dataLabelAlignment: "center",
         dataLabelSigFig: 1,
+        dataLabelPercentages: true,
+        hasTitle: true,
         titleLabel: "Participants",
         titleFontSize: 12,
         titleAlignment: "center",
         hasLegend: true,
         legendPosition: "top",
+        legendFontSize: 12,
+        legendPointStyle: true,
       },
       id: 1,
     },
     {
       data: lineData,
+      total: 235,
+      index: 0,
       title: "Trending Score",
       titleLabel: "Trending Score",
       type: "linechart",
@@ -171,16 +184,22 @@ export const Visualizations = () => {
         dataLabelPosition: "center",
         dataLabelAlignment: "center",
         dataLabelSigFig: 1,
+        dataLabelPercentages: false,
+        hasTitle: true,
         titleLabel: "Trending Score",
         titleFontSize: 12,
         titleAlignment: "center",
         hasLegend: true,
         legendPosition: "top",
+        legendFontSize: 12,
+        legendPointStyle: true,
       },
       id: 2,
     },
     {
       data: doughnutdata,
+      total: 250,
+      index: 0,
       type: "doughnutchart",
       title: "How much wood could a wood chuck chuck?",
       titleLabel: "How much wood could a wood chuck chuck?",
@@ -191,16 +210,22 @@ export const Visualizations = () => {
         dataLabelPosition: "center",
         dataLabelAlignment: "center",
         dataLabelSigFig: 1,
+        dataLabelPercentages: true,
+        hasTitle: true,
         titleLabel: "How much wood could a wood chuck chuck?",
         titleFontSize: 12,
         titleAlignment: "center",
         hasLegend: true,
-        legendPosition: "top",
+        legendPosition: "bottom",
+        legendFontSize: 12,
+        legendPointStyle: true,
       },
       id: 3,
     },
     {
       data: rankingQuestionData,
+      total: 250,
+      index: 0,
       type: "horizontalbarchart",
       title:
         "How likely are you to recommend Primary Medical Group to a friend or to a family member?",
@@ -213,17 +238,23 @@ export const Visualizations = () => {
         dataLabelPosition: "center",
         dataLabelAlignment: "center",
         dataLabelSigFig: 0,
+        dataLabelPercentages: true,
+        hasTitle: true,
         titleLabel:
           "How likely are you to recommend Primary Medical Group to a friend or to a family member?",
         titleFontSize: 12,
         titleAlignment: "center",
-        hasLegend: true,
+        hasLegend: false,
         legendPosition: "top",
+        legendFontSize: 12,
+        legendPointStyle: true,
       },
       id: 4,
     },
     {
       data: trendedNPSData,
+      total: 250,
+      index: 0,
       type: "linechart",
       title: "Trended NPS",
       titleLabel: "Trended NPS",
@@ -234,66 +265,156 @@ export const Visualizations = () => {
         dataLabelPosition: "center",
         dataLabelAlignment: "center",
         dataLabelSigFig: 1,
+        dataLabelPercentages: true,
+        hasTitle: true,
         titleLabel: "Trended NPS",
         titleFontSize: 12,
         titleAlignment: "center",
         hasLegend: true,
         legendPosition: "top",
+        legendFontSize: 12,
+        legendPointStyle: true,
       },
       id: 5,
     },
   ];
+
+  const defaultChart = {
+    data: data,
+    total: 250,
+    index: 0,
+    title: "Participant Percentage",
+    titleLabel: "Participant Percentage",
+    type: "verticalbarchart",
+    selected: false,
+    design_settings: {
+      hasDataLabels: true,
+      dataLabelFontSize: 12,
+      dataLabelPosition: "end",
+      dataLabelAlignment: "right",
+      dataLabelSigFig: 1,
+      dataLabelPercentages: true,
+      hasTitle: true,
+      titleLabel: "Participant Percentage",
+      titleFontSize: 12,
+      titleAlignment: "center",
+      hasLegend: false,
+      legendPosition: "top",
+      legendFontSize: 12,
+      legendPointStyle: true,
+    },
+    id: 0,
+  }
   const [items, setItems] = useState(display);
+  const [selectedIndex, setSelectedIndex] = useState(0);
+
+  function handleDeleteChart() {
+    let index = selectedIndex;
+    console.log(index);
+    var array = items; // make a separate copy of the array
+    // var index = array.indexOf(i)
+    if (index !== -1) {
+      array.splice(index, 1);
+      setItems(array);
+    }
+  }
+
+  const handleNewChart = () => {
+    var array = items;
+    defaultChart.index = items.length; // make a separate copy of the array
+    array.push(defaultChart);
+    setItems(array);
+  }
+
+function handleChartData(value, index) {
+  console.log(value);
+  console.log(index);
+  let array = display;
+  for (let i = 0; i < display.length; i++) {
+    if (display[i].id === value) {
+      // console.log(i)
+      // console.log(selectedIndex)
+      array[index].data = display[i].data
+      array[index].title = display[i].title
+      array[index].titleLabel = display[i].titleLabel
+      console.log(array[index]);
+      console.log(display[i]);
+    }
+  }
+  setItems(array);
+  // items[selectedIndex].data = value;
+}
+
+function setItemIndex (item, index) {
+  item.index = index;
+}
 
   return (
-    <div className={styles.vizpage}>
-      <SplitHorizontal>
-        <div className={styles.visualizations}>
-          <DndContext
-            sensors={sensors}
-            collisionDetection={closestCenter}
-            onDragStart={handleDragStart}
-            onDragEnd={handleDragEnd}
-            onDragCancel={handleDragCancel}
-          >
-            <SortableContext items={items} strategy={rectSortingStrategy}>
-              <Grid columns={4}>
-                {items.map((item, index) => (
-                  <>
-                    {/* {console.log(item)} */}
-                    <SortableBox
-                      key={item.url}
-                      item={item}
-                      index={index}
-                      opensettings={setSettingsVisible}
-                    />
-                  </>
-                ))}
-                {/* <SortablePhoto key={"beef"} url={"beef"} index={items.length + 1} numParticipants={250} /> */}
-              </Grid>
-            </SortableContext>
-
-            <DragOverlay adjustScale={true}>
-              {/* {console.log(items.indexOf(activeId))} */}
-              {activeId ? (
-                <ChartBox item={activeId} index={items.indexOf(activeId)} />
-              ) : null}
-            </DragOverlay>
-          </DndContext>
-        </div>
-        {settingsVisible ? (
-          <div ref={ref} className={styles.settingscontainer}>
-            {items.map((item, index) => (
-              <div key={index}>
-                {item.selected == true && <VizSettings item={item}></VizSettings>}
+    <SplitHorizontal fullHeight divider={settingsVisible}>
+      <div className={styles.visualizations}>
+        <DndContext
+          sensors={sensors}
+          collisionDetection={closestCenter}
+          onDragStart={handleDragStart}
+          onDragEnd={handleDragEnd}
+          onDragCancel={handleDragCancel}
+        >
+          <SortableContext items={items} strategy={rectSortingStrategy}>
+            <Grid columns={4}>
+              {items.map((item, index) => (
+                <>
+                  {/* {console.log(item)} */}
+                  {setItemIndex(item, index)}
+                  <SortableBox
+                    key={item.url}
+                    item={item}
+                    index={index}
+                    opensettings={setSettingsVisible}
+                    
+                    // handleDeletion={handleDeleteChart}
+                  />
+                </>
+              ))}
+              {/* <SortablePhoto key={"beef"} url={"beef"} index={items.length + 1} numParticipants={250} /> */}
+              <div className={styles.newchartdiv}>
+                
+                <button onClick={handleNewChart}>New Chart +</button>
               </div>
-            ))}
-          </div>
-        ) : (
-          <div></div>
-        )}
-      </SplitHorizontal>
-    </div>
+            </Grid>
+          </SortableContext>
+
+          <DragOverlay adjustScale={true}>
+            {/* {console.log(items.indexOf(activeId))} */}
+            {activeId ? (
+              <ChartBox item={activeId} index={items.indexOf(activeId)} />
+            ) : null}
+          </DragOverlay>
+        </DndContext>
+      </div>
+      {settingsVisible ? (
+        <div ref={ref} className={styles.settingscontainer}>
+          {items.map((item, index) => (
+            
+            <div key={index}>
+              {() => setSelectedIndex(index)}
+              {item.selected == true && (
+                <VizSettings
+                  item={item}
+                  index={index}
+                  handleDeleteChart={handleDeleteChart}
+                  questions={display}
+                  handleChartData={handleChartData}
+                  // index={index}
+                ></VizSettings>
+              )}
+              
+            </div>
+          ))}
+        </div>
+      ) : (
+        <div></div>
+      )}
+    </SplitHorizontal>
   );
 
   // function handleDragEnd(event) {

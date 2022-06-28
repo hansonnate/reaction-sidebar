@@ -22,6 +22,9 @@ export const DataLabelSettings = ({ item, title }) => {
   const handleHasDataLabels = () => {
     item.design_settings.hasDataLabels = !item.design_settings.hasDataLabels;
   };
+  const handleDataLabelPercentages= () => {
+    item.design_settings.dataLabelPercentages = !item.design_settings.dataLabelPercentages;
+  };
 
   const positionOptions = [
     { value: "start", label: "Start" },
@@ -55,6 +58,13 @@ export const DataLabelSettings = ({ item, title }) => {
             <ToggleSwitch
               startChecked={item.design_settings.hasDataLabels}
               handleCheck={handleHasDataLabels}
+            ></ToggleSwitch>
+          </div>
+          <div className={styles.setting}>
+            <span>Percentages</span>
+            <ToggleSwitch
+              startChecked={item.design_settings.dataLabelPercentages}
+              handleCheck={handleDataLabelPercentages}
             ></ToggleSwitch>
           </div>
           <div className={styles.settingwithlabel}>

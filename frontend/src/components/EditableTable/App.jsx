@@ -3,7 +3,7 @@ import "./style.css";
 import makeData from "./makeData";
 import Table from "./Table";
 import { randomColor, shortId } from "./utils";
-import ActionButton from "components/ActionButton/ActionButton";
+// import ActionButton from "components/ActionButton/ActionButton";
 
 function reducer(state, action) {
   switch (action.type) {
@@ -247,9 +247,6 @@ function Editor() {
           />
 
         </div>
-      </div>
-      <div style={{width: "100px"}}>
-      <ActionButton title="Upload"></ActionButton>
       </div>
     </div>
   );

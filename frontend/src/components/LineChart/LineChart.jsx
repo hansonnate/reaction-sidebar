@@ -26,11 +26,19 @@ export const LineChart = ({ data, title, settings}) => {
     maintainAspectRatio: false,
     plugins: {
       legend: {
-        position: 'top',
+        display: settings.hasLegend,
+        position: settings.legendPosition,
+        font: {
+          size: settings.legendFontSize,
+        },
+        labels: {
+          usePointStyle: settings.legendPointStyle,
+        },
       },
       title: {
-        display: true,
+        display: settings.hasTitle,
         text: title,
+        align: settings.titleAlignment,
         font: {
           weight: "bold",
           size: settings.titleFontSize,
@@ -46,6 +54,20 @@ export const LineChart = ({ data, title, settings}) => {
           size: settings.dataLabelFontSize,
         },
         color: "black",
+        formatter: (value, ctx) => {
+          if (settings.dataLabelPercentages === true) {
+            let sum = 0;
+            let dataArr = ctx.chart.data.datasets[0].data;
+            dataArr.map((data) => {
+              sum += data;
+            });
+            let percentage =
+              ((value * 100) / sum).toFixed(settings.dataLabelSigFig) + "%";
+            return percentage;
+          } else {
+            return value;
+          }
+        },
       },
     },
   };

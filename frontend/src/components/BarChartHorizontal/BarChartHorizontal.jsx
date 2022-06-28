@@ -33,15 +33,19 @@ export const BarChartHorizontal = ({ data, title, settings }) => {
     maintainAspectRatio: false,
     plugins: {
       legend: {
-        display: false,
-        position: "top",
+        display: settings.hasLegend,
+        position: settings.legendPosition,
+        font: {
+          size: settings.legendFontSize,
+        },
         labels: {
-          usePointStyle: true,
+          usePointStyle: settings.legendPointStyle,
         },
       },
       title: {
-        display: true,
+        display: settings.hasTitle,
         text: title,
+        align: settings.titleAlignment,
         font: {
           weight: "bold",
           size: settings.titleFontSize,
@@ -58,13 +62,18 @@ export const BarChartHorizontal = ({ data, title, settings }) => {
         },
         color: "black",
         formatter: (value, ctx) => {
-          let sum = 0;
-          let dataArr = ctx.chart.data.datasets[0].data;
-          dataArr.map((data) => {
-            sum += data;
-          });
-          let percentage = ((value * 100) / sum).toFixed(settings.dataLabelSigFig) + "%";
-          return percentage;
+          if (settings.dataLabelPercentages === true) {
+            let sum = 0;
+            let dataArr = ctx.chart.data.datasets[0].data;
+            dataArr.map((data) => {
+              sum += data;
+            });
+            let percentage =
+              ((value * 100) / sum).toFixed(settings.dataLabelSigFig) + "%";
+            return percentage;
+          } else {
+            return value;
+          }
         },
       },
     },

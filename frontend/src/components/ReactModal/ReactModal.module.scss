@@ -26,10 +26,10 @@
 .modal__wrap {
   overflow-y: scroll;
   overflow-x: hidden;
-  position: relative;
-  display: block;
+  display: flex;
+  flex-direction: column;
   width: 25vw;
-  height: 30%;
+  height: fit-content;
   min-height: 100px;
   min-width: 400px;
   margin: 0 auto;
@@ -52,13 +52,10 @@
   transition: opacity 250ms 500ms ease, transform 350ms 500ms ease;
 }
 
-.buttonclose {
-  position: absolute;
-  top:80%;
+.buttons {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
 }
-.buttonsave {
-    position: absolute;
-    top:80%;
-    right: 4%;
-}
+
   

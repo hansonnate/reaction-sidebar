@@ -1,29 +1,180 @@
-import React from "react";
+import { ToggleSwitch } from "components/inputs/input_fields/ToggleSwitch/ToggleSwitch.jsx";
+import { Label } from "components/layouts/Label/Label.jsx";
+import React, { useState } from "react";
+import { submitted } from "./CleanerFunctionality.js";
 import styles from "./ContactCleaner.module.scss";
+import "./style.css";
+import ReactModal from "components/ReactModal/ReactModal";
+import { TextField } from "components/inputs/index.js";
 // import exampleFile from "./Images/fileFormat.png";
 // import {submitted} from "./CleanerFunctionality.js"
 
-function ContactCleaner() {
+export const ContactCleaner = () => {
+  const [file, setFile] = useState();
+  const [show, setShow] = useState(false);
+  // const fileReader = new FileReader();
+
+  const handleOnChange = (e) => {
+    console.log(file);
+    setFile(e.target.files[0]);
+  };
+
+  // const handleOnSubmit = (e) => {
+  //     e.preventDefault();
+
+  //     if (file) {
+  //         fileReader.onload = function (event) {
+  //             const csvOutput = event.target.result;
+  //             console.log(csvOutput);
+  //         };
+
+  //         fileReader.readAsText(file);
+  //     }
+  // };
+
   return (
     <div className={styles.body}>
       {/* <!-- success alert --> */}
-      {/* <div className={`${styles.alert} ${styles.success}`} id="successalert">
-        <strong>Success!</strong> Contact has been added to the final list and
+      <div className={`${styles.alert} ${styles.success}`} id="successalert">
+        <strong>Success!</strong> Changes have been saved and the contact was added to the clean list and
         removed from error list
-      </div> */}
+      </div>
       {/* <!-- ignored alert --> */}
-      {/* <div className={`${styles.alert} ${styles.success}`} id="ignorealert">
+      <div className={`${styles.alert} ${styles.success}`} id="ignorealert">
         <strong>Success!</strong> Contact warnings have been ignored and added
         to clean list
-      </div> */}
-      {/* <script text="type/javascript" src={functionality}></script> */}
+      </div>
+      {/* <!-- Modal --> */}
+      <ReactModal
+        show={show}
+        onClose={() => setShow(false)}
+        onSave={() => {
+          setShow(false);
+        }}
+        saveID="savebutton"
+      >
+        <h5 className="modal-title" id="staticBackdropLabel">
+          Modal title
+        </h5>
+
+        <div className="modal-body">
+        <div className={styles.modalcontent} id="modalinfo"></div>
+          <Label>First Name:</Label>
+          <TextField inputID="editFName"></TextField>
+          <Label>Last Name:</Label>
+          <TextField inputID="editLName"></TextField>
+          <Label>Email:</Label>
+          <TextField inputID="editEmail"></TextField>
+          <button
+          type="button"
+          className="btn"
+          data-bs-dismiss="modal"
+          id="ignoremodalbutton"
+          onClick={() => setShow(false)}
+        >
+          <u>Ignore Errors</u>
+        </button>
+         
+        </div>
+
+      </ReactModal>
+      {/* <!-- Modal configure --> */}
+      <div
+        className="modal fade"
+        id="exampleModalCenter"
+        tabIndex="-1"
+        aria-labelledby="exampleModalCenterTitle"
+        aria-hidden="true"
+      >
+        <div className="modal-dialog modal-dialog-centered">
+          <div className="modal-content">
+            <div className="modal-header">
+              <h5 className="modal-title" id="exampleModalLabel">
+                Find and Replace Settings
+              </h5>
+              <button
+                type="button"
+                className="btn-close"
+                data-bs-dismiss="modal"
+                aria-label="Close"
+              ></button>
+            </div>
+            <div className="modal-bodyfar" id="modalfindreplace">
+              <div className="modalbox" id="modalboxheader">
+                <input
+                  className="farinput"
+                  id="farHeader"
+                  type="text"
+                  placeholder="Header"
+                  aria-label="default input example"
+                />
+                <button
+                  type="button"
+                  id="addheader"
+                  className="btn btn-primary"
+                >
+                  Add
+                </button>
+                <button
+                  type="button"
+                  id="removeheader"
+                  className="btn btn-primary"
+                >
+                  Remove
+                </button>
+              </div>
+              <div className="modalbox" id="moreheaders"></div>
+              <div className="modalbox">
+                <input
+                  className="farinput"
+                  id="findinput"
+                  type="text"
+                  placeholder="Find"
+                  aria-label="default input example"
+                />
+                <input
+                  className="farinput"
+                  id="replaceinput"
+                  type="text"
+                  placeholder="Replace"
+                  aria-label="default input example"
+                />
+                <button
+                  type="button"
+                  id="addreplace"
+                  className="btn btn-primary"
+                >
+                  Add
+                </button>
+                <button
+                  type="button"
+                  id="removereplace"
+                  className="btn btn-primary"
+                >
+                  Remove
+                </button>
+              </div>
+              <div className="modalbox" id="moreFars"></div>
+            </div>
+            <div className="modal-footer">
+              <button
+                type="button"
+                className="btn btn-primary"
+                data-bs-dismiss="modal"
+              >
+                Save
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
 
       <div className={styles.aboutbox}>
         <div className={styles.container1}>
           <h2>Before Upload...</h2>
           <p>
             ONLY IMPORT .csv FILES, ALL OTHER FILE TYPES WILL NOT WORK! <br />{" "}
-            File should be adjusted to the following format:
+            First three header fields must be in the following format:
             firstname,lastname,email
           </p>
           <p>
@@ -38,36 +189,21 @@ function ContactCleaner() {
             final clean audience until those issues are fixed
           </p>
         </div>
-        {/* <div className={styles.container2}>
-          <p>Example in excel: </p>
-          <img
-            src={exampleFile}
-            alt="firstname,lastname,email"
-            id="exampleImage"
-          />
-          <p>
-            Click <a href="#">here</a> to see full explations of each setting.
-          </p>
-        </div> */}
         <div className={styles.settingsbox} id="settingsboxid">
           <div id="switchbox" className={styles.switchbox}>
             <h5>
               Contact Cleaner <i className="bi bi-question-circle"> </i>
             </h5>
             <div className={styles.charlengthbox}>
-              <div className="form-check form-switch" id="charlength">
-                <input
-                  className="form-check-input"
-                  type="checkbox"
-                  id="charlengthCheck"
-                />
-                <label
+              <div className={styles.setting} id="charlength">
+                <ToggleSwitch id="charlengthCheck" startChecked />
+                <Label
                   className={styles.charlengthtext}
                   htmlFor="flexSwitchCheckDefault"
                   id="charlengthtext"
                 >
                   Character length over:
-                </label>
+                </Label>
                 <input
                   type="number"
                   min="0"
@@ -80,91 +216,63 @@ function ContactCleaner() {
                 />
               </div>
             </div>
-            <div className="form-check form-switch">
-              <input
-                className="form-check-input"
-                type="checkbox"
-                id="singlechar"
-              />
-              <label
+            <div className={styles.setting}>
+              <ToggleSwitch startChecked id="singlechar" />
+              <Label
                 className="form-check-label"
                 htmlFor="flexSwitchCheckDefault"
               >
                 Single character or letter
-              </label>
+              </Label>
             </div>
-            <div className="form-check form-switch">
-              <input
-                className="form-check-input"
-                type="checkbox"
-                id="atCheck"
-              />
-              <label
+            <div className={styles.setting}>
+              <ToggleSwitch startChecked id="atCheck" />
+              <Label
                 className="form-check-label"
                 htmlFor="flexSwitchCheckDefault"
               >
                 Look for @ symbol
-              </label>
+              </Label>
             </div>
-            <div className="form-check form-switch">
-              <input
-                className="form-check-input"
-                type="checkbox"
-                id="domainCheck"
-              />
-              <label
+            <div className={styles.setting}>
+              <ToggleSwitch startChecked id="domainCheck" />
+              <Label
                 className="form-check-label"
                 htmlFor="flexSwitchCheckDefault"
               >
                 Verify domian
-              </label>
+              </Label>
             </div>
-            <div className="form-check form-switch">
-              <input
-                className="form-check-input"
-                type="checkbox"
-                id="removeDupes"
-              />
-              <label
+            <div className={styles.setting}>
+              <ToggleSwitch startChecked id="removeDupes" />
+              <Label
                 className="form-check-label"
                 htmlFor="flexSwitchCheckDefault"
               >
                 Remove duplicates by email
-              </label>
+              </Label>
             </div>
-            <div className="form-check form-switch">
-              <input
-                className="form-check-input"
-                type="checkbox"
-                id="prefixCheck"
-              />
-              <label
+            <div className={styles.setting}>
+              <ToggleSwitch startChecked id="prefixCheck" />
+              <Label
                 className="form-check-label"
                 htmlFor="flexSwitchCheckDefault"
               >
                 Check for prefixes
-              </label>
+              </Label>
             </div>
-            <div className="form-check form-switch">
-              <input
-                className="form-check-input"
-                type="checkbox"
-                id="suffixCheck"
-              />
-              <label
+            <div className={styles.setting}>
+              <ToggleSwitch startChecked id="suffixCheck" />
+              <Label
                 className="form-check-label"
                 htmlFor="flexSwitchCheckDefault"
               >
                 Check for suffixes
-              </label>
+              </Label>
             </div>
-            <div className="form-check form-switch">
-              <input
-                className="form-check-input"
-                type="checkbox"
-                id="findandreplacecheck"
-              />
-              <label
+            <div className={styles.setting}>
+              <ToggleSwitch startChecked id="findandreplacecheck" />
+              <Label
                 className="form-check-label"
                 htmlFor="flexSwitchCheckDefault"
                 id="findreplacelabel"
@@ -179,11 +287,12 @@ function ContactCleaner() {
                 >
                   <u>configure</u>
                 </button>
-              </label>
+              </Label>
             </div>
           </div>
         </div>
       </div>
+
       <div id="menubox" className={styles.menubox}>
         <div className={styles.uploadbox} id="uploadBoxid">
           <p>Upload File Here</p>
@@ -193,30 +302,30 @@ function ContactCleaner() {
               id="csvFile"
               accept=".csv"
               className={styles.csvFile}
+              onChange={handleOnChange}
             />
-            <div className="form-switch form-check">
+            <div className={styles.setting}>
               <label
                 className="form-check-label"
                 htmlFor="flexSwitchCheckDefault"
               >
                 Use Contact Cleaner
               </label>
-              <input
-                className="form-check-input"
-                type="checkbox"
-                id="useCleaner"
-              />
+              <ToggleSwitch startChecked />
             </div>
-            <input
-              type="submit"
-              value="Submit"
+            <button
+              onClick={(e) => {
+                submitted(e, file, setShow);
+              }}
               id="submitButton"
               className={styles.submitButton}
-            />
+            >
+              Submit
+            </button>
           </form>
         </div>
       </div>
-      {/* <div className={styles.bodybox} id="outputbox">
+      <div className={styles.bodybox} id="outputbox">
         <p id="arrayOutput"></p>
         <div id="warningBox">
           <h5 id="changeHeader"></h5>
@@ -225,9 +334,7 @@ function ContactCleaner() {
           <p id="errorOutput"></p>
           <p id="download"></p>
         </div>
-      </div> */}
+      </div>
     </div>
   );
-}
-
-export default ContactCleaner;
+};

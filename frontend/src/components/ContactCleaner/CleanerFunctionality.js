@@ -1,18 +1,18 @@
 // const myForm = document.getElementById("myForm");
-const csvFile = document.getElementById("csvFile");
-let parOutput = document.getElementById("errorOutput");
-let h1Output = document.getElementById("changeHeader");
-let errorHeader = document.getElementById("errorHeader");
-let download = document.getElementById("download");
-let charLength = document.getElementById("charlengthCheck");
-let charLengthNum = document.getElementById("charlengthnum");
-let singleChar = document.getElementById("singlechar");
-let domainCheck = document.getElementById("domainCheck");
-let atCheck = document.getElementById("atCheck");
-let remDupesCheck = document.getElementById("removeDupes");
-let prefixCheck = document.getElementById("prefixCheck");
-let suffixCheck = document.getElementById("suffixCheck");
-let findreplacecheck = document.getElementById("findandreplacecheck");
+// const csvFile = document.getElementById("csvFile");
+// let parOutput = document.getElementById("errorOutput");
+// let h1Output = document.getElementById("changeHeader");
+// let errorHeader = document.getElementById("errorHeader");
+// let download = document.getElementById("download");
+// let charLength = document.getElementById("charlengthCheck");
+// let charLengthNum = document.getElementById("charlengthnum");
+// let singleChar = document.getElementById("singlechar");
+// let domainCheck = document.getElementById("domainCheck");
+// let atCheck = document.getElementById("atCheck");
+// let remDupesCheck = document.getElementById("removeDupes");
+// let prefixCheck = document.getElementById("prefixCheck");
+// let suffixCheck = document.getElementById("suffixCheck");
+// let findreplacecheck = document.getElementById("findandreplacecheck");
 //let csvString = "";
 let warnCount = 0;
 let badContacts = new Array();
@@ -484,6 +484,7 @@ function hasPrefix(fullArray) {
 
 //this function counts the characters in firstname and lastname of each row and gives a warning if over 20 char
 function charCount(fullArray) {
+  let charLengthNum = document.getElementById("charlengthnum");
   for (let i = 0; i < fullArray.length; i++) {
     //if first or last names are over charLengthNum characters
     if (
@@ -597,7 +598,7 @@ function emailDomain(fullArray) {
       text.substr(text.length - 7).includes(".health") ||
       text.substr(text.length - 5).includes(".us")
     ) {
-        console.log("No Invalid Emails")
+      console.log("No Invalid Emails");
     } else {
       addWarning("Invalid email domain", fullArray[i]);
     }
@@ -655,7 +656,7 @@ function dedupe(a) {
   let numDupes = 0;
   let seen = [];
   let out = [];
-//   let j = 0;
+  //   let j = 0;
   for (let i = 0; i < a.length; i++) {
     let item = a[i]["email"];
     if (seen[item] !== 1) {
@@ -675,6 +676,7 @@ function dedupe(a) {
     changeDisplay.appendChild(textToAdd);
 
     //download Duplicates if option is checked
+    let remDupesCheck = document.getElementById("removeDupes");
     if (remDupesCheck.checked) {
       let btnDupes = document.createElement("button");
       btnDupes.id = "dupeList";
@@ -762,12 +764,20 @@ function downloadCSVFile(array, fileName) {
   temp_link.click();
   document.body.removeChild(temp_link);
 }
+
+
+
+
+
+
+/* eslint-disable */
 //this activates when the submit button is pressed
-export function submitted(e) {
+export const submitted = (e, file, setShow) => {
   e.preventDefault();
-  const input = csvFile.files[0];
+  const input = file;
   const reader = new FileReader();
   reader.onload = function (e) {
+    debugger; // eslint-disable-line no-debugger
     //display the warningsbox
     document.getElementById("outputbox").style.display = "block";
     document.getElementById("uploadBoxid").style.display = "none";
@@ -779,6 +789,7 @@ export function submitted(e) {
     //removeCommas(cleanArray);
     //outputting changes and warnings/errors
     // let changes = document.createTextNode("Clean-up");
+    let h1Output = document.getElementById("changeHeader");
     h1Output.innerHTML = "<strong>Clean-up</strong><br>";
     let textToAdd = document.createTextNode(
       "Automated cleaning succefully made the following changes:"
@@ -790,6 +801,18 @@ export function submitted(e) {
     //clean up array
     cleanArray = spaceRemoval(cleanArray);
     cleanArray = capitalize(cleanArray);
+    let domainCheck = document.getElementById("domainCheck");
+    let remDupesCheck = document.getElementById("removeDupes");
+    let prefixCheck = document.getElementById("prefixCheck");
+    let suffixCheck = document.getElementById("suffixCheck");
+    let findreplacecheck = document.getElementById("findandreplacecheck");
+    let atCheck = document.getElementById("atCheck");
+    let errorHeader = document.getElementById("errorHeader");
+    let download = document.getElementById("download");
+    let charLength = document.getElementById("charlengthCheck");
+    let charLengthNum = document.getElementById("charlengthnum");
+    let singleChar = document.getElementById("singlechar");
+    let parOutput = document.getElementById("errorOutput");
     if (domainCheck.checked) {
       emailDomain(cleanArray);
     }
@@ -800,7 +823,7 @@ export function submitted(e) {
         farHeaders.push(document.getElementById("farheaderinput" + i).value);
       }
       let findValues = new Array();
-    //   let firstfind = document.getElementById("findinput").value;
+      //   let firstfind = document.getElementById("findinput").value;
       findValues.push(document.getElementById("findinput").value);
       for (let i = 0; i < numFars; i++) {
         findValues.push(document.getElementById("findinput" + i).value);
@@ -916,16 +939,17 @@ export function submitted(e) {
               'id="' +
               key.toString() +
               'warning"' +
-              ' class="editbutton" data-bs-toggle="modal" data-bs-target="#staticBackdrop"><i class="fa fa-pencil"></i></button>';
+              ' class="editbutton" data-bs-toggle="modal" data-bs-target="#staticBackdrop"><i class="bi bi-pencil"></i></button>';
           } else {
             row_2_data_2.innerHTML = "Multiple errors detected";
             //print out info depending on error for quick edit
+            debugger; // eslint-disable-line no-debugger
             row_2_data_3.innerHTML =
               '<button type="button" ' +
               'id="' +
               key.toString() +
-              'warning"' +
-              ' class="editbutton" data-bs-toggle="modal" data-bs-target="#staticBackdrop"><u>Edit<u></button>';
+              'warning"' + 
+              ' class="editbutton"><u>Edit<u></button>';
           }
           //ignore action
           let row_2_data_4 = document.createElement("td");
@@ -966,9 +990,11 @@ export function submitted(e) {
           //output the warning
           // let buttonBox = document.createElement('div');
           // buttonBox.id = key.toString() + "lineID";
-          // buttonBox.innerHTML = "⚠️ Line " + key.toString() + ": Multiple errors found " + " <button type=\"button\" " + "id=\"" + key.toString() + "warning\"" + " class=\"editbutton\" data-bs-toggle=\"modal\" data-bs-target=\"#staticBackdrop\"><i class=\"fa fa-pencil\"></i></button>";
+          // buttonBox.innerHTML = "⚠️ Line " + key.toString() + ": Multiple errors found " + " <button type=\"button\" " + "id=\"" + key.toString() + "warning\"" + " class=\"editbutton\" data-bs-toggle=\"modal\" data-bs-target=\"#staticBackdrop\"><i class=\"bi bi-pencil\"></i></button>";
           // parOutput.appendChild(buttonBox);
+          debugger; // eslint-disable-line no-debugger
           let editButt = document.getElementById(key.toString() + "warning");
+          editButt.addEventListener("click", function () {setShow(true)})
           //edit button functionality
           editButt.addEventListener("click", function () {
             let div = document.getElementById("modalinfo");
@@ -988,30 +1014,12 @@ export function submitted(e) {
             );
             title.appendChild(editInfo);
             //change content
-            let editableFName = document.createElement("input");
-            editableFName.id = "editFName";
-            editableFName.className = "modaltextboxes";
-            editableFName.type = "text";
+            let editableFName = document.getElementById("editFName");
             editableFName.value = value[0].contact.firstname;
-            div.appendChild(document.createTextNode("First Name: "));
-            div.appendChild(editableFName);
-            div.appendChild(document.createElement("br"));
-            let editableLName = document.createElement("input");
-            editableLName.className = "modaltextboxes";
-            editableLName.id = "editLName";
-            editableLName.type = "text";
+            let editableLName = document.getElementById("editLName");
             editableLName.value = value[0].contact.lastname;
-            div.appendChild(document.createTextNode("Last Name: "));
-            div.appendChild(editableLName);
-            div.appendChild(document.createElement("br"));
-            let editableEmail = document.createElement("input");
-            editableEmail.className = "modaltextboxes";
-            editableEmail.id = "editLName";
-            editableEmail.type = "text";
+            let editableEmail = document.getElementById("editEmail");
             editableEmail.value = value[0].contact.email;
-            div.appendChild(document.createTextNode("Email: "));
-            div.appendChild(editableEmail);
-            div.appendChild(document.createElement("br"));
             //save button functionality
             let saveButt = document.getElementById("savebutton");
             saveButt.addEventListener("click", function () {
@@ -1075,8 +1083,6 @@ export function submitted(e) {
               }
               //remove line
               document.getElementById(key.toString() + "row").remove();
-              //close modal
-              document.getElementById("closemodalbutton").click();
               //report successful
               openSuccess();
             });
@@ -1108,6 +1114,7 @@ export function submitted(e) {
           let row_2_data_2 = document.createElement("td");
           row_2_data_2.innerHTML = value[0].warning;
           let row_2_data_3 = document.createElement("td");
+          
           //print out info depending on error for quick edit
           if (value[0].warning.includes("email")) {
             //print email accoording to warning
@@ -1118,7 +1125,7 @@ export function submitted(e) {
               'id="' +
               key.toString() +
               'warning"' +
-              ' class="editbutton" data-bs-toggle="modal" data-bs-target="#staticBackdrop"><i class="fa fa-pencil"></i></button>';
+              ' class="editbutton"><i class="bi bi-pencil"></i></button>';
           } else if (
             value[0].warning.includes("First") ||
             value[0].warning.includes("first")
@@ -1131,7 +1138,7 @@ export function submitted(e) {
               'id="' +
               key.toString() +
               'warning"' +
-              ' class="editbutton" data-bs-toggle="modal" data-bs-target="#staticBackdrop"><i class="fa fa-pencil"></i></button>';
+              ' class="editbutton" data-bs-toggle="modal" data-bs-target="#staticBackdrop"><i class="bi bi-pencil"></i></button>';
           } else if (
             value[0].warning.includes("Last") ||
             value[0].warning.includes("last")
@@ -1144,7 +1151,7 @@ export function submitted(e) {
               'id="' +
               key.toString() +
               'warning"' +
-              ' class="editbutton" data-bs-toggle="modal" data-bs-target="#staticBackdrop"><i class="fa fa-pencil"></i></button>';
+              ' class="editbutton" data-bs-toggle="modal" data-bs-target="#staticBackdrop"><i class="bi bi-pencil"></i></button>';
           } else {
             row_2_data_3.innerHTML = "unknown";
           }
@@ -1185,13 +1192,14 @@ export function submitted(e) {
           tbody.appendChild(row_2);
           //output the warning
           // let buttonBox = document.createElement('div');
-          // buttonBox.innerHTML = "⚠️ Line " + key.toString() + ": " + value[0].warning + " <button type=\"button\" " + "id=\"" + key.toString() + "warning\"" + " class=\"editbutton\" data-bs-toggle=\"modal\" data-bs-target=\"#staticBackdrop\"><i class=\"fa fa-pencil\"></i></button>";
+          // buttonBox.innerHTML = "⚠️ Line " + key.toString() + ": " + value[0].warning + " <button type=\"button\" " + "id=\"" + key.toString() + "warning\"" + " class=\"editbutton\" data-bs-toggle=\"modal\" data-bs-target=\"#staticBackdrop\"><i class=\"bi bi-pencil\"></i></button>";
           // buttonBox.id = key.toString() + "lineID";
           // if (value[0].warning.includes("email")) { //print email accoording to warning
           //   buttonBox.appendChild(document.createTextNode(value[0].contact.email));
           // }
           //parOutput.appendChild(buttonBox);
           let editButt = document.getElementById(key.toString() + "warning");
+          editButt.addEventListener("click", function () {setShow(true)})
           // edit button functionality
           editButt.addEventListener("click", function () {
             let div = document.getElementById("modalinfo");
@@ -1210,31 +1218,12 @@ export function submitted(e) {
             //change content
 
             div.innerHTML = "";
-            let editableFName = document.createElement("input");
-            editableFName.id = "editFName";
-            editableFName.className = "modaltextboxes";
-            editableFName.type = "text";
+            let editableFName = document.getElementById("editFName");
             editableFName.value = value[0].contact.firstname;
-            div.appendChild(document.createTextNode("First Name: "));
-            div.appendChild(editableFName);
-            div.appendChild(document.createElement("br"));
-            let editableLName = document.createElement("input");
-            editableLName.className = "modaltextboxes";
-            editableLName.id = "editLName";
-            editableLName.type = "text";
+            let editableLName = document.getElementById("editLName");
             editableLName.value = value[0].contact.lastname;
-            div.appendChild(document.createTextNode("Last Name: "));
-            div.appendChild(editableLName);
-            div.appendChild(document.createElement("br"));
-            let editableEmail = document.createElement("input");
-            editableEmail.className = "modaltextboxes";
-            editableEmail.id = "editLName";
-            editableEmail.type = "text";
+            let editableEmail = document.getElementById("editEmail");
             editableEmail.value = value[0].contact.email;
-            div.appendChild(document.createTextNode("Email: "));
-            div.appendChild(editableEmail);
-            div.appendChild(document.createElement("br"));
-            //save button functionality
             let saveButt = document.getElementById("savebutton");
             saveButt.addEventListener("click", function () {
               //first name edits
@@ -1253,8 +1242,6 @@ export function submitted(e) {
                     warnCount--;
                   }
                 }
-                //close modal
-                document.getElementById("closemodalbutton").click();
                 //report successful
                 openSuccess();
               }
@@ -1274,8 +1261,6 @@ export function submitted(e) {
                     warnCount--;
                   }
                 }
-                //close modal
-                document.getElementById("closemodalbutton").click();
                 //report successful
                 openSuccess();
               }
@@ -1295,8 +1280,6 @@ export function submitted(e) {
                     warnCount--;
                   }
                 }
-                //close modal
-                document.getElementById("closemodalbutton").click();
                 //report successful
                 openSuccess();
               }
@@ -1356,7 +1339,7 @@ export function submitted(e) {
     console.log(duplicates);
   };
   reader.readAsText(input);
-}
+};
 // let findreplacecheck = document.getElementById("findandreplacecheck");
 // findreplacecheck.addEventListener('change', function () {
 //     if (this.checked) {

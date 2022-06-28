@@ -2,7 +2,6 @@ import React from "react";
 import ChartDataLabels from "chartjs-plugin-datalabels";
 import { Doughnut } from "react-chartjs-2";
 import { Chart as ChartJS, ArcElement, Tooltip, Legend } from "chart.js";
-
 ChartJS.register(ArcElement, Tooltip, Legend, ChartDataLabels);
 
 export const DoughnutChart = ({ data, title, settings }) => {
@@ -11,20 +10,24 @@ export const DoughnutChart = ({ data, title, settings }) => {
     maintainAspectRatio: false,
     plugins: {
       legend: {
-        position: "bottom",
+        display: settings.hasLegend,
+        position: settings.legendPosition,
+        font: {
+          size: settings.legendFontSize,
+        },
         labels: {
-          usePointStyle: true,
+          usePointStyle: settings.legendPointStyle,
         },
       },
       title: {
-        display: true,
+        display: settings.hasTitle,
         text: title,
-        position: 'top',
-        align: 'start',
+        position: "top",
+        align: settings.titleAlignment,
         font: {
           weight: "bold",
           size: settings.titleFontSize,
-          family: "'Poppins', sans-serif"
+          family: "'Poppins', sans-serif",
         },
       },
       datalabels: {
@@ -37,18 +40,21 @@ export const DoughnutChart = ({ data, title, settings }) => {
         },
         color: "black",
         formatter: (value, ctx) => {
-          let sum = 0;
-          let dataArr = ctx.chart.data.datasets[0].data;
-          dataArr.map((data) => {
-            sum += data;
-          });
-          let percentage = ((value * 100) / sum).toFixed(settings.dataLabelSigFig) + "%";
-          return percentage;
+          if (settings.dataLabelPercentages === true) {
+            let sum = 0;
+            let dataArr = ctx.chart.data.datasets[0].data;
+            dataArr.map((data) => {
+              sum += data;
+            });
+            let percentage =
+              ((value * 100) / sum).toFixed(settings.dataLabelSigFig) + "%";
+            return percentage;
+          } else {
+            return value;
+          }
         },
       },
     },
   };
-  return (
-      <Doughnut options={options} data={data} width={"auto"}/>
-  );
+  return <Doughnut options={options} data={data} width={"auto"} />;
 };

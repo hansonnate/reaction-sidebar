@@ -1,3 +1,4 @@
+@import "assets/styles/globals.scss";
 $reactlightblue: #d5f3fe;
 $reactlighterblue: #d5f3feaa;
 $reactdarkerblue: #2a627c;
@@ -15,7 +16,7 @@ $reactbluegray: #738c91;
 
 .firstrow {
     border-radius: 5px;
-    background-color: $reactlightblue;
+    background-color: $sapphire20;
     width: 100%;
 }
 

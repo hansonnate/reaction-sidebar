@@ -1,3 +1,4 @@
+@import "assets/styles/globals.scss";
 $reactlightblue: #d5f3fe;
 $reactlighterblue: #d5f3feaa;
 $reactdarkerblue: #2a627c;
@@ -27,12 +28,13 @@ $reactbluegray: #738c91;
     border-radius: 0 5px 5px 0;
   }
   th {
-    background-color: $reactlightblue;
-    padding: 5px;
-    color: $reactdarkblue;
+    background-color: $sapphire20;
+    padding: 8px 5px;
+    color: $sapphire100;
     text-transform: uppercase;
-    font-weight: 700;
-    font-size: 11pt;
+    font-weight: 900;
+    font-family: "Poppins", sans-serif;
+    // font-size: 13pt;
   }
   td:first-child {
     padding-left: 20px;
@@ -45,6 +47,7 @@ $reactbluegray: #738c91;
 
   td {
     padding: 8px 5px;
+    font-family: "Poppins", sans-serif;
     // border: 2px solid black;
   }
   tr {

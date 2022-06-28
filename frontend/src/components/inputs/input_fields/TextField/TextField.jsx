@@ -9,6 +9,7 @@ export const TextField = ({
   autosave,
   disabled,
   inactive,
+  inputID,
 }) => {
   const [val, setVal] = useState(value);
 
@@ -40,6 +41,7 @@ export const TextField = ({
       onChange={handleChange}
       onBlur={handleFocusOut}
       disabled={disabled}
+      id={inputID}
     />
   );
 };

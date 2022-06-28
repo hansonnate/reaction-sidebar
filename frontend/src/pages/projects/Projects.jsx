@@ -51,7 +51,7 @@ export const Projects = () => {
         Cell: (e) => (
           <span
             className={`${styles.status} ${
-              isOpen(e) ? `${styles.isopen}` : `${styles.isclosed}`
+              isOpen(e) ? `${styles.isclosed}` : `${styles.isopen}`
             }`}
           >
             {e.value}{" "}
@@ -143,7 +143,7 @@ export const Projects = () => {
       >
         <div className="content">
           <h1>Create a New Project</h1>
-          <div className="text">
+          <div className={styles.text}>
             <ReactInput
               type="text"
               placeholder="Project Name"

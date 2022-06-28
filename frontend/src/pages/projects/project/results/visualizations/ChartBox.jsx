@@ -24,10 +24,14 @@ const options = [
     label: "Doughnut Chart",
     value: "doughnutchart",
   },
+  {
+    label: "Answer Count",
+    value: "numbercount",
+  },
 ];
 
 export const ChartBox = forwardRef(
-  ({ item, index, faded, style, ...props }, ref) => {
+  ({ item, index, faded, style, handleDeletion, opensettings, ...props }, ref) => {
     // const [selected, setSelected] = useState(false);
     const inlineStyles = {
       opacity: faded ? "0.2" : "1",
@@ -45,30 +49,31 @@ export const ChartBox = forwardRef(
       display: "flex",
       flexDirection: "column",
       position: "relative",
-      boxShadow: "rgba(0, 0, 0, 0.12) 0px 1px 3px, rgba(0, 0, 0, 0.24) 0px 1px 2px",
+      boxShadow:
+        "rgba(0, 0, 0, 0.12) 0px 1px 3px, rgba(0, 0, 0, 0.24) 0px 1px 2px",
       ...style,
     };
 
     const refer = useRef(null);
 
-
-    const participantPercentage = () => {
+    const VerticalBarChart = () => {
       return (
         <div className={styles.chart}>
           <BarChartVertical
             data={item.data}
-            title="Participant Percentage"
+            title={item.titleLabel}
             settings={item.design_settings}
           />
         </div>
       );
     };
+
     const lineChart = () => {
       return (
         <div className={styles.chart}>
           <LineChart
             data={item.data}
-            title="Trending Score"
+            title={item.titleLabel}
             settings={item.design_settings}
           />
         </div>
@@ -81,12 +86,12 @@ export const ChartBox = forwardRef(
     //     </div>
     //   );
     // };
-    const rankingQuestion1 = () => {
+    const HorizontalBarChart = () => {
       return (
         <div className={styles.chart}>
           <BarChartHorizontal
             data={item.data}
-            title="How likely are you to recommend Primary Medical Group to a friend or to a family member?"
+            title={item.titleLabel}
             settings={item.design_settings}
           />
         </div>
@@ -97,18 +102,18 @@ export const ChartBox = forwardRef(
         <div className={styles.chart}>
           <DoughnutChart
             data={item.data}
-            title="How much wood could a wood chuck chuck?"
+            title={item.titleLabel}
             settings={item.design_settings}
           />
         </div>
       );
     };
 
-    const numParticipants = () => {
+    const GenericNumber = () => {
       return (
         <div className={styles.participants}>
-          <span>250</span>
-          <h6>Participants</h6>
+          <span>{item.total}</span>
+          <h6>{item.titleLabel}</h6>
         </div>
       );
     };
@@ -122,6 +127,11 @@ export const ChartBox = forwardRef(
         //   // props.opensettings(false);
         // }
       }
+    };
+
+    const handleDeleteChart = () => {
+      //return index
+      handleDeletion(index);
     };
 
     useEffect(() => {
@@ -139,21 +149,22 @@ export const ChartBox = forwardRef(
         >
           {" "}
           <div className={styles.chartholder} {...props}>
-            {item.type === "verticalbarchart" && participantPercentage()}
+            {item.type === "verticalbarchart" && VerticalBarChart()}
             {item.type === "linechart" && lineChart()}
-            {item.type === "horizontalbarchart" && rankingQuestion1()}
+            {item.type === "horizontalbarchart" && HorizontalBarChart()}
             {item.type === "doughnutchart" && pieChart()}
-            {item.type === "numbercount" && numParticipants()}
+            {item.type === "numbercount" && GenericNumber()}
           </div>
           <div className={styles.editbuttons}>
+            {/* <span>Total Answered: </span> */}
             <button
               onClick={() => {
-                props.opensettings(!item.selected);
+                opensettings(!item.selected);
                 item.selected = !item.selected;
               }}
               className={styles.editchart}
             >
-              <i className="bi bi-pencil-square"></i>
+              <i className="bi bi-three-dots"></i>
             </button>
           </div>
         </div>
