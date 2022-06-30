@@ -151,12 +151,13 @@ export const Projects = () => {
   const [description, setDescription] = useState("");
 
   const handlePostProject = () => {
-    createProjectQuery.mutate(
-      {
+    createProjectQuery.mutate({
+      input: {
         name: projectName,
         description: description,
       },
-      token
+      token: token
+    }
     );
   };
 

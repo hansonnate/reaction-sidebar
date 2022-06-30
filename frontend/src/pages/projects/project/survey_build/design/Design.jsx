@@ -5,7 +5,7 @@ import { ToggleButtonGroup, ToggleButton } from "@mui/material";
 
 // Internal
 import { SplitHorizontal } from "components/layouts";
-import { useFetchProject } from "api/resources/projects/projects";
+import { useFetchProjectGql } from "api/resources/projects/projects";
 import { TextField, ImageUpload } from "components/inputs";
 import { ColorPicker } from "components/inputs/input_fields/ColorPicker/ColorPicker";
 import styles from "./Design.module.scss";
@@ -13,7 +13,7 @@ import { Row, Col } from "react-bootstrap";
 
 export const Design = () => {
   const { id } = useParams();
-  const fetchProjectQuery = useFetchProject(id);
+  const fetchProjectQuery = useFetchProjectGql(id);
 
   if (fetchProjectQuery.isLoading) {
     return <div>Loading...</div>;
@@ -47,7 +47,7 @@ export const Design = () => {
 
 const DesignDialog = () => {
   const { id } = useParams();
-  const fetchProjectQuery = useFetchProject(id);
+  const fetchProjectQuery = useFetchProjectGql(id);
 
   const [alignment, setAlignment] = useState("left");
   const [titleColor, setTitleColor] = useState();

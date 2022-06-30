@@ -7,14 +7,16 @@ import { useParams } from "react-router-dom";
 import { SaveForm } from "components/inputs/SaveForm/SaveForm";
 import {
   useFetchProjectGql,
-  useUpdateProject,
+  useUpdateProjectGql,
 } from "api/resources/projects/projects";
+import { useToken } from "components/Login/Login";
 
 export const SurveyDetails = () => {
   const { id } = useParams();
   const fetchProjectQuery = useFetchProjectGql(id);
   // eslint-disable-next-line
-  const updateProjectQuery = useUpdateProject();
+  const updateProjectQuery = useUpdateProjectGql();
+  const { token } = useToken();
 
   // const handleSave = (values) => {
   //   updateProjectQuery.mutate(values);
@@ -23,16 +25,22 @@ export const SurveyDetails = () => {
   const updateTitle = (newTitle) => {
     updateProjectQuery.mutate({
       id: id,
-      name: newTitle,
+      input: {
+        name: newTitle,
+      },
+      token: token,
     });
-  }
+  };
 
   const updateDescription = (newDesc) => {
     updateProjectQuery.mutate({
       id: id,
-      description: newDesc,
+      input: {
+        description: newDesc,
+      },
+      token: token,
     });
-  }
+  };
 
   const tags = [
     { value: "Product", label: "Product" },
