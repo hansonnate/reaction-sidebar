@@ -16,9 +16,10 @@ import ReactInput from "../../components/ReactInput/ReactInput.jsx";
 import { Header } from "components/layouts";
 //import { useApi, ProjectsApi } from "api";
 import {
-  useCreateProject,
-  useFetchProjects,
+  useCreateProjectGql,
+  useFetchProjectsGql,
 } from "api/resources/projects/projects";
+import { useToken } from "components/Login/Login";
 
 //sample data
 // const getData = () => [
@@ -137,8 +138,9 @@ export const Projects = () => {
   // const getProjects = useApi(ProjectsApi.getProjects);
   // const postProject = useApi(ProjectsApi.postProject);
 
-  const fetchProjectsQuery = useFetchProjects();
-  const createProjectQuery = useCreateProject();
+  const fetchProjectsQuery = useFetchProjectsGql();
+  const createProjectQuery = useCreateProjectGql();
+  const { token } = useToken();
 
   // useEffect(() => {
   //   getProjects.request();
@@ -148,31 +150,21 @@ export const Projects = () => {
   const [projectName, setProjectName] = useState("New Project");
   const [description, setDescription] = useState("");
 
-  const handlePostProject = (
-    projectName,
-    owner,
-    status,
-    responses,
-    created,
-    modified,
-    description
-  ) => {
-    createProjectQuery.mutate({
-      name: projectName,
-      owner: owner,
-      status: status,
-      responses: responses,
-      created: created,
-      modified: modified,
-      description: description,
-    });
+  const handlePostProject = () => {
+    createProjectQuery.mutate(
+      {
+        name: projectName,
+        description: description,
+      },
+      token
+    );
   };
 
   return (
     <>
       <Header title="Projects" />
       {fetchProjectsQuery.isLoading && <p>Loading...</p>}
-      {fetchProjectsQuery.isError && <p>{fetchProjectsQuery.error}</p>}
+      {fetchProjectsQuery.isError && <p>Error</p>}
       {/* {getProjects.data?.map((project) => (
       {projectsQuery.isLoading && <p>Loading...</p>}
       {projectsQuery.isError && <p>{projectsQuery.error}</p>}
@@ -182,10 +174,11 @@ export const Projects = () => {
         </div>
         
       ))} */}
+      {console.log(fetchProjectsQuery)}
       {fetchProjectsQuery.isSuccess && (
         <ReactTable
           columns={columns}
-          data={fetchProjectsQuery.data}
+          data={fetchProjectsQuery.data.surveys}
           buttonMethod={() => setShow(true)}
           modalTitle="New Project"
         />
@@ -194,15 +187,7 @@ export const Projects = () => {
         show={show}
         onClose={() => setShow(false)}
         onSave={() => {
-          handlePostProject(
-            projectName,
-            "Jack Sparrow",
-            "Closed",
-            0,
-            Date.now(),
-            Date.now(),
-            description
-          );
+          handlePostProject();
           setShow(false);
         }}
       >

@@ -9,7 +9,7 @@ import { ProjectRoutes } from "routes";
 import { Sidebar2 } from "components/sidebars";
 import styles from "./Project.module.scss";
 import { Loading } from "components/Loading/Loading";
-import { useFetchProject } from "api/resources/projects/projects";
+import { useFetchProjectGql } from "api/resources/projects/projects";
 import { ErrorPage } from "pages";
 
 const menuItems = [
@@ -35,7 +35,7 @@ const menuItems = [
 
 export const Project = () => {
   const { id } = useParams();
-  const projectQuery = useFetchProject(id);
+  const fetchProjectQuery = useFetchProjectGql(id);
 
   const [active, setActive] = useState(0);
   const handleActiveUpdate = (item) => {
@@ -43,12 +43,12 @@ export const Project = () => {
   };
   return (
     <>
-      {projectQuery.isLoading && <Loading />}
-      {projectQuery.isError && <ErrorPage />}
-      {projectQuery.isSuccess && (
+      {fetchProjectQuery.isLoading && <Loading />}
+      {fetchProjectQuery.isError && <ErrorPage />}
+      {fetchProjectQuery.isSuccess && (
         <>
           <Header
-            title={projectQuery.data.name || "Untitled Project"}
+            title={fetchProjectQuery.data.survey.name || "Untitled Project"}
             backPath="/projects"
           />
           <SplitHorizontal className="flex-grow" leftShrink divider fullHeight>
@@ -58,7 +58,7 @@ export const Project = () => {
               updateActive={handleActiveUpdate}
             />
             <div className={styles.content}>
-              {projectQuery.data && <ProjectRoutes />}
+              {fetchProjectQuery.data.survey && <ProjectRoutes />}
             </div>
           </SplitHorizontal>
         </>

@@ -3,7 +3,7 @@ import { useQuery, useMutation, useSubscription } from "react-query";
 
 
 // GRAPHQL - REACTION SERVER
-const endpoint = "http://localhost:8001/graphql";
+const endpoint = "http://localhost:8001/";
 
 const getGqlRequestFn = (request, variables) => {
   const headers = {};
@@ -16,8 +16,10 @@ export const useGqlQuery = (key, query, variables, options = {}) => {
   return useQuery(key, queryFn, options);
 };
 
-export const useGqlMutation = (mutation, variables, options = {}) => {
-  const mutationFn = getGqlRequestFn(mutation, variables);
+export const useGqlMutation = (mutation, options = {}) => {
+  const headers = {};
+  const graphQLClient = new GraphQLClient(endpoint, headers);
+  const mutationFn = async variables => await graphQLClient.request(mutation, variables);
   return useMutation(mutationFn, options);
 };
 

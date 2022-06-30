@@ -6,13 +6,13 @@ import { useParams } from "react-router-dom";
 // Internal
 import { SaveForm } from "components/inputs/SaveForm/SaveForm";
 import {
-  useFetchProject,
+  useFetchProjectGql,
   useUpdateProject,
 } from "api/resources/projects/projects";
 
 export const SurveyDetails = () => {
   const { id } = useParams();
-  const fetchProjectQuery = useFetchProject(id);
+  const fetchProjectQuery = useFetchProjectGql(id);
   // eslint-disable-next-line
   const updateProjectQuery = useUpdateProject();
 
@@ -60,7 +60,7 @@ export const SurveyDetails = () => {
               label: "Survey Name",
               field: (
                 <TextField
-                  value={fetchProjectQuery.data.name}
+                  value={fetchProjectQuery.data.survey.name}
                   placeholder="Survey Name"
                   onSave={updateTitle}
                 ></TextField>
@@ -70,7 +70,7 @@ export const SurveyDetails = () => {
               label: "Description",
               field: (
                 <TextField
-                  value={fetchProjectQuery.data.description}
+                  value={fetchProjectQuery.data.survey.description}
                   placeholder="Description"
                   onSave={updateDescription}
                 ></TextField>

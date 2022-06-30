@@ -8,23 +8,26 @@ import { useGqlQuery, useGqlMutation } from "api/Api";
 export const useFetchQuestionsGql = (projectId) => {
   const query = gql`
     query {
-      surveyById(id: ${projectId}) {
-        questions {
+      surveyById(id: "${projectId}") {
+        name
+        question {
           id
-          title
+          questionText
           description
-          projectId
+          surveyId
+          type
         }
       }
-    }`;
+    }
+  `;
 
-  return useGqlQuery(["projects", projectId, "questions"], query, []);
+  return useGqlQuery(["projects", projectId, "questions"], query, {});
 };
 
 export const useFetchQuestionGql = (questionId, projectId = null) => {
   const query = gql`
     query {
-      question(where: { id: ${questionId} }) {
+      question(id: "${questionId}" ) {
         id
         title
         description
@@ -94,9 +97,6 @@ export const useUpdateQuestionGql = (projectId) => {
 
   return useGqlMutation(mutation, [], options);
 };
-
-
-
 
 // REST API METHODS
 const uri = "/questions";
@@ -259,5 +259,3 @@ export const useDeleteQuestionChoice = (projectId, questionId) => {
     }
   );
 };
-
-

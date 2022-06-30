@@ -1,9 +1,87 @@
 import { apiClient } from "api/Api";
 import { useQuery, useMutation, useQueryClient } from "react-query";
+import { gql } from "graphql-request";
 
+// eslint-disable-next-line no-unused-vars
+import { useGqlQuery, useGqlMutation, useGqlSubscription } from "api/Api";
+
+// GRAPHQL API
+export const useFetchProjectsGql = (includeDesignSettings = false) => {
+  const query = gql`
+    query {
+      surveys: allSurveys {
+        id
+        name
+        status
+        responseCount
+        customFields
+        createdAt
+        updatedAt
+        startedAt
+        closedAt
+        designSettings @include(if: ${includeDesignSettings})
+      }
+    }`;
+
+  return useGqlQuery(["projects"], query, {});
+};
+
+export const useFetchProjectGql = (id, includeQuestions = false) => {
+  const query = gql`
+    query {
+      survey: surveyById(id: "${id}") {
+        id
+        name
+        question @include(if: ${includeQuestions}) {
+          id
+          type
+          surveyId
+          pageOrderIndex
+          pageNumber
+          isHidden
+          createdAt
+          updatedAt
+          description
+          questionText
+        }
+      }
+    }
+  `;
+
+  return useGqlQuery(["projects", id], query, {});
+};
+
+export const useCreateProjectGql = () => {
+  const mutation = gql`
+    mutation CreateSurvey($survey: Object!, $token: String!) {
+      createSurvey(survey: $survey, token: $token) {
+        ok
+      }
+    }
+  `;
+
+  const options = {
+    onMutate: (values) => {
+      console.log("creating project");
+      console.log(values);
+    },
+    onError: (err, _project, rollback) => {
+      console.log(err);
+      if (rollback) rollback();
+    },
+    onSettled: () => {
+      useQueryClient().invalidateQueries("projects");
+    },
+  };
+  
+  return useGqlMutation(mutation, options);
+};
+
+
+
+// REST API
 const uri = "/projects";
 
-// Using react-query to cache the projects
 export const useFetchProjects = () => {
   return useQuery(
     "projects",
@@ -11,21 +89,6 @@ export const useFetchProjects = () => {
     {}
   );
 };
-
-// export const useFetchProjectsGql = () => {
-//   const query = gql`
-//     query {
-//       projects {
-//         id
-//         name
-//         status
-//         responseCount
-//         createAt
-//       }
-//     }`;
-
-//   return useGqlQuery(["projects", projectId, "questions"], query, []);
-// };
 
 export const useFetchProject = (projectId) => {
   return useQuery(

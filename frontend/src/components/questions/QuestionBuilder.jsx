@@ -6,20 +6,21 @@ import { SplitHorizontal } from "components/layouts";
 import styles from "./QuestionBuilder.module.scss";
 import {
   useCreateQuestion,
-  useFetchQuestions,
+  useFetchQuestionsGql,
   useUpdateQuestion,
 } from "api/resources/projects/questions";
 
 /* eslint-disable no-unused-vars */
 export const QuestionBuilder = () => {
   const { id } = useParams();
-  const fetchQuestionsQuery = useFetchQuestions(id);
+  console.log(id);
+  const fetchQuestionsQuery = useFetchQuestionsGql(id);
   const updateQuestionQuery = useUpdateQuestion(id);
   const createQuestionQuery = useCreateQuestion(id);
   const [active, setActive] = useState();
 
   const activeQuestion = () => {
-    return fetchQuestionsQuery.data?.find((q) => q.id == active);
+    return fetchQuestionsQuery.data.question?.find((q) => q.id == active);
   };
 
   const handleQuestionTypeChange = (type) => {
@@ -39,11 +40,12 @@ export const QuestionBuilder = () => {
 
   return (
     <>
+
       <SplitHorizontal fullHeight leftWidth={8}>
         <>
           {fetchQuestionsQuery.isSuccess && (
             <div className={`${styles.scrollPane}`}>
-              {fetchQuestionsQuery.data.map((question) => (
+              {fetchQuestionsQuery.data.question?.map((question) => (
                 <Question
                   key={question.id}
                   question={question}
