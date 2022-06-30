@@ -1,0 +1,125 @@
+$reactlightblue: #d5f3fe;
+$reactlighterblue: #d5f3feaa;
+$reactdarkerblue: #2a627c;
+$reactdarkblue: #2a627c81;
+$reactorange: #edb57e;
+$reactdarkorange: #ed9146;
+$reactbluegray: #738c91;
+@import "assets/styles/globals.scss";
+
+.fulltable {
+  // border-collapse: collapse;
+  // border: 1px solid black;
+  // border-radius: 5px;
+  font-family: "Poppins", sans-serif;
+  width: 100%;
+  height: fit-content;
+  input[type="checkbox"] {
+    accent-color: $reactdarkblue;
+  }
+
+  th:first-child {
+    border-radius: 5px 0 0 5px;
+    color: $reactdarkerblue;
+    padding-left: 20px;
+  }
+
+  th:last-child {
+    border-radius: 0 5px 5px 0;
+  }
+  th {
+    background-color: $sapphire20;
+    padding: 5px;
+    color: $sapphire100;
+    text-transform: uppercase;
+    font-weight: 700;
+    font-size: 11pt;
+  }
+  td:first-child {
+    padding-left: 20px;
+    border-radius: 5px 0px 0px 5px;
+  }
+
+  td:last-child {
+    border-radius: 0 5px 5px 0;
+  }
+
+  td {
+    padding: 8px 5px;
+    // border: 2px solid black;
+  }
+  tr {
+    background-color: white;
+  }
+}
+
+.tbodyrow:hover {
+  background-color: #efefef;
+  // border-radius: 5px;
+  cursor: pointer;
+}
+.editDots {
+  text-align: left;
+  width: 30px;
+}
+.hide {
+  display: none;
+}
+
+.searchfilter {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: flex-start;
+  gap: 30px;
+  font-family: "Poppins", sans-serif;
+  // border: 2px solid black;
+}
+
+.topcontainer {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  // border: 2px solid black;
+  padding-bottom: 0px;
+  padding-left: 19px;
+  align-items: center;
+  font-family: "Poppins", sans-serif;
+  gap: 30px;
+  h6 {
+    color: $sapphire100;
+    text-transform: uppercase;
+    font-weight: 900;
+  }
+}
+
+.textfield {
+  
+}
+
+.actionitem:hover {
+  background-color: #efefef;
+}
+.actionitem {
+  padding: 5px 10px;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.pagination {
+  width: 100%;
+  font-family: "Poppins", sans-serif;
+  // border: 2px solid black;
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-end;
+  gap: 10px;
+}
+.customaccordion {
+  input:checked {
+    background-color: #2a627c;
+  }
+}
+.accordioncheckbox {
+  accent-color: $reactdarkblue;
+}

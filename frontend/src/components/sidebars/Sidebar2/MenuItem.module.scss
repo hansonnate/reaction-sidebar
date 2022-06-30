@@ -57,4 +57,5 @@ a {
   top: 0;
   left: 120%;
   @include transition(opacity 300ms 100ms);
+  z-index: 1000;
 }

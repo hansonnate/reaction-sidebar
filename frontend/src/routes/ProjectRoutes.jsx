@@ -13,6 +13,9 @@ import {
   // Delivery tab pages
   Distributions,
   Deliveries,
+  Email,
+  SMS,
+  Link,
   // Results tab pages
   Visualizations,
   Participations,
@@ -45,8 +48,22 @@ export const DeliveryRoutes = () => {
   return (
     <Routes>
       <Route path="/" element={<Navigate to="distributions" />} />
-      <Route path="distributions" element={<Distributions />} />
-      <Route path="deliveries" element={<Deliveries />} />
+      <Route path="distributions/*" element={<Distributions />} />
+      <Route path="deliveries/*" element={<Deliveries />} />
+      {/* <Route path="distributions/email" element={<Email />} />
+      <Route path="distributions/link" element={<Link />} />
+      <Route path="distributions/sms" element={<SMS />} /> */}
+    </Routes>
+  );
+};
+
+export const DistributionRoutes = () => {
+  return (
+    <Routes>
+      <Route path="/" element={<Navigate to="email" />} />
+      <Route path="email" element={<Email />} />
+      <Route path="link" element={<Link />} />
+      <Route path="sms" element={<SMS />} />
     </Routes>
   );
 };

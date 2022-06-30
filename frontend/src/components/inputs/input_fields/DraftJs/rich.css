@@ -1,0 +1,40 @@
+.RichEditor-editor {
+  cursor: text;
+  font-size: 16px;
+  padding: 10px;
+  height: 200px;
+  overflow: auto;
+}
+
+.DraftEditor-editorContainer {
+  position: relative;
+  
+}
+
+.public-DraftEditorPlaceholder-root {
+  position: absolute;
+}
+
+.public-DraftEditorPlaceholder-inner {
+  color: #ccc;
+}
+
+.DraftEditor-root {
+  height: unset !important;
+}
+
+.RichEditor-hidePlaceholder
+  .DraftEditor-root
+  .public-DraftEditorPlaceholder-root {
+  display: none;
+}
+
+.align-right div {
+  text-align: right;
+}
+.align-center div {
+  text-align: center;
+}
+.align-left div {
+  text-align: left;
+}

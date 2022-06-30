@@ -1,0 +1,47 @@
+@import "assets/styles/globals.scss";
+.settingscontainer {
+    width: 100%;
+    padding: 2px 5px;
+    display:flex;
+    flex-direction: column;
+    gap: .5em;
+}
+.setting {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    gap: 10px;
+    width: 100%;
+}
+
+.settingwithlabel {
+    display: flex;
+    flex-direction: column;
+    gap: .1em;
+    span {
+        color: $sapphire100;
+        font-family: 'Poppins', sans-serif;
+        font-weight: 900;
+        font-size: .8em;
+    }
+    
+}
+
+.header {
+    font-family: 'Poppins', sans-serif;
+    font-weight: 900;
+    font-size: 1.5em;
+    text-align: center;
+    border-bottom: 2px solid #eee;
+    color: $gray100;
+}
+
+.deletechartbox {
+    text-align: center;
+    button {
+        font-family: 'Poppins', sans-serif;
+    }
+    button:hover {
+        color: $orange100;
+    }
+}

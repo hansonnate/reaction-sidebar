@@ -1,15 +1,13 @@
 import React from 'react';
 import styles from './ReactInput.module.scss';
 
-function FormInput({label, name, error, value, onChange, type = "text", placeholder}) {
+function FormInput({name, error, value, onChange, type = "text", placeholder}) {
   return <div>
-            <label className="block mb-2 text-teal-500" htmlFor={name}>{label}</label>
             <input
                 type={type} 
                 name={name}
                 value={value} 
                 onChange={onChange}
-                // className={`rounded w-full p-2 border-b-2 ${!error ? "mb-6 border-teal-500 " : "border-red-500 "} text-teal-700 outline-none focus:bg-gray-300`}
                 className={styles.formInput}
                 placeholder={placeholder}
             />

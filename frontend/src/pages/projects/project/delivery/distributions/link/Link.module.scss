@@ -1,0 +1,45 @@
+.status {
+    border-radius: 5px;
+    padding: 3px 5px 3px 5px;
+}
+
+.status.isopen {
+    background-color: #edb57e4a;
+    color: #EDB57E;
+}
+.status.isclosed {
+    background-color: #7fcfd35b;
+    color: #7FCFD3;
+}
+
+.linkpage {
+    margin-left: 40px;
+    min-width: 500px;
+}
+
+.shareablelink {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    
+}
+
+.radiobutton {
+    display: flex;
+    flex-direction: row;
+    gap: 15px;
+    align-items: center;
+    label {
+        font-family: "Poppins", sans-serif;
+    }
+    input {
+        accent-color: black;
+    }
+    margin-left: 20px;
+}
+
+.generatelink {
+    display: flex;
+    flex-direction: row;
+    gap: 20px;
+}

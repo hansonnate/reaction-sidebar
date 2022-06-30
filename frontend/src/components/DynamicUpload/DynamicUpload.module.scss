@@ -1,0 +1,19 @@
+@import "assets/styles/globals.scss";
+
+.page {
+    padding-top: 50px;
+    max-width: 700px;
+    margin: auto;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    button {
+        color: $gray100;
+    }
+}
+
+.rules {
+    display: flex;
+    flex-direction: row;
+    gap: 10px;
+}

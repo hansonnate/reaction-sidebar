@@ -10,6 +10,8 @@ export const EditableTextField = ({
   onSave,
   align = "left",
   customStyles,
+  disabled,
+  inputID,
 }) => {
   const [val, setVal] = useState(value);
 
@@ -129,6 +131,8 @@ export const TextInputField = ({
       fullWidth
       sx={sx}
       size="small"
+      disabled={disabled}
+      id={inputID}
     />
   );
 };
