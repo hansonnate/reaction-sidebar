@@ -5,18 +5,17 @@ import { EditQuestionDialog } from "./EditQuestionDialog";
 import { SplitHorizontal } from "components/layouts";
 import styles from "./QuestionBuilder.module.scss";
 import {
-  useCreateQuestion,
+  useCreateQuestionGql,
   useFetchQuestionsGql,
-  useUpdateQuestion,
+  useUpdateQuestionGql,
 } from "api/resources/projects/questions";
 
 /* eslint-disable no-unused-vars */
 export const QuestionBuilder = () => {
   const { id } = useParams();
-  console.log(id);
   const fetchQuestionsQuery = useFetchQuestionsGql(id);
-  const updateQuestionQuery = useUpdateQuestion(id);
-  const createQuestionQuery = useCreateQuestion(id);
+  const updateQuestionQuery = useUpdateQuestionGql(id);
+  const createQuestionQuery = useCreateQuestionGql(id);
   const [active, setActive] = useState();
 
   const activeQuestion = () => {
