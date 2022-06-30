@@ -12,14 +12,9 @@ $orange20: rgba(237, 181, 126, 0.15);
 $seafoam100: #738c91;
 $seafoam60: #8dabb2;
 
-<<<<<<< HEAD
-$sapphire100: #2a627c;
-$sapphire60: #a4c6d0;
-=======
 $sapphire100: #2A627C;
 $sapphire60: #A4C6D0;
 $sapphire20: #a4c6d055;
->>>>>>> visulizations
 
 $black: #050606;
 $white: #ffffff;
@@ -28,7 +23,6 @@ $gray100: #a3a4a8;
 $gray60: #d8d9d9;
 $gray40: #efefef;
 
-<<<<<<< HEAD
 /************** Text **************/
 // Fonts
 $poppins: 'Poppins', sans-serif;
@@ -43,11 +37,6 @@ $questrial: 'Questrial', sans-serif;
   @if $contrast {
     color: $white;
   } @else {
-=======
-
-// Text
-@mixin normal-text {
->>>>>>> visulizations
     color: $black;
   }
 }

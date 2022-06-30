@@ -43,6 +43,8 @@ export const EditableTextField = ({
       placeholder={placeholder}
       onChange={handleChange}
       onBlur={handleFocusOut}
+      disabled={disabled}
+      id={inputID}
     />
   );
 };
@@ -131,8 +133,6 @@ export const TextInputField = ({
       fullWidth
       sx={sx}
       size="small"
-      disabled={disabled}
-      id={inputID}
     />
   );
 };
