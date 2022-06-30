@@ -11,6 +11,7 @@ $reactorange: #EDB57E;
         width: 100%;
         padding: 5px 10px;
         border-radius: 5px;
+        border: 2px solid $reactorange;
         background-color: $reactorange;
         color: white;
         transition: all .3s;
@@ -19,6 +20,8 @@ $reactorange: #EDB57E;
 
     button:hover {
         transition: all .3s;
-        background-color: #edb57ea6;
+        background-color: white;
+        color: $reactorange;
+        border: 2px solid $reactorange;
     }
 }

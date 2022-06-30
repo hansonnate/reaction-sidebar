@@ -21,54 +21,6 @@ import {
 } from "api/resources/projects/projects";
 import { useToken } from "components/Login/Login";
 
-//sample data
-// const getData = () => [
-//   {
-//     name: "Doctors Opinion",
-//     link: "survey1",
-//     owner: "Mark Wagner",
-//     status: "Open",
-//     responses: 25,
-//     modified: "Mar 3, 2022",
-//     created: "Feb 1, 2022",
-//   },
-//   {
-//     name: "Are Patients Sick?",
-//     link: "survey1",
-//     owner: "Nate Hanson",
-//     status: "Closed",
-//     responses: 1001,
-//     modified: "Mar 10, 2022",
-//     created: "Mar 1, 2022",
-//   },
-//   {
-//     name: "Who Cares",
-//     link: "survey1",
-//     owner: "Jeremy Bikman",
-//     status: "Open",
-//     responses: 2,
-//     modified: "Mar 21, 2022",
-//     created: "Jan 2, 2022",
-//   },
-//   {
-//     name: "Anotha one",
-//     link: "survey1",
-//     owner: "Nate Hanson",
-//     status: "Closed",
-//     responses: 34,
-//     modified: "May 2, 2022",
-//     created: "April 5, 2022",
-//   },
-//   {
-//     name: "Do you like Jokes?",
-//     link: "survey1",
-//     owner: "Jeremy Bikman",
-//     status: "Closed",
-//     responses: 3078,
-//     modified: "April 12, 2022",
-//     created: "April 1, 2022",
-//   },
-// ];
 function isOpen(value) {
   if (value.value == "Open") {
     return true;
@@ -100,7 +52,7 @@ export const Projects = () => {
         Cell: (e) => (
           <span
             className={`${styles.status} ${
-              isOpen(e) ? `${styles.isopen}` : `${styles.isclosed}`
+              isOpen(e) ? `${styles.isclosed}` : `${styles.isopen}`
             }`}
           >
             {e.value}{" "}
@@ -135,6 +87,7 @@ export const Projects = () => {
     []
   );
 
+<<<<<<< HEAD
   // const getProjects = useApi(ProjectsApi.getProjects);
   // const postProject = useApi(ProjectsApi.postProject);
 
@@ -146,6 +99,10 @@ export const Projects = () => {
   //   getProjects.request();
   // }, []);
 
+=======
+  const fetchProjectsQuery = useFetchProjects();
+  const createProjectQuery = useCreateProject();
+>>>>>>> visulizations
   const [show, setShow] = useState(false);
   const [projectName, setProjectName] = useState("New Project");
   const [description, setDescription] = useState("");
@@ -164,6 +121,7 @@ export const Projects = () => {
     <>
       <Header title="Projects" />
       {fetchProjectsQuery.isLoading && <p>Loading...</p>}
+<<<<<<< HEAD
       {fetchProjectsQuery.isError && <p>Error</p>}
       {/* {getProjects.data?.map((project) => (
       {projectsQuery.isLoading && <p>Loading...</p>}
@@ -175,6 +133,9 @@ export const Projects = () => {
         
       ))} */}
       {console.log(fetchProjectsQuery)}
+=======
+      {fetchProjectsQuery.isError && <p>{fetchProjectsQuery.error}</p>}
+>>>>>>> visulizations
       {fetchProjectsQuery.isSuccess && (
         <ReactTable
           columns={columns}
@@ -193,7 +154,7 @@ export const Projects = () => {
       >
         <div className="content">
           <h1>Create a New Project</h1>
-          <div className="text">
+          <div className={styles.text}>
             <ReactInput
               type="text"
               placeholder="Project Name"

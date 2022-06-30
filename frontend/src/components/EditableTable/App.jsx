@@ -3,7 +3,7 @@ import "./style.css";
 import makeData from "./makeData";
 import Table from "./Table";
 import { randomColor, shortId } from "./utils";
-import ActionButton from "components/ActionButton/ActionButton";
+// import ActionButton from "components/ActionButton/ActionButton";
 
 function reducer(state, action) {
   switch (action.type) {
@@ -235,7 +235,7 @@ function Editor() {
           style={{
             flex: "1 1 auto",
             padding: "1rem",
-            maxWidth: 1000,
+            maxWidth: "100%"
   
           }}
         >
@@ -247,9 +247,6 @@ function Editor() {
           />
 
         </div>
-      </div>
-      <div style={{width: "100px"}}>
-      <ActionButton title="Upload"></ActionButton>
       </div>
     </div>
   );

@@ -22,7 +22,7 @@ export default function makeData(count) {
       id: "email",
       label: "E-Mail",
       accessor: "email",
-      width: 300,
+      width: 250,
       dataType: "text",
       options: []
     },

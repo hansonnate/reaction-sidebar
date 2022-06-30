@@ -8,8 +8,15 @@ export const EditableTextField = ({
   value,
   placeholder,
   onSave,
+<<<<<<< HEAD
   align = "left",
   customStyles,
+=======
+  autosave,
+  disabled,
+  inactive,
+  inputID,
+>>>>>>> visulizations
 }) => {
   const [val, setVal] = useState(value);
 
@@ -41,6 +48,7 @@ export const EditableTextField = ({
       placeholder={placeholder}
       onChange={handleChange}
       onBlur={handleFocusOut}
+<<<<<<< HEAD
     />
   );
 };
@@ -129,6 +137,10 @@ export const TextInputField = ({
       fullWidth
       sx={sx}
       size="small"
+=======
+      disabled={disabled}
+      id={inputID}
+>>>>>>> visulizations
     />
   );
 };

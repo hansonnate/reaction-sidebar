@@ -1,0 +1,10 @@
+@import "assets/styles/globals.scss";
+
+.numberbox {
+  input {
+    width: 50px;
+    border: 2px solid $blue100;
+    border-radius: 5px;
+    color: $gray100;
+  }
+}

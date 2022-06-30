@@ -3,7 +3,7 @@ import React, { useState } from "react";
 import makeAnimated from "react-select/animated";
 import CreatableSelect from "react-select/creatable";
 // Internal
-//import styles from "./SelectField.module.scss";
+import styles from "./SelectField.module.scss";
 
 const customStyles = {
   option: (provided) => ({
@@ -42,7 +42,8 @@ export const SelectField = ({
   options,
   defaultValue,
   selectMultiple,
-  onChange
+  onChange,
+  placeholder,
 }) => {
   const [val, setVal] = useState(defaultValue);
 
@@ -54,14 +55,17 @@ export const SelectField = ({
   };
 
   return (
-    <CreatableSelect
-      styles={customStyles}
-      className={``}
-      options={options}
-      value={val}
-      isMulti={selectMultiple}
-      onChange={handleChange}
-      components={animatedComponents}
-    />
+    <div className={styles.select}>
+      <CreatableSelect
+        styles={customStyles}
+        className={``}
+        options={options}
+        value={val}
+        isMulti={selectMultiple}
+        onChange={handleChange}
+        components={animatedComponents}
+        placeholder={placeholder}
+      />
+    </div>
   );
 };

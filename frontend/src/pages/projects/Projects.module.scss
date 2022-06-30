@@ -11,3 +11,10 @@
     background-color: #7fcfd35b;
     color: #7FCFD3;
 }
+
+.text {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    padding: 10px 0;
+}
