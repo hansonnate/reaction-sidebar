@@ -13,7 +13,8 @@ import styles from "./Table.module.scss";
 import { useNavigate } from "react-router-dom";
 import FilterMenu from "../FilterMenu/FilterMenu.jsx";
 import DropdownMenu from "../FilterMenu/DropdownMenu.jsx";
-import ActionButton from "../ActionButton/ActionButton.jsx";
+// import ActionButton from "../ActionButton/ActionButton.jsx";
+import Button from "components/Button/Button.jsx";
 import BulkActionButton from "../BulkActionButton/BulkActionButton.jsx";
 import Accordion from "../Accordion/Accordion.jsx";
 import AccordionItem from "../Accordion/AccordionItem.jsx";
@@ -370,10 +371,10 @@ function ReactTable({ columns, data, buttonMethod, modalTitle }) {
               </Accordion>
             </DropdownMenu>
           </FilterMenu>
-          <ActionButton
-            title={modalTitle}
-            functionality={buttonMethod}
-          ></ActionButton>
+          <Button
+            
+            onClick={buttonMethod}
+          >{modalTitle}</Button>
         </div>
       </div>
       <table className={`${styles.fulltable}`} {...getTableProps()} border="1">

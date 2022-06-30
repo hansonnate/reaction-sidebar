@@ -5,7 +5,7 @@ import { useFetchProject } from "api/resources/projects/projects";
 import styles from "./Link.module.scss";
 // Internal
 import { useFetchProjects } from "api/resources/projects/projects";
-import ActionButton from "components/ActionButton/ActionButton";
+import Button from "components/Button/Button";
 import ReactInput from "components/ReactInput/ReactInput";
 
 export const Link = () => {
@@ -36,7 +36,7 @@ export const Link = () => {
           <i className="bi bi-question-circle"></i>
         </div>
         <div className={styles.generatelink}>
-          <ActionButton title="Generate Link"></ActionButton>
+          <Button>Generate Link</Button>
           <ReactInput type="text" placeholder="Link..."></ReactInput>
         </div>
       </div>

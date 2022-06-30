@@ -42,7 +42,7 @@ export const ChartBox = forwardRef(
       backgroundSize: "cover",
       backgroundPosition: "center",
       backgroundColor: "white",
-      border: item.selected ? "2px solid #15bcc7" : "2px solid white",
+      border: item.selected ? "2px solid #15bcc7" : "2px solid #EEEE",
       borderRadius: "5px",
       overflow: "hidden",
       paddingTop: "5px",

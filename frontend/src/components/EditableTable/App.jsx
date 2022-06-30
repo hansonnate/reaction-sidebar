@@ -235,7 +235,7 @@ function Editor() {
           style={{
             flex: "1 1 auto",
             padding: "1rem",
-            maxWidth: 1000,
+            maxWidth: "100%"
   
           }}
         >

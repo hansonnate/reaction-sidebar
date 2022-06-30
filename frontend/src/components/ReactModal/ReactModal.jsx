@@ -1,6 +1,6 @@
 import React, { useEffect, useRef } from "react";
-import ActionButton from "../ActionButton/ActionButton.jsx";
-// import CloseIcon from "../CloseIcon";
+
+import Button from "components/Button/Button";
 import styles from "./ReactModal.module.scss";
 
 const Modal = ({
@@ -27,13 +27,12 @@ const Modal = ({
           {children}
           <div className={styles.buttons}>
             <div className={styles.buttonclose}>
-              <ActionButton
-                functionality={onClose}
-                title="Close"
-              ></ActionButton>
+              <Button
+                onClick={onClose}
+              >Close</Button>
             </div>
             <div className={styles.buttonsave} id={saveID}>
-              <ActionButton functionality={onSave} title="Save"></ActionButton>
+              <Button onClick={onSave}>Save</Button>
             </div>
           </div>
         </div>

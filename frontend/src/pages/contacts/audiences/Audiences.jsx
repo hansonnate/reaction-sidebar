@@ -6,12 +6,12 @@ import ReactTable, {
 } from "../../../components/BasicTable/ReactTable.jsx";
 import styles from "./Audiences.module.scss";
 // import ReactModal from "../../../components/ReactModal/ReactModal.jsx";
-import { SelectField, TextField } from "components/inputs/index.js";
+import { TextField, SaveForm, SelectField } from "components/inputs";
 
 // Internal
 // import { Header } from "components/layouts";
 import { useFetchAudiences } from "api/resources/contacts/audiences";
-import { Label } from "components/layouts/Label/Label.jsx";
+// import { Label } from "components/layouts/Label/Label.jsx";
 import { ContactCleaner } from "components/ContactCleaner/ContactCleaner.jsx";
 import Editor from "components/EditableTable/App.jsx";
 import { DynamicUpload } from "components/DynamicUpload/DynamicUpload.jsx";
@@ -90,9 +90,43 @@ export const Audiences = () => {
         />
       )}
       {newAudience && (
-        <div>
-          <h1>New Audience</h1>
-          <div className={styles.legistics}>
+        <>
+        <h1>New Audience</h1>
+        <div className={styles.page}>
+          <SaveForm
+            fields={[
+              {
+                label: "Name",
+                field: (
+                  <TextField
+                    // value={displayName}
+                    placeholder="Audience Name"
+                    // onSave={updateTitle}
+                  ></TextField>
+                ),
+              },
+              {
+                label: "Description",
+                field: (
+                  <TextField
+                    // value={displayName}
+                    placeholder="Description"
+                    // onSave={updateTitle}
+                  ></TextField>
+                ),
+              },
+              {
+                label: "Type",
+                field: (
+                  <SelectField
+                    options={options}
+                    onChange={onChange}
+                  ></SelectField>
+                ),
+              },
+            ]}
+          ></SaveForm>
+          {/* <div className={styles.legistics}>
             <div className={styles.legistic}>
               <Label>Name</Label>
               <TextField placeholder="Audience Name"></TextField>
@@ -105,7 +139,7 @@ export const Audiences = () => {
               <Label>Type</Label>
               <SelectField options={options} onChange={onChange}></SelectField>
             </div>
-          </div>
+          </div> */}
           {chosenOption === "fileupload" && (
             <div>
               <ContactCleaner></ContactCleaner>
@@ -125,6 +159,7 @@ export const Audiences = () => {
             </div>
           )}
         </div>
+        </>
       )}
 
       {/* <ReactModal show={show} onClose={() => setShow(false)}>
