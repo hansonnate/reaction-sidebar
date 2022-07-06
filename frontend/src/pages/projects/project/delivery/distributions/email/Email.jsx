@@ -9,7 +9,7 @@ import styles from "./Email.module.scss";
 import DistributionModal from "components/ReactModal/DistributionModal.jsx";
 import { TextField } from "components/inputs";
 import { useParams } from "react-router-dom";
-import { useFetchProject } from "api/resources/projects/projects";
+// import { useFetchProjectGql } from "api/resources/projects/projects";
 import Select from "react-select";
 // import { TextEdit } from "components/inputs/input_fields/TextEdit/TextEdit";
 import TextEditor from "components/inputs/input_fields/TextEditor";
@@ -17,7 +17,8 @@ import "draft-js/dist/Draft.css";
 // Internal
 import {
   // useCreateProject,
-  useFetchProjects,
+  useFetchProjectGql,
+  useFetchProjectsGql,
 } from "api/resources/projects/projects";
 import { useFetchAudiences } from "api/resources/contacts/audiences";
 
@@ -38,7 +39,7 @@ export const Email = () => {
   const fetchAudiencesQuery = useFetchAudiences();
 
   const { id } = useParams();
-  const projectQuery = useFetchProject(id);
+  const projectQuery = useFetchProjectGql(id);
   console.log(projectQuery.data);
   const columns = React.useMemo(
     () => [
@@ -91,7 +92,7 @@ export const Email = () => {
     []
   );
 
-  const fetchProjectsQuery = useFetchProjects();
+  const fetchProjectsQuery = useFetchProjectsGql();
   console.log(fetchProjectsQuery.data);
 
   const [show, setShow] = useState(false);

@@ -1,16 +1,13 @@
 // External
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
-// import Table from "../../components/BasicTable/Table.jsx"
 import ReactTable, {
   SelectColumnFilter,
   MultipleFilter,
 } from "../../components/BasicTable/ReactTable.jsx";
 import styles from "./Projects.module.scss";
 import ReactModal from "../../components/ReactModal/ReactModal.jsx";
-// import FormInput from "../../components/FormInput/FormInput.jsx";
 import ReactInput from "../../components/ReactInput/ReactInput.jsx";
-// import ActionButton from "../../components/ActionButton/ActionButton.jsx";
 
 // Internal
 import { Header } from "components/layouts";
@@ -74,6 +71,7 @@ export const Projects = () => {
       {
         Header: "Modified",
         accessor: "modified",
+        checked: false,
         Filter: SelectColumnFilter,
         filter: MultipleFilter,
       },
@@ -93,11 +91,6 @@ export const Projects = () => {
   const fetchProjectsQuery = useFetchProjectsGql();
   const createProjectQuery = useCreateProjectGql();
   const { token } = useToken();
-
-  // useEffect(() => {
-  //   getProjects.request();
-  // }, []);
-
   const [show, setShow] = useState(false);
   const [projectName, setProjectName] = useState("New Project");
   const [description, setDescription] = useState("");

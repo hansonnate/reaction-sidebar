@@ -5,7 +5,7 @@ import React, { useState } from "react";
 import { Header, SplitHorizontal } from "components/layouts";
 import { Sidebar2 } from "components/sidebars";
 import { OrganizationRoutes } from "routes";
-import styles from "./Organization.module.scss";
+// import styles from "./Organization.module.scss";
 
 export const Organization = () => {
   const menuItems = [
@@ -47,9 +47,8 @@ export const Organization = () => {
           active={active}
           updateActive={handleActiveUpdate}
         />
-        <div className={styles.content}>
-          <OrganizationRoutes />
-        </div>
+
+        <OrganizationRoutes />
       </SplitHorizontal>
     </>
   );

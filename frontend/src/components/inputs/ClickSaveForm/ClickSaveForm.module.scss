@@ -1,0 +1,53 @@
+@import "assets/styles/globals.scss";
+.textinput {
+    font-family: $poppins;
+    width: 100%;
+    max-width: 550px;
+    outline: none;
+    background-color: $gray40;
+    color: black;
+    border-radius: 5px;
+    padding: 6px 10px;
+}
+.inputlabel {
+    font-family: $poppins;
+    // font-weight: 900;
+    width: 200px;
+       
+}
+.container {
+    display: flex;
+    flex-direction: row;
+    width: 100%;
+    gap: 20px;
+    align-items: center;
+    justify-content: space-between;
+    // border: 2px solid black;
+}
+
+.formpage {
+    display: flex;
+    flex-direction: column;
+    gap: 10px; 
+    // border: 2px solid black;
+    width: 100%;
+    max-width: 700px;
+}
+
+.submitbutton {
+    // position: fixed;
+    // top: 40em;
+    // left: 10%;
+    border: 2px solid $orange100;
+    border-radius: 5px;
+    padding: 6px 10px;
+    background-color: $orange100;
+    color: white;
+    font-family: $poppins;
+    transition: .5s all;
+}
+.submitbutton:hover {
+    background-color:white;
+    color: $orange100;
+    transition: .5s;
+}

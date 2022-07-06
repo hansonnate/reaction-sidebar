@@ -7,7 +7,7 @@ import { useGqlQuery, useGqlMutation } from "api/Api";
 
 
 // GRAPHQL API
-const queryClient = useQueryClient();
+
 
 export const useFetchProjectsGql = (includeDesignSettings = false) => {
   const query = gql`
@@ -62,7 +62,7 @@ export const useCreateProjectGql = () => {
       }
     }
   `;
-
+  const queryClient = useQueryClient();
   const options = {
     onError: (err, _project, rollback) => {
       if (rollback) rollback();
@@ -87,7 +87,7 @@ export const useUpdateProjectGql = () => {
       }
     }
   `;
-
+  const queryClient = useQueryClient();
   const options = {
     onError: (err, _project, rollback) => {
       if (rollback) rollback();
@@ -111,7 +111,7 @@ export const useDeleteProjectGql = () => {
       }
     }
   `;
-
+  const queryClient = useQueryClient();
   const options = {
     onSuccess: () => {
       queryClient.invalidateQueries(["projects"]);

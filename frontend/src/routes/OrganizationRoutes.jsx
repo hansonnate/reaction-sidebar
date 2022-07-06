@@ -10,7 +10,7 @@ import {
   UserGroups,
   DistributionSettings,
   Roles,
-  Teams
+  AccessGroups,
 } from "pages";
 
 export const OrganizationRoutes = () => {
@@ -30,7 +30,10 @@ export const UserGroupsRoutes = () => {
     <Routes>
       <Route path="/" element={<Navigate to="Roles" />} />
       <Route path="Roles/*" element={<Roles />} />
-      <Route path="Teams/*" element={<Teams />} />
+      <Route path="AccessGroups/*" element={<AccessGroups />} />
     </Routes>
   )
 }
+
+
+//:id

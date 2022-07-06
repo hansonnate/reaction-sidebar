@@ -6,7 +6,7 @@ import ReactTable, {
 } from "components/BasicTable/ReactTable.jsx";
 import styles from "./SMS.module.scss";
 import { useParams } from "react-router-dom";
-import { useFetchProject } from "api/resources/projects/projects";
+// import { useFetchProjectGql } from "api/resources/projects/projects";
 import Select from "react-select";
 import DistributionModal from "components/ReactModal/DistributionModal.jsx";
 import { TextArea } from "components/inputs/input_fields/TextArea/TextArea";
@@ -15,7 +15,8 @@ import { TextArea } from "components/inputs/input_fields/TextArea/TextArea";
 // Internal
 import {
   // useCreateProject,
-  useFetchProjects,
+  useFetchProjectGql,
+  useFetchProjectsGql,
 } from "api/resources/projects/projects";
 
 function isOpen(value) {
@@ -28,7 +29,7 @@ function isOpen(value) {
 
 export const SMS = () => {
   const { id } = useParams();
-  const projectQuery = useFetchProject(id);
+  const projectQuery = useFetchProjectGql(id);
   console.log(projectQuery.data);
   const columns = React.useMemo(
     () => [
@@ -78,7 +79,7 @@ export const SMS = () => {
   // const getProjects = useApi(ProjectsApi.getProjects);
   // const postProject = useApi(ProjectsApi.postProject);
 
-  const fetchProjectsQuery = useFetchProjects();
+  const fetchProjectsQuery = useFetchProjectsGql();
   // const createProjectQuery = useCreateProject();
   console.log(fetchProjectsQuery.data);
 

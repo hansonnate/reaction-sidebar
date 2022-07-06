@@ -1,19 +1,19 @@
 // External
 import React from "react";
 import { useParams } from "react-router-dom";
-import { useFetchProject } from "api/resources/projects/projects";
+// import { useFetchProject } from "api/resources/projects/projects";
 import styles from "./Link.module.scss";
 // Internal
-import { useFetchProjects } from "api/resources/projects/projects";
+import { useFetchProjectsGql, useFetchProjectGql } from "api/resources/projects/projects";
 import Button from "components/Button/Button";
 import ReactInput from "components/ReactInput/ReactInput";
 
 export const Link = () => {
   const { id } = useParams();
-  const projectQuery = useFetchProject(id);
+  const projectQuery = useFetchProjectGql(id);
   console.log(projectQuery.data);
 
-  const fetchProjectsQuery = useFetchProjects();
+  const fetchProjectsQuery = useFetchProjectsGql();
   console.log(fetchProjectsQuery.data);
   const onChangeValue = (e) => {
     console.log(e.target.value);

@@ -4,9 +4,11 @@ import { UGSidebar } from "components/sidebars/UGSidebar/UGSidebar";
 import { SplitHorizontal } from "components/layouts";
 import { TextField } from "components/inputs";
 import styles from "./Roles.module.scss";
-import { InputContainer } from "components/layouts/InputContainer/InputContainer";
-import { Label } from "components/layouts/Label/Label";
+// import { InputContainer } from "components/layouts/InputContainer/InputContainer";
+// import { Label } from "components/layouts/Label/Label";
 import { UGAccordion } from "components/UGAccordion/UGAccordion";
+import { Form } from "components/inputs/ClickSaveForm/ClickSaveForm";
+// import { useNavigate } from "react-router-dom";
 
 // Internal
 
@@ -35,82 +37,93 @@ export const Roles = () => {
     },
   ];
   const permissions = [
-    
-       {
-        name: "Projects",
-        createSurvey: false,
-        seeAllSurveys: false,
-        sendFromOrgEmail: false,
-        sendSurvey: false,
-        seeSurveysWhere: false,
-        seeSurveyResults: false,
-      },
-      {
-        name: "Contacts",
-        createContactsForTeam: false,
-        editContacts: false,
-        createAudience: false,
-      },
-      {
-        name: "Organization",
-        createContactsForTeam: false,
-        editContacts: false,
-        createAudience: false,
-      },
-      {
-        name: "Distribution",
-        createContactsForTeam: false,
-        editContacts: false,
-        createAudience: false,
-      },
-    
+    {
+      name: "Projects",
+      createSurvey: false,
+      seeAllSurveys: false,
+      sendFromOrgEmail: false,
+      sendSurvey: false,
+      seeSurveysWhere: false,
+      seeSurveyResults: false,
+    },
+    {
+      name: "Contacts",
+      createContactsForTeam: false,
+      editContacts: false,
+      createAudience: false,
+    },
+    {
+      name: "Organization",
+      createContactsForTeam: false,
+      editContacts: false,
+      createAudience: false,
+    },
+    {
+      name: "Distribution",
+      createContactsForTeam: false,
+      editContacts: false,
+      createAudience: false,
+    },
   ];
 
-  const [currRole, setCurrRole] = useState(menuItems[0]);
-  const [active, setActive] = useState(0);
-  const handleActiveUpdate = (item) => {
-    setActive(item);
+  const [currRole, setCurrRole] = useState(menuItems[1]);
+  const [items, setItems] = useState(menuItems);
+  const [active, setActive] = useState(1);
+  const handleActiveUpdate = (i) => {
+    setActive(i);
+    setCurrRole(items[i]);
   };
-  const handleSetCurrRole = (role) => {
-    setCurrRole(role);
-  };
-  const handleSetName = (name) => {
-    currRole.name = name;
-    console.log(currRole);
-  };
+  console.log(currRole);
+
+  const handleNewRole = () => {
+    
+    setItems([...items, {id: items.length, name: "New Role", to: "New Description", description: "New Description", type: "role"}]);
+    console.log(items);
+  }
+
+  const onSave = (name, description) => {
+    let array = items;
+    for (let i = 0; i < array.length; i++) {
+      if(array[i].id === currRole.id) {
+        array[i].name = name;
+        array[i].description = description;
+      }
+    }
+    setItems(array);
+    console.log(items);
+  }
 
   return (
-    <>
-      <SplitHorizontal leftShrink divider fullHeight>
+    
+      <SplitHorizontal className="flex-grow" leftShrink divider fullHeight>
         <UGSidebar
-          menuItems={menuItems}
+          menuItems={items}
           active={active}
           updateActive={handleActiveUpdate}
-          updateCurrRole={handleSetCurrRole}
+          onNewClick={handleNewRole}
           type="Role"
         />
-        <div className={styles.page}>
-          <div className={styles.container}>
-            <InputContainer>
-              <Label>Name</Label>
-              <TextField
-                placeholder="Role Name"
-                value={currRole.name}
-                onSave={handleSetName}
-              ></TextField>
-            </InputContainer>
-            <InputContainer>
-              <Label>Description</Label>
-              <TextField
-                placeholder="Role Name"
-                value={currRole.description}
-                onSave={handleSetName}
-              ></TextField>
-            </InputContainer>
-          </div>
+        <div className={`flex-grow-1 ${styles.page}`}>
+          <Form onSave={onSave}>
+            <TextField
+              name="name"
+              label="Name"
+              type="text"
+              placeholder="type here..."
+              value={currRole.name}
+            ></TextField>
+            <TextField
+              name="description"
+              label="Description"
+              type="text"
+              placeholder="type here..."
+              value={currRole.description}
+            ></TextField>
+          </Form>
+
           <UGAccordion data={permissions}></UGAccordion>
         </div>
       </SplitHorizontal>
-    </>
+    
   );
 };

@@ -13,6 +13,11 @@ import styles from "./Table.module.scss";
 import { useNavigate } from "react-router-dom";
 import { TextField } from "components/inputs/index.js";
 // import ActionButton from "../ActionButton/ActionButton.jsx";
+// import {
+//   useFetchUserGql,
+// } from "api/resources/organization/users";
+// import { useToken } from "components/Login/Login";
+// import { data } from "autoprefixer";
 
 
 //Date calculations
@@ -130,7 +135,16 @@ export function SelectColumnFilter({
 }
 
 function TeamsList({ columns, data, title }) {
-
+  // const { token } = useToken();
+  // let data = [];
+  // console.log(idList);
+  // const fetchUserQuery = useFetchUserGql();
+  // for (let i = 0; i < idList.length; i++) {
+  //   const promise = useFetchUserGql(idList[i], token);
+  //   console.log(promise);
+  //   data.push(promise);
+  // }
+  // debugger;// eslint-disable-line no-debugger
   // Use the state and functions returned from useTable to build UI
   let navigate = useNavigate();
   const routeChange = (path) => {

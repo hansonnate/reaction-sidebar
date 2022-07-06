@@ -14,8 +14,8 @@ export const UserGroups = () => {
     },
     {
       id: 1,
-      name: "Teams",
-      to: `Teams`,
+      name: "Access Groups",
+      to: `AccessGroups`,
     },
   ];
   const [active, setActive] = useState(0);
@@ -23,7 +23,7 @@ export const UserGroups = () => {
     setActive(item);
   };
   return (
-    <>
+    <div className="d-flex flex-col h-100">
       <TabBar
         tabBarItems={tabBarItems}
         active={active}
@@ -32,6 +32,6 @@ export const UserGroups = () => {
       <>
         <UserGroupsRoutes />
       </>
-    </>
+    </div>
   );
 };

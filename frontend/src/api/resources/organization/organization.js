@@ -1,4 +1,4 @@
-import { apiClient } from "../Api";
+import { apiClient } from "../../Api";
 
 const getOrganizations = () => apiClient.get("/organizations");
 const postOrganization = (body) => {

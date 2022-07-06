@@ -3,7 +3,7 @@ export { useGqlQuery, useApi } from "./Api";
 
 /*************** AVAILABLE APIS ***************/
 // Organizations
-export { default as OrganizationApi } from "./resources/organization";
+export { default as OrganizationApi } from "./resources/organization/organization";
 
 // Projects
 // export { default as ProjectsApi } from "./resources/projects/projects";

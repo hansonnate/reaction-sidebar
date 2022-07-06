@@ -195,7 +195,7 @@ function ReactTable({ columns, data, buttonMethod, modalTitle }) {
     // console.log(tempList);
     // Check/ UnCheck All Items
     tempList.map((row) => (row.selected = e.target.checked));
-    
+
     //Update State
     setList(tempList);
     setMasterChecked(e.target.checked);
@@ -214,7 +214,7 @@ function ReactTable({ columns, data, buttonMethod, modalTitle }) {
     // console.log(tempList);
     // Check/ UnCheck All Items
     tempList.map((row) => (row.selected = false));
-    
+
     //Update State
     setList(tempList);
     setMasterChecked(false);
@@ -233,12 +233,12 @@ function ReactTable({ columns, data, buttonMethod, modalTitle }) {
     //To Control Master Checkbox State
     const totalItems = List.length;
     const totalCheckedItems = tempList.filter((e) => e.selected).length;
-    
+
     // Update State
     setList(tempList);
     setMasterChecked(totalItems === totalCheckedItems);
     setSelectedList(tempList.filter((e) => e.selected));
-    console.log(SelectedList)
+    console.log(SelectedList);
     // this.setState({
     //   MasterChecked: totalItems === totalCheckedItems,
     //   List: tempList,
@@ -353,28 +353,28 @@ function ReactTable({ columns, data, buttonMethod, modalTitle }) {
                   {" "}
                   {allColumns.map((column) =>
                     column.Filter ? (
-                      <AccordionItem
-                        key={column.id}
-                        body={column.render("Filter")}
-                        column={column}
-                        checkbox={
-                          <input
-                            type="checkbox"
-                            className={styles.accordioncheckbox}
-                            {...column.getToggleHiddenProps()}
-                          />
-                        }
-                      ></AccordionItem>
+                      <>
+                        {console.log(column)}
+                        <AccordionItem
+                          key={column.id}
+                          body={column.render("Filter")}
+                          column={column}
+                          checkbox={
+                            <input
+                              type="checkbox"     
+                              className={styles.accordioncheckbox}
+                              {...column.getToggleHiddenProps()}
+                            />
+                          }
+                        ></AccordionItem>
+                      </>
                     ) : null
                   )}
                 </div>
               </Accordion>
             </DropdownMenu>
           </FilterMenu>
-          <Button
-            
-            onClick={buttonMethod}
-          >{modalTitle}</Button>
+          <Button onClick={buttonMethod}>{modalTitle}</Button>
         </div>
       </div>
       <table className={`${styles.fulltable}`} {...getTableProps()} border="1">
@@ -426,7 +426,11 @@ function ReactTable({ columns, data, buttonMethod, modalTitle }) {
           {page.map((row) => {
             prepareRow(row);
             return (
-              <tr className={styles.tbodyrow} key={row.id} {...row.getRowProps()}>
+              <tr
+                className={styles.tbodyrow}
+                key={row.id}
+                {...row.getRowProps()}
+              >
                 <td className={styles.tabledimension}>
                   <input
                     className={styles.checkbox}

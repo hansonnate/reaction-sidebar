@@ -1,11 +1,11 @@
 // External
-import React, { useState } from "react";
+import React, {useState} from "react";
 import { Link } from "react-router-dom";
 import ReactTable, {
   SelectColumnFilter,
   MultipleFilter,
 } from "components/BasicTable/ReactTable.jsx";
-import styles from "./Users.module.scss";
+// import styles from "./Users.module.scss";
 import ReactModal from "components/ReactModal/ReactModal.jsx";
 import ReactInput from "components/ReactInput/ReactInput.jsx";
 
@@ -14,24 +14,17 @@ import ReactInput from "components/ReactInput/ReactInput.jsx";
 import { Header } from "components/layouts";
 //import { useApi, ProjectsApi } from "api";
 import {
-  useCreateProject,
-  useFetchProjects,
-} from "api/resources/projects/projects";
+  useFetchUsersGql,
+} from "api/resources/organization/users";
+// import { useToken } from "components/Login/Login";
 
-function isOpen(value) {
-  if (value.value == "Open") {
-    return true;
-  } else {
-    return false;
-  }
-}
 
 export const Users = () => {
   const columns = React.useMemo(
     () => [
       {
-        Header: "Project",
-        accessor: "name",
+        Header: "First Name",
+        accessor: "firstName",
         Filter: SelectColumnFilter,
         filter: MultipleFilter,
         Cell: (e) => (
@@ -42,41 +35,26 @@ export const Users = () => {
         ),
       },
       {
-        Header: "Status",
-        accessor: "status",
-        Filter: SelectColumnFilter,
-        filter: MultipleFilter,
-        Cell: (e) => (
-          <span
-            className={`${styles.status} ${
-              isOpen(e) ? `${styles.isopen}` : `${styles.isclosed}`
-            }`}
-          >
-            {e.value}{" "}
-          </span>
-        ),
-      },
-      {
-        Header: "Responses",
-        accessor: "responses",
+        Header: "Last Name",
+        accessor: "lastName",
         Filter: SelectColumnFilter,
         filter: MultipleFilter,
       },
       {
-        Header: "Owner",
-        accessor: "owner",
+        Header: "Email",
+        accessor: "email",
         Filter: SelectColumnFilter,
         filter: MultipleFilter,
       },
       {
-        Header: "Modified",
-        accessor: "modified",
+        Header: "Role",
+        accessor: "role",
         Filter: SelectColumnFilter,
         filter: MultipleFilter,
       },
       {
-        Header: "Created",
-        accessor: "created",
+        Header: "Last Sign In",
+        accessor: "lastSignInAt",
         Filter: SelectColumnFilter,
         filter: MultipleFilter,
       },
@@ -84,41 +62,32 @@ export const Users = () => {
     []
   );
 
-  const fetchProjectsQuery = useFetchProjects();
-  const createProjectQuery = useCreateProject();
+  const fetchUsersQuery = useFetchUsersGql();
+  // const { token } = useToken();
   const [show, setShow] = useState(false);
-  const [projectName, setProjectName] = useState("New Project");
-  const [description, setDescription] = useState("");
+  // const [projectName, setProjectName] = useState("New Project");
+  // const [description, setDescription] = useState("");
 
-  const handlePostProject = (
-    projectName,
-    owner,
-    status,
-    responses,
-    created,
-    modified,
-    description
-  ) => {
-    createProjectQuery.mutate({
-      name: projectName,
-      owner: owner,
-      status: status,
-      responses: responses,
-      created: created,
-      modified: modified,
-      description: description,
-    });
-  };
+  // const handlePostProject = () => {
+  //   createProjectQuery.mutate({
+  //     input: {
+  //       name: projectName,
+  //       description: description,
+  //     },
+  //     token: token
+  //   }
+  //   );
+  // };
 
   return (
     <>
       <Header title="Users" />
-      {fetchProjectsQuery.isLoading && <p>Loading...</p>}
-      {fetchProjectsQuery.isError && <p>{fetchProjectsQuery.error}</p>}
-      {fetchProjectsQuery.isSuccess && (
+      {fetchUsersQuery.isLoading && <p>Loading...</p>}
+      {fetchUsersQuery.isError && <p>Error</p>}
+      {fetchUsersQuery.isSuccess && (
         <ReactTable
           columns={columns}
-          data={fetchProjectsQuery.data}
+          data={fetchUsersQuery.data.users}
           buttonMethod={() => setShow(true)}
           modalTitle="New Project"
         />
@@ -127,15 +96,15 @@ export const Users = () => {
         show={show}
         onClose={() => setShow(false)}
         onSave={() => {
-          handlePostProject(
-            projectName,
-            "Jack Sparrow",
-            "Closed",
-            0,
-            Date.now(),
-            Date.now(),
-            description
-          );
+          // handlePostProject(
+          //   projectName,
+          //   "Jack Sparrow",
+          //   "Closed",
+          //   0,
+          //   Date.now(),
+          //   Date.now(),
+          //   description
+          // );
           setShow(false);
         }}
       >
@@ -145,12 +114,12 @@ export const Users = () => {
             <ReactInput
               type="text"
               placeholder="Project Name"
-              onChange={(e) => setProjectName(e.target.value)}
+              // onChange={(e) => setProjectName(e.target.value)}
             ></ReactInput>
             <ReactInput
               type="text"
               placeholder="Description (optional)"
-              onChange={(e) => setDescription(e.target.value)}
+              // onChange={(e) => setDescription(e.target.value)}
             ></ReactInput>
           </div>
         </div>

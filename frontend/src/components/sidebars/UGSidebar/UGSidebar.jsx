@@ -2,7 +2,7 @@ import React from "react";
 import styles from "./UGSidebar.module.scss";
 import { MenuItem } from "./MenuItem";
 
-export const UGSidebar = ({ menuItems, active, updateActive, type }) => {
+export const UGSidebar = ({ menuItems, active, updateActive, type, onNewClick }) => {
   return (
     <ul className={styles.menu}>
       {menuItems.map((menuItem) => (
@@ -10,14 +10,13 @@ export const UGSidebar = ({ menuItems, active, updateActive, type }) => {
           key={menuItem.id}
           id={menuItem.id}
           label={menuItem.name}
-          to={menuItem.to}
           condensed
           isActive={active==menuItem.id}
-          makeActive={(index) => {updateActive(index)}}
+          makeActive={(id) => {updateActive(id)}}
           description={menuItem.description}
         />
       ))}
-      <li className={styles.addRole}><button>+ New {type}</button></li>
+      <li className={styles.addRole} onClick={onNewClick}><button>+ New {type}</button></li>
     </ul>
   );
 };

@@ -1,6 +1,6 @@
 // Externals
 import React from "react";
-import { Link } from "react-router-dom";
+// import { Link } from "react-router-dom";
 
 // Internals
 import styles from "./MenuItem.module.scss";
@@ -9,7 +9,7 @@ export const MenuItem = ({
   id,
   label,
   // sublabel,
-  to,
+  // to,
   description,
   // condensed,
   isActive,
@@ -19,7 +19,7 @@ export const MenuItem = ({
 
   return (
     <li>
-      <Link to={to}>
+      {/* <Link to={to}> */}
         <div
           className={`${styles.menuItem} ${isActive && styles.activeItem}`}
           // onMouseEnter={() => setShow(true)}
@@ -30,7 +30,7 @@ export const MenuItem = ({
           <span>{label}</span>
           <span className={styles.description}>{description}</span>
         </div>
-      </Link>
+      {/* </Link> */}
     </li>
   );
 };
