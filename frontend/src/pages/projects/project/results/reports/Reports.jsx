@@ -4,7 +4,7 @@ import { SaveForm } from "components/inputs";
 
 import { SelectField } from "components/inputs";
 import styles from "./Reports.module.scss";
-import ActionButton from "components/ActionButton/ActionButton";
+import ActionButton from "components/buttons/ActionButton/ActionButton";
 // Internal
 
 export const Reports = () => {

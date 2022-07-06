@@ -3,26 +3,20 @@ import React, { useState } from "react";
 import ReactTable, {
   SelectColumnFilter,
   MultipleFilter,
-<<<<<<< HEAD
-} from "../../../components/BasicTable/ReactTable.jsx";
+} from "components/tables/BasicTable/ReactTable.jsx";
 import styles from "./Audiences.module.scss";
 // import ReactModal from "../../../components/ReactModal/ReactModal.jsx";
 import { TextField, SaveForm, SelectField } from "components/inputs";
-=======
-} from "../../../components/tables/BasicTable/ReactTable.jsx";
-// import styles from "./AllContacts.module.scss";
-import ReactModal from "../../../components/ReactModal/ReactModal.jsx";
-// import ReactInput from "../../components/ReactInput/ReactInput.jsx";
->>>>>>> origin/main
+
 
 // Internal
 // import { Header } from "components/layouts";
 import { useFetchAudiences } from "api/resources/contacts/audiences";
 // import { Label } from "components/layouts/Label/Label.jsx";
 import { ContactCleaner } from "components/ContactCleaner/ContactCleaner.jsx";
-import Editor from "components/EditableTable/App.jsx";
+import Editor from "components/tables/EditableTable/App.jsx";
 import { DynamicUpload } from "components/DynamicUpload/DynamicUpload.jsx";
-import Button from "components/Button/Button.jsx";
+import Button from "components/buttons/Button/Button.jsx";
 // import Header from "components/EditableTable/Header.jsx";
 
 // Internal

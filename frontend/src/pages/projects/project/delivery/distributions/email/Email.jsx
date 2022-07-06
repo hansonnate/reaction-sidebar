@@ -4,7 +4,7 @@ import React, { useState } from "react";
 import ReactTable, {
   SelectColumnFilter,
   MultipleFilter,
-} from "components/BasicTable/ReactTable.jsx";
+} from "components/tables/BasicTable/ReactTable.jsx";
 import styles from "./Email.module.scss";
 import DistributionModal from "components/ReactModal/DistributionModal.jsx";
 import { TextField } from "components/inputs";

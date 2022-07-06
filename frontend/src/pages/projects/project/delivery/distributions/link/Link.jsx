@@ -5,7 +5,7 @@ import { useParams } from "react-router-dom";
 import styles from "./Link.module.scss";
 // Internal
 import { useFetchProjectsGql, useFetchProjectGql } from "api/resources/projects/projects";
-import Button from "components/Button/Button";
+import Button from "components/buttons/Button/Button";
 import ReactInput from "components/ReactInput/ReactInput";
 
 export const Link = () => {

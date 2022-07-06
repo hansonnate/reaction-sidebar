@@ -1,6 +1,6 @@
 import React, { useEffect, useRef } from "react";
 
-import Button from "components/Button/Button";
+import Button from "components/buttons/Button/Button";
 
 // import CloseIcon from "../CloseIcon";
 import styles from "./ReactModal.module.scss";

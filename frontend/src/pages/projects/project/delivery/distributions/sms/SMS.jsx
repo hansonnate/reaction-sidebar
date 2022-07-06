@@ -3,7 +3,7 @@ import React, { useState } from "react";
 import ReactTable, {
   SelectColumnFilter,
   MultipleFilter,
-} from "components/BasicTable/ReactTable.jsx";
+} from "components/tables/BasicTable/ReactTable.jsx";
 import styles from "./SMS.module.scss";
 import { useParams } from "react-router-dom";
 // import { useFetchProjectGql } from "api/resources/projects/projects";

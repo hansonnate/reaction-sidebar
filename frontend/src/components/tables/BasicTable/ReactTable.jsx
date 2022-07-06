@@ -7,25 +7,19 @@ import {
   useFilters,
   usePagination,
 } from "react-table";
-import SearchFilter from "../../SearchFilter/SearchFilter.jsx";
+import SearchFilter from "components/SearchFilter/SearchFilter";
 // import { Link } from "react-router-dom";
 import styles from "./Table.module.scss";
 import { useNavigate } from "react-router-dom";
-import FilterMenu from "../FilterMenu/FilterMenu.jsx";
-import DropdownMenu from "../FilterMenu/DropdownMenu.jsx";
+import FilterMenu from "components/FilterMenu/FilterMenu.jsx";
+import DropdownMenu from "components/FilterMenu/DropdownMenu.jsx";
 // import ActionButton from "../ActionButton/ActionButton.jsx";
-import Button from "components/Button/Button.jsx";
-// import BulkActionButton from "../BulkActionButton/BulkActionButton.jsx";
-// import Accordion from "../Accordion/Accordion.jsx";
-// import AccordionItem from "../Accordion/AccordionItem.jsx";
-import FilterMenu from "../../FilterMenu/FilterMenu.jsx";
-// import DropdownMenu from "../../FilterMenu/DropdownMenu.jsx";
-// import ActionButton from "../../buttons/ActionButton/ActionButton.jsx";
-import BulkActionButton from "../../buttons/BulkActionButton/BulkActionButton.jsx";
+import Button from "components/buttons/Button/Button.jsx";
+import BulkActionButton from "components/buttons/BulkActionButton/BulkActionButton.jsx";
 import { Accordion } from "components/layouts";
 import { AccordionItem } from "components/layouts";
 import Select from "react-select";
-import ActionDropdown from "../../buttons/BulkActionButton/ActionDropdown.jsx";
+import ActionDropdown from "components/buttons/BulkActionButton/ActionDropdown";
 // import Checkbox from "components/Checkbox/Checkbox.jsx";
 
 //Date calculations
