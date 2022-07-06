@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import FastAPIClient from "../../client";
 import config from "../../config";
-import Button from "../../components/Button/Button";
+import Button from "../../components/buttons/Button/Button";
 import FormInput from "../../components/FormInput/FormInput";
 // import SideMenu from "../../components/SideMenu/SideMenu.js";
 

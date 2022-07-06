@@ -3,10 +3,17 @@ import React, { useState } from "react";
 import ReactTable, {
   SelectColumnFilter,
   MultipleFilter,
+<<<<<<< HEAD
 } from "../../../components/BasicTable/ReactTable.jsx";
 import styles from "./Audiences.module.scss";
 // import ReactModal from "../../../components/ReactModal/ReactModal.jsx";
 import { TextField, SaveForm, SelectField } from "components/inputs";
+=======
+} from "../../../components/tables/BasicTable/ReactTable.jsx";
+// import styles from "./AllContacts.module.scss";
+import ReactModal from "../../../components/ReactModal/ReactModal.jsx";
+// import ReactInput from "../../components/ReactInput/ReactInput.jsx";
+>>>>>>> origin/main
 
 // Internal
 // import { Header } from "components/layouts";

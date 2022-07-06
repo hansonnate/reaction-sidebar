@@ -7,7 +7,7 @@ import {
   useFilters,
   usePagination,
 } from "react-table";
-import SearchFilter from "../SearchFilter/SearchFilter.jsx";
+import SearchFilter from "../../SearchFilter/SearchFilter.jsx";
 // import { Link } from "react-router-dom";
 import styles from "./Table.module.scss";
 import { useNavigate } from "react-router-dom";
@@ -15,11 +15,17 @@ import FilterMenu from "../FilterMenu/FilterMenu.jsx";
 import DropdownMenu from "../FilterMenu/DropdownMenu.jsx";
 // import ActionButton from "../ActionButton/ActionButton.jsx";
 import Button from "components/Button/Button.jsx";
-import BulkActionButton from "../BulkActionButton/BulkActionButton.jsx";
-import Accordion from "../Accordion/Accordion.jsx";
-import AccordionItem from "../Accordion/AccordionItem.jsx";
+// import BulkActionButton from "../BulkActionButton/BulkActionButton.jsx";
+// import Accordion from "../Accordion/Accordion.jsx";
+// import AccordionItem from "../Accordion/AccordionItem.jsx";
+import FilterMenu from "../../FilterMenu/FilterMenu.jsx";
+// import DropdownMenu from "../../FilterMenu/DropdownMenu.jsx";
+// import ActionButton from "../../buttons/ActionButton/ActionButton.jsx";
+import BulkActionButton from "../../buttons/BulkActionButton/BulkActionButton.jsx";
+import { Accordion } from "components/layouts";
+import { AccordionItem } from "components/layouts";
 import Select from "react-select";
-import ActionDropdown from "../BulkActionButton/ActionDropdown.jsx";
+import ActionDropdown from "../../buttons/BulkActionButton/ActionDropdown.jsx";
 // import Checkbox from "components/Checkbox/Checkbox.jsx";
 
 //Date calculations
@@ -136,7 +142,7 @@ export function SelectColumnFilter({
   );
 }
 
-function ReactTable({ columns, data, buttonMethod, modalTitle }) {
+export const ReactTable = ({ columns, data, buttonMethod, modalTitle }) => {
   //dropdown menu views
   const isDisabled = false;
   const isLoading = false;

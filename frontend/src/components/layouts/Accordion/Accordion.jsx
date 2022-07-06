@@ -3,7 +3,7 @@ import React from "react";
 import styles from "./Accordion.module.scss";
 // let i = 1;
 // i += 1;
-const Accordion = (props) => {
+export const Accordion = (props) => {
   return (
     <div>
       <div className={styles.customaccordion}>
@@ -12,6 +12,3 @@ const Accordion = (props) => {
     </div>
   );
 };
-
-
-export default Accordion;

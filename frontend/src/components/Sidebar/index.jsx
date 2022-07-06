@@ -31,7 +31,7 @@ import "react-pro-sidebar/dist/css/styles.css";
 import "./index.css";
 
 
-const Header = () => {
+export const Header = () => {
   
     //create initial menuCollapse state using useState hook
     const [menuCollapse, setMenuCollapse] = useState(false)

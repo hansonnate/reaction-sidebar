@@ -1,6 +1,8 @@
 import React, { useEffect, useRef } from "react";
 
 import Button from "components/Button/Button";
+
+// import CloseIcon from "../CloseIcon";
 import styles from "./ReactModal.module.scss";
 
 const Modal = ({

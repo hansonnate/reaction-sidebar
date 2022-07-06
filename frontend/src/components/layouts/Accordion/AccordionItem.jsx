@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import styles from "./Accordion.module.scss";
 
 //custom accordian
-const AccordionItem = ({ body, column, checkbox }) => {
+export const AccordionItem = ({ body, column, checkbox }) => {
   const [visibility, setVisibility] = useState(false);
 
   const toggleVisibility = () => {
@@ -27,4 +27,3 @@ const AccordionItem = ({ body, column, checkbox }) => {
   );
 };
 
-export default AccordionItem;

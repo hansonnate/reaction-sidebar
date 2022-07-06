@@ -2,7 +2,7 @@ import {
   useDeleteQuestion,
   useUpdateQuestion,
 } from "api/resources/projects/questions";
-import { IconButton } from "components/IconButton/IconButton";
+import { IconButton } from "components/buttons/IconButton/IconButton";
 import { TextField } from "components/inputs";
 import React from "react";
 import { useParams } from "react-router-dom";
