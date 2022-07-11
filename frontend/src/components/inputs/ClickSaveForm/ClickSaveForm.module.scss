@@ -22,16 +22,36 @@
     gap: 20px;
     align-items: center;
     justify-content: space-between;
+    max-width: 700px;
     // border: 2px solid black;
 }
 
-.formpage {
+.formbody {
     display: flex;
     flex-direction: column;
     gap: 10px; 
     // border: 2px solid black;
     width: 100%;
-    max-width: 700px;
+    height: 100%;
+    // max-width: 700px;
+}
+
+.formpage {
+    form {
+        height: 100%;
+        // border: 2px solid black;
+    }
+    height: 100%;
+    // border: 2px solid black;
+}
+
+.fullform {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    height: 100%;
+    // border: 2px solid black;
+
 }
 
 .submitbutton {
@@ -45,9 +65,22 @@
     color: white;
     font-family: $poppins;
     transition: .5s all;
+    margin-top: 10px;
 }
 .submitbutton:hover {
     background-color:white;
     color: $orange100;
     transition: .5s;
 }
+
+.submitcontainer {
+    width: 100%;
+    height: fit-content;
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-end;
+    border-top: 2px solid $gray40;
+    // transition: all .5s;
+}
+
+

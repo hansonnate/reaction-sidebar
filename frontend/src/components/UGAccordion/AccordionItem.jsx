@@ -2,14 +2,20 @@ import React, { useState } from "react";
 import styles from "./UGAccordion.module.scss";
 
 //custom accordian
-const AccordionItem = ({ item }) => {
+const AccordionItem = ({ item, children }) => {
   const [visibility, setVisibility] = useState(false);
+  // eslint-disable-next-line
+  // const [permissions, setPermissions] = useState(item);
 
   const toggleVisibility = () => {
     setVisibility((v) => !v);
   };
 
-  
+  // const handleChange = (key) => {
+  //   let array = permissions;
+  //   array[key] = !array[key];
+  //   setPermissions(array);
+  // }
 
   return (
     <>
@@ -25,13 +31,21 @@ const AccordionItem = ({ item }) => {
           <i className="bi bi-chevron-left"></i>
         </span>
       </div>
-      {visibility && <div className={styles.body}>
-        {console.log(item)}
-        {Object.keys(item).map((key) => <div key={key}>
-          {console.log(key)}
-          <span>{item[key].toString()}</span>
-        </div>)}
-        </div>}
+      {visibility && (
+        <div className={styles.body}>
+          {/* {console.log(item)} */}
+          {children}
+          {/* {Object.keys(item).map((key) => (
+            <div key={key}>
+              {key !== "name" && (
+                <>
+                  <input type="checkbox" checked={item[key] }></input><span>{key}</span>
+                </>
+              )}
+            </div>
+          ))} */}
+        </div>
+      )}
     </>
   );
 };

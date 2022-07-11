@@ -20,16 +20,17 @@ export const MenuItem = ({
   return (
     <li>
       {/* <Link to={to}> */}
+
         <div
           className={`${styles.menuItem} ${isActive && styles.activeItem}`}
           // onMouseEnter={() => setShow(true)}
           // onMouseLeave={() => setShow(false)}
           onClick={() => makeActive(id)}
         >
-  
           <span>{label}</span>
           <span className={styles.description}>{description}</span>
         </div>
+
       {/* </Link> */}
     </li>
   );

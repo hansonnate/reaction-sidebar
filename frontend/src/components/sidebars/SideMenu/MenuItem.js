@@ -19,8 +19,11 @@ const MenuItem = (props) => {
         // }}
         className={`menu-item`}
       >
+        
         <div className="menu-icon">
+   
           <i className={iconClassName}></i>
+   
         </div>
         <span>{name}</span>
       </Link>

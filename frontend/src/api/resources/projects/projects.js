@@ -5,48 +5,31 @@ import { gql } from "graphql-request";
 // Internal
 import { useGqlQuery, useGqlMutation } from "api/Api";
 
-
 // GRAPHQL API
 
-
-export const useFetchProjectsGql = (includeDesignSettings = false) => {
+export const useFetchProjectsGql = () => {
   const query = gql`
     query {
-      surveys: allSurveys {
+      surveys: allProjects {
         id
         name
         status
-        responseCount
-        customFields
-        createdAt
-        updatedAt
-        startedAt
-        closedAt
-        designSettings @include(if: ${includeDesignSettings})
+        responses
+        owner
+
       }
-    }`;
+    }
+  `;
 
   return useGqlQuery(["projects"], query, {});
 };
 
-export const useFetchProjectGql = (id, includeQuestions = false) => {
+export const useFetchProjectGql = (id) => {
   const query = gql`
     query {
-      survey: surveyById(id: "${id}") {
+      survey: Project(id: "${id}") {
         id
         name
-        question @include(if: ${includeQuestions}) {
-          id
-          type
-          surveyId
-          pageOrderIndex
-          pageNumber
-          isHidden
-          createdAt
-          updatedAt
-          description
-          questionText
-        }
       }
     }
   `;
@@ -102,10 +85,7 @@ export const useUpdateProjectGql = () => {
 
 export const useDeleteProjectGql = () => {
   const mutation = gql`
-    mutation DeleteSurvey(
-      $id: String!
-      $token: String!
-    ) {
+    mutation DeleteSurvey($id: String!, $token: String!) {
       deleteSurvey(surveyId: $id, token: $token) {
         ok
       }
@@ -120,8 +100,6 @@ export const useDeleteProjectGql = () => {
 
   return useGqlMutation(mutation, options);
 };
-
-
 
 // REST API
 // const uri = "/projects";

@@ -187,6 +187,7 @@ export const ReactTable = ({ columns, data, buttonMethod, modalTitle }) => {
 
   const [List, setList] = useState(page);
   const [MasterChecked, setMasterChecked] = useState(false);
+  // eslint-disable-next-line
   const [SelectedList, setSelectedList] = useState([]);
 
   // Select/ UnSelect Table rows
@@ -238,7 +239,7 @@ export const ReactTable = ({ columns, data, buttonMethod, modalTitle }) => {
     setList(tempList);
     setMasterChecked(totalItems === totalCheckedItems);
     setSelectedList(tempList.filter((e) => e.selected));
-    console.log(SelectedList);
+    // console.log(SelectedList);
     // this.setState({
     //   MasterChecked: totalItems === totalCheckedItems,
     //   List: tempList,
@@ -354,7 +355,7 @@ export const ReactTable = ({ columns, data, buttonMethod, modalTitle }) => {
                   {allColumns.map((column) =>
                     column.Filter ? (
                       <>
-                        {console.log(column)}
+                        {/* {console.log(column)} */}
                         <AccordionItem
                           key={column.id}
                           body={column.render("Filter")}

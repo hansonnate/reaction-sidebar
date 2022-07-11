@@ -3,7 +3,7 @@ import { useQuery, useMutation, useSubscription } from "react-query";
 
 
 // GRAPHQL - REACTION SERVER
-const endpoint = "http://localhost:8001/";
+const endpoint = "http://localhost:8002/";
 
 const getGqlRequestFn = (request, variables) => {
   const headers = {};
