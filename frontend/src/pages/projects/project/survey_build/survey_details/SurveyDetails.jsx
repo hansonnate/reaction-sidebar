@@ -62,53 +62,72 @@ export const SurveyDetails = () => {
     <>
       {fetchProjectQuery.isLoading && "Loading..."}
       {fetchProjectQuery.isSuccess && (
-        <SaveForm
-          fields={[
-            {
-              label: "Survey Name",
-              field: (
-                <TextField
-                  value={fetchProjectQuery.data.survey.name}
-                  placeholder="Survey Name"
-                  onSave={updateTitle}
-                ></TextField>
-              ),
-            },
-            {
-              label: "Description",
-              field: (
-                <TextField
-                  value={fetchProjectQuery.data.survey.description}
-                  placeholder="Description"
-                  onSave={updateDescription}
-                ></TextField>
-              ),
-            },
-            {
-              label: "Tags",
-              field: <SelectField options={tags} selectMultiple></SelectField>,
-            },
-            {
-              label: "Default Language",
-              field: <SelectField options={languages}></SelectField>,
-            },
-            {
-              label: "Supported Language",
-              field: (
-                <SelectField options={languages} selectMultiple></SelectField>
-              ),
-            },
-            {
-              label: "Access Groups",
-              field: (
-                <SelectField
-                  options={accessGroups}
-                  selectMultiple
-                ></SelectField>
-              ),
-            },
-          ]}
-        ></SaveForm>
+        <>
+          {console.log(fetchProjectQuery)}
+          <SaveForm
+            fields={[
+              {
+                label: "Survey Name",
+                field: (
+                  <TextField
+                    value={fetchProjectQuery.data.survey.name}
+                    placeholder="Survey Name"
+                    onSave={updateTitle}
+                  ></TextField>
+                ),
+              },
+              {
+                label: "Description",
+                field: (
+                  <TextField
+                    value={fetchProjectQuery.data.survey.description}
+                    placeholder="Description"
+                    onSave={updateDescription}
+                  ></TextField>
+                ),
+              },
+              {
+                label: "Tags",
+                field: (
+                  <SelectField options={tags} defaultValue="Product" selectMultiple></SelectField>
+                ),
+              },
+              {
+                label: "Default Language",
+                field: (
+                  <SelectField
+                    options={languages}
+                    defaultValue={
+                      fetchProjectQuery.data.survey.default_language
+                    }
+                  ></SelectField>
+                ),
+              },
+              {
+                label: "Supported Language",
+                field: (
+                  <SelectField
+                    options={languages}
+                    defaultValue={
+                      fetchProjectQuery.data.survey.supported_languages
+                    }
+                    selectMultiple
+                  ></SelectField>
+                ),
+              },
+              {
+                label: "Access Groups",
+                field: (
+                  <SelectField
+                    options={accessGroups}
+                    defaultValue="0"
+                    selectMultiple
+                  ></SelectField>
+                ),
+              },
+            ]}
+          ></SaveForm>
+        </>
       )}
     </>
   );

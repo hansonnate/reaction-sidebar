@@ -11,7 +11,7 @@ import { TextField, SaveForm, SelectField } from "components/inputs";
 
 // Internal
 // import { Header } from "components/layouts";
-import { useFetchAudiences } from "api/resources/contacts/audiences";
+import { useFetchAudiencesGql } from "api/resources/contacts/audiences";
 // import { Label } from "components/layouts/Label/Label.jsx";
 import { ContactCleaner } from "components/ContactCleaner/ContactCleaner.jsx";
 import Editor from "components/tables/EditableTable/App.jsx";
@@ -52,7 +52,7 @@ export const Audiences = () => {
     []
   );
 
-  const fetchAudiencesQuery = useFetchAudiences();
+  const fetchAudiencesQuery = useFetchAudiencesGql();
 
   // const [show, setShow] = useState(false);
   // eslint-disable-next-line

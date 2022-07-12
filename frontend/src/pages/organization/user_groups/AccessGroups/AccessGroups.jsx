@@ -2,68 +2,41 @@
 import React, { useState } from "react";
 import { UGSidebar } from "components/sidebars/UGSidebar/UGSidebar";
 import { SplitHorizontal } from "components/layouts";
-// import { TextField } from "components/inputs";
+import { TextField } from "components/inputs";
 import styles from "./AccessGroups.module.scss";
-// import { InputContainer } from "components/layouts/InputContainer/InputContainer";
-// import { Label } from "components/layouts/Label/Label";
 import TeamsList, {
   SelectColumnFilter,
   MultipleFilter,
 } from "components/TeamsList/TeamsList.jsx";
-import { useFetchContacts } from "api/resources/contacts/contacts";
-import { useFetchAccessGroupsGql, useCreateAccessGroupGql, useUpdateAccessGroupGql } from "api/resources/organization/accessgroups";
-import { useToken } from "components/Login/Login";
+// import { useFetchContacts } from "api/resources/contacts/contacts";
+import { useFetchAccessGroupsGql, useCreateAccessGroupGql, useUpdateAccessGroupGql, useDeleteAccessGroupGql } from "api/resources/organization/accessgroups";
+// import { useToken } from "components/Login/Login";
 import { Form } from "components/inputs/ClickSaveForm/ClickSaveForm";
 
 // Internal
 
 export const AccessGroups = () => {
-  const { token } = useToken();
-  const fetchContactsQuery = useFetchContacts();
-  const fetchGroupsQuery = useFetchAccessGroupsGql(token);
+  // const { token } = useToken();
+  // const fetchContactsQuery = useFetchContacts();
+  const fetchGroupsQuery = useFetchAccessGroupsGql();
   const createAccessGroupQuery = useCreateAccessGroupGql();
   const updateAccessGroupQuery = useUpdateAccessGroupGql();
-  
+  const deleteAccessGroupQuery = useDeleteAccessGroupGql();
 
   const handlePostAccessGroup = () => {
     createAccessGroupQuery.mutate({
-      input: {
-        name: "staff",
-        // description: description,
-      },
-      token: token
+      organization_id: "0684348415",
+      name: "New Group",
+      description: "New Lists",
+      whitelist_user_ids: [],
+      blacklist_user_ids: [], 
+      created_at: "2020-01-01",
+      updated_at: "2020-01-01",
     }
     );
   };
   /* eslint-disable no-unused-vars */
-  const handleUpdateAccessGroup = (name, description, whiteId, blackId) => {
-    updateAccessGroupQuery.mutate({
-      input: {
-        id: currRole.id,
-        token: token,
-        name: name,
-        description: description,
-        whitelistUserIds: whiteId,
-        blacklistUserIds: blackId,
-
-      }
-    }
-    );
-  };
-
-  const handleActiveUpdate = (id) => {
-    console.log(id);
-    setActive(id);
-    for (let i = 0; i < fetchGroupsQuery.data.accessgroups.length; i++) {
-      if (fetchGroupsQuery.data.accessgroups[i].id === id) {
-        setCurrRole(fetchGroupsQuery.data.accessgroups[i]);
-      }
-    }
-  };
-  const handleSetName = (name) => {
-    currRole.name = name;
-    console.log(currRole);
-  };
+ 
 
   const columns = React.useMemo(
     () => [
@@ -102,8 +75,35 @@ export const AccessGroups = () => {
   );
 
   console.log(fetchGroupsQuery);
-  const [currRole, setCurrRole] = useState(0);
+  const [currRole, setCurrRole] = useState();
   const [active, setActive] = useState();
+
+  const handleActiveUpdate = (id) => {
+    // debugger; // eslint-disable-line no-debugger
+    console.log(id);
+    setActive(id);
+    for (let i = 0; i < fetchGroupsQuery.data.allAccessgroups.length; i++) {
+      if (fetchGroupsQuery.data.allAccessgroups[i].id === id) {
+        setCurrRole(fetchGroupsQuery.data.allAccessgroups[i]);
+        console.log(currRole);
+      }
+    }
+  };
+
+  const onSave = (data) => {
+    updateAccessGroupQuery.mutate({
+      id: currRole.id,
+      organization_id: "0684348415",
+      name: data.name,
+      description: data.description,
+    });
+  };
+
+  const onDelete = () => {
+    deleteAccessGroupQuery.mutate({
+      id: currRole.id,
+    });
+  }
 
   return (
     <>
@@ -111,53 +111,52 @@ export const AccessGroups = () => {
       {fetchGroupsQuery.isError && <p>Error</p>}
       {fetchGroupsQuery.isSuccess && (
         <SplitHorizontal leftShrink divider fullHeight>
+    
           <UGSidebar
-            menuItems={fetchGroupsQuery.data.accessgroups}
+            menuItems={fetchGroupsQuery.data.allAccessgroups}
             active={active}
             updateActive={handleActiveUpdate}
             type="Team"
-            handlePostAccessGroup={handlePostAccessGroup}
+            onNewClick={handlePostAccessGroup}
           />
 
           <div className={styles.page}>
             {active && (
               <>
                 <div className={styles.container}>
-                  {/* <InputContainer>
-                    <Label>Name</Label>
-                    <TextField
-                      placeholder="Role Name"
-                      value={currRole.name}
-                      onSave={handleSetName}
-                    ></TextField>
-                  </InputContainer>
-                  <InputContainer>
-                    <Label>Description</Label>
-                    <TextField
-                      placeholder="Role Name"
-                      value={"A description"}
-                      onSave={handleSetName}
-                    ></TextField>
-                  </InputContainer> */}
-                  <Form handleUpdate={() => handleUpdateAccessGroup}>
-                    <input name="name" label="Name" type="text" placeholder="type here..." defaultValue={currRole.name}></input>
-                    <input name="description" label="Description" type="text" placeholder="type here..." defaultValue={currRole.description}></input>
-
-                  </Form>
-                </div>
-
-                <>
+                  <Form onSave={onSave} onDelete={onDelete}>
+                  <TextField
+                    name="name"
+                    label="Name"
+                    type="text"
+                    placeholder="type here..."
+                    value={currRole.name}
+                  ></TextField>
+                  <TextField
+                    name="description"
+                    label="Description"
+                    type="text"
+                    placeholder="type here..."
+                    value={currRole.description}
+                  ></TextField>
                   <TeamsList
+                    type="userlist"
                     columns={columns}
-                    data={fetchContactsQuery.data}
+                    data={currRole.whitelist_user_ids}
                     title="White List"
                   />
                   <TeamsList
+                    type="userlist"
                     columns={columns}
-                    data={fetchContactsQuery.data}
+                    data={currRole.blacklist_user_ids}
                     title="Black List"
                   />
-                </>
+                  </Form>
+                </div>
+
+                {/* <>
+
+                </> */}
               </>
             )}
           </div>

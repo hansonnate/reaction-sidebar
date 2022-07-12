@@ -59,7 +59,7 @@
   "projects": [
     {
       "id": 0,
-      "name": "Doctors Opinion",
+      "name": "Doctors Opinion1",
       "link": "survey1",
       "owner": "Mark Wagner",
       "status": "Open",
@@ -67,46 +67,24 @@
       "modified": 1650310574000,
       "created": 1643310574000,
       "emails": [
-        {
-          "id": 0,
-          "subject": "Opinion",
-          "audience": "Doctors",
-          "from": "jbikman@reaction.com",
-          "status": "Delivered",
-          "date": 1653340059929,
-          "strength": "Bad"
-        },
-        {
-          "id": 1,
-          "subject": "More Opinion",
-          "audience": "Doctors",
-          "from": "jbikman@reaction.com",
-          "status": "Draft",
-          "date": null,
-          "strength": "Good"
-        }
-      ],
-      "sms": [
-        {
-          "id": 0,
-          "subject": "Opinion",
-          "audience": "Doctors",
-          "from": "jbikman@reaction.com",
-          "status": "Delivered",
-          "messaeg": "",
-          "date": 1653340059929,
-          "strength": "Bad"
-        },
-        {
-          "id": 1,
-          "subject": "More Opinion",
-          "audience": "Doctors",
-          "from": "jbikman@reaction.com",
-          "status": "Draft",
-          "message": "",
-          "date": null,
-          "strength": "Good"
-        }
+          {
+            "id": 0,
+            "subject": "Opinion",
+            "audience": "Doctors",
+            "from": "jbikman@reaction.com",
+            "status": "Delivered",
+            "date": 1653340059929,
+            "strength": "Bad"
+          },
+          {
+            "id": 1, 
+            "subject": "More Opinion",
+            "audience": "Doctors",
+            "from": "jbikman@reaction.com",
+            "status": "Draft",
+            "date": null,
+            "strength": "Good"
+          }
       ]
     },
     {
@@ -125,29 +103,7 @@
       "responses": 300,
       "created": 1652339672318,
       "modified": 1653339672318,
-      "id": 2,
-      "distributions": [
-        {
-          "id": 0,
-          "type": "sms",
-          "subject": "Opinion",
-          "audience": "Doctors",
-          "from": "jbikman@reaction.com",
-          "status": "Delivered",
-          "date": 1653340059929,
-          "strength": "Bad"
-        },
-        {
-          "id": 1,
-          "type": "sms",
-          "subject": "More Opinion",
-          "audience": "Doctors",
-          "from": "jbikman@reaction.com",
-          "status": "Draft",
-          "date": null,
-          "strength": "Good"
-        }
-      ]
+      "id": 2
     },
     {
       "name": "Are Patients Sick?",
@@ -354,8 +310,6 @@
     {
       "id": 0,
       "name": "Patients",
-      "value": "patients",
-      "label": "Patients",
       "members": 350,
       "created": 1653497659988,
       "modified": 1653497659988
@@ -363,8 +317,6 @@
     {
       "id": 1,
       "name": "Doctors",
-      "value": "doctors",
-      "label": "Doctors",
       "members": 25,
       "created": 1653497659988,
       "modified": 1653497659988
@@ -372,8 +324,6 @@
     {
       "id": 2,
       "name": "Clients",
-      "value": "clients",
-      "label": "Clients",
       "members": 656,
       "created": 1653497659988,
       "modified": 1653497659988
@@ -381,8 +331,6 @@
     {
       "id": 3,
       "name": "Employees",
-      "value": "employees",
-      "label": "Employees",
       "members": 223,
       "created": 1653497659988,
       "modified": 1653497659988
@@ -392,60 +340,14 @@
     {
       "id": 0,
       "projectId": 0,
-      "name": "Hey how are you?",
-      "type": "Text",
-      "instructions": "asdfsadf"
+      "name": "How are you?",
+      "type": "MultipleChoice"
     },
     {
       "id": 1,
       "projectId": 0,
-      "name": "Where are you from?asdf",
-      "type": "NumberScale",
-      "instructions": "asdfdfg"
-    },
-    {
-      "projectId": "0",
-      "type": "MultipleChoice",
-      "id": 2
-    },
-    {
-      "projectId": "0",
-      "type": "Text",
-      "id": 3
-    },
-    {
-      "projectId": "0",
-      "type": "Text",
-      "id": 4,
-      "name": "sadfasd",
-      "instructions": "sdfg"
-    },
-    {
-      "projectId": "0",
-      "type": "Text",
-      "id": 5
-    },
-    {
-      "projectId": "0",
-      "type": "Ranking",
-      "id": 6
-    },
-    {
-      "projectId": "0",
-      "type": "Text",
-      "id": 7,
-      "name": "Hey there",
-      "instructions": "asdf"
-    },
-    {
-      "projectId": "0",
-      "type": "Text",
-      "id": 8
-    },
-    {
-      "projectId": "0",
-      "type": "Text",
-      "id": 9
+      "name": "Where are you from?",
+      "type": "Ranking"
     }
   ]
 }

@@ -28,14 +28,16 @@ const Modal = ({
         <div style={modalStyle} className={styles.modal__wrap}>
           {children}
           <div className={styles.buttons}>
-            <div className={styles.buttonclose}>
-              <Button
-                onClick={onClose}
-              >Close</Button>
-            </div>
-            <div className={styles.buttonsave} id={saveID}>
-              <Button onClick={onSave}>Save</Button>
-            </div>
+            {onClose && (
+              <div className={styles.buttonclose}>
+                <Button onClick={onClose}>Close</Button>
+              </div>
+            )}
+            {onSave && (
+              <div className={styles.buttonsave} id={saveID}>
+                <Button onClick={onSave}>Save</Button>
+              </div>
+            )}
           </div>
         </div>
       </div>

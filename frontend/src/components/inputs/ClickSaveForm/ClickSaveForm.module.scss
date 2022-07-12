@@ -42,6 +42,7 @@
         // border: 2px solid black;
     }
     height: 100%;
+    
     // border: 2px solid black;
 }
 
@@ -50,6 +51,8 @@
     flex-direction: column;
     justify-content: space-between;
     height: 100%;
+    
+    gap: 10px;
     // border: 2px solid black;
 
 }
@@ -80,6 +83,7 @@
     flex-direction: row;
     justify-content: flex-end;
     border-top: 2px solid $gray40;
+    gap: 10px;
     // transition: all .5s;
 }
 

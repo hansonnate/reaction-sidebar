@@ -8,19 +8,20 @@ import ReactTable, {
 import styles from "./Email.module.scss";
 import DistributionModal from "components/ReactModal/DistributionModal.jsx";
 import { TextField } from "components/inputs";
-import { useParams } from "react-router-dom";
+// import { useParams } from "react-router-dom";
 // import { useFetchProjectGql } from "api/resources/projects/projects";
 import Select from "react-select";
 // import { TextEdit } from "components/inputs/input_fields/TextEdit/TextEdit";
 import TextEditor from "components/inputs/input_fields/TextEditor";
 import "draft-js/dist/Draft.css";
 // Internal
-import {
+// import {
   // useCreateProject,
-  useFetchProjectGql,
-  useFetchProjectsGql,
-} from "api/resources/projects/projects";
-import { useFetchAudiences } from "api/resources/contacts/audiences";
+  // useFetchProjectGql,
+  // useFetchProjectsGql,
+// } from "api/resources/projects/projects";
+import { useFetchAudienceGql } from "api/resources/contacts/audiences";
+import { useFetchEmailsGql } from "api/resources/projects/emails";
 
 function isOpen(value) {
   if (value.value == "Bad") {
@@ -36,11 +37,12 @@ export const Email = () => {
     { value: "strawberry", label: "Strawberry" },
     { value: "vanilla", label: "Vanilla" },
   ];
-  const fetchAudiencesQuery = useFetchAudiences();
+  const fetchAudiencesQuery = useFetchAudienceGql();
+  const fetchEmailsQuery = useFetchEmailsGql();
 
-  const { id } = useParams();
-  const projectQuery = useFetchProjectGql(id);
-  console.log(projectQuery.data);
+  // const { id } = useParams();
+  // const projectQuery = useFetchProjectGql(id);
+
   const columns = React.useMemo(
     () => [
       {
@@ -92,8 +94,8 @@ export const Email = () => {
     []
   );
 
-  const fetchProjectsQuery = useFetchProjectsGql();
-  console.log(fetchProjectsQuery.data);
+  // const fetchProjectsQuery = useFetchProjectsGql();
+  // console.log(fetchProjectsQuery.data);
 
   const [show, setShow] = useState(false);
 
@@ -101,12 +103,12 @@ export const Email = () => {
     <>
       {fetchAudiencesQuery.isLoading && <p>Loading...</p>}
       {fetchAudiencesQuery.isError && <p>{fetchAudiencesQuery.error}</p>}
-      {fetchProjectsQuery.isLoading && <p>Loading...</p>}
-      {fetchProjectsQuery.isError && <p>{fetchProjectsQuery.error}</p>}
-      {fetchProjectsQuery.isSuccess && (
+      {fetchEmailsQuery.isLoading && <p>Loading...</p>}
+      {fetchEmailsQuery.isError && <p>{fetchEmailsQuery.error}</p>}
+      {fetchEmailsQuery.isSuccess && (
         <ReactTable
           columns={columns}
-          data={projectQuery.data.emails}
+          data={fetchEmailsQuery.data.allEmails}
           buttonMethod={() => setShow(true)}
           modalTitle="Compose Email"
         />
@@ -118,9 +120,9 @@ export const Email = () => {
             <div className={styles.formfield}>
               <label>Audience</label>
               <div className={styles.selectfield}>
-              {fetchAudiencesQuery.isSuccess &&
-                <Select options={fetchAudiencesQuery.data}></Select>
-              }
+                {fetchAudiencesQuery.isSuccess && (
+                  <Select options={fetchAudiencesQuery.data}></Select>
+                )}
               </div>
             </div>
             <div className={styles.formfield}>

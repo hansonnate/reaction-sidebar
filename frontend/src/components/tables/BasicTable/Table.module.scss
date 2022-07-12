@@ -92,14 +92,7 @@ $reactbluegray: #738c91;
   gap: 30px;
 }
 
-.actionitem:hover {
-  background-color: #efefef;
-}
-.actionitem {
-  padding: 5px 10px;
-  border-radius: 5px;
-  cursor: pointer;
-}
+
 
 .pagination {
   width: 100%;
@@ -117,4 +110,12 @@ $reactbluegray: #738c91;
 }
 .accordioncheckbox {
   accent-color: $reactdarkblue;
+}
+.actionitem:hover {
+  background-color: #efefef;
+}
+.actionitem {
+  padding: 5px 10px;
+  border-radius: 5px;
+  cursor: pointer;
 }

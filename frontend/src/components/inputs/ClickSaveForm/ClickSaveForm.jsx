@@ -4,22 +4,29 @@ import { useForm, Controller } from "react-hook-form";
 import { UGAccordion } from "components/UGAccordion/UGAccordion";
 import AccordionItem from "components/UGAccordion/AccordionItem";
 import Checkbox from "../input_fields/CheckboxAnimated/Checkbox";
+import TeamsList from "components/TeamsList/TeamsList";
 
-export const Form = ({onSave, children }) => {
+export const Form = ({ onSave, onDelete, onClose, children }) => {
   const { control, handleSubmit, register, setValue, getValues } = useForm();
   // eslint-disable-next-line
 
-  
   const onSubmit = (data) => {
     alert(JSON.stringify(data));
     // handleUpdate(data.name, data.description);
     onSave(data);
   };
+  const onRemove = () => {
+    onDelete();
+    alert("Role has been yeeted");
+  };
+  const onQuit = () => {
+    onClose();
+  }
 
   console.log(children);
   return (
     <div className={styles.formpage}>
-      <form onSubmit={handleSubmit(onSubmit)}>
+      <form>
         <div className={styles.fullform}>
           <div className={styles.formbody}>
             {children.map((item, i) => (
@@ -27,9 +34,11 @@ export const Form = ({onSave, children }) => {
                 <div key={i} className={styles.container}>
                   {item.props.type === "text" && (
                     <>
-                      <label className={styles.inputlabel}>
-                        {item.props.label}
-                      </label>
+                      {item.props.label && (
+                        <label className={styles.inputlabel}>
+                          {item.props.label}
+                        </label>
+                      )}
                       <Controller
                         render={({ field }) => (
                           <item.type
@@ -85,15 +94,42 @@ export const Form = ({onSave, children }) => {
                     ))}
                   </UGAccordion>
                 )}
+                {item.props.type === "userlist" && (
+                  <TeamsList
+                    columns={item.props.columns}
+                    data={item.props.data}
+                    title={item.props.title}
+                  ></TeamsList>
+                )}
               </div>
             ))}
           </div>
+
           <div className={styles.submitcontainer}>
-            <input
-              type="submit"
-              value="Save"
-              className={styles.submitbutton}
-            ></input>
+          {onClose && (
+              <button
+                className={styles.submitbutton}
+                onClick={handleSubmit(onQuit)}
+              >
+                Close
+              </button>
+            )}
+            {onDelete && (
+              <button
+                className={styles.submitbutton}
+                onClick={handleSubmit(onRemove)}
+              >
+                Delete
+              </button>
+            )}
+            {onSave && (
+              <button
+                className={styles.submitbutton}
+                onClick={handleSubmit(onSubmit)}
+              >
+                Save
+              </button>
+            )}
           </div>
         </div>
       </form>

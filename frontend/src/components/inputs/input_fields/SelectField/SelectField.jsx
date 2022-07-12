@@ -45,13 +45,35 @@ export const SelectField = ({
   onChange,
   placeholder,
 }) => {
-  const [val, setVal] = useState(defaultValue);
+  const value = () => {
+    let values = [];
+    console.log(selectMultiple);
+    for (let i = 0; i < options.length; i++) {
+      if (selectMultiple) {
+        for (let j = 0; j < defaultValue.length; j++) {
+          if (options[i].value === defaultValue[j]) {
+            values.push(options[i]);
+          }
+        }
+      } else {
+        if (options[i].value === defaultValue) {
+          values.push(options[i]);
+        }
+      }
+    }
+    if (values.length === 1) {
+      values = values[0];
+    }
+    return values;
+  };
+  const [val, setVal] = useState(value);
 
   const handleChange = (option) => {
     setVal(option);
     if (onChange) {
       onChange(option.value);
     }
+    console.log(val);
   };
 
   return (

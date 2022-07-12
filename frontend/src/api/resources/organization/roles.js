@@ -75,20 +75,20 @@ export const useUpdateRolesGql = () => {
   return useGqlMutation(mutation, options);
 };
 
-export const useFetchUserGql = (id, token) => {
-  const query = gql`
-      query {
-        user: userById(id: "${id}", token:"${token}") {
-          id
-          firstName
-          lastName
-          email
-          role
-          prefix
-          lastSignInAt
-          signInCount
-        }
-      }`;
+export const useDeleteRoleGql = () => {
+  const mutation = gql`
+    mutation RemoveRole($id: ID!) {
+      removeRole(id: $id) {
+        id
+      }
+    }
+  `;
+  const queryClient = useQueryClient();
+  const options = {
+    onSuccess: () => {
+      queryClient.invalidateQueries(["roles"]);
+    },
+  };
 
-  return useGqlQuery(["users", id], query, {});
+  return useGqlMutation(mutation, options);
 };

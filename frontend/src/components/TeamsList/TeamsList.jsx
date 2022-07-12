@@ -12,6 +12,7 @@ import {
 import styles from "./Table.module.scss";
 import { useNavigate } from "react-router-dom";
 import { TextField } from "components/inputs/index.js";
+import Checkbox from "components/inputs/input_fields/CheckboxAnimated/Checkbox";
 // import ActionButton from "../ActionButton/ActionButton.jsx";
 // import {
 //   useFetchUserGql,
@@ -267,7 +268,7 @@ function TeamsList({ columns, data, title }) {
               {...headerGroup.getHeaderGroupProps()}
             >
               <th>
-                <input
+                <Checkbox
                   type="checkbox"
                   className={styles.headercheckbox}
                   id="selectAll"
@@ -275,7 +276,7 @@ function TeamsList({ columns, data, title }) {
                   // checked={checkList.length === page.length}
                   onChange={(e) => onMasterCheck(e)}
                   checked={MasterChecked}
-                ></input>
+                />
               </th>
               {headerGroup.headers.map((column) => (
                 <th
@@ -309,7 +310,7 @@ function TeamsList({ columns, data, title }) {
             return (
               <tr className={styles.tbodyrow} key={row.id} {...row.getRowProps()}>
                 <td className={styles.tabledimension}>
-                  <input
+                  <Checkbox
                     className={styles.checkbox}
                     type="checkbox"
                     id={row.id}
@@ -317,7 +318,7 @@ function TeamsList({ columns, data, title }) {
                     // checked={checkList.includes(row)}
                     onChange={(e) => onItemCheck(e, row)}
                     checked={row.selected}
-                  ></input>
+                  />
                   {/* {console.log(row.original.id)} */}
                 </td>
                 {row.cells.map((cell) => {

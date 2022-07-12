@@ -4,165 +4,24 @@ import { UGSidebar } from "components/sidebars/UGSidebar/UGSidebar";
 import { SplitHorizontal } from "components/layouts";
 import { TextField } from "components/inputs";
 import styles from "./Roles.module.scss";
-// import { InputContainer } from "components/layouts/InputContainer/InputContainer";
-// import { Label } from "components/layouts/Label/Label";
 import { UGAccordion } from "components/UGAccordion/UGAccordion";
 import { Form } from "components/inputs/ClickSaveForm/ClickSaveForm";
 import {
   useCreateRolesGql,
+  useDeleteRoleGql,
   useFetchRolesGql,
   useUpdateRolesGql,
 } from "api/resources/organization/roles";
-// import { useNavigate } from "react-router-dom";
 
 // Internal
 
 export const Roles = () => {
-  // const menuItems = [
-  //   {
-  //     id: 0,
-  //     name: "Admin",
-  //     to: "admin",
-  //     description: "Full access",
-  //     type: "role",
-  //     permissions: [
-  //       {
-  //         name: "Projects",
-  //         createSurvey: true,
-  //         seeAllSurveys: true,
-  //         sendFromOrgEmail: false,
-  //         sendSurvey: false,
-  //         seeSurveysWhere: false,
-  //         seeSurveyResults: false,
-  //       },
-  //       {
-  //         name: "Contacts",
-  //         createContactsForTeam: false,
-  //         editContacts: false,
-  //         createAudience: false,
-  //       },
-  //       {
-  //         name: "Organization",
-  //         createContactsForTeam: false,
-  //         editContacts: false,
-  //         createAudience: false,
-  //       },
-  //       {
-  //         name: "Distribution",
-  //         createContactsForTeam: false,
-  //         editContacts: false,
-  //         createAudience: false,
-  //       },
-  //     ],
-  //   },
-  //   {
-  //     id: 1,
-  //     name: "Staff",
-  //     to: "staff",
-  //     description: "Limited access",
-  //     type: "role",
-  //     permissions: [
-  //       {
-  //         name: "Projects",
-  //         createSurvey: true,
-  //         seeAllSurveys: true,
-  //         sendFromOrgEmail: false,
-  //         sendSurvey: false,
-  //         seeSurveysWhere: false,
-  //         seeSurveyResults: false,
-  //       },
-  //       {
-  //         name: "Contacts",
-  //         createContactsForTeam: false,
-  //         editContacts: false,
-  //         createAudience: false,
-  //       },
-  //       {
-  //         name: "Organization",
-  //         createContactsForTeam: false,
-  //         editContacts: false,
-  //         createAudience: false,
-  //       },
-  //       {
-  //         name: "Distribution",
-  //         createContactsForTeam: false,
-  //         editContacts: false,
-  //         createAudience: false,
-  //       },
-  //     ],
-  //   },
-  //   {
-  //     id: 2,
-  //     name: "Account Manager",
-  //     to: "accountmanager",
-  //     description: "Regular access",
-  //     type: "role",
-  //     permissions: [
-  //       {
-  //         name: "Projects",
-  //         createSurvey: true,
-  //         seeAllSurveys: true,
-  //         sendFromOrgEmail: false,
-  //         sendSurvey: false,
-  //         seeSurveysWhere: false,
-  //         seeSurveyResults: false,
-  //       },
-  //       {
-  //         name: "Contacts",
-  //         createContactsForTeam: true,
-  //         editContacts: false,
-  //         createAudience: false,
-  //       },
-  //       {
-  //         name: "Organization",
-  //         createContactsForTeam: false,
-  //         editContacts: false,
-  //         createAudience: false,
-  //       },
-  //       {
-  //         name: "Distribution",
-  //         createContactsForTeam: false,
-  //         editContacts: false,
-  //         createAudience: false,
-  //       },
-  //     ],
-  //   },
-  // ];
-  // const permissions = [
-  //   {
-  //     name: "Projects",
-  //     createSurvey: true,
-  //     seeAllSurveys: true,
-  //     sendFromOrgEmail: false,
-  //     sendSurvey: false,
-  //     seeSurveysWhere: false,
-  //     seeSurveyResults: false,
-  //   },
-  //   {
-  //     name: "Contacts",
-  //     createContactsForTeam: false,
-  //     editContacts: false,
-  //     createAudience: false,
-  //   },
-  //   {
-  //     name: "Organization",
-  //     createContactsForTeam: false,
-  //     editContacts: false,
-  //     createAudience: false,
-  //   },
-  //   {
-  //     name: "Distribution",
-  //     createContactsForTeam: false,
-  //     editContacts: false,
-  //     createAudience: false,
-  //   },
-  // ];
 
   const fetchRolesQuery = useFetchRolesGql();
   const createRoles = useCreateRolesGql();
   const updateRole = useUpdateRolesGql();
+  const deleteRole = useDeleteRoleGql();
   const [currRole, setCurrRole] = useState();
-  // const [items, setItems] = useState();
   const [active, setActive] = useState(0);
 
   const handleActiveUpdate = (id) => {
@@ -252,6 +111,12 @@ export const Roles = () => {
     });
   };
 
+  const onDelete = () => {
+    deleteRole.mutate({
+      id: currRole.id,
+    });
+  }
+
   return (
     <>
       {fetchRolesQuery.isLoading && <p>Loading...</p>}
@@ -269,7 +134,7 @@ export const Roles = () => {
             />
             <div className={`flex-grow-1 ${styles.page}`}>
               {currRole !== undefined && (
-                <Form onSave={onSave}>
+                <Form onSave={onSave} onDelete={onDelete}>
                   <TextField
                     name="name"
                     label="Name"

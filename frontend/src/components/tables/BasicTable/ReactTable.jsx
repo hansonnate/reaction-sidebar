@@ -20,6 +20,7 @@ import { Accordion } from "components/layouts";
 import { AccordionItem } from "components/layouts";
 import Select from "react-select";
 import ActionDropdown from "components/buttons/BulkActionButton/ActionDropdown";
+import Checkbox from "components/inputs/input_fields/CheckboxAnimated/Checkbox";
 // import Checkbox from "components/Checkbox/Checkbox.jsx";
 
 //Date calculations
@@ -123,6 +124,15 @@ export function SelectColumnFilter({
               }}
               checked={filterValue.includes(option) ? true : false}
             ></input>
+            {/* <Checkbox
+              id={option}
+              name={option}
+              value={option}
+              onChange={(e) => {
+                setFilter(setFilteredParams(filterValue, e.target.value));
+              }}
+              checked={filterValue.includes(option) ? true : false}
+            ></Checkbox> */}
             <label
               htmlFor={option}
               className="ml-1.5 font-medium text-gray-700"
@@ -136,7 +146,13 @@ export function SelectColumnFilter({
   );
 }
 
-export const ReactTable = ({ columns, data, buttonMethod, modalTitle }) => {
+export const ReactTable = ({
+  columns,
+  data,
+  buttonMethod,
+  modalTitle,
+  deleteSelected
+}) => {
   //dropdown menu views
   const isDisabled = false;
   const isLoading = false;
@@ -188,7 +204,7 @@ export const ReactTable = ({ columns, data, buttonMethod, modalTitle }) => {
   const [List, setList] = useState(page);
   const [MasterChecked, setMasterChecked] = useState(false);
   // eslint-disable-next-line
-  const [SelectedList, setSelectedList] = useState([]);
+  const [selectedList, setSelectedList] = useState([]);
 
   // Select/ UnSelect Table rows
   const onMasterCheck = (e) => {
@@ -201,7 +217,7 @@ export const ReactTable = ({ columns, data, buttonMethod, modalTitle }) => {
     setList(tempList);
     setMasterChecked(e.target.checked);
     setSelectedList(page.filter((e) => e.selected));
-
+    console.log(selectedList);
     // this.setState({
     //   MasterChecked: e.target.checked,
     //   List: tempList,
@@ -239,88 +255,21 @@ export const ReactTable = ({ columns, data, buttonMethod, modalTitle }) => {
     setList(tempList);
     setMasterChecked(totalItems === totalCheckedItems);
     setSelectedList(tempList.filter((e) => e.selected));
-    // console.log(SelectedList);
-    // this.setState({
-    //   MasterChecked: totalItems === totalCheckedItems,
-    //   List: tempList,
-    //   SelectedList: this.state.List.filter((e) => e.selected),
-    // });
   };
-  // // Event to get selected rows(Optional)
-  // const getSelectedRows = () => {
-  //   this.setState({
-  //     SelectedList: this.state.List.filter((e) => e.selected),
-  //   });
-  // }
 
-  // const [checkList, setCheckList] = useState([]);
-
-  // const handleChange = (e) => {
-  //   const { id, checked } = e.target;
-  //   // setList(page);
-  //   // setCheckList(page);
-  //   // console.log(checkList);
-  //   if (id === "selectAll") {
-  //     if (checked) {
-  //       setCheckList(page);
-  //     } else {
-  //       setCheckList([]);
-  //     }
-  //     console.log("Checked: ");
-  //     console.log(checkList);
-  //   } else {
-  //     if (checked) {
-  //       console.log(checkList);
-  //       let tempList = checkList;
-  //       for (let i = 0; i < page.length; i++) {
-  //         if (page[i].id === id) {
-  //           tempList.push(page[i]);
-  //         }
-  //       }
-  //       console.log("Checked: ");
-  //       setCheckList(tempList);
-  //       console.log(checkList);
-  //     } else {
-  //       console.log(checkList);
-  //       let tempList = [];
-  //       for (let i = 0; i < checkList.length; i++) {
-  //         if (checkList[i].id === id) {
-  //           //do nothing
-  //         } else {
-  //           tempList.push(checkList[i]);
-  //         }
-  //       }
-  //       console.log("Not Checked: ");
-  //       setCheckList(tempList);
-  //       console.log(checkList);
-  //     }
-  //   }
-  // };
-
-  // function isInList(id) {
-  //   let isThere = false;
-  //   checkList.forEach(function (item) {
-  //     // console.log(id);
-  //     // console.log(item.original.id);
-  //     if (item.original.id === id) {
-  //       // console.log("Return Here")
-  //       isThere = true;
-  //     }
-  //   });
-  // console.log(isThere);
-  //   return isThere;
-  // }
   // Render the UI for your table
   return (
     <div>
       <div className={styles.topcontainer}>
+        {/* {actions} */}
+        {/* <Buttons onClick={()=> deleteSelected(selectedList)}>Delete Selected</Button> */}
         <BulkActionButton>
           <ActionDropdown>
-            <span className={styles.actionitem}>
-              Delete Selected <i className="bi bi-trash"></i>
+            <span  onClick={()=> deleteSelected(selectedList)} className={styles.actionitem} >
+              Delete Selected
             </span>
             <span className={styles.actionitem}>
-              Change Owners <i className="bi bi-person"></i>
+              Change Owners 
             </span>
           </ActionDropdown>
         </BulkActionButton>
@@ -354,21 +303,21 @@ export const ReactTable = ({ columns, data, buttonMethod, modalTitle }) => {
                   {" "}
                   {allColumns.map((column) =>
                     column.Filter ? (
-                      <>
+                      <div key={column.id}>
                         {/* {console.log(column)} */}
                         <AccordionItem
                           key={column.id}
                           body={column.render("Filter")}
                           column={column}
                           checkbox={
-                            <input
-                              type="checkbox"     
+                            <Checkbox
+                              type="checkbox"
                               className={styles.accordioncheckbox}
                               {...column.getToggleHiddenProps()}
                             />
                           }
                         ></AccordionItem>
-                      </>
+                      </div>
                     ) : null
                   )}
                 </div>
@@ -387,7 +336,7 @@ export const ReactTable = ({ columns, data, buttonMethod, modalTitle }) => {
               {...headerGroup.getHeaderGroupProps()}
             >
               <th>
-                <input
+                <Checkbox
                   type="checkbox"
                   className={styles.headercheckbox}
                   id="selectAll"
@@ -395,7 +344,7 @@ export const ReactTable = ({ columns, data, buttonMethod, modalTitle }) => {
                   // checked={checkList.length === page.length}
                   onChange={(e) => onMasterCheck(e)}
                   checked={MasterChecked}
-                ></input>
+                />
               </th>
               {headerGroup.headers.map((column) => (
                 <th
@@ -433,7 +382,7 @@ export const ReactTable = ({ columns, data, buttonMethod, modalTitle }) => {
                 {...row.getRowProps()}
               >
                 <td className={styles.tabledimension}>
-                  <input
+                  <Checkbox
                     className={styles.checkbox}
                     type="checkbox"
                     id={row.id}
@@ -441,7 +390,7 @@ export const ReactTable = ({ columns, data, buttonMethod, modalTitle }) => {
                     // checked={checkList.includes(row)}
                     onChange={(e) => onItemCheck(e, row)}
                     checked={row.selected}
-                  ></input>
+                  />
                   {/* {console.log(row.original.id)} */}
                 </td>
                 {row.cells.map((cell) => {
@@ -518,7 +467,7 @@ export const ReactTable = ({ columns, data, buttonMethod, modalTitle }) => {
       </div>
     </div>
   );
-}
+};
 
 export default ReactTable;
 

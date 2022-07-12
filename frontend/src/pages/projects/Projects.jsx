@@ -7,16 +7,22 @@ import ReactTable, {
 } from "../../components/tables/BasicTable/ReactTable.jsx";
 import styles from "./Projects.module.scss";
 import ReactModal from "../../components/ReactModal/ReactModal.jsx";
-import ReactInput from "../../components/ReactInput/ReactInput.jsx";
+// import ReactInput from "../../components/ReactInput/ReactInput.jsx";
 
 // Internal
 import { Header } from "components/layouts";
 //import { useApi, ProjectsApi } from "api";
 import {
   useCreateProjectGql,
+  useDeleteProjectGql,
+  // useDeleteProjectGql,
   useFetchProjectsGql,
 } from "api/resources/projects/projects";
-import { useToken } from "components/Login/Login";
+import { TextField } from "components/inputs/index.js";
+import { Form } from "components/inputs/ClickSaveForm/ClickSaveForm.jsx";
+// import BulkActionButton from "components/buttons/BulkActionButton/BulkActionButton.jsx";
+// import ActionDropdown from "components/buttons/BulkActionButton/ActionDropdown.jsx";
+// import { useToken } from "components/Login/Login";
 
 function isOpen(value) {
   if (value.value == "Open") {
@@ -85,26 +91,50 @@ export const Projects = () => {
     []
   );
 
-  // const getProjects = useApi(ProjectsApi.getProjects);
-  // const postProject = useApi(ProjectsApi.postProject);
-
   const fetchProjectsQuery = useFetchProjectsGql();
   const createProjectQuery = useCreateProjectGql();
-  const { token } = useToken();
+  const deleteProjectQuery = useDeleteProjectGql();
+  // const { token } = useToken();
   const [show, setShow] = useState(false);
-  const [projectName, setProjectName] = useState("New Project");
-  const [description, setDescription] = useState("");
 
-  const handlePostProject = () => {
+  const handlePostProject = (data) => {
     createProjectQuery.mutate({
-      input: {
-        name: projectName,
-        description: description,
-      },
-      token: token
-    }
-    );
+      organization_id: "0684348415",
+      name: data.name,
+      description: data.description,
+      created_at: "2020-01-01",
+      updated_at: "2020-01-01",
+      status: "Closed",
+      responses: 0,
+      owner: "Mark Wagner",
+    });
+    setShow(false);
   };
+
+  const deleteSelected = (selected) => {
+    console.log(selected);
+    for (let i = 0; i < selected.length; i++) {
+      deleteProjectQuery.mutate({
+        id: selected[i].original.id,
+      });
+    }
+
+  };
+
+  // const actions = () => {
+  //   return (
+  //     <BulkActionButton>
+  //       <ActionDropdown>
+  //         <span className={styles.actionitem}>
+  //           Delete Selected <i className="bi bi-trash"></i>
+  //         </span>
+  //         <span className={styles.actionitem}>
+  //           Change Owners <i className="bi bi-person"></i>
+  //         </span>
+  //       </ActionDropdown>
+  //     </BulkActionButton>
+  //   );
+  // };
 
   return (
     <>
@@ -127,29 +157,33 @@ export const Projects = () => {
           data={fetchProjectsQuery.data.surveys}
           buttonMethod={() => setShow(true)}
           modalTitle="New Project"
+          deleteSelected={deleteSelected}
+          // actions={}
         />
       )}
       <ReactModal
         show={show}
-        onClose={() => setShow(false)}
-        onSave={() => {
-          handlePostProject();
-          setShow(false);
-        }}
+        // onClose={() => setShow(false)}
+        // onSave={() => {
+        //   handlePostProject();
+        //   setShow(false);
+        // }}
       >
         <div className="content">
           <h1>Create a New Project</h1>
           <div className={styles.text}>
-            <ReactInput
-              type="text"
-              placeholder="Project Name"
-              onChange={(e) => setProjectName(e.target.value)}
-            ></ReactInput>
-            <ReactInput
-              type="text"
-              placeholder="Description (optional)"
-              onChange={(e) => setDescription(e.target.value)}
-            ></ReactInput>
+            <Form onSave={handlePostProject} onClose={() => setShow(false)}>
+              <TextField
+                type="text"
+                name="name"
+                placeholder="Project Name"
+              ></TextField>
+              <TextField
+                type="text"
+                name="description"
+                placeholder="Description (optional)"
+              ></TextField>
+            </Form>
             {/* <ActionButton functionality={() =>handlePostProject("New Project", "Jack Sparrow", "Closed", 0, Date.now(), Date.now())} title="Click me">Click me</ActionButton> */}
           </div>
         </div>

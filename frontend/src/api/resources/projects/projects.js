@@ -13,10 +13,10 @@ export const useFetchProjectsGql = () => {
       surveys: allProjects {
         id
         name
+        description
         status
         responses
         owner
-
       }
     }
   `;
@@ -30,6 +30,13 @@ export const useFetchProjectGql = (id) => {
       survey: Project(id: "${id}") {
         id
         name
+        description
+        status
+        responses
+        owner
+        default_language
+        supported_languages
+        accessgroup_ids
       }
     }
   `;
@@ -39,9 +46,27 @@ export const useFetchProjectGql = (id) => {
 
 export const useCreateProjectGql = () => {
   const mutation = gql`
-    mutation CreateSurvey($input: GenericScalar, $token: String!) {
-      createSurvey(survey: $input, token: $token) {
-        ok
+    mutation CreateProject(
+      $organization_id: ID!
+      $name: String!
+      $description: String!
+      $created_at: String!
+      $updated_at: String!
+      $status: String!
+      $responses: Int!
+      $owner: String!
+    ) {
+      createProject(
+        organization_id: $organization_id
+        name: $name
+        description: $description
+        created_at: $created_at
+        updated_at: $updated_at
+        status: $status
+        responses: $responses
+        owner: $owner
+      ) {
+        id
       }
     }
   `;
@@ -60,13 +85,33 @@ export const useCreateProjectGql = () => {
 
 export const useUpdateProjectGql = () => {
   const mutation = gql`
-    mutation UpdateSurvey(
-      $id: String!
-      $input: GenericScalar
-      $token: String!
+    mutation CreateProject(
+      $organization_id: ID!
+      $name: String!
+      $description: String!
+      $created_at: String!
+      $updated_at: String!
+      $status: String!
+      $responses: Int!
+      $owner: String!
+      $default_language: String!
+      $supported_languages: JSON!
+      $accessgroup_ids: JSON!
     ) {
-      updateSurvey(surveyId: $id, survey: $input, token: $token) {
-        ok
+      createProject(
+        organization_id: $organization_id
+        name: $name
+        description: $description
+        created_at: $created_at
+        updated_at: $updated_at
+        status: $status
+        responses: $responses
+        owner: $owner
+        default_language: $default_language
+        supported_languages: $supported_languages
+        accessgroup_ids: $accessgroup_ids
+      ) {
+        id
       }
     }
   `;
@@ -85,9 +130,9 @@ export const useUpdateProjectGql = () => {
 
 export const useDeleteProjectGql = () => {
   const mutation = gql`
-    mutation DeleteSurvey($id: String!, $token: String!) {
-      deleteSurvey(surveyId: $id, token: $token) {
-        ok
+    mutation RemoveProject($id: ID!) {
+      removeProject(id: $id) {
+        id
       }
     }
   `;

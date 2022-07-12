@@ -7,67 +7,93 @@ import { useGqlQuery, useGqlMutation } from "api/Api";
 
 // GRAPHQL API
 
+export const useFetchAccessGroupsGql = () => {
+  const query = gql`
+    query {
+      allAccessgroups {
+        id
+        organization_id
+        name
+        description
+        whitelist_user_ids
+        blacklist_user_ids
+      }
+    }
+  `;
 
-export const useFetchAccessGroupsGql = (token) => {
-    const query = gql`
-      query {
-        accessgroups: allAccessGroups(token:"${token}") {
-          id
-          organizationId
-          name
-          whitelistUserIds {
-            lastName
-          }
-          blacklistUserIds
-          createdAt
-        }
-      }`;
-  
-    return useGqlQuery(["accessgroups"], query, {});
+  return useGqlQuery(["accessgroups"], query, {});
+};
+
+export const useUpdateAccessGroupGql = () => {
+  const mutation = gql`
+  mutation UpdateAccessGroup(
+    $id: ID!
+    $organization_id: ID
+    $name: String
+    $description: String
+    $whitelist_user_ids: JSON
+    $blacklist_user_ids: JSON
+  ) {
+    updateAccessgroup(id: $id organization_id: $organization_id, name: $name, description: $description, whitelist_user_ids: $whitelist_user_ids, blacklist_user_ids: $blacklist_user_ids) {
+      id
+    }
+  }
+  `;
+  const queryClient = useQueryClient();
+  const options = {
+    onError: (err, _project, rollback) => {
+      if (rollback) rollback();
+    },
+    onSettled: () => {
+      queryClient.invalidateQueries("accessgroups");
+    },
   };
 
+  return useGqlMutation(mutation, options);
+};
 
-  export const useUpdateAccessGroupGql = () => {
-    const mutation = gql`
-      mutation UpdateAccessGroup($input: UpdateInput!) {
-        updateAccessGroup(input:$input) {
-          ok
-        }
-      } 
-    `;
-    const queryClient = useQueryClient();
-    const options = {
-      onError: (err, _project, rollback) => {
-        if (rollback) rollback();
-      },
-      onSettled: () => {
-        queryClient.invalidateQueries("accessgroups");
-      },
-    };
-  
-    return useGqlMutation(mutation, options);
+export const useCreateAccessGroupGql = () => {
+  const mutation = gql`
+  mutation CreateAccessGroup($organization_id: ID!
+    $name: String!
+    $description: String!
+    $whitelist_user_ids: JSON!
+    $blacklist_user_ids: JSON!
+    $created_at: String!
+    $updated_at: String!
+    ) {
+    createAccessgroup(organization_id: $organization_id, name: $name, description: $description, whitelist_user_ids: $whitelist_user_ids, blacklist_user_ids: $blacklist_user_ids, created_at: $created_at, updated_at: $updated_at) {
+      id
+    }
+  }
+  `;
+  const queryClient = useQueryClient();
+  const options = {
+    onError: (err, _project, rollback) => {
+      if (rollback) rollback();
+    },
+    onSettled: () => {
+      queryClient.invalidateQueries("accessgroups");
+    },
   };
 
+  return useGqlMutation(mutation, options);
+};
 
-
-
-  export const useCreateAccessGroupGql = () => {
-    const mutation = gql`
-      mutation CreateAccessGroup($input: GenericScalar, $token: String!) {
-        createAccessGroup(accessGroup: $input, token: $token) {
-          ok
-        }
-      } 
-    `;
-    const queryClient = useQueryClient();
-    const options = {
-      onError: (err, _project, rollback) => {
-        if (rollback) rollback();
-      },
-      onSettled: () => {
-        queryClient.invalidateQueries("accessgroups");
-      },
-    };
-  
-    return useGqlMutation(mutation, options);
+export const useDeleteAccessGroupGql = () => {
+  const mutation = gql`
+    mutation RemoveAccessGroup($id: ID!) {
+      removeAccessgroup(id: $id) {
+        id
+      }
+    }
+  `;
+  const queryClient = useQueryClient();
+  const options = {
+    onSuccess: () => {
+      queryClient.invalidateQueries(["accessgroups"]);
+    },
   };
+
+  return useGqlMutation(mutation, options);
+};
