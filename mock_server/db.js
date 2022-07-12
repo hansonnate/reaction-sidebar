@@ -264,5 +264,58 @@ module.exports = {
       modified: "2020-01-01"
     },
 
-  ] 
+  ],
+  questions: [
+    {
+      id: 0,
+      project_id: 0,
+      type: "NumberScale",
+      page_order_index: 2,
+      page_number: 1,
+      is_hidden: false,
+      created_at: "2020-01-01",
+      updated_at: "2020-01-01",
+      description: "This is a scale question",
+      name: "On a scale of 1-5 how much do you like bananas?",
+      instructions: "1=Yuck; 5=Yay!",
+      isMultiSelect: null,
+      otherOption: null,
+      otherOptionText: null,
+      question_type_config: {"scale_question": {"min": 1, "max": 5, "min_description": "Yuck", "max_description": "Yum"}}
+    },
+    {
+      id: 1,
+      project_id: 0,
+      type: "MultipleChoice",
+      page_order_index: 1,
+      page_number: 2,
+      is_hidden: false,
+      created_at: "2020-01-01",
+      updated_at: "2020-01-01",
+      description: "This is a choice question",
+      name: "What is your favorite color?",
+      instructions: "Choose Multiple",
+      isMultiSelect: true,
+      otherOption: true,
+      otherOptionText: "Other Juan",
+      question_type_config: {"choice_question": {"isMultiSelect": false, "isRandomized": false, "hasOtherOption": true, "otherOptionLabel": "No Pill", "choices": ["5d4ce9a8-d386-45c5-ba70-ef42625883ca", "f4ec337c-c506-4f1f-b436-60977e5f0274"]}}
+    },
+    {
+      id: 2,
+      project_id: 0,
+      type: "Text",
+      page_order_index: 1,
+      page_number: 1,
+      is_hidden: false,
+      created_at: "2020-01-01",
+      updated_at: "2020-01-01",
+      description: "This is a text question",
+      name: "What is your favorite color?",
+      instructions: "Enter text",
+      isMultiSelect: null,
+      otherOption: null,
+      otherOptionText: null,
+      question_type_config: {"text_question": {"max_length": 255, "placeholder": "Enter your favorite color"}}
+    },
+  ]
 };

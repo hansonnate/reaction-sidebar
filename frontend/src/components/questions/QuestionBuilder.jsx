@@ -19,7 +19,7 @@ export const QuestionBuilder = () => {
   const [active, setActive] = useState();
 
   const activeQuestion = () => {
-    return fetchQuestionsQuery.data.question?.find((q) => q.id == active);
+    return fetchQuestionsQuery.data.Questions?.find((q) => q.id == active);
   };
 
   const handleQuestionTypeChange = (type) => {
@@ -30,6 +30,7 @@ export const QuestionBuilder = () => {
   };
 
   const handleCreateQuestion = (question) => {
+    console.log(fetchQuestionsQuery.data);
     createQuestionQuery.mutate({
       projectId: parseInt(id),
       type: "Text",
@@ -42,15 +43,21 @@ export const QuestionBuilder = () => {
 
       <SplitHorizontal fullHeight leftWidth={8}>
         <>
+        {fetchQuestionsQuery.isLoading && <p>Loading...</p>}
+        {fetchQuestionsQuery.isError && <p>{fetchQuestionsQuery.error}</p>}
           {fetchQuestionsQuery.isSuccess && (
             <div className={`${styles.scrollPane}`}>
-              {fetchQuestionsQuery.data.question?.map((question) => (
+              {/* {console.log(fetchQuestionsQuery.data.Project.Questions)} */}
+              {fetchQuestionsQuery.data.Project.Questions?.map((question) => (
+                <>
+                
                 <Question
                   key={question.id}
                   question={question}
                   active={active == question.id}
                   activate={(id) => setActive(id)}
                 />
+                </>
               ))}
               <button
                 className={`ml-2`}

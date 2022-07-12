@@ -8,14 +8,18 @@ import { useGqlQuery, useGqlMutation } from "api/Api";
 export const useFetchQuestionsGql = (projectId) => {
   const query = gql`
     query {
-      surveyById(id: "${projectId}") {
+      Project(id: "${projectId}") {
         name
-        question {
+        Questions {
           id
-          questionText
+          name
           description
-          surveyId
+          project_id
           type
+          instructions
+          otherOption
+          otherOptionText
+          isMultiSelect
         }
       }
     }
