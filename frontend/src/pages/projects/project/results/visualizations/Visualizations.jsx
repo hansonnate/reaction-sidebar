@@ -21,6 +21,10 @@ import {
 } from "@dnd-kit/sortable";
 import { SplitHorizontal } from "components/layouts";
 import { VizSettings } from "components/VizSettings/VizSettings";
+import {
+  useFetchVisualizationGql,
+  useFetchVisualizationsGql,
+} from "api/resources/projects/visualizations";
 
 // Internal
 
@@ -29,6 +33,9 @@ export const Visualizations = () => {
   const [activeId, setActiveId] = useState(null);
   const [settingsVisible, setSettingsVisible] = useState(false);
   const sensors = useSensors(useSensor(MouseSensor), useSensor(TouchSensor));
+  /* eslint-disable no-unused-vars */
+  const fetchVisualization = useFetchVisualizationGql();
+  const fetchVisualizations = useFetchVisualizationsGql();
 
   const handleClickOutside = (event) => {
     if (ref.current && !ref.current.contains(event.target)) {
@@ -304,9 +311,9 @@ export const Visualizations = () => {
       legendPointStyle: true,
     },
     id: 0,
-  }
+  };
   const [items, setItems] = useState(display);
-  const [selectedIndex, setSelectedIndex] = useState(0);
+  const [selectedIndex, setSelectedIndex] = useState();
 
   function handleDeleteChart() {
     let index = selectedIndex;
@@ -324,97 +331,156 @@ export const Visualizations = () => {
     defaultChart.index = items.length; // make a separate copy of the array
     array.push(defaultChart);
     setItems(array);
+    getVisuals();
+  };
+
+  function handleChartData(value, index) {
+    console.log(value);
+    console.log(index);
+    let array = display;
+    for (let i = 0; i < display.length; i++) {
+      if (display[i].id === value) {
+        // console.log(i)
+        // console.log(selectedIndex)
+        array[index].data = display[i].data;
+        array[index].title = display[i].title;
+        array[index].titleLabel = display[i].titleLabel;
+        console.log(array[index]);
+        console.log(display[i]);
+      }
+    }
+    setItems(array);
+    // items[selectedIndex].data = value;
   }
 
-function handleChartData(value, index) {
-  console.log(value);
-  console.log(index);
-  let array = display;
-  for (let i = 0; i < display.length; i++) {
-    if (display[i].id === value) {
-      // console.log(i)
-      // console.log(selectedIndex)
-      array[index].data = display[i].data
-      array[index].title = display[i].title
-      array[index].titleLabel = display[i].titleLabel
-      console.log(array[index]);
-      console.log(display[i]);
+  function setItemIndex(item, index) {
+    item.index = index;
+  }
+
+  function getVisuals() {
+    if (fetchVisualizations.isSuccess) {
+      // console.log(fetchVisualizations.data.allVisualizations);
+      let array = fetchVisualizations.data.allVisualizations;
+      for (let i = 0; i < array.length; i++) {
+        array[i].data = setData(array[i])
+      }
+      console.log(array)
+      return array;
+    } else {
+      console.log("Fetch visualizaitons failed")
+      return [];
     }
   }
-  setItems(array);
-  // items[selectedIndex].data = value;
-}
 
-function setItemIndex (item, index) {
-  item.index = index;
-}
+  function setData(visualization) {
+    //returns the formatted data for the charts
+    if (visualization.type === "horizontalbarchart") {
+      let labels = [];
+      for (let i = 0; i < visualization.Question.Choices.length; i++) {
+        labels.push(visualization.Question.Choices[i].choice_value);
+      }
+      return {
+        labels: labels,
+        // datasets is an array of objects where each object represents a set of data to display corresponding to the labels above. for brevity, we'll keep it at one object
+        datasets: [
+          {
+            // you can set indiviual colors for each bar
+            label: "# of Votes",
+            data: [1, 1, 0, 0, 1, 0],
+            backgroundColor: [
+              "#15bcc7",
+              "#7fcfd3",
+              "#b5e1df",
+              "#ed9146",
+              "#edb57e",
+              "#f4e3c2",
+            ],
+            borderWidth: 1,
+          },
+        ],
+      };
+    } else {
+      return {}
+    }
+  }
 
   return (
-    <SplitHorizontal fullHeight divider={settingsVisible}>
-      <div className={styles.visualizations}>
-        <DndContext
-          sensors={sensors}
-          collisionDetection={closestCenter}
-          onDragStart={handleDragStart}
-          onDragEnd={handleDragEnd}
-          onDragCancel={handleDragCancel}
-        >
-          <SortableContext items={items} strategy={rectSortingStrategy}>
-            <Grid columns={4}>
-              {items.map((item, index) => (
-                <>
-                  {/* {console.log(item)} */}
-                  {setItemIndex(item, index)}
-                  <SortableBox
-                    key={item.url}
-                    item={item}
-                    index={index}
-                    opensettings={setSettingsVisible}
-                    
-                    // handleDeletion={handleDeleteChart}
-                  />
-                </>
-              ))}
-              {/* <SortablePhoto key={"beef"} url={"beef"} index={items.length + 1} numParticipants={250} /> */}
-              <div className={styles.newchartdiv}>
-                
-                <button onClick={handleNewChart}>New Chart +</button>
-              </div>
-            </Grid>
-          </SortableContext>
+    <>
+      {fetchVisualizations.isLoading && <p>Loading...</p>}
+      {fetchVisualizations.isError && <p>Error</p>}
+      {fetchVisualizations.isSuccess && (
+        <SplitHorizontal fullHeight divider={settingsVisible}>
+          <div className={styles.visualizations}>
+            <DndContext
+              sensors={sensors}
+              collisionDetection={closestCenter}
+              onDragStart={handleDragStart}
+              onDragEnd={handleDragEnd}
+              onDragCancel={handleDragCancel}
+            >
+              <SortableContext items={items} strategy={rectSortingStrategy}>
+                <Grid columns={4}>
+                  {items.map((item, index) => (
+                    <>
+                      {/* {console.log(item)} */}
+                      {setItemIndex(item, index)}
+                      <SortableBox
+                        key={item.id}
+                        item={item}
+                        index={index}
+                        opensettings={setSettingsVisible}
 
-          <DragOverlay adjustScale={true}>
-            {/* {console.log(items.indexOf(activeId))} */}
-            {activeId ? (
-              <ChartBox item={activeId} index={items.indexOf(activeId)} />
-            ) : null}
-          </DragOverlay>
-        </DndContext>
-      </div>
-      {settingsVisible ? (
-        <div ref={ref} className={styles.settingscontainer}>
-          {items.map((item, index) => (
-            
-            <div key={index}>
-              {() => setSelectedIndex(index)}
-              {item.selected == true && (
-                <VizSettings
-                  item={item}
-                  index={index}
-                  handleDeleteChart={handleDeleteChart}
-                  questions={display}
-                  handleChartData={handleChartData}
-                  // index={index}
-                ></VizSettings>
-              )}
-              
+                        // handleDeletion={handleDeleteChart}
+                      />
+                    </>
+                  ))}
+                  {/* <SortableBox
+                    key={fetchVisualizations.data.allVisualizations[0].id}
+                    item={getVisuals()[0]}
+                    index={items.length}
+                    opensettings={setSettingsVisible}
+
+                    // handleDeletion={handleDeleteChart}
+                  /> */}
+                  {/* <SortablePhoto key={"beef"} url={"beef"} index={items.length + 1} numParticipants={250} /> */}
+                  <div className={styles.newchartdiv}>
+                    <button onClick={handleNewChart}>New Chart +</button>
+                  </div>
+                </Grid>
+              </SortableContext>
+
+              <DragOverlay adjustScale={true}>
+                {/* {console.log(items.indexOf(activeId))} */}
+                {activeId ? (
+                  <ChartBox item={activeId} index={items.indexOf(activeId)} />
+                ) : null}
+              </DragOverlay>
+            </DndContext>
+          </div>
+          {settingsVisible ? (
+            <div ref={ref} className={styles.settingscontainer}>
+              {items.map((item, index) => (
+                <div key={index}>
+                  {() => setSelectedIndex(index)}
+                  {item.selected == true && (
+                    <VizSettings
+                      item={item}
+                      index={index}
+                      handleDeleteChart={handleDeleteChart}
+                      questions={display}
+                      handleChartData={handleChartData}
+                      // index={index}
+                    ></VizSettings>
+                  )}
+                </div>
+              ))}
             </div>
-          ))}
-        </div>
-      ) : (
-        <div></div>
+          ) : (
+            <div></div>
+          )}
+        </SplitHorizontal>
       )}
-    </SplitHorizontal>
+    </>
   );
 
   // function handleDragEnd(event) {

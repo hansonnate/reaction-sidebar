@@ -14,6 +14,10 @@ export const useFetchQuestionsGql = (projectId) => {
           id
           name
           description
+          Choices {
+            id
+            choice_value
+          }
           project_id
           type
           instructions
@@ -33,9 +37,16 @@ export const useFetchQuestionGql = (questionId, projectId = null) => {
     query {
       question(id: "${questionId}" ) {
         id
-        title
+        name
+        type
         description
-        projectId
+        instructions
+        otherOptionText
+        project_id
+        Choices {
+          id
+          choice_value
+        }
       }
     }`;
 

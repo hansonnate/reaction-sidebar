@@ -5,6 +5,7 @@ import { UGAccordion } from "components/UGAccordion/UGAccordion";
 import AccordionItem from "components/UGAccordion/AccordionItem";
 import Checkbox from "../input_fields/CheckboxAnimated/Checkbox";
 import TeamsList from "components/TeamsList/TeamsList";
+import { SelectField } from "../input_fields";
 
 export const Form = ({ onSave, onDelete, onClose, children }) => {
   const { control, handleSubmit, register, setValue, getValues } = useForm();
@@ -21,7 +22,7 @@ export const Form = ({ onSave, onDelete, onClose, children }) => {
   };
   const onQuit = () => {
     onClose();
-  }
+  };
 
   console.log(children);
   return (
@@ -101,12 +102,32 @@ export const Form = ({ onSave, onDelete, onClose, children }) => {
                     title={item.props.title}
                   ></TeamsList>
                 )}
+                {item.props.type === "select" && (
+                  <Controller
+                    render={({ field }) => (
+                      <SelectField
+                        {...field}
+                        options={item.props.options}
+                        onChange={(value) => ({...setValue(
+                          `${item.props.name}`,
+                          value,
+                          {
+                            shouldTouch: true,
+                          }
+                        )})}
+                      ></SelectField>
+                    )}
+                    control={control}
+                    // defaultValue="yeh"
+                    {...register(`${item.props.name}`)}
+                  />
+                )}
               </div>
             ))}
           </div>
 
           <div className={styles.submitcontainer}>
-          {onClose && (
+            {onClose && (
               <button
                 className={styles.submitbutton}
                 onClick={handleSubmit(onQuit)}

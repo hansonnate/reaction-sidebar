@@ -1,5 +1,5 @@
 // External
-import React, {useState} from "react";
+import React, { useState } from "react";
 import { Link } from "react-router-dom";
 import ReactTable, {
   SelectColumnFilter,
@@ -7,24 +7,26 @@ import ReactTable, {
 } from "components/tables/BasicTable/ReactTable.jsx";
 // import styles from "./Users.module.scss";
 import ReactModal from "components/ReactModal/ReactModal.jsx";
-import ReactInput from "components/ReactInput/ReactInput.jsx";
-
+import { SelectField, TextField } from "components/inputs";
+import { Form } from "components/inputs/ClickSaveForm/ClickSaveForm.jsx";
 
 // Internal
 import { Header } from "components/layouts";
-//import { useApi, ProjectsApi } from "api";
 import {
+  useCreateUserGql,
   useFetchUsersGql,
 } from "api/resources/organization/users";
+
 // import { useToken } from "components/Login/Login";
 
-
 export const Users = () => {
+  const [data, setData] = useState();
+  const [show, setShow] = useState(false);
   const columns = React.useMemo(
     () => [
       {
         Header: "First Name",
-        accessor: "firstName",
+        accessor: "firstname",
         Filter: SelectColumnFilter,
         filter: MultipleFilter,
         Cell: (e) => (
@@ -36,7 +38,7 @@ export const Users = () => {
       },
       {
         Header: "Last Name",
-        accessor: "lastName",
+        accessor: "lastname",
         Filter: SelectColumnFilter,
         filter: MultipleFilter,
       },
@@ -47,14 +49,15 @@ export const Users = () => {
         filter: MultipleFilter,
       },
       {
-        Header: "Role",
-        accessor: "role",
+        Header: "Position",
+        accessor: "position",
         Filter: SelectColumnFilter,
         filter: MultipleFilter,
       },
+
       {
         Header: "Last Sign In",
-        accessor: "lastSignInAt",
+        accessor: "last_sign_in_at",
         Filter: SelectColumnFilter,
         filter: MultipleFilter,
       },
@@ -63,21 +66,59 @@ export const Users = () => {
   );
 
   const fetchUsersQuery = useFetchUsersGql();
-  // const { token } = useToken();
-  const [show, setShow] = useState(false);
-  // const [projectName, setProjectName] = useState("New Project");
-  // const [description, setDescription] = useState("");
+  const createUserQuery = useCreateUserGql();
 
-  // const handlePostProject = () => {
-  //   createProjectQuery.mutate({
-  //     input: {
-  //       name: projectName,
-  //       description: description,
-  //     },
-  //     token: token
-  //   }
-  //   );
-  // };
+
+  // const { token } = useToken();
+
+  const handleCreateUser = (result) => {
+    createUserQuery.mutate({
+      organization_id: data[0].Organization.id,
+      role_id: result.role,
+      firstname: result.firstname,
+      lastname: result.lastname,
+      email: result.email,
+      position: result.position,
+      company: "peer60",
+      created_at: "now",
+      updated_at: "2020-01-01",
+      last_sign_in_at: "now",
+    });
+    setShow(false);
+  };
+
+  const newUserClick = () => {
+    setData(fetchUsersQuery.data.allUsers);
+    setShow(true);
+  };
+
+  function getOptions(data) {
+    if (data) {
+      let roles = data[0].Organization.Roles;
+      // console.log(roles);
+      // console.log(roles.allUsers);
+      let options = [];
+      for (let i = 0; i < roles.length; i++) {
+        options.push({
+          value: roles[i].id,
+          label: roles[i].name,
+        });
+      }
+      // console.log(options);
+      return options;
+    } else {
+      return [
+        { value: "dynamic", label: "Dynamic" },
+        { value: "fileupload", label: "File Upload" },
+        { value: "entermanually", label: "Enter Manual" },
+      ];
+    }
+  }
+  // const options = [
+  //   { value: "dynamic", label: "Dynamic" },
+  //   { value: "fileupload", label: "File Upload" },
+  //   { value: "entermanually", label: "Enter Manual" },
+  // ];
 
   return (
     <>
@@ -87,40 +128,42 @@ export const Users = () => {
       {fetchUsersQuery.isSuccess && (
         <ReactTable
           columns={columns}
-          data={fetchUsersQuery.data.users}
-          buttonMethod={() => setShow(true)}
-          modalTitle="New Project"
+          data={fetchUsersQuery.data.allUsers}
+          buttonMethod={newUserClick}
+          modalTitle="New User"
         />
       )}
-      <ReactModal
-        show={show}
-        onClose={() => setShow(false)}
-        onSave={() => {
-          // handlePostProject(
-          //   projectName,
-          //   "Jack Sparrow",
-          //   "Closed",
-          //   0,
-          //   Date.now(),
-          //   Date.now(),
-          //   description
-          // );
-          setShow(false);
-        }}
-      >
+      <ReactModal show={show}>
         <div className="content">
-          <h1>Create a New Project</h1>
+          <h1>Create a New User</h1>
           <div className="text">
-            <ReactInput
-              type="text"
-              placeholder="Project Name"
-              // onChange={(e) => setProjectName(e.target.value)}
-            ></ReactInput>
-            <ReactInput
-              type="text"
-              placeholder="Description (optional)"
-              // onChange={(e) => setDescription(e.target.value)}
-            ></ReactInput>
+            <Form onSave={handleCreateUser} onClose={() => setShow(false)}>
+              <TextField
+                type="text"
+                name="firstname"
+                placeholder="First Name"
+              ></TextField>
+              <TextField
+                type="text"
+                name="lastname"
+                placeholder="Last Name"
+              ></TextField>
+              <SelectField
+                type="select"
+                name="role"
+                options={getOptions(data)}
+              ></SelectField>
+              <TextField
+                type="text"
+                name="email"
+                placeholder="Email"
+              ></TextField>
+              <TextField
+                type="text"
+                name="position"
+                placeholder="Position"
+              ></TextField>
+            </Form>
           </div>
         </div>
       </ReactModal>

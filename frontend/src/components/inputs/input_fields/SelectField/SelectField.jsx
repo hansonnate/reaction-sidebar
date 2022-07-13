@@ -47,7 +47,8 @@ export const SelectField = ({
 }) => {
   const value = () => {
     let values = [];
-    console.log(selectMultiple);
+    if (defaultValue) {
+    // console.log(selectMultiple);
     for (let i = 0; i < options.length; i++) {
       if (selectMultiple) {
         for (let j = 0; j < defaultValue.length; j++) {
@@ -64,6 +65,7 @@ export const SelectField = ({
     if (values.length === 1) {
       values = values[0];
     }
+  } 
     return values;
   };
   const [val, setVal] = useState(value);

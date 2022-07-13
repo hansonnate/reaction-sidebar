@@ -1,9 +1,8 @@
-// External
-// import { useQueryClient } from "react-query";
+import { useQueryClient } from "react-query";
 import { gql } from "graphql-request";
 
 // Internal
-import { useGqlQuery } from "api/Api";
+import { useGqlQuery, useGqlMutation } from "api/Api";
 
 // GRAPHQL API
 
@@ -11,15 +10,29 @@ import { useGqlQuery } from "api/Api";
 export const useFetchUsersGql = () => {
     const query = gql`
       query {
-        users: allUsers {
+        allUsers {
           id
-          firstName
-          lastName
+          firstname
+          lastname
           email
-          role
-          prefix
-          lastSignInAt
-          signInCount
+          position
+          company
+          Role {
+            id
+            name
+            description
+            permissions
+          }
+          last_sign_in_at
+          Organization {
+            id
+            Roles {
+              id
+              name
+              description
+              permissions
+            }
+          }
         }
       }`;
   
@@ -42,4 +55,47 @@ export const useFetchUsersGql = () => {
       }`;
   
     return useGqlQuery(["users",id], query, {});
+  };
+
+  export const useCreateUserGql = () => {
+    const mutation = gql`
+      mutation CreateUser(
+        $role_id: ID!
+        $organization_id: ID!
+        $firstname: String!
+        $lastname: String!
+        $email: String!
+        $position: String!
+        $company: String!
+        $created_at: String!
+        $updated_at: String!
+        $last_sign_in_at: String!
+      ) {
+        createUser(
+          role_id: $role_id
+          organization_id: $organization_id
+          firstname: $firstname
+          lastname: $lastname
+          email: $email
+          position: $position
+          company: $company
+          created_at: $created_at
+          updated_at: $updated_at
+          last_sign_in_at: $last_sign_in_at
+        ) {
+          id
+        }
+      }
+    `;
+    const queryClient = useQueryClient();
+    const options = {
+      onError: (err, _project, rollback) => {
+        if (rollback) rollback();
+      },
+      onSettled: () => {
+        queryClient.invalidateQueries("projects");
+      },
+    };
+  
+    return useGqlMutation(mutation, options);
   };
