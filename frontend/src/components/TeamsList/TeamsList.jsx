@@ -12,7 +12,10 @@ import {
 import styles from "./Table.module.scss";
 import { useNavigate } from "react-router-dom";
 import { TextField } from "components/inputs/index.js";
+// import { SelectField } from "components/inputs/input_fields";
 import Checkbox from "components/inputs/input_fields/CheckboxAnimated/Checkbox";
+// import { useSearchUserGql } from "api/resources/organization/users";
+import { SearchField } from "components/inputs/input_fields/SearchField/SearchField";
 // import ActionButton from "../ActionButton/ActionButton.jsx";
 // import {
 //   useFetchUserGql,
@@ -88,22 +91,6 @@ export function SelectColumnFilter({
   }, [id, preFilteredRows]);
 
   return (
-    //Code for select box if it is wanted
-    // <select
-    //   name={id}
-    //   id={id}
-    //   value={filterValue}
-    //   onChange={(e) => {
-    //     setFilter(e.target.value || undefined);
-    //   }}
-    // >
-    //   <option value="">All</option>
-    //   {options.map((option, i) => (
-    //     <option key={i} value={option}>
-    //       {option}
-    //     </option>
-    //   ))}
-    // </select>
 
     //Filter checkkboxes
     <div>
@@ -135,18 +122,13 @@ export function SelectColumnFilter({
   );
 }
 
-function TeamsList({ columns, data, title }) {
+function TeamsList({ organization_id, columns, data, title }) {
   // const { token } = useToken();
-  // let data = [];
-  // console.log(idList);
-  // const fetchUserQuery = useFetchUserGql();
-  // for (let i = 0; i < idList.length; i++) {
-  //   const promise = useFetchUserGql(idList[i], token);
-  //   console.log(promise);
-  //   data.push(promise);
-  // }
   // debugger;// eslint-disable-line no-debugger
   // Use the state and functions returned from useTable to build UI
+
+  
+
   let navigate = useNavigate();
   const routeChange = (path) => {
     // console.log(path);
@@ -184,11 +166,38 @@ function TeamsList({ columns, data, title }) {
   const [List, setList] = useState(page);
   const [MasterChecked, setMasterChecked] = useState(false);
   const [SelectedList, setSelectedList] = useState([]);
-
+  // const [options, setOptions] = useState([{value: "option1", label: "option 1"}, {value: "option2", label: "option 2"}]);
+  // const [searchValue, setSearchValue] = useState(" ");
+  // const fetchUserByEmail = useFetchUserByEmailGql();
+  // const searchUser = useSearchUserGql(organization_id, searchValue);
+  // console.log(fetchUserByEmail);
+  // console.log(organization_id);
+  // const onSelectChange = (string) => {
+  //   if(searchUser.isSuccess) {
+  //   setSearchValue(string);
+  //   console.log(string);
+  //   searchUser.refetch();
+  //   console.log(searchUser);
+  //   setOptions(getOptions());
+  //   console.log(options)
+  //   }
+  // }
+  // const getOptions = () => {
+  //   let options = [];
+    
+  //   // console.log(fetchUserByEmail);
+  //   if (searchUser.data.allUsers.length > 0) {
+  //     let users = searchUser.data.allUsers;
+  //     for (let i = 0; i < users.length; i++) {
+  //       options.push({value: users[i].id, label: users[i].email});
+  //     }
+  //   }
+  //   setOptions(options);
+  //   return options;
+  // }
   // Select/ UnSelect Table rows
   const onMasterCheck = (e) => {
     let tempList = page;
-    // console.log(tempList);
     // Check/ UnCheck All Items
     tempList.map((row) => (row.selected = e.target.checked));
     
@@ -197,11 +206,6 @@ function TeamsList({ columns, data, title }) {
     setMasterChecked(e.target.checked);
     setSelectedList(page.filter((e) => e.selected));
 
-    // this.setState({
-    //   MasterChecked: e.target.checked,
-    //   List: tempList,
-    //   SelectedList: this.state.List.filter((e) => e.selected),
-    // });
   };
 
   //Manually uncheck all
@@ -235,28 +239,12 @@ function TeamsList({ columns, data, title }) {
     setMasterChecked(totalItems === totalCheckedItems);
     setSelectedList(tempList.filter((e) => e.selected));
     console.log(SelectedList)
-    // this.setState({
-    //   MasterChecked: totalItems === totalCheckedItems,
-    //   List: tempList,
-    //   SelectedList: this.state.List.filter((e) => e.selected),
-    // });
+
   };
   // Render the UI for your table
   return (
     <div>
       <div className={styles.topcontainer}>
-        {/* <div className={styles.searchfilter}>
-          <h4>White List {title}</h4>
-          <SearchFilter
-            preGlobalFilteredRows={preGlobalFilteredRows}
-            globalFilter={state.globalFilter}
-            setGlobalFilter={setGlobalFilter}
-          />
-          <ActionButton
-            title={modalTitle}
-            functionality={buttonMethod}
-          ></ActionButton>
-        </div> */}
         <h6>{title}</h6>
       </div>
       <table className={`${styles.fulltable}`} {...getTableProps()} border="1">
@@ -304,6 +292,7 @@ function TeamsList({ columns, data, title }) {
             </tr>
           ))}
         </thead>
+      
         <tbody {...getTableBodyProps()}>
           {page.map((row) => {
             prepareRow(row);
@@ -343,7 +332,7 @@ function TeamsList({ columns, data, title }) {
           })}
           <tr>
             <td></td>
-            <td><div className={styles.textfield}><TextField placeholder="Email"></TextField></div></td>
+            <td><div className={styles.textfield}><SearchField placeholder="Email" org_id={organization_id} searchType="user"></SearchField></div></td>
             <td><div className={styles.textfield}><TextField placeholder="First Name"></TextField></div></td>
             <td><div className={styles.textfield}><TextField placeholder="Last Name"></TextField></div></td>
             <td></td>

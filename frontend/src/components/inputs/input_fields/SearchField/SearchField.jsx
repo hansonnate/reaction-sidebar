@@ -1,0 +1,68 @@
+import React, { useState } from "react";
+// import { TextField } from "@mui/material";
+// import { styled } from "@mui/material/styles";
+
+import styles from "./SearchField.module.scss";
+import { useSearchUserGql } from "api/resources/organization/users";
+
+export const SearchField = ({
+  value,
+  placeholder,
+  // label,
+  onChange,
+  disabled,
+  org_id,
+  // searchType,
+  // inactive,
+  // align = "left",
+  // customStyles,
+}) => {
+  const [val, setVal] = useState(value);
+  const [options, setOptions] = useState([]);
+  const [showOptions, setShowOptions] = useState(false);
+  const searchUser = useSearchUserGql(org_id, val);
+  const handleChange = (event) => {
+    setVal(event.target.value);
+    setShowOptions(true);
+    // searchUser(org_id, event.target.value);
+    searchUser.refetch();
+    console.log(searchUser);
+    if (searchUser.data.allUsers.length > 0) {
+      setOptions(searchUser.data.allUsers);
+    }
+
+    console.log(options);
+    if (onChange) {
+      onChange(event.target.value);
+    }
+  };
+
+  return (
+    <>
+      <input
+        disabled={disabled}
+        className={styles.textfield}
+        value={val}
+        onChange={handleChange}
+        type="text"
+        placeholder={placeholder}
+      ></input>
+      {showOptions && (
+        <div className={styles.dropdown}>
+          <div className={`${styles.header}`}>
+            <span>User</span>
+            <span>Position</span>
+            <span>Company</span>
+          </div>
+          {options.map((user) => (
+            <div key={user.firstname} className={styles.userbox}>
+              <span><div>{user.firstname}{" "}{user.lastname}</div><div className={styles.addon}>{user.email}</div></span>
+              <span>{user.position}</span>
+              <span>{user.company}</span>
+            </div>
+          ))}
+        </div>
+      )}
+    </>
+  );
+};

@@ -9,7 +9,12 @@ import TeamsList, {
   MultipleFilter,
 } from "components/TeamsList/TeamsList.jsx";
 // import { useFetchContacts } from "api/resources/contacts/contacts";
-import { useFetchAccessGroupsGql, useCreateAccessGroupGql, useUpdateAccessGroupGql, useDeleteAccessGroupGql } from "api/resources/organization/accessgroups";
+import {
+  useFetchAccessGroupsGql,
+  useCreateAccessGroupGql,
+  useUpdateAccessGroupGql,
+  useDeleteAccessGroupGql,
+} from "api/resources/organization/accessgroups";
 // import { useToken } from "components/Login/Login";
 import { Form } from "components/inputs/ClickSaveForm/ClickSaveForm";
 
@@ -29,14 +34,12 @@ export const AccessGroups = () => {
       name: "New Group",
       description: "New Lists",
       whitelist_user_ids: [],
-      blacklist_user_ids: [], 
+      blacklist_user_ids: [],
       created_at: "2020-01-01",
       updated_at: "2020-01-01",
-    }
-    );
+    });
   };
   /* eslint-disable no-unused-vars */
- 
 
   const columns = React.useMemo(
     () => [
@@ -103,7 +106,7 @@ export const AccessGroups = () => {
     deleteAccessGroupQuery.mutate({
       id: currRole.id,
     });
-  }
+  };
 
   return (
     <>
@@ -111,7 +114,6 @@ export const AccessGroups = () => {
       {fetchGroupsQuery.isError && <p>Error</p>}
       {fetchGroupsQuery.isSuccess && (
         <SplitHorizontal leftShrink divider fullHeight>
-    
           <UGSidebar
             menuItems={fetchGroupsQuery.data.allAccessgroups}
             active={active}
@@ -125,32 +127,34 @@ export const AccessGroups = () => {
               <>
                 <div className={styles.container}>
                   <Form onSave={onSave} onDelete={onDelete}>
-                  <TextField
-                    name="name"
-                    label="Name"
-                    type="text"
-                    placeholder="type here..."
-                    value={currRole.name}
-                  ></TextField>
-                  <TextField
-                    name="description"
-                    label="Description"
-                    type="text"
-                    placeholder="type here..."
-                    value={currRole.description}
-                  ></TextField>
-                  <TeamsList
-                    type="userlist"
-                    columns={columns}
-                    data={currRole.whitelist_user_ids}
-                    title="White List"
-                  />
-                  <TeamsList
-                    type="userlist"
-                    columns={columns}
-                    data={currRole.blacklist_user_ids}
-                    title="Black List"
-                  />
+                    <TextField
+                      name="name"
+                      label="Name"
+                      type="text"
+                      placeholder="type here..."
+                      value={currRole.name}
+                    ></TextField>
+                    <TextField
+                      name="description"
+                      label="Description"
+                      type="text"
+                      placeholder="type here..."
+                      value={currRole.description}
+                    ></TextField>
+                    <TeamsList
+                      organization_id={currRole.organization_id}
+                      type="userlist"
+                      columns={columns}
+                      data={currRole.whitelist_user_ids}
+                      title="White List"
+                    />
+                    <TeamsList
+                      organization_id={currRole.organization_id}
+                      type="userlist"
+                      columns={columns}
+                      data={currRole.blacklist_user_ids}
+                      title="Black List"
+                    />
                   </Form>
                 </div>
 

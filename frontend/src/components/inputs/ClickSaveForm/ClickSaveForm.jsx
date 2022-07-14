@@ -24,7 +24,17 @@ export const Form = ({ onSave, onDelete, onClose, children }) => {
     onClose();
   };
 
-  console.log(children);
+  function capitalizeFirstLetter(string) {
+    return string.charAt(0).toUpperCase() + string.slice(1);
+  }
+
+  function fixTextStyle(string) {
+    let newString = string.replaceAll("_", " ");
+    newString = capitalizeFirstLetter(newString);
+    console.log(newString);
+    return newString;
+  }
+
   return (
     <div className={styles.formpage}>
       <form>
@@ -63,33 +73,29 @@ export const Form = ({ onSave, onDelete, onClose, children }) => {
                     {item.props.data.map((item) => (
                       <AccordionItem key={item.name} item={item}>
                         {Object.keys(item).map((key) => (
-                          <div key={key}>
+                          <>
                             {key !== "name" && (
-                              <>
+                              <div key={key} className={styles.item}>
                                 <Controller
                                   render={({ field }) => (
                                     <Checkbox
                                       {...field}
-                                      checked={getValues(`${item.name}_${key}`)}
+                                      checked={getValues(`${key}`)}
                                       // defaultChecked={item[key]}
                                     ></Checkbox>
                                   )}
                                   control={control}
                                   // defaultValue="yeh"
-                                  {...register(`${item.name}_${key}`)}
-                                  {...setValue(
-                                    `${item.name}_${key}`,
-                                    item[key],
-                                    {
-                                      shouldTouch: true,
-                                    }
-                                  )}
+                                  {...register(`${key}`)}
+                                  {...setValue(`${key}`, item[key], {
+                                    shouldTouch: true,
+                                  })}
                                   className="materialUIInput"
                                 />
-                                <span>{key}</span>
-                              </>
+                                <span>{fixTextStyle(key)}</span>
+                              </div>
                             )}
-                          </div>
+                          </>
                         ))}
                       </AccordionItem>
                     ))}
@@ -97,6 +103,7 @@ export const Form = ({ onSave, onDelete, onClose, children }) => {
                 )}
                 {item.props.type === "userlist" && (
                   <TeamsList
+                    organization_id={item.props.organization_id}
                     columns={item.props.columns}
                     data={item.props.data}
                     title={item.props.title}
@@ -108,13 +115,11 @@ export const Form = ({ onSave, onDelete, onClose, children }) => {
                       <SelectField
                         {...field}
                         options={item.props.options}
-                        onChange={(value) => ({...setValue(
-                          `${item.props.name}`,
-                          value,
-                          {
+                        onChange={(value) => ({
+                          ...setValue(`${item.props.name}`, value, {
                             shouldTouch: true,
-                          }
-                        )})}
+                          }),
+                        })}
                       ></SelectField>
                     )}
                     control={control}

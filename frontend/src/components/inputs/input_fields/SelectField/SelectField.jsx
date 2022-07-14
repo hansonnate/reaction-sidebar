@@ -75,7 +75,7 @@ export const SelectField = ({
     if (onChange) {
       onChange(option.value);
     }
-    console.log(val);
+    // console.log(val);
   };
 
   return (

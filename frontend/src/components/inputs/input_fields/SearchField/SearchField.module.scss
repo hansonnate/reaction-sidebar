@@ -1,0 +1,65 @@
+@import "assets/styles/globals.scss";
+
+.textfield {
+  width: 100%;
+  position: relative;
+  // height: 100%;
+  background-color: $gray40;
+  border-radius: 5px;
+  padding: 7.75px 13px;
+  // flex-grow:1;
+  outline: none;
+}
+
+.dropdown {
+  position: absolute;
+  display: flex;
+  flex-direction: column;
+  z-index: 20000000000;
+  background-color: white;
+  color: black;
+  height: fit-content;
+  max-height: 300px;
+  overflow-y: scroll;
+  width: fit-content;
+  border-radius: 5px;
+  // margin-bottom: -100px;
+  margin-top: 3px;
+  padding: 10px 10px;
+  box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px;
+}
+
+.userbox {
+  padding: 15px 10px;
+  border-radius: 5px;
+  display: flex;
+  flex-direction: row;
+  gap: 10px;
+  span {
+    min-width: 200px;
+    
+  }
+  align-items: center;
+}
+.userbox:hover {
+  background-color: $gray40;
+}
+
+.header {
+  padding: 5px 10px;
+  border-radius: 5px;
+  font-weight: 900;
+  color: $sapphire100;
+  background-color: $sapphire20;
+  display: flex;
+  flex-direction: row;
+  gap: 10px;
+  span {
+    min-width: 200px;
+  }
+}
+
+.addon{
+  color: $gray100;
+  font-size: .7em;
+}
