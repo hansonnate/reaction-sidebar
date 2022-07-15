@@ -11,19 +11,19 @@ import { ReactQueryDevtools } from "react-query/devtools";
 import { SideMenu } from "components/sidebars";
 import { SplitHorizontal } from "components/layouts";
 import { MainContentRoutes } from "routes";
-import { Login, useToken } from "./components/Login/Login";
+// import { Login, useToken } from "./components/Login/Login";
 
 const queryClient = new QueryClient();
 
 const App = () => {
-  const { token, setToken } = useToken();
+  // const { token, setToken } = useToken();
 
   return (
     <>
       <QueryClientProvider client={queryClient}>
-        {!token ? (
+        {/* {!token ? ( //!token
           <Login setToken={setToken} />
-        ) : (
+        ) : ( */}
           <>
             <div className={`${styles.App} bg-white`}>
               <link rel="preconnect" href="https://fonts.googleapis.com" />
@@ -43,7 +43,7 @@ const App = () => {
               </BrowserRouter>
             </div>
           </>
-        )}
+        {/* )} */}
         <ReactQueryDevtools />
       </QueryClientProvider>
     </>

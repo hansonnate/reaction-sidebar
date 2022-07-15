@@ -4,9 +4,10 @@ import { UGSidebar } from "components/sidebars/UGSidebar/UGSidebar";
 import { SplitHorizontal } from "components/layouts";
 import { TextField } from "components/inputs";
 import styles from "./AccessGroups.module.scss";
-import TeamsList, {
+import {
+  TeamsList,
   SelectColumnFilter,
-  MultipleFilter,
+  MultipleFilter
 } from "components/TeamsList/TeamsList.jsx";
 // import { useFetchContacts } from "api/resources/contacts/contacts";
 import {
@@ -83,7 +84,7 @@ export const AccessGroups = () => {
 
   const handleActiveUpdate = (id) => {
     // debugger; // eslint-disable-line no-debugger
-    console.log(id);
+    // console.log(id);
     setActive(id);
     for (let i = 0; i < fetchGroupsQuery.data.allAccessgroups.length; i++) {
       if (fetchGroupsQuery.data.allAccessgroups[i].id === id) {
@@ -94,12 +95,57 @@ export const AccessGroups = () => {
   };
 
   const onSave = (data) => {
-    updateAccessGroupQuery.mutate({
-      id: currRole.id,
-      organization_id: "0684348415",
-      name: data.name,
-      description: data.description,
-    });
+    let go = true;
+    let whiteList = currRole.whitelist_user_ids;
+    let blackList = currRole.blacklist_user_ids;
+    if (data.user) {
+      // debugger; // eslint-disable-line no-debugger
+
+      if (data.type === "White List") {
+        for (let i = 0; i < whiteList.length; i++) {
+          if (whiteList[i].id === data.user.id) {
+            alert(data.user.firstname + " " + data.user.lastname + " is already in the White List")
+            go = false;
+          }
+        }
+        for (let i = 0; i < blackList.length; i++) {
+          if (blackList[i].id === data.user.id) {
+            alert(data.user.firstname + " " + data.user.lastname + " is already in the Black List")
+            go = false;
+          }
+        }
+        if (go) {
+          whiteList.push(data.user);
+        }
+      }
+      if (data.type === "Black List") {
+        for (let i = 0; i < blackList.length; i++) {
+          if (blackList[i].id === data.user.id) {
+            alert(data.user.firstname + " " + data.user.lastname + " is already in the Black List")
+            go = false;
+          }
+        }
+        for (let i = 0; i < whiteList.length; i++) {
+          if (whiteList[i].id === data.user.id) {
+            alert(data.user.firstname + " " + data.user.lastname + " is already in the White List")
+            go = false;
+          }
+        }
+        if (go) {
+          blackList.push(data.user);
+        }
+      }
+    }
+    if (go) {
+      updateAccessGroupQuery.mutate({
+        id: currRole.id,
+        organization_id: currRole.organization_id,
+        name: data.name,
+        description: data.description,
+        whitelist_user_ids: whiteList,
+        blacklist_user_ids: blackList,
+      });
+    }
   };
 
   const onDelete = () => {
@@ -107,6 +153,7 @@ export const AccessGroups = () => {
       id: currRole.id,
     });
   };
+
 
   return (
     <>
@@ -147,6 +194,7 @@ export const AccessGroups = () => {
                       columns={columns}
                       data={currRole.whitelist_user_ids}
                       title="White List"
+                      onSave={onSave}
                     />
                     <TeamsList
                       organization_id={currRole.organization_id}
@@ -154,6 +202,7 @@ export const AccessGroups = () => {
                       columns={columns}
                       data={currRole.blacklist_user_ids}
                       title="Black List"
+                      onSave={onSave}
                     />
                   </Form>
                 </div>

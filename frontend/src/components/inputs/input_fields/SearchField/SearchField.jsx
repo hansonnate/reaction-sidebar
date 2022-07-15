@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useRef, useEffect } from "react";
 // import { TextField } from "@mui/material";
 // import { styled } from "@mui/material/styles";
 
@@ -12,6 +12,7 @@ export const SearchField = ({
   onChange,
   disabled,
   org_id,
+  onRowClick,
   // searchType,
   // inactive,
   // align = "left",
@@ -21,6 +22,8 @@ export const SearchField = ({
   const [options, setOptions] = useState([]);
   const [showOptions, setShowOptions] = useState(false);
   const searchUser = useSearchUserGql(org_id, val);
+  const ref = useRef(null);
+
   const handleChange = (event) => {
     setVal(event.target.value);
     setShowOptions(true);
@@ -37,6 +40,24 @@ export const SearchField = ({
     }
   };
 
+  const handleClickOutside = (event) => {
+    if (ref.current && !ref.current.contains(event.target)) {
+      setShowOptions(false);
+    }
+  };
+
+  useEffect(() => {
+    document.addEventListener("click", handleClickOutside, true);
+    return () => {
+      document.removeEventListener("click", handleClickOutside, true);
+    };
+  }, []);
+
+  const handleRowClick = (user) => {
+    // alert("You clicked on: " + user.firstname)
+    onRowClick(user);
+  }
+
   return (
     <>
       <input
@@ -48,14 +69,14 @@ export const SearchField = ({
         placeholder={placeholder}
       ></input>
       {showOptions && (
-        <div className={styles.dropdown}>
+        <div className={styles.dropdown} ref={ref}>
           <div className={`${styles.header}`}>
             <span>User</span>
             <span>Position</span>
             <span>Company</span>
           </div>
           {options.map((user) => (
-            <div key={user.firstname} className={styles.userbox}>
+            <div key={user.firstname} className={styles.userbox} onClick={() => handleRowClick(user)}>
               <span><div>{user.firstname}{" "}{user.lastname}</div><div className={styles.addon}>{user.email}</div></span>
               <span>{user.position}</span>
               <span>{user.company}</span>

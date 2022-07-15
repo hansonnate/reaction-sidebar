@@ -46,9 +46,13 @@ export const useFetchUserGql = (id, token) => {
           id
           firstname
           lastname
+          organization_id
           email
           position
           company
+          created_at
+          updated_at
+          last_sign_in_at
         }
       }`;
 
@@ -62,9 +66,13 @@ export const useSearchUserGql = (id, string) => {
         id
         firstname
         lastname
+        organization_id
         email
         position
         company
+        created_at
+        updated_at
+        last_sign_in_at
       }
     }`;
 

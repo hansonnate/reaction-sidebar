@@ -184,7 +184,7 @@ module.exports = {
       description: "Exclude Jeremy",
       whitelist_user_ids: [
         {
-          id: 0,
+          id: "563",
           organization_id: "0684348415",
           firstname: "Mohema",
           lastname: "Dsquarious",
@@ -197,7 +197,7 @@ module.exports = {
       ],
       blacklist_user_ids: [
         {
-          id: 1,
+          id: "564",
           organization_id: "0684348415",
           firstname: "Beast",
           lastname: "Mode",
@@ -214,7 +214,7 @@ module.exports = {
   ],
   users: [
     {
-      id: 0,
+      id: "563",
       role_id: "66659702",
       organization_id: "0684348415",
       firstname: "Mohema",
@@ -227,7 +227,7 @@ module.exports = {
       last_sign_in_at: "2020-01-01"
     },
     {
-      id: 1,
+      id: "564",
       role_id: "384650",
       organization_id: "0684348415",
       firstname: "Beast",
@@ -235,6 +235,19 @@ module.exports = {
       email: "marshawn@email.com",
       position: "YourNightmare",
       company: "Seahawks",
+      created_at: "2020-01-01",
+      updated_at: "2020-01-01",
+      last_sign_in_at: "2020-01-01"
+    },
+    {
+      id: "565",
+      role_id: "384650",
+      organization_id: "0684348415",
+      firstname: "Nathaniel",
+      lastname: "Hanson",
+      email: "Nathanson@email.com",
+      position: "Inter",
+      company: "ReactionData",
       created_at: "2020-01-01",
       updated_at: "2020-01-01",
       last_sign_in_at: "2020-01-01"

@@ -41,7 +41,7 @@ export const Login = () => {
         setError(true);
         console.err(err);
       });
-      window.location.reload(false);
+      window.location.reload(true);
   };
 
   return (

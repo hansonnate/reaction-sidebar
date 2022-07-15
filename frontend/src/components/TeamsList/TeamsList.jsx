@@ -122,7 +122,7 @@ export function SelectColumnFilter({
   );
 }
 
-function TeamsList({ organization_id, columns, data, title }) {
+export const TeamsList = ({ onSave, organization_id, columns, data, title }) => {
   // const { token } = useToken();
   // debugger;// eslint-disable-line no-debugger
   // Use the state and functions returned from useTable to build UI
@@ -166,35 +166,15 @@ function TeamsList({ organization_id, columns, data, title }) {
   const [List, setList] = useState(page);
   const [MasterChecked, setMasterChecked] = useState(false);
   const [SelectedList, setSelectedList] = useState([]);
-  // const [options, setOptions] = useState([{value: "option1", label: "option 1"}, {value: "option2", label: "option 2"}]);
-  // const [searchValue, setSearchValue] = useState(" ");
-  // const fetchUserByEmail = useFetchUserByEmailGql();
-  // const searchUser = useSearchUserGql(organization_id, searchValue);
-  // console.log(fetchUserByEmail);
-  // console.log(organization_id);
-  // const onSelectChange = (string) => {
-  //   if(searchUser.isSuccess) {
-  //   setSearchValue(string);
-  //   console.log(string);
-  //   searchUser.refetch();
-  //   console.log(searchUser);
-  //   setOptions(getOptions());
-  //   console.log(options)
-  //   }
-  // }
-  // const getOptions = () => {
-  //   let options = [];
-    
-  //   // console.log(fetchUserByEmail);
-  //   if (searchUser.data.allUsers.length > 0) {
-  //     let users = searchUser.data.allUsers;
-  //     for (let i = 0; i < users.length; i++) {
-  //       options.push({value: users[i].id, label: users[i].email});
-  //     }
-  //   }
-  //   setOptions(options);
-  //   return options;
-  // }
+
+
+  const onSearchClick = (user) => {
+    // alert("You clicked on: " + user.firstname);
+    // console.log());
+    let data = {user: user, type: title}
+    onSave(data);
+  }
+
   // Select/ UnSelect Table rows
   const onMasterCheck = (e) => {
     let tempList = page;
@@ -332,7 +312,7 @@ function TeamsList({ organization_id, columns, data, title }) {
           })}
           <tr>
             <td></td>
-            <td><div className={styles.textfield}><SearchField placeholder="Email" org_id={organization_id} searchType="user"></SearchField></div></td>
+            <td><div className={styles.textfield}><SearchField placeholder="Email" org_id={organization_id} searchType="user" onRowClick={onSearchClick}></SearchField></div></td>
             <td><div className={styles.textfield}><TextField placeholder="First Name"></TextField></div></td>
             <td><div className={styles.textfield}><TextField placeholder="Last Name"></TextField></div></td>
             <td></td>
@@ -394,6 +374,6 @@ function TeamsList({ organization_id, columns, data, title }) {
   );
 }
 
-export default TeamsList;
+// export default TeamsList;
 
 //eslint-disable-next-line

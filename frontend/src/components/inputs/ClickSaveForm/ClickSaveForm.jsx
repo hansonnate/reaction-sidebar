@@ -4,7 +4,7 @@ import { useForm, Controller } from "react-hook-form";
 import { UGAccordion } from "components/UGAccordion/UGAccordion";
 import AccordionItem from "components/UGAccordion/AccordionItem";
 import Checkbox from "../input_fields/CheckboxAnimated/Checkbox";
-import TeamsList from "components/TeamsList/TeamsList";
+import { TeamsList } from "components/TeamsList/TeamsList";
 import { SelectField } from "../input_fields";
 
 export const Form = ({ onSave, onDelete, onClose, children }) => {
@@ -107,6 +107,7 @@ export const Form = ({ onSave, onDelete, onClose, children }) => {
                     columns={item.props.columns}
                     data={item.props.data}
                     title={item.props.title}
+                    onSave={item.props.onSave}
                   ></TeamsList>
                 )}
                 {item.props.type === "select" && (
