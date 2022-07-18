@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import styles from "./UGAccordion.module.scss";
 
 //custom accordian
-const AccordionItem = ({ item, children }) => {
+const AccordionItem = ({ name, children }) => {
   const [visibility, setVisibility] = useState(false);
   // eslint-disable-next-line
   // const [permissions, setPermissions] = useState(item);
@@ -15,13 +15,13 @@ const AccordionItem = ({ item, children }) => {
   return (
     <>
       <div
-        key={item.name}
+        key={name}
         className={`${styles.header} ${
           visibility ? styles.accordionactive : ""
         }`}
         onClick={toggleVisibility}
       >
-        {item.name}
+        {name}
         <span className={styles.accordionicon}>
           <i className="bi bi-chevron-left"></i>
         </span>

@@ -11,7 +11,7 @@ import { TextField, SaveForm, SelectField } from "components/inputs";
 
 // Internal
 // import { Header } from "components/layouts";
-import { useFetchAudiencesGql } from "api/resources/contacts/audiences";
+import { useCreateAudienceGql, useDeleteAudienceGql, useFetchAudiencesGql } from "api/resources/contacts/audiences";
 // import { Label } from "components/layouts/Label/Label.jsx";
 import { ContactCleaner } from "components/ContactCleaner/ContactCleaner.jsx";
 import Editor from "components/tables/EditableTable/App.jsx";
@@ -38,13 +38,13 @@ export const Audiences = () => {
       },
       {
         Header: "Modified",
-        accessor: "modified",
+        accessor: "modified_at",
         Filter: SelectColumnFilter,
         filter: MultipleFilter,
       },
       {
         Header: "Created",
-        accessor: "created",
+        accessor: "created_at",
         Filter: SelectColumnFilter,
         filter: MultipleFilter,
       },
@@ -53,11 +53,16 @@ export const Audiences = () => {
   );
 
   const fetchAudiencesQuery = useFetchAudiencesGql();
+  const createAudienceQuery = useCreateAudienceGql();
+  const deleteAudienceQuery = useDeleteAudienceGql();
 
   // const [show, setShow] = useState(false);
   // eslint-disable-next-line
   const [newAudience, setNewAudience] = useState(false);
   const [chosenOption, setChosenOption] = useState();
+  const [newName, setNewName] = useState("");
+  const [newDescription, setNewDescription] = useState("");
+  const [audience, setAudience] = useState([]);
 
   const options = [
     { value: "dynamic", label: "Dynamic" },
@@ -73,10 +78,32 @@ export const Audiences = () => {
     return (
       <div className={styles.finalbuttons}>
         <Button white>Preview Audience</Button>
-        <Button>Save Audience</Button>
+        <Button onClick={handleCreateAudience}>Save Audience</Button>
       </div>
     );
   };
+
+  const handleCreateAudience = () => {
+    createAudienceQuery.mutate({
+      name: newName,
+      description: newDescription,
+      members: audience.length,
+      contact_ids: audience,
+      created_at: "2020-01-01",
+      modified_at: "2020-01-01",
+    });
+  };
+
+  const deleteSelected = (selected) => {
+    console.log(selected);
+    for (let i = 0; i < selected.length; i++) {
+      deleteAudienceQuery.mutate({
+        id: selected[i].original.id,
+      });
+    }
+
+  };
+
 
   return (
     <>
@@ -85,9 +112,10 @@ export const Audiences = () => {
       {fetchAudiencesQuery.isSuccess && newAudience === false && (
         <ReactTable
           columns={columns}
-          data={fetchAudiencesQuery.data}
+          data={fetchAudiencesQuery.data.allAudiences}
           buttonMethod={() => setNewAudience(true)}
           modalTitle="New Audience"
+          deleteSelected={deleteSelected}
         />
       )}
       {newAudience && (
@@ -100,9 +128,9 @@ export const Audiences = () => {
                 label: "Name",
                 field: (
                   <TextField
-                    // value={displayName}
+                    value={newName}
                     placeholder="Audience Name"
-                    // onSave={updateTitle}
+                    onChange={(e) => (setNewName(e.target.value))}
                   ></TextField>
                 ),
               },
@@ -110,9 +138,9 @@ export const Audiences = () => {
                 label: "Description",
                 field: (
                   <TextField
-                    // value={displayName}
+                    value={newDescription}
                     placeholder="Description"
-                    // onSave={updateTitle}
+                    onChange={(e) => setNewDescription(e.target.value)}
                   ></TextField>
                 ),
               },
@@ -127,35 +155,21 @@ export const Audiences = () => {
               },
             ]}
           ></SaveForm>
-          {/* <div className={styles.legistics}>
-            <div className={styles.legistic}>
-              <Label>Name</Label>
-              <TextField placeholder="Audience Name"></TextField>
-            </div>
-            <div className={styles.legistic}>
-              <Label>Description</Label>
-              <TextField placeholder="Description"></TextField>
-            </div>
-            <div className={styles.legistic}>
-              <Label>Type</Label>
-              <SelectField options={options} onChange={onChange}></SelectField>
-            </div>
-          </div> */}
           {chosenOption === "fileupload" && (
             <div>
-              <ContactCleaner></ContactCleaner>
+              <ContactCleaner setList={() => setAudience}></ContactCleaner>
               {finalButtons()}
             </div>
           )}
           {chosenOption === "dynamic" && (
             <div>
-              <DynamicUpload></DynamicUpload>
+              <DynamicUpload setList={() => setAudience}></DynamicUpload>
               {finalButtons()}
             </div>
           )}
           {chosenOption === "entermanually" && (
             <div>
-              <Editor></Editor>
+              <Editor buttonName={"Upload"}></Editor>
               {finalButtons()}
             </div>
           )}
@@ -163,22 +177,6 @@ export const Audiences = () => {
         </>
       )}
 
-      {/* <ReactModal show={show} onClose={() => setShow(false)}>
-        <div className="content">
-          <h1>Create Audience</h1>
-          <div className={styles.text}>
-            <TextField
-              type="text"
-              placeholder="Audience Name"
-            ></TextField>
-            <TextField
-              type="text"
-              placeholder="Description (optional)"
-            ></TextField>
-            
-          </div>
-        </div>
-      </ReactModal>  */}
     </>
   );
 };

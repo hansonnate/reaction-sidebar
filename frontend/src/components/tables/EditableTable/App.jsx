@@ -3,6 +3,7 @@ import "./style.css";
 import makeData from "./makeData";
 import Table from "./Table";
 import { randomColor, shortId } from "./utils";
+import Button from "components/buttons/Button/Button";
 // import ActionButton from "components/ActionButton/ActionButton";
 
 function reducer(state, action) {
@@ -21,17 +22,17 @@ function reducer(state, action) {
             ...state.columns[optionIndex],
             options: [
               ...state.columns[optionIndex].options,
-              { label: action.option, backgroundColor: action.backgroundColor }
-            ]
+              { label: action.option, backgroundColor: action.backgroundColor },
+            ],
           },
-          ...state.columns.slice(optionIndex + 1, state.columns.length)
-        ]
+          ...state.columns.slice(optionIndex + 1, state.columns.length),
+        ],
       };
     case "add_row":
       return {
         ...state,
         skipReset: true,
-        data: [...state.data, {}]
+        data: [...state.data, {}],
       };
     case "update_column_type":
       const typeIndex = state.columns.findIndex(
@@ -47,14 +48,14 @@ function reducer(state, action) {
               columns: [
                 ...state.columns.slice(0, typeIndex),
                 { ...state.columns[typeIndex], dataType: action.dataType },
-                ...state.columns.slice(typeIndex + 1, state.columns.length)
+                ...state.columns.slice(typeIndex + 1, state.columns.length),
               ],
               data: state.data.map((row) => ({
                 ...row,
                 [action.columnId]: isNaN(row[action.columnId])
                   ? ""
-                  : Number.parseInt(row[action.columnId])
-              }))
+                  : Number.parseInt(row[action.columnId]),
+              })),
             };
           }
         case "select":
@@ -64,9 +65,9 @@ function reducer(state, action) {
               columns: [
                 ...state.columns.slice(0, typeIndex),
                 { ...state.columns[typeIndex], dataType: action.dataType },
-                ...state.columns.slice(typeIndex + 1, state.columns.length)
+                ...state.columns.slice(typeIndex + 1, state.columns.length),
               ],
-              skipReset: true
+              skipReset: true,
             };
           } else {
             let options = [];
@@ -74,7 +75,7 @@ function reducer(state, action) {
               if (row[action.columnId]) {
                 options.push({
                   label: row[action.columnId],
-                  backgroundColor: randomColor()
+                  backgroundColor: randomColor(),
                 });
               }
             });
@@ -85,11 +86,11 @@ function reducer(state, action) {
                 {
                   ...state.columns[typeIndex],
                   dataType: action.dataType,
-                  options: [...state.columns[typeIndex].options, ...options]
+                  options: [...state.columns[typeIndex].options, ...options],
                 },
-                ...state.columns.slice(typeIndex + 1, state.columns.length)
+                ...state.columns.slice(typeIndex + 1, state.columns.length),
               ],
-              skipReset: true
+              skipReset: true,
             };
           }
         case "text":
@@ -102,8 +103,8 @@ function reducer(state, action) {
               columns: [
                 ...state.columns.slice(0, typeIndex),
                 { ...state.columns[typeIndex], dataType: action.dataType },
-                ...state.columns.slice(typeIndex + 1, state.columns.length)
-              ]
+                ...state.columns.slice(typeIndex + 1, state.columns.length),
+              ],
             };
           } else {
             return {
@@ -112,12 +113,12 @@ function reducer(state, action) {
               columns: [
                 ...state.columns.slice(0, typeIndex),
                 { ...state.columns[typeIndex], dataType: action.dataType },
-                ...state.columns.slice(typeIndex + 1, state.columns.length)
+                ...state.columns.slice(typeIndex + 1, state.columns.length),
               ],
               data: state.data.map((row) => ({
                 ...row,
-                [action.columnId]: row[action.columnId] + ""
-              }))
+                [action.columnId]: row[action.columnId] + "",
+              })),
             };
           }
         default:
@@ -133,8 +134,8 @@ function reducer(state, action) {
         columns: [
           ...state.columns.slice(0, index),
           { ...state.columns[index], label: action.label },
-          ...state.columns.slice(index + 1, state.columns.length)
-        ]
+          ...state.columns.slice(index + 1, state.columns.length),
+        ],
       };
     case "update_cell":
       return {
@@ -142,13 +143,14 @@ function reducer(state, action) {
         skipReset: true,
         data: state.data.map((row, index) => {
           if (index === action.rowIndex) {
+            console.log(state.data);
             return {
               ...state.data[action.rowIndex],
-              [action.columnId]: action.value
+              [action.columnId]: action.value,
             };
           }
           return row;
-        })
+        }),
       };
     case "add_column_to_left":
       const leftIndex = state.columns.findIndex(
@@ -166,10 +168,10 @@ function reducer(state, action) {
             accessor: leftId,
             dataType: "text",
             created: action.focus && true,
-            options: []
+            options: [],
           },
-          ...state.columns.slice(leftIndex, state.columns.length)
-        ]
+          ...state.columns.slice(leftIndex, state.columns.length),
+        ],
       };
     case "add_column_to_right":
       const rightIndex = state.columns.findIndex(
@@ -187,10 +189,10 @@ function reducer(state, action) {
             accessor: rightId,
             dataType: "text",
             created: action.focus && true,
-            options: []
+            options: [],
           },
-          ...state.columns.slice(rightIndex + 1, state.columns.length)
-        ]
+          ...state.columns.slice(rightIndex + 1, state.columns.length),
+        ],
       };
     case "delete_column":
       const deleteIndex = state.columns.findIndex(
@@ -201,42 +203,39 @@ function reducer(state, action) {
         skipReset: true,
         columns: [
           ...state.columns.slice(0, deleteIndex),
-          ...state.columns.slice(deleteIndex + 1, state.columns.length)
-        ]
+          ...state.columns.slice(deleteIndex + 1, state.columns.length),
+        ],
       };
     case "enable_reset":
       return {
         ...state,
-        skipReset: false
+        skipReset: false,
       };
     default:
       return state;
   }
 }
 
-function Editor() {
-  const [state, dispatch] = useReducer(reducer, makeData(0));
+function Editor({ buttonName }) {
+  const [state, dispatch] = useReducer(reducer, makeData());
 
   useEffect(() => {
     dispatch({ type: "enable_reset" });
   }, [state.data, state.columns]);
 
+  // console.log(state.data);
+
   return (
-    <div
-      style={{
-        width: "100%",
-        height: "100%",
-        overflowX: "hidden",
-        padding: "0px 20px"
-      }}
-    >
+
       <div style={{ overflow: "auto", display: "flex" }}>
         <div
           style={{
             flex: "1 1 auto",
             padding: "1rem",
-            maxWidth: "100%"
-  
+            width: "100%",
+            display: "flex",
+            flexDirection: "column",
+            gap: "10px"
           }}
         >
           <Table
@@ -245,10 +244,9 @@ function Editor() {
             dispatch={dispatch}
             skipReset={state.skipReset}
           />
-
+          {buttonName && <Button>{buttonName}</Button>}
         </div>
       </div>
-    </div>
   );
 }
 

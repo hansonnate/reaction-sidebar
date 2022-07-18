@@ -81,7 +81,7 @@ export default function Cell({
   function empty(value) {
     // console.log(value);
     if (value === "" || value === undefined) {
-      console.log(id);
+      // console.log(id);
       return true;
     }
     return false;

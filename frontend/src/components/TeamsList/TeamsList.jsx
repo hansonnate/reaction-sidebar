@@ -11,7 +11,7 @@ import {
 // import { Link } from "react-router-dom";
 import styles from "./Table.module.scss";
 import { useNavigate } from "react-router-dom";
-import { TextField } from "components/inputs/index.js";
+// import { TextField } from "components/inputs/index.js";
 // import { SelectField } from "components/inputs/input_fields";
 import Checkbox from "components/inputs/input_fields/CheckboxAnimated/Checkbox";
 // import { useSearchUserGql } from "api/resources/organization/users";
@@ -312,9 +312,9 @@ export const TeamsList = ({ onSave, organization_id, columns, data, title }) => 
           })}
           <tr>
             <td></td>
-            <td><div className={styles.textfield}><SearchField placeholder="Email" org_id={organization_id} searchType="user" onRowClick={onSearchClick}></SearchField></div></td>
-            <td><div className={styles.textfield}><TextField placeholder="First Name"></TextField></div></td>
-            <td><div className={styles.textfield}><TextField placeholder="Last Name"></TextField></div></td>
+            <td><div className={styles.textfield}><SearchField placeholder="Search User..." org_id={organization_id} searchType="user" onRowClick={onSearchClick}></SearchField></div></td>
+            <td></td>
+            <td></td>
             <td></td>
             <td></td>
           </tr>

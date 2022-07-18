@@ -13,43 +13,53 @@ export const useFetchAudiencesGql = () => {
       allAudiences {
         id
         name
+        description
         members
+        contact_ids
+        created_at
+        modified_at
       }
     }
   `;
 
-  return useGqlQuery(["emails"], query, {});
+  return useGqlQuery(["audience"], query, {});
 };
 
 export const useFetchAudienceGql = (id) => {
   const query = gql`
     query {
-      survey: Project(id: "${id}") {
+      Audience(id: "${id}") {
         id
         name
+        description
       }
     }
   `;
 
-  return useGqlQuery(["emails", id], query, {});
+  return useGqlQuery(["audience", id], query, {});
 };
 
 export const useCreateAudienceGql = () => {
   const mutation = gql`
-  mutation CreateProject(
-    $organization_id: ID!
-    $name: String!
-    $description: String!
-    $created_at: String!
-    $updated_at: String!
-    $status: String!
-    $responses: Int!
-    $owner: String!
+    mutation CreateAudience(
+      $name: String!
+      $members: Int!
+      $contact_ids: [Int]!
+      $created_at: String!
+      $modified_at: String!
+      $description: String!
     ) {
-    createProject(organization_id: $organization_id, name: $name, description: $description, created_at: $created_at, updated_at: $updated_at, status: $status, responses: $responses, owner: $owner) {
-      id
+      createAudience(
+        name: $name,
+        members: $members,
+        contact_ids: $contact_ids,
+        created_at: $created_at,
+        modified_at: $modified_at,
+        description: $description
+      ) {
+        id
+      }
     }
-  }
   `;
   const queryClient = useQueryClient();
   const options = {
@@ -57,7 +67,7 @@ export const useCreateAudienceGql = () => {
       if (rollback) rollback();
     },
     onSettled: () => {
-      queryClient.invalidateQueries("emails");
+      queryClient.invalidateQueries("audience");
     },
   };
 
@@ -66,12 +76,24 @@ export const useCreateAudienceGql = () => {
 
 export const useUpdateAudienceGql = () => {
   const mutation = gql`
-    mutation UpdateSurvey(
-      $id: String!
-      $input: GenericScalar
-      $token: String!
+    mutation UpdateAudience(
+      $id: ID!
+      $name: String
+      $members: Int
+      $contact_ids: [Int]
+      $created_at: String
+      $modified_at: String
+      $description: String
     ) {
-      updateSurvey(surveyId: $id, survey: $input, token: $token) {
+      updateAudience(
+        id: $id, 
+        name: $name,
+        members: $members,
+        contact_ids: $contact_ids,
+        created_at: $created_at,
+        modified_at: $modified_at,
+        description: $description
+        ) {
         ok
       }
     }
@@ -82,7 +104,7 @@ export const useUpdateAudienceGql = () => {
       if (rollback) rollback();
     },
     onSuccess: () => {
-      queryClient.invalidateQueries(["emails"]);
+      queryClient.invalidateQueries(["audience"]);
     },
   };
 
@@ -91,19 +113,18 @@ export const useUpdateAudienceGql = () => {
 
 export const useDeleteAudienceGql = () => {
   const mutation = gql`
-  mutation RemoveProject($id: ID!) {
-    removeProject(id: $id) {
-      id
+    mutation RemoveAudience($id: ID!) {
+      removeAudience(id: $id) {
+        id
+      }
     }
-  }
   `;
   const queryClient = useQueryClient();
   const options = {
     onSuccess: () => {
-      queryClient.invalidateQueries(["emails"]);
+      queryClient.invalidateQueries(["audience"]);
     },
   };
 
   return useGqlMutation(mutation, options);
 };
-

@@ -20,7 +20,6 @@ export const useFetchUsersGql = () => {
           id
           name
           description
-          permissions
         }
         last_sign_in_at
         Organization {
@@ -29,7 +28,6 @@ export const useFetchUsersGql = () => {
             id
             name
             description
-            permissions
           }
         }
       }

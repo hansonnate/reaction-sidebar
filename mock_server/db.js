@@ -12,7 +12,7 @@ module.exports = {
       owner: "Mark Wagner",
       default_language: "en",
       supported_languages: ["en", "sp"],
-      accessgroup_ids: ["552224"]
+      accessgroup_ids: ["552224"],
     },
     {
       id: 1,
@@ -26,7 +26,7 @@ module.exports = {
       owner: "Mark Wagner",
       default_language: "en",
       supported_languages: ["en", "sp"],
-      accessgroup_ids: ["552224"]
+      accessgroup_ids: ["552224"],
     },
     {
       id: 2,
@@ -40,7 +40,7 @@ module.exports = {
       owner: "Mark Wagner",
       default_language: "en",
       supported_languages: ["en", "sp"],
-      accessgroup_ids: ["552224"]
+      accessgroup_ids: ["552224"],
     },
     {
       id: 3,
@@ -54,7 +54,7 @@ module.exports = {
       owner: "Mark Wagner",
       default_language: "en",
       supported_languages: ["en", "sp"],
-      accessgroup_ids: ["552224"]
+      accessgroup_ids: ["552224"],
     },
   ],
   organizations: [
@@ -72,108 +72,66 @@ module.exports = {
       organization_id: "0684348415",
       name: "Admin",
       description: "Full access",
-      permissions: [
-        {
-          name: "Projects",
-          create_survey: true,
-          see_all_surveys: true,
-          send_from_org_email: true,
-          send_survey: true,
-          see_surveys_where: true,
-          see_survey_results: true,
-        },
-        {
-          name: "Contacts",
-          create_contacts_for_team: true,
-          edit_contacts: true,
-          create_audience: true,
-        },
-        {
-          name: "Organization",
-          can_edit_user_groups: true,
-          can_edit_users: true,
-          can_see_users: true,
-          can_create_user: true,
-          can_see_distribution_settings: true,
-          can_edit_org_details: true,
-        },
-        {
-          name: "Distribution",
-          can_edit_distribution_settings: true,
-        },
-      ],
+      create_project: true,
+      see_all_projects: true,
+      send_from_org_email: true,
+      send_survey: true,
+      see_surveys_where: true,
+      see_survey_results: true,
+      create_contacts_for_team: true,
+      edit_contacts: true,
+      create_audience: true,
+      can_edit_user_groups: true,
+      can_edit_users: true,
+      can_see_users: true,
+      can_create_user: true,
+      can_see_distribution_settings: true,
+      can_edit_org_details: true,
+      can_edit_distribution_settings: true,
     },
     {
       id: "66659702",
       organization_id: "0684348415",
       name: "Staff",
       description: "Limited access",
-      permissions: [
-        {
-          name: "Projects",
-          create_survey: true,
-          see_all_surveys: true,
-          send_from_org_email: false,
-          send_survey: false,
-          see_surveys_where: false,
-          see_survey_results: false,
-        },
-        {
-          name: "Contacts",
-          create_contacts_for_team: false,
-          edit_contacts: false,
-          create_audience: false,
-        },
-        {
-          name: "Organization",
-          can_edit_user_groups: false,
-          can_edit_users: false,
-          can_see_users: false,
-          can_create_user: false,
-          can_see_distribution_settings: false,
-          can_edit_org_details: false,
-        },
-        {
-          name: "Distribution",
-          can_edit_distribution_settings: false,
-        },
-      ],
+      create_project: true,
+      see_all_projects: true,
+      send_from_org_email: false,
+      send_survey: false,
+      see_surveys_where: false,
+      see_survey_results: false,
+      create_contacts_for_team: false,
+      edit_contacts: false,
+      create_audience: false,
+      can_edit_user_groups: false,
+      can_edit_users: false,
+      can_see_users: false,
+      can_create_user: false,
+      can_see_distribution_settings: false,
+      can_edit_org_details: false,
+      can_edit_distribution_settings: false,
     },
     {
       id: "6480564",
       organization_id: "0684348415",
       name: "Account Manager",
       description: "Regular access",
-      permissions: [
-        {
-          name: "Projects",
-          create_survey: true,
-          see_all_surveys: true,
-          send_from_org_email: false,
-          send_survey: false,
-          see_surveys_where: false,
-          see_survey_results: false,
-        },
-        {
-          name: "Contacts",
-          create_contacts_for_team: false,
-          edit_contacts: false,
-          create_audience: false,
-        },
-        {
-          name: "Organization",
-          can_edit_user_groups: false,
-          can_edit_users: false,
-          can_see_users: false,
-          can_create_user: false,
-          can_see_distribution_settings: false,
-          can_edit_org_details: false,
-        },
-        {
-          name: "Distribution",
-          can_edit_distribution_settings: false,
-        },
-      ],
+      create_project: true,
+      see_all_projects: true,
+      send_from_org_email: false,
+      send_survey: false,
+      see_surveys_where: false,
+      see_survey_results: false,
+      create_contacts_for_team: false,
+      edit_contacts: false,
+      create_audience: false,
+      can_edit_user_groups: false,
+      can_edit_users: false,
+      can_see_users: false,
+      can_create_user: false,
+      can_see_distribution_settings: false,
+      can_edit_org_details: false,
+      can_edit_distribution_settings: false,
     },
   ],
   accessgroups: [
@@ -224,7 +182,7 @@ module.exports = {
       company: "Peer60",
       created_at: "2020-01-01",
       updated_at: "2020-01-01",
-      last_sign_in_at: "2020-01-01"
+      last_sign_in_at: "2020-01-01",
     },
     {
       id: "564",
@@ -237,7 +195,7 @@ module.exports = {
       company: "Seahawks",
       created_at: "2020-01-01",
       updated_at: "2020-01-01",
-      last_sign_in_at: "2020-01-01"
+      last_sign_in_at: "2020-01-01",
     },
     {
       id: "565",
@@ -250,7 +208,7 @@ module.exports = {
       company: "ReactionData",
       created_at: "2020-01-01",
       updated_at: "2020-01-01",
-      last_sign_in_at: "2020-01-01"
+      last_sign_in_at: "2020-01-01",
     },
   ],
   emails: [
@@ -262,28 +220,31 @@ module.exports = {
       from: "jbikman@reaction.com",
       status: "Delivered",
       date: "2020-01-01",
-      strength: "Bad"
+      strength: "Bad",
     },
     {
-      id: 1, 
+      id: 1,
       project_id: 0,
       subject: "More Opinion",
       audience_id: 0,
       from: "jbikman@reaction.com",
       status: "Draft",
       date: null,
-      strength: "Good"
-    }
+      strength: "Good",
+    },
   ],
   audiences: [
     {
       id: 0,
       name: "Patients",
+      description: "Only Patients",
       members: 350,
-      created: "2020-01-01",
-      modified: "2020-01-01"
+      contact_ids: [
+        0, 1, 2
+      ],
+      created_at: "2020-01-01",
+      modified_at: "2020-01-01",
     },
-
   ],
   questions: [
     {
@@ -301,7 +262,14 @@ module.exports = {
       isMultiSelect: null,
       otherOption: null,
       otherOptionText: null,
-      question_type_config: {"scale_question": {"min": 1, "max": 5, "min_description": "Yuck", "max_description": "Yum"}}
+      question_type_config: {
+        scale_question: {
+          min: 1,
+          max: 5,
+          min_description: "Yuck",
+          max_description: "Yum",
+        },
+      },
     },
     {
       id: 1,
@@ -318,7 +286,22 @@ module.exports = {
       isMultiSelect: true,
       otherOption: true,
       otherOptionText: "Other Juan",
-      question_type_config: {"choice_question": {"isMultiSelect": false, "isRandomized": false, "hasOtherOption": true, "otherOptionText": "No Pill", "choices": ["Red", "Blue", "Green", "Yellow", "Black", "Very dark grey"]}}
+      question_type_config: {
+        choice_question: {
+          isMultiSelect: false,
+          isRandomized: false,
+          hasOtherOption: true,
+          otherOptionText: "No Pill",
+          choices: [
+            "Red",
+            "Blue",
+            "Green",
+            "Yellow",
+            "Black",
+            "Very dark grey",
+          ],
+        },
+      },
     },
     {
       id: 2,
@@ -335,39 +318,44 @@ module.exports = {
       isMultiSelect: null,
       otherOption: null,
       otherOptionText: null,
-      question_type_config: {"text_question": {"max_length": 255, "placeholder": "Enter your favorite color"}}
+      question_type_config: {
+        text_question: {
+          max_length: 255,
+          placeholder: "Enter your favorite color",
+        },
+      },
     },
   ],
   choices: [
     {
       id: "524",
       question_id: 1,
-      choice_value: "Red"
+      choice_value: "Red",
     },
     {
       id: "525",
       question_id: 1,
-      choice_value: "Blue"
+      choice_value: "Blue",
     },
     {
       id: "526",
       question_id: 1,
-      choice_value: "Green"
+      choice_value: "Green",
     },
     {
       id: "527",
       question_id: 1,
-      choice_value: "Yellow"
+      choice_value: "Yellow",
     },
     {
       id: "528",
       question_id: 1,
-      choice_value: "Black"
+      choice_value: "Black",
     },
     {
       id: "529",
       question_id: 1,
-      choice_value: "Very dark grey"
+      choice_value: "Very dark grey",
     },
   ],
   contacts: [
@@ -450,7 +438,7 @@ module.exports = {
       text_value: null,
       boolean_value: null,
       array_value: null,
-      decimal_value: 5, 
+      decimal_value: 5,
     },
     {
       id: 1,
@@ -460,7 +448,7 @@ module.exports = {
       text_value: null,
       boolean_value: null,
       array_value: ["Red"],
-      decimal_value: null, 
+      decimal_value: null,
     },
     {
       id: 1,
@@ -470,7 +458,7 @@ module.exports = {
       text_value: null,
       boolean_value: null,
       array_value: ["Blue"],
-      decimal_value: null, 
+      decimal_value: null,
     },
     {
       id: 1,
@@ -480,7 +468,7 @@ module.exports = {
       text_value: null,
       boolean_value: null,
       array_value: ["Black"],
-      decimal_value: null, 
+      decimal_value: null,
     },
   ],
   visualizations: [

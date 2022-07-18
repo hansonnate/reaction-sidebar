@@ -56,6 +56,8 @@ export const SearchField = ({
   const handleRowClick = (user) => {
     // alert("You clicked on: " + user.firstname)
     onRowClick(user);
+    setShowOptions(false);
+    setVal("");
   }
 
   return (

@@ -41,36 +41,22 @@ export const Roles = () => {
       organization_id: "0684348415",
       name: "New Role",
       description: "New Permissions",
-      permissions: [
-        {
-          name: "Projects",
-          create_survey: true,
-          see_all_surveys: true,
-          send_from_org_email: true,
-          send_survey: true,
-          see_surveys_where: true,
-          see_survey_results: true,
-        },
-        {
-          name: "Contacts",
-          create_contacts_for_team: true,
-          edit_contacts: true,
-          create_audience: true,
-        },
-        {
-          name: "Organization",
-          can_edit_user_groups: true,
-          can_edit_users: true,
-          can_see_users: true,
-          can_create_user: true,
-          can_see_distribution_settings: true,
-          can_edit_org_details: true,
-        },
-        {
-          name: "Distribution",
-          can_edit_distribution_settings: true,
-        },
-      ],
+      create_project: true,
+      see_all_projects: true,
+      send_from_org_email: true,
+      send_survey: true,
+      see_surveys_where: true,
+      see_survey_results: true,
+      create_contacts_for_team: true,
+      edit_contacts: true,
+      create_audience: true,
+      can_edit_user_groups: true,
+      can_edit_users: true,
+      can_see_users: true,
+      can_create_user: true,
+      can_see_distribution_settings: true,
+      can_edit_org_details: true,
+      can_edit_distribution_settings: true,
     });
   };
 
@@ -80,36 +66,22 @@ export const Roles = () => {
       organization_id: "0684348415",
       name: data.name,
       description: data.description,
-      permissions: [
-        {
-          name: "Projects",
-          create_survey: data.create_survey,
-          see_all_surveys: data.see_all_surveys,
-          send_from_org_email: data.send_from_org_email,
-          send_survey: data.send_survey,
-          see_surveys_where: data.see_surveys_where,
-          see_survey_results: data.see_survey_results,
-        },
-        {
-          name: "Contacts",
-          create_contacts_for_team: data.create_contacts_for_team,
-          edit_contacts: data.edit_contacts,
-          create_audience: data.create_audience,
-        },
-        {
-          name: "Organization",
-          can_edit_user_groups: data.can_edit_user_groups,
-          can_edit_users: data.can_edit_users,
-          can_see_users: data.can_see_users,
-          can_create_user: data.can_create_user,
-          can_see_distribution_settings: data.can_see_distribution_settings,
-          can_edit_org_details: data.can_edit_org_details,
-        },
-        {
-          name: "Distribution",
-          can_edit_distribution_settings: data.can_edit_distribution_settings,
-        },
-      ],
+      create_project: data.create_project,
+      see_all_projects: data.see_all_projects,
+      send_from_org_email: data.send_from_org_email,
+      send_survey: data.send_survey,
+      see_surveys_where: data.see_surveys_where,
+      see_survey_results: data.see_survey_results,
+      create_contacts_for_team: data.create_contacts_for_team,
+      edit_contacts: data.edit_contacts,
+      create_audience: data.create_audience,
+      can_edit_user_groups: data.can_edit_user_groups,
+      can_edit_users: data.can_edit_users,
+      can_see_users: data.can_see_users,
+      can_create_user: data.can_create_user,
+      can_see_distribution_settings: data.can_see_distribution_settings,
+      can_edit_org_details: data.can_edit_org_details,
+      can_edit_distribution_settings: data.can_edit_distribution_settings,
     });
   };
 
@@ -155,7 +127,7 @@ export const Roles = () => {
                     name="permissions"
                     label="Name"
                     type="accordion"
-                    data={currRole.permissions}
+                    data={currRole}
                   ></UGAccordion>
                 </Form>
               )}

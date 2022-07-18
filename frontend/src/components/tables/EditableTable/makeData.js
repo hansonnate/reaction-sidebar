@@ -1,21 +1,22 @@
-import {randomColor} from "./utils";
+// import {randomColor} from "./utils";
 
-export default function makeData(count) {
+export default function makeData() {
   let data = [];
   let options = [];
-  for (let i = 0; i < count; i++) {
-    let row = {
-      ID: "faker.mersenne.rand()",
-      firstName: "faker.name.firstName()",
-      lastName: "faker.name.lastName()",
-      email: "faker.internet.email()",
-      age: Math.floor(20 + Math.random() * 20),
-      music: "faker.music.genre()"
-    };
-    options.push({label: row.music, backgroundColor: randomColor()});
+  // for (let i = 0; i < count; i++) {
+  //   let row = {
+  //     ID: "faker.mersenne.rand()",
+  //     firstName: "faker.name.firstName()",
+  //     lastName: "faker.name.lastName()",
+  //     email: "faker.internet.email()",
+  //     age: Math.floor(20 + Math.random() * 20),
+  //     music: "faker.music.genre()"
+  //   };
+  //   options.push({label: row.music, backgroundColor: randomColor()});
 
-    data.push(row);
-  }
+  //   data.push(row);
+  // }
+
 
   let columns = [
     {

@@ -11,7 +11,6 @@ import { SelectField, TextField } from "components/inputs";
 import { Form } from "components/inputs/ClickSaveForm/ClickSaveForm.jsx";
 
 // Internal
-import { Header } from "components/layouts";
 import {
   useCreateUserGql,
   useFetchUsersGql,
@@ -49,12 +48,11 @@ export const Users = () => {
         filter: MultipleFilter,
       },
       {
-        Header: "Position",
-        accessor: "position",
+        Header: "Role",
+        accessor: "Role.name",
         Filter: SelectColumnFilter,
         filter: MultipleFilter,
       },
-
       {
         Header: "Last Sign In",
         accessor: "last_sign_in_at",
@@ -122,7 +120,6 @@ export const Users = () => {
 
   return (
     <>
-      <Header title="Users" />
       {fetchUsersQuery.isLoading && <p>Loading...</p>}
       {fetchUsersQuery.isError && <p>Error</p>}
       {fetchUsersQuery.isSuccess && (
