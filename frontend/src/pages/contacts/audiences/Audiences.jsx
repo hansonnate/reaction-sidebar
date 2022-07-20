@@ -169,8 +169,8 @@ export const Audiences = () => {
           )}
           {chosenOption === "entermanually" && (
             <div>
-              <Editor buttonName={"Upload"}></Editor>
-              {finalButtons()}
+              <Editor buttonName={"Save Audience"} setList={setAudience}></Editor>
+              {/* {finalButtons()} */}
             </div>
           )}
         </div>

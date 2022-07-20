@@ -22,28 +22,45 @@ export const DynamicUpload = () => {
 //     setRules(array);
 //   };
 
+const filterTypes = [
+  {
+    value: 'equals', label: 'Equals'
+  },
+  {
+    value: 'doesnotequal', label: 'Does Not Equal'
+  },
+  {
+    value: 'contains', label: 'Contains'
+  },
+  {
+    value: 'doesnotcontain', label: 'Does Not Contain'
+  },
+]
+
+const filterConditions = [
+  {
+    value: 'first_name', label: 'First Name'
+  },
+  {
+    value: 'last_name', label: 'Last Name'
+  },
+  {
+    value: 'email', label: 'Email'
+  },
+  {
+    value: 'position', label: 'Position'
+  },
+  {
+    value: 'company', label: 'Company'
+  },
+]
   return (
     <div className={styles.page}>
       <Label>Rules</Label>
-      {/* <table>
-        {rules.map((i) => (
-          <tr key={i}>
-            <td>
-              <SelectField></SelectField>
-            </td>
-            <td>
-              <SelectField></SelectField>
-            </td>
-            <td>
-              <TextField placeholder="Type..."></TextField>
-            </td>
-          </tr>
-        ))}
-      </table> */}
 
       <div className={styles.rules}>
-        <SelectField></SelectField>
-        <SelectField></SelectField>
+        <SelectField options={filterConditions}></SelectField>
+        <SelectField options={filterTypes}></SelectField>
         <TextField placeholder="Type..."></TextField>
       </div>
       <button > + New Rule</button>

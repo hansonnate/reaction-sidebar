@@ -128,12 +128,13 @@ function reducer(state, action) {
       const index = state.columns.findIndex(
         (column) => column.id === action.columnId
       );
+      let newId = shortId();
       return {
         ...state,
         skipReset: true,
         columns: [
           ...state.columns.slice(0, index),
-          { ...state.columns[index], label: action.label },
+          { ...state.columns[index], label: action.label, accessor: action.label === "Column" ? newId : action.label, id: action.label === "Column" ? newId : action.label.toLowerCase() },
           ...state.columns.slice(index + 1, state.columns.length),
         ],
       };
@@ -143,7 +144,7 @@ function reducer(state, action) {
         skipReset: true,
         data: state.data.map((row, index) => {
           if (index === action.rowIndex) {
-            console.log(state.data);
+            // console.log(state.data);
             return {
               ...state.data[action.rowIndex],
               [action.columnId]: action.value,
@@ -177,16 +178,16 @@ function reducer(state, action) {
       const rightIndex = state.columns.findIndex(
         (column) => column.id === action.columnId
       );
-      const rightId = shortId();
+      // const rightId = shortId();
       return {
         ...state,
         skipReset: true,
         columns: [
           ...state.columns.slice(0, rightIndex + 1),
           {
-            id: rightId,
+            id: "Column",
             label: "Column",
-            accessor: rightId,
+            accessor: "Column",
             dataType: "text",
             created: action.focus && true,
             options: [],
@@ -216,7 +217,7 @@ function reducer(state, action) {
   }
 }
 
-function Editor({ buttonName }) {
+function Editor({ buttonName, setList }) {
   const [state, dispatch] = useReducer(reducer, makeData());
 
   useEffect(() => {
@@ -244,7 +245,7 @@ function Editor({ buttonName }) {
             dispatch={dispatch}
             skipReset={state.skipReset}
           />
-          {buttonName && <Button>{buttonName}</Button>}
+          {buttonName && <Button onClick={() => setList(state.data)}>{buttonName}</Button>}
         </div>
       </div>
   );

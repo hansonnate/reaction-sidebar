@@ -1,23 +1,25 @@
+@import "assets/styles/globals.scss";
+
 .searchbar {
     max-width: 500px;
     input {
         width: 300px;
         min-width: 150px;
         box-sizing: border-box;
-        border-radius: 4px;
+        border-radius: 5px;
+        border: 2px solid $gray40;
         font-size: 16px;
-        background-color: #EFEFEF;
-        background-image: url("../../assets/icons/SVG/search.svg");
+        background-color: white;
         background-position: 10px; 
         background-repeat: no-repeat;
         padding: 8px 20px 8px 40px;
-
+        outline: none;
     }
-    input:focus, textarea:focus, select:focus{
-        outline-color: #a0a0a0;
-    }
-    i {
-        padding-right: 10px;
-    }
+    // input:focus, textarea:focus, select:focus{
+    //     outline-color: #a0a0a0;
+    // }
+    // i {
+    //     padding-right: 10px;
+    // }
 
 }
