@@ -10,16 +10,17 @@
         border: 2px solid $gray40;
         font-size: 16px;
         background-color: white;
+        background-image: url("../../assets/icons/SVG/search.svg");
         background-position: 10px; 
         background-repeat: no-repeat;
         padding: 8px 20px 8px 40px;
-        outline: none;
+
     }
-    // input:focus, textarea:focus, select:focus{
-    //     outline-color: #a0a0a0;
-    // }
-    // i {
-    //     padding-right: 10px;
-    // }
+    input:focus, textarea:focus, select:focus{
+        outline-color: #a0a0a0;
+    }
+    i {
+        padding-right: 10px;
+    }
 
 }

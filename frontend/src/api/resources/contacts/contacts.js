@@ -101,6 +101,31 @@ export const useCreateContactGql = () => {
 
   return useGqlMutation(mutation, options);
 };
+export const useCreateManyContactGql = () => {
+  const mutation = gql`
+  mutation CreateManyContact(
+    $data: [ContactInput]
+    ) {
+    createManyContact(
+      data: $data
+      ) {
+      id
+    }
+  }
+  `;
+  const queryClient = useQueryClient();
+  const options = {
+    onError: (err, _project, rollback) => {
+      if (rollback) rollback();
+    },
+    onSettled: () => {
+      queryClient.invalidateQueries("contacts");
+    },
+  };
+
+  return useGqlMutation(mutation, options);
+};
+
 
 export const useUpdateContactGql = () => {
   const mutation = gql`

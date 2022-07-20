@@ -44,10 +44,11 @@ export const useCreateAudienceGql = () => {
     mutation CreateAudience(
       $name: String!
       $members: Int!
-      $contact_ids: [Int]!
+      $contact_ids: [String]!
       $created_at: String!
       $modified_at: String!
       $description: String!
+      $type: String!
     ) {
       createAudience(
         name: $name,
@@ -55,7 +56,8 @@ export const useCreateAudienceGql = () => {
         contact_ids: $contact_ids,
         created_at: $created_at,
         modified_at: $modified_at,
-        description: $description
+        description: $description,
+        type: $type
       ) {
         id
       }
@@ -80,7 +82,7 @@ export const useUpdateAudienceGql = () => {
       $id: ID!
       $name: String
       $members: Int
-      $contact_ids: [Int]
+      $contact_ids: [String]
       $created_at: String
       $modified_at: String
       $description: String

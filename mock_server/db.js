@@ -235,13 +235,26 @@ module.exports = {
   ],
   audiences: [
     {
-      id: 0,
+      id: "0",
       name: "Patients",
       description: "Only Patients",
       members: 350,
       contact_ids: [
-        0, 1, 2
+        "0", "1", "2"
       ],
+      type: "dynamic",
+      created_at: "2020-01-01",
+      modified_at: "2020-01-01",
+    },
+    {
+      id: "1",
+      name: "Doctors",
+      description: "Only Doctors",
+      members: 202,
+      contact_ids: [
+        "0", "1", "2"
+      ],
+      type: "static",
       created_at: "2020-01-01",
       modified_at: "2020-01-01",
     },

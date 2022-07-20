@@ -134,7 +134,12 @@ function reducer(state, action) {
         skipReset: true,
         columns: [
           ...state.columns.slice(0, index),
-          { ...state.columns[index], label: action.label, accessor: action.label === "Column" ? newId : action.label, id: action.label === "Column" ? newId : action.label.toLowerCase() },
+          {
+            ...state.columns[index],
+            label: action.label,
+            accessor: action.label === "Column" ? newId : action.label,
+            id: action.label === "Column" ? newId : action.label.toLowerCase(),
+          },
           ...state.columns.slice(index + 1, state.columns.length),
         ],
       };
@@ -212,12 +217,18 @@ function reducer(state, action) {
         ...state,
         skipReset: false,
       };
+    case "delete_data":
+      return {
+        ...state,
+        skipReset: true,
+        data: [],
+      };
     default:
       return state;
   }
 }
 
-function Editor({ buttonName, setList }) {
+function Editor({ buttonName, setList}) {
   const [state, dispatch] = useReducer(reducer, makeData());
 
   useEffect(() => {
@@ -225,29 +236,31 @@ function Editor({ buttonName, setList }) {
   }, [state.data, state.columns]);
 
   // console.log(state.data);
-
+  function onButtonClick() {
+    setList(state.data);
+    dispatch({type: "delete_data"})
+  }
   return (
-
-      <div style={{ overflow: "auto", display: "flex" }}>
-        <div
-          style={{
-            flex: "1 1 auto",
-            padding: "1rem",
-            width: "100%",
-            display: "flex",
-            flexDirection: "column",
-            gap: "10px"
-          }}
-        >
-          <Table
-            columns={state.columns}
-            data={state.data}
-            dispatch={dispatch}
-            skipReset={state.skipReset}
-          />
-          {buttonName && <Button onClick={() => setList(state.data)}>{buttonName}</Button>}
-        </div>
+    <div style={{ overflow: "auto", display: "flex" }}>
+      <div
+        style={{
+          flex: "1 1 auto",
+          padding: "1rem",
+          width: "100%",
+          display: "flex",
+          flexDirection: "column",
+          gap: "10px",
+        }}
+      >
+        <Table
+          columns={state.columns}
+          data={state.data}
+          dispatch={dispatch}
+          skipReset={state.skipReset}
+        />
+        {buttonName && <Button onClick={onButtonClick}>{buttonName}</Button>}
       </div>
+    </div>
   );
 }
 
