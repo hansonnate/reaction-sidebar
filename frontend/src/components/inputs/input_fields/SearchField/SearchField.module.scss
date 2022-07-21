@@ -4,11 +4,13 @@
   width: 100%;
   position: relative;
   // height: 100%;
-  background-color: $gray40;
+  background-color: $white;
+  border: 2px solid $gray30;
   border-radius: 5px;
   padding: 7.75px 13px;
   // flex-grow:1;
   outline: none;
+
 }
 
 .dropdown {

@@ -1,32 +1,64 @@
 @import "assets/styles/globals.scss";
 
-
-.buttonboxorange {
-    button {
-        border: 2px solid $orange100;
-        background-color: $orange100;
-        color: white;
-        border-radius: 5px;
-        padding: 5px 7px;
-        transition: .5s all;
-    }
-    button:hover {
-        background-color: white;
-        color: $orange100;
-    }
+.buttonboxblue {
+  height: 100%;
+  button {
+    overflow: hidden;
+    white-space: nowrap;
+    height: 100%;
+    border: 2px solid $blue100;
+    background-color: $blue100;
+    color: white;
+    border-radius: 5px;
+    padding: 0px 20px;
+    transition: 0.5s all;
+    font-weight: 600;
+    font-size: 0.9em;
+  }
+  button:hover {
+    background-color: white;
+    color: $blue100;
+  }
 }
 
 .buttonboxwhite {
-    button {
-        border: 2px solid $orange100;
-        background-color: white;
-        color: $orange100;
-        border-radius: 5px;
-        padding: 5px 7px;
-        transition: .5s all;
-    }
-    button:hover {
-        background-color: $orange100;
-        color: white;
-    }
+  height: 100%;
+  button {
+    overflow: hidden;
+    white-space: nowrap;
+    height: 100%;
+    border: 2px solid $blue100;
+    background-color: white;
+    color: $blue100;
+    border-radius: 5px;
+    padding: 0px 20px;
+    transition: 0.5s all;
+    font-weight: 600;
+    font-size: 0.9em;
+  }
+  button:hover {
+    background-color: $blue100;
+    color: white;
+  }
 }
+
+.buttonboxgray {
+    height: 100%;
+    button {
+      overflow: hidden;
+      white-space: nowrap;
+      height: 100%;
+      border: 2px solid $gray30;
+      background-color: white;
+      color: $gray100;
+      border-radius: 5px;
+      padding: 0px 20px;
+      transition: 0.5s all;
+      font-weight: 600;
+      font-size: 0.9em;
+    }
+    // button:hover {
+    //   background-color: $gray30;
+    //   color: white;
+    // }
+  }

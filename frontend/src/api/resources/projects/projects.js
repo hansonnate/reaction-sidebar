@@ -17,6 +17,8 @@ export const useFetchProjectsGql = () => {
         status
         responses
         owner
+        created_at
+        updated_at
       }
     }
   `;
@@ -42,6 +44,34 @@ export const useFetchProjectGql = (id) => {
   `;
 
   return useGqlQuery(["projects", id], query, {});
+};
+
+export const useSearchProjectGql = (id, string) => {
+  const query = gql`
+    query {
+      allProjects(filter: {organization_id: "${id}" q: "${string}"}) {
+        id
+        name
+        description
+        status
+        responses
+        owner
+        created_at
+        updated_at
+      }
+    }`;
+
+    const queryClient = useQueryClient();
+    const options = {
+      onError: (err, _project, rollback) => {
+        if (rollback) rollback();
+      },
+      onSettled: () => {
+        queryClient.invalidateQueries("projects");
+      },
+    };
+
+  return useGqlQuery(["users", id], query, options);
 };
 
 export const useCreateProjectGql = () => {

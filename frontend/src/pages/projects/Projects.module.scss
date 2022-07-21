@@ -1,15 +1,18 @@
+
+@import "assets/styles/globals.scss";
 .status {
     border-radius: 5px;
     padding: 3px 5px 3px 5px;
 }
 
 .status.isopen {
-    background-color: #edb57e4a;
-    color: #EDB57E;
+    background-color: $blue20;
+    color: $blue60;
 }
 .status.isclosed {
-    background-color: #7fcfd35b;
-    color: #7FCFD3;
+
+    background-color: $orange20;
+    color: $orange60;
 }
 
 .text {

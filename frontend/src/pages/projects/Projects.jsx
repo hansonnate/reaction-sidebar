@@ -1,31 +1,27 @@
 // External
 import React, { useState } from "react";
-import { Link } from "react-router-dom";
-import ReactTable, {
-  SelectColumnFilter,
-  MultipleFilter,
-} from "../../components/tables/BasicTable/ReactTable.jsx";
 import styles from "./Projects.module.scss";
 import ReactModal from "../../components/ReactModal/ReactModal.jsx";
-// import ReactInput from "../../components/ReactInput/ReactInput.jsx";
+import { useNavigate } from "react-router-dom";
 
 // Internal
 import { Header } from "components/layouts";
-//import { useApi, ProjectsApi } from "api";
 import {
   useCreateProjectGql,
   useDeleteProjectGql,
   // useDeleteProjectGql,
   useFetchProjectsGql,
+  // useSearchProjectGql,
 } from "api/resources/projects/projects";
 import { TextField } from "components/inputs/index.js";
 import { Form } from "components/inputs/ClickSaveForm/ClickSaveForm.jsx";
+import Table from "components/tables/Table/Table.jsx";
 // import BulkActionButton from "components/buttons/BulkActionButton/BulkActionButton.jsx";
 // import ActionDropdown from "components/buttons/BulkActionButton/ActionDropdown.jsx";
 // import { useToken } from "components/Login/Login";
 
 function isOpen(value) {
-  if (value.value == "Open") {
+  if (value == "Open") {
     return true;
   } else {
     return false;
@@ -33,70 +29,67 @@ function isOpen(value) {
 }
 
 export const Projects = () => {
-  const columns = React.useMemo(
-    () => [
-      {
-        Header: "Project",
-        accessor: "name",
-        Filter: SelectColumnFilter,
-        filter: MultipleFilter,
-        Cell: (e) => (
-          <Link to={e.cell.row.id} style={{ color: "black" }}>
-            {" "}
-            {e.value}{" "}
-          </Link>
-        ),
-      },
-      {
-        Header: "Status",
-        accessor: "status",
-        Filter: SelectColumnFilter,
-        filter: MultipleFilter,
-        Cell: (e) => (
-          <span
-            className={`${styles.status} ${
-              isOpen(e) ? `${styles.isclosed}` : `${styles.isopen}`
-            }`}
-          >
-            {e.value}{" "}
-          </span>
-        ),
-      },
-      {
-        Header: "Responses",
-        accessor: "responses",
-        Filter: SelectColumnFilter,
-        filter: MultipleFilter,
-      },
-      {
-        Header: "Owner",
-        accessor: "owner",
-        Filter: SelectColumnFilter,
-        filter: MultipleFilter,
-      },
-      {
-        Header: "Modified",
-        accessor: "modified",
-        checked: false,
-        Filter: SelectColumnFilter,
-        filter: MultipleFilter,
-      },
-      {
-        Header: "Created",
-        accessor: "created",
-        Filter: SelectColumnFilter,
-        filter: MultipleFilter,
-      },
-    ],
-    []
-  );
+  const headers = [
+    {
+      id: 0,
+      name: "Project",
+      accessor: "name",
+      enabled: true,
+      cell_style: null,
+    },
+    {
+      id: 1,
+      name: "Status",
+      accessor: "status",
+      enabled: true,
+      cell_style: (value) => (
+        <span
+          className={`${styles.status} ${
+            isOpen(value) ? `${styles.isopen}` : `${styles.isclosed}`
+          }`}
+        >
+          {/* {console.log(e)} */}
+          {value}{" "}
+        </span>
+      ),
+    },
+    {
+      id: 2,
+      name: "Responses",
+      accessor: "responses",
+      enabled: true,
+      cell_style: null,
+    },
+    {
+      id: 3,
+      name: "Owner",
+      accessor: "owner",
+      enabled: true,
+      cell_style: null,
+    },
+    {
+      id: 4,
+      name: "Created",
+      accessor: "created_at",
+      enabled: true,
+      cell_style: null,
+    },
+    {
+      id: 5,
+      name: "Modified",
+      accessor: "updated_at",
+      enabled: true,
+      cell_style: null,
+    },
+  ];
 
   const fetchProjectsQuery = useFetchProjectsGql();
   const createProjectQuery = useCreateProjectGql();
   const deleteProjectQuery = useDeleteProjectGql();
+  // const searchProjectQuery = useSearchProjectGql();
+  
   // const { token } = useToken();
   const [show, setShow] = useState(false);
-
   const handlePostProject = (data) => {
     createProjectQuery.mutate({
       organization_id: "0684348415",
@@ -111,6 +104,8 @@ export const Projects = () => {
     setShow(false);
   };
 
+
+
   const deleteSelected = (selected) => {
     console.log(selected);
     for (let i = 0; i < selected.length; i++) {
@@ -118,56 +113,36 @@ export const Projects = () => {
         id: selected[i].original.id,
       });
     }
-
   };
 
-  // const actions = () => {
-  //   return (
-  //     <BulkActionButton>
-  //       <ActionDropdown>
-  //         <span className={styles.actionitem}>
-  //           Delete Selected <i className="bi bi-trash"></i>
-  //         </span>
-  //         <span className={styles.actionitem}>
-  //           Change Owners <i className="bi bi-person"></i>
-  //         </span>
-  //       </ActionDropdown>
-  //     </BulkActionButton>
-  //   );
-  // };
+  //to be able to navigate to the project. onClick in the row
+  let navigate = useNavigate();
+  const routeChange = (row) => {
+    // console.log(path);
+    navigate(row.id);
+  };
 
   return (
     <>
       <Header title="Projects" />
       {fetchProjectsQuery.isLoading && <p>Loading...</p>}
       {fetchProjectsQuery.isError && <p>Error</p>}
-      {/* {getProjects.data?.map((project) => (
-      {projectsQuery.isLoading && <p>Loading...</p>}
-      {projectsQuery.isError && <p>{projectsQuery.error}</p>}
-      {projectsQuery.data?.map((project) => (
-        <div key={project.id}>
-          <Link to={`${project.id}/`}>{project.name}</Link>
-        </div>
-        
-      ))} */}
       {console.log(fetchProjectsQuery)}
       {fetchProjectsQuery.isSuccess && (
-        <ReactTable
-          columns={columns}
-          data={fetchProjectsQuery.data.surveys}
-          buttonMethod={() => setShow(true)}
-          modalTitle="New Project"
-          deleteSelected={deleteSelected}
-          // actions={}
-        />
+        <>
+          <Table
+            initHeaders={headers}
+            data={fetchProjectsQuery.data.surveys}
+            createMethod={() => setShow(true)}
+            createTitle="New Project"
+            deleteSelected={deleteSelected}
+            onRowClick={routeChange}
+            search="project"
+          ></Table>
+        </>
       )}
       <ReactModal
         show={show}
-        // onClose={() => setShow(false)}
-        // onSave={() => {
-        //   handlePostProject();
-        //   setShow(false);
-        // }}
       >
         <div className="content">
           <h1>Create a New Project</h1>

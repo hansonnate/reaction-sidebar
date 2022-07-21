@@ -1,7 +1,7 @@
 module.exports = {
   projects: [
     {
-      id: 0,
+      id: "0",
       organization_id: "0684348415",
       name: "Project 1",
       description: "This is project 1",
@@ -15,7 +15,7 @@ module.exports = {
       accessgroup_ids: ["552224"],
     },
     {
-      id: 1,
+      id: "1",
       organization_id: "0684348415",
       name: "Project 2",
       description: "This is project 2",
@@ -29,7 +29,7 @@ module.exports = {
       accessgroup_ids: ["552224"],
     },
     {
-      id: 2,
+      id: "2",
       organization_id: "0684348415",
       name: "Project 3",
       description: "This is project 3",
@@ -43,7 +43,7 @@ module.exports = {
       accessgroup_ids: ["552224"],
     },
     {
-      id: 3,
+      id: "3",
       organization_id: "0684348415",
       name: "Project 4",
       description: "This is project 4",
@@ -51,6 +51,20 @@ module.exports = {
       updated_at: "2020-01-01",
       status: "Open",
       responses: 200,
+      owner: "Mark Wagner",
+      default_language: "en",
+      supported_languages: ["en", "sp"],
+      accessgroup_ids: ["552224"],
+    },
+    {
+      id: "4",
+      organization_id: "0684348415",
+      name: "Project 5",
+      description: "This is project 5",
+      created_at: "2020-01-01",
+      updated_at: "2020-01-01",
+      status: "Open",
+      responses: 100,
       owner: "Mark Wagner",
       default_language: "en",
       supported_languages: ["en", "sp"],

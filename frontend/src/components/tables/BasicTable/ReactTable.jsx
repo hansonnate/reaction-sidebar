@@ -205,7 +205,7 @@ export const ReactTable = ({
   const [MasterChecked, setMasterChecked] = useState(false);
   // eslint-disable-next-line
   const [selectedList, setSelectedList] = useState([]);
-
+  // () => setSelectedList([]);
   // Select/ UnSelect Table rows
   const onMasterCheck = (e) => {
     let tempList = page;
@@ -403,7 +403,7 @@ export const ReactTable = ({
                     >
                       {!isNaN(cell.value)
                         ? checkDate(cell.value)
-                        : cell.render("Cell")}
+                        : cell.render("Cell") }
                     </td>
                   );
                 })}

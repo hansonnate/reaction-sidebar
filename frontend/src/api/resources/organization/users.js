@@ -80,7 +80,7 @@ export const useSearchUserGql = (id, string) => {
         if (rollback) rollback();
       },
       onSettled: () => {
-        queryClient.invalidateQueries("projects");
+        queryClient.invalidateQueries("users");
       },
     };
 
