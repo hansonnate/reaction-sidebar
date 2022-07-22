@@ -1,0 +1,12 @@
+@import "assets/styles/globals.scss";
+
+.textField {
+    width: 100%;
+    background-color: white;
+    border-radius: 5px;
+    border: 2px solid $gray30;
+    color: $gray110;
+    font-family: $poppins;
+    outline: none;
+    padding: 8px 10px;
+}

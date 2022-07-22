@@ -1,9 +1,9 @@
 // External
 import React, { useState } from "react";
-import ReactTable, {
-  SelectColumnFilter,
-  MultipleFilter,
-} from "components/tables/BasicTable/ReactTable.jsx";
+// import ReactTable, {
+//   SelectColumnFilter,
+//   MultipleFilter,
+// } from "components/tables/BasicTable/ReactTable.jsx";
 import styles from "./Audiences.module.scss";
 // import ReactModal from "../../../components/ReactModal/ReactModal.jsx";
 import { TextField, SaveForm, SelectField } from "components/inputs";
@@ -21,40 +21,79 @@ import Editor from "components/tables/EditableTable/App.jsx";
 import { DynamicUpload } from "components/DynamicUpload/DynamicUpload.jsx";
 import Button from "components/buttons/Button/Button.jsx";
 import { useCreateManyContactGql } from "api/resources/contacts/contacts";
+import Table from "components/tables/Table/Table";
+import { useNavigate } from "react-router-dom";
 // import Header from "components/EditableTable/Header.jsx";
 
 // Internal
 
 export const Audiences = () => {
-  const columns = React.useMemo(
-    () => [
-      {
-        Header: "Audience Name",
-        accessor: "name",
-        Filter: SelectColumnFilter,
-        filter: MultipleFilter,
-      },
-      {
-        Header: "Members",
-        accessor: "members",
-        Filter: SelectColumnFilter,
-        filter: MultipleFilter,
-      },
-      {
-        Header: "Modified",
-        accessor: "modified_at",
-        Filter: SelectColumnFilter,
-        filter: MultipleFilter,
-      },
-      {
-        Header: "Created",
-        accessor: "created_at",
-        Filter: SelectColumnFilter,
-        filter: MultipleFilter,
-      },
-    ],
-    []
-  );
+  // const columns = React.useMemo(
+  //   () => [
+  //     {
+  //       Header: "Audience Name",
+  //       accessor: "name",
+  //       Filter: SelectColumnFilter,
+  //       filter: MultipleFilter,
+  //     },
+  //     {
+  //       Header: "Members",
+  //       accessor: "members",
+  //       Filter: SelectColumnFilter,
+  //       filter: MultipleFilter,
+  //     },
+  //     {
+  //       Header: "Modified",
+  //       accessor: "modified_at",
+  //       Filter: SelectColumnFilter,
+  //       filter: MultipleFilter,
+  //     },
+  //     {
+  //       Header: "Created",
+  //       accessor: "created_at",
+  //       Filter: SelectColumnFilter,
+  //       filter: MultipleFilter,
+  //     },
+  //   ],
+  //   []
+  // );
+
+  //to be able to navigate to the project. onClick in the row
+  let navigate = useNavigate();
+  const routeChange = (row) => {
+    // console.log(path);
+    navigate(row.id);
+  };
+  const headers = [
+    {
+      id: 0,
+      name: "Audience",
+      accessor: "name",
+      enabled: true,
+      cell_style: null,
+    },
+    {
+      id: 1,
+      name: "Members",
+      accessor: "members",
+      enabled: true,
+      cell_style: null,
+    },
+    {
+      id: 2,
+      name: "Modified",
+      accessor: "modified_at",
+      enabled: true,
+      cell_style: null,
+    },
+    {
+      id: 3,
+      name: "Created",
+      accessor: "created_at",
+      enabled: true,
+      cell_style: null,
+    },
+  ];
 
   const fetchAudiencesQuery = useFetchAudiencesGql();
   const createAudienceQuery = useCreateAudienceGql();
@@ -96,7 +135,8 @@ export const Audiences = () => {
   }
 
   function handleCreateAudience(data) {
-    if (data.length > 0) { //if there is no data don't do anything and prompt user to add a new row for contacts
+    if (data.length > 0) {
+      //if there is no data don't do anything and prompt user to add a new row for contacts
       // console.log(data);
       let contacts = [];
       //take the given contacts and format them to be right for the query
@@ -134,9 +174,13 @@ export const Audiences = () => {
       if (createManyContact.isLoading) {
         console.log("Loading");
       }
-      let arrayOfIds = []
+      let arrayOfIds = [];
       if (createManyContact.isSuccess) {
-        for (let i = 0; i < createManyContact.data.createManyContact.length; i++) {
+        for (
+          let i = 0;
+          i < createManyContact.data.createManyContact.length;
+          i++
+        ) {
           arrayOfIds.push(createManyContact.data.createManyContact[i].id);
         }
         console.log(arrayOfIds);
@@ -156,11 +200,9 @@ export const Audiences = () => {
       if (createAudienceQuery.isSuccess) {
         refreshPage();
       }
-      
     } else {
       alert("Click + New to add a new row");
     }
-    
   }
 
   const deleteSelected = (selected) => {
@@ -177,13 +219,23 @@ export const Audiences = () => {
       {fetchAudiencesQuery.isLoading && <p>Loading...</p>}
       {fetchAudiencesQuery.isError && <p>{fetchAudiencesQuery.error}</p>}
       {fetchAudiencesQuery.isSuccess && newAudience === false && (
-        <ReactTable
-          columns={columns}
-          data={fetchAudiencesQuery.data.allAudiences}
-          buttonMethod={() => setNewAudience(true)}
-          modalTitle="New Audience"
-          deleteSelected={deleteSelected}
-        />
+        <>
+          <Table
+            initHeaders={headers}
+            data={fetchAudiencesQuery.data.allAudiences}
+            createMethod={() => setNewAudience(true)}
+            createTitle="New Audience"
+            deleteSelected={deleteSelected}
+            onRowClick={routeChange}
+            search="project"
+            // setPageNumber={handlePageChange}
+            pageNumber={1}
+          />
+          <div className={styles.footer}>
+            <i className="bi bi-life-preserver"></i> Need Help?{" "}
+            <a href="">Learn More</a> about creating audiences
+          </div>
+        </>
       )}
       {newAudience && (
         <>

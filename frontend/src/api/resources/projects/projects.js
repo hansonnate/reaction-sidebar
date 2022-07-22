@@ -7,10 +7,10 @@ import { useGqlQuery, useGqlMutation } from "api/Api";
 
 // GRAPHQL API
 
-export const useFetchProjectsGql = () => {
+export const useFetchProjectsGql = (page, perPage) => {
   const query = gql`
     query {
-      surveys: allProjects {
+      surveys: allProjects(page: ${page}, perPage: ${perPage}) {
         id
         name
         description
@@ -85,6 +85,9 @@ export const useCreateProjectGql = () => {
       $status: String!
       $responses: Int!
       $owner: String!
+      $default_language: String!
+      $supported_languages: [String]!
+      $accessgroup_ids:[String]!
     ) {
       createProject(
         organization_id: $organization_id
@@ -95,8 +98,12 @@ export const useCreateProjectGql = () => {
         status: $status
         responses: $responses
         owner: $owner
+        default_language: $default_language
+        supported_languages: $supported_languages
+        accessgroup_ids: $accessgroup_ids
       ) {
         id
+        name
       }
     }
   `;

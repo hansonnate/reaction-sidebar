@@ -1,0 +1,10 @@
+@import "assets/styles/globals.scss";
+.footer {
+    margin-top: 2em;
+    font-family: $poppins;
+    color: $gray110;
+    text-align: center;
+    a {
+      color: $blue100;
+    }
+  }

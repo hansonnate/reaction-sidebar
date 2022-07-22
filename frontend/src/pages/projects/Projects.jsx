@@ -13,9 +13,10 @@ import {
   useFetchProjectsGql,
   // useSearchProjectGql,
 } from "api/resources/projects/projects";
-import { TextField } from "components/inputs/index.js";
+// import { TextField } from "components/inputs/index.js";
 import { Form } from "components/inputs/ClickSaveForm/ClickSaveForm.jsx";
 import Table from "components/tables/Table/Table.jsx";
+import { TextFieldSimple } from "components/inputs";
 // import BulkActionButton from "components/buttons/BulkActionButton/BulkActionButton.jsx";
 // import ActionDropdown from "components/buttons/BulkActionButton/ActionDropdown.jsx";
 // import { useToken } from "components/Login/Login";
@@ -32,6 +33,7 @@ export const Projects = () => {
   const headers = [
     {
       id: 0,
+      index: 0,
       name: "Project",
       accessor: "name",
       enabled: true,
@@ -39,6 +41,7 @@ export const Projects = () => {
     },
     {
       id: 1,
+      index: 1,
       name: "Status",
       accessor: "status",
       enabled: true,
@@ -55,6 +58,7 @@ export const Projects = () => {
     },
     {
       id: 2,
+      index: 2,
       name: "Responses",
       accessor: "responses",
       enabled: true,
@@ -62,6 +66,7 @@ export const Projects = () => {
     },
     {
       id: 3,
+      index: 3,
       name: "Owner",
       accessor: "owner",
       enabled: true,
@@ -69,6 +74,7 @@ export const Projects = () => {
     },
     {
       id: 4,
+      index: 4,
       name: "Created",
       accessor: "created_at",
       enabled: true,
@@ -76,38 +82,29 @@ export const Projects = () => {
     },
     {
       id: 5,
+      index: 5,
       name: "Modified",
       accessor: "updated_at",
       enabled: true,
       cell_style: null,
     },
   ];
-
-  const fetchProjectsQuery = useFetchProjectsGql();
+    // eslint-disable-next-line no-unused-vars
+  const [pageNumber, setPageNumber] = useState(0);
+  const fetchProjectsQuery = useFetchProjectsGql(pageNumber, 5);
   const createProjectQuery = useCreateProjectGql();
   const deleteProjectQuery = useDeleteProjectGql();
+      // eslint-disable-next-line no-unused-vars
+  const [data, setData] = useState();
   // const searchProjectQuery = useSearchProjectGql();
-  
   // const { token } = useToken();
   const [show, setShow] = useState(false);
-  const handlePostProject = (data) => {
-    createProjectQuery.mutate({
-      organization_id: "0684348415",
-      name: data.name,
-      description: data.description,
-      created_at: "2020-01-01",
-      updated_at: "2020-01-01",
-      status: "Closed",
-      responses: 0,
-      owner: "Mark Wagner",
-    });
-    setShow(false);
-  };
 
 
+  // console.log(fetchProjectsQuery)
 
   const deleteSelected = (selected) => {
-    console.log(selected);
+    // console.log(selected);
     for (let i = 0; i < selected.length; i++) {
       deleteProjectQuery.mutate({
         id: selected[i].original.id,
@@ -122,42 +119,84 @@ export const Projects = () => {
     navigate(row.id);
   };
 
+  function handlePageChange(integer) {
+    // let newPage = pageNumber + integer;
+    setPageNumber(prevState => prevState + integer)
+    // fetchProjectsQuery.refetch();
+    // setShow(show => show);
+  }
+
+  const handlePostProject = (data) => {
+    createProjectQuery.mutate({
+      organization_id: "0684348415",
+      name: data.name,
+      description: data.description,
+      created_at: "2020-01-01",
+      updated_at: "2020-01-01",
+      status: "Closed",
+      responses: 0,
+      owner: "Mark Wagner",
+      default_language: "en",
+      supported_languages: ["en"],
+      accessgroup_ids: [],
+    });
+    console.log(createProjectQuery);
+    setShow(false);
+    if (createProjectQuery.isIdle) {
+      console.log("Idling...");
+    }
+    if (createProjectQuery.isLoading) {
+      console.log("Loading...");
+      console.log(createProjectQuery);
+    }
+    if (createProjectQuery.isSuccess) {
+      // routeChange(createProjectQuery.data.createProject)
+      console.log("success...");
+      console.log(createProjectQuery);
+    }
+  };
+  
   return (
     <>
       <Header title="Projects" />
       {fetchProjectsQuery.isLoading && <p>Loading...</p>}
       {fetchProjectsQuery.isError && <p>Error</p>}
-      {console.log(fetchProjectsQuery)}
-      {fetchProjectsQuery.isSuccess && (
+      {/* {console.log(fetchProjectsQuery)} */}
+      {fetchProjectsQuery.isSuccess &&  (
         <>
+        {/* {setData(fetchProjectsQuery.data.surveys)} */}
+        {/* {console.log(fetchProjectsQuery.data.surveys)} */}
           <Table
             initHeaders={headers}
             data={fetchProjectsQuery.data.surveys}
             createMethod={() => setShow(true)}
-            createTitle="New Project"
+            createTitle="Create Project"
             deleteSelected={deleteSelected}
             onRowClick={routeChange}
             search="project"
+            setPageNumber={handlePageChange}
+            pageNumber={pageNumber}
           ></Table>
+          <div className={styles.footer}><i className="bi bi-life-preserver"></i> Need Help? <a href="">Learn More</a> about creating a project</div>
         </>
       )}
       <ReactModal
         show={show}
       >
         <div className="content">
-          <h1>Create a New Project</h1>
+          <h1>Create Project</h1>
           <div className={styles.text}>
             <Form onSave={handlePostProject} onClose={() => setShow(false)}>
-              <TextField
+              <TextFieldSimple
                 type="text"
                 name="name"
                 placeholder="Project Name"
-              ></TextField>
-              <TextField
+              ></TextFieldSimple>
+              <TextFieldSimple
                 type="text"
                 name="description"
                 placeholder="Description (optional)"
-              ></TextField>
+              ></TextFieldSimple>
             </Form>
             {/* <ActionButton functionality={() =>handlePostProject("New Project", "Jack Sparrow", "Closed", 0, Date.now(), Date.now())} title="Click me">Click me</ActionButton> */}
           </div>

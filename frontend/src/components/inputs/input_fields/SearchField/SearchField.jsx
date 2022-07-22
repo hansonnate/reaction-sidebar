@@ -13,7 +13,7 @@ export const SearchField = ({
   disabled,
   org_id,
   onRowClick,
-  // searchType,
+  searchType,
   // inactive,
   // align = "left",
   // customStyles,
@@ -26,15 +26,17 @@ export const SearchField = ({
 
   const handleChange = (event) => {
     setVal(event.target.value);
-    setShowOptions(true);
+    
     // searchUser(org_id, event.target.value);
-    searchUser.refetch();
-    console.log(searchUser);
-    if (searchUser.data.allUsers.length > 0) {
-      setOptions(searchUser.data.allUsers);
+    if (searchType === "user") {
+      setShowOptions(true);
+      searchUser.refetch();
+      // console.log(searchUser);
+      if (searchUser.data.allUsers.length > 0) {
+        setOptions(searchUser.data.allUsers);
+      }
     }
-
-    console.log(options);
+    // console.log(options);
     if (onChange) {
       onChange(event.target.value);
     }
@@ -53,12 +55,12 @@ export const SearchField = ({
     };
   }, []);
 
-  const handleRowClick = (user) => {
+  const handleRowClick = (row) => {
     // alert("You clicked on: " + user.firstname)
-    onRowClick(user);
+    onRowClick(row);
     setShowOptions(false);
     setVal("");
-  }
+  };
 
   return (
     <>
@@ -70,7 +72,7 @@ export const SearchField = ({
         type="text"
         placeholder={placeholder}
       ></input>
-      {showOptions && (
+      {showOptions && searchType === "user" && (
         <div className={styles.dropdown} ref={ref}>
           <div className={`${styles.header}`}>
             <span>User</span>
@@ -78,8 +80,17 @@ export const SearchField = ({
             <span>Company</span>
           </div>
           {options.map((user) => (
-            <div key={user.firstname} className={styles.userbox} onClick={() => handleRowClick(user)}>
-              <span><div>{user.firstname}{" "}{user.lastname}</div><div className={styles.addon}>{user.email}</div></span>
+            <div
+              key={user.firstname}
+              className={styles.userbox}
+              onClick={() => handleRowClick(user)}
+            >
+              <span>
+                <div>
+                  {user.firstname} {user.lastname}
+                </div>
+                <div className={styles.addon}>{user.email}</div>
+              </span>
               <span>{user.position}</span>
               <span>{user.company}</span>
             </div>

@@ -6,6 +6,7 @@ import AccordionItem from "components/UGAccordion/AccordionItem";
 import Checkbox from "../input_fields/CheckboxAnimated/Checkbox";
 import { TeamsList } from "components/TeamsList/TeamsList";
 import { SelectField } from "../input_fields";
+import Button from "components/buttons/Button/Button";
 
 export const Form = ({ onSave, onDelete, onClose, children }) => {
   const { control, handleSubmit, register, setValue, getValues } = useForm();
@@ -226,28 +227,28 @@ export const Form = ({ onSave, onDelete, onClose, children }) => {
 
           <div className={styles.submitcontainer}>
             {onClose && (
-              <button
-                className={styles.submitbutton}
+              <Button
+                // className={styles.submitbutton}
                 onClick={handleSubmit(onQuit)}
               >
                 Close
-              </button>
+              </Button>
             )}
             {onDelete && (
-              <button
+              <Button
                 className={styles.submitbutton}
                 onClick={handleSubmit(onRemove)}
               >
                 Delete
-              </button>
+              </Button>
             )}
             {onSave && (
-              <button
+              <Button
                 className={styles.submitbutton}
                 onClick={handleSubmit(onSubmit)}
               >
                 Save
-              </button>
+              </Button>
             )}
           </div>
         {/* </div> */}

@@ -71,11 +71,12 @@
 
 .submitcontainer {
     width: 100%;
-    height: fit-content;
+    height: 4em;
     display: flex;
     flex-direction: row;
     justify-content: flex-end;
     border-top: 2px solid $gray40;
+    padding: 10px;
     gap: 10px;
     // transition: all .5s;
 }
