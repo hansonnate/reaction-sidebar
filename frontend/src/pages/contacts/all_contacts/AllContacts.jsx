@@ -17,7 +17,7 @@ import styles from "./AllContacts.module.scss";
 export const AllContacts = () => {
   let navigate = useNavigate();
   const routeChangeContacts = () => {
-    let path = `/AddContacts`;
+    let path = `addContacts`;
     navigate(path);
   };
   const routeChange = (row) => {

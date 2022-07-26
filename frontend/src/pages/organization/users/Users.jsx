@@ -1,10 +1,10 @@
 // External
 import React, { useState } from "react";
-import { Link } from "react-router-dom";
-import ReactTable, {
-  SelectColumnFilter,
-  MultipleFilter,
-} from "components/tables/BasicTable/ReactTable.jsx";
+// import { Link } from "react-router-dom";
+// import ReactTable, {
+//   SelectColumnFilter,
+//   MultipleFilter,
+// } from "components/tables/BasicTable/ReactTable.jsx";
 // import styles from "./Users.module.scss";
 import ReactModal from "components/ReactModal/ReactModal.jsx";
 import { SelectField, TextField } from "components/inputs";
@@ -15,57 +15,100 @@ import {
   useCreateUserGql,
   useFetchUsersGql,
 } from "api/resources/organization/users";
+import Table from "components/tables/Table/Table";
+import { useNavigate } from "react-router-dom";
 
 // import { useToken } from "components/Login/Login";
 
 export const Users = () => {
   const [data, setData] = useState();
   const [show, setShow] = useState(false);
-  const columns = React.useMemo(
-    () => [
-      {
-        Header: "First Name",
-        accessor: "firstname",
-        Filter: SelectColumnFilter,
-        filter: MultipleFilter,
-        Cell: (e) => (
-          <Link to={e.cell.row.id} style={{ color: "black" }}>
-            {" "}
-            {e.value}{" "}
-          </Link>
-        ),
-      },
-      {
-        Header: "Last Name",
-        accessor: "lastname",
-        Filter: SelectColumnFilter,
-        filter: MultipleFilter,
-      },
-      {
-        Header: "Email",
-        accessor: "email",
-        Filter: SelectColumnFilter,
-        filter: MultipleFilter,
-      },
-      {
-        Header: "Role",
-        accessor: "Role.name",
-        Filter: SelectColumnFilter,
-        filter: MultipleFilter,
-      },
-      {
-        Header: "Last Sign In",
-        accessor: "last_sign_in_at",
-        Filter: SelectColumnFilter,
-        filter: MultipleFilter,
-      },
-    ],
-    []
-  );
+  // const columns = React.useMemo(
+  //   () => [
+  //     {
+  //       Header: "First Name",
+  //       accessor: "firstname",
+  //       Filter: SelectColumnFilter,
+  //       filter: MultipleFilter,
+  //       Cell: (e) => (
+  //         <Link to={e.cell.row.id} style={{ color: "black" }}>
+  //           {" "}
+  //           {e.value}{" "}
+  //         </Link>
+  //       ),
+  //     },
+  //     {
+  //       Header: "Last Name",
+  //       accessor: "lastname",
+  //       Filter: SelectColumnFilter,
+  //       filter: MultipleFilter,
+  //     },
+  //     {
+  //       Header: "Email",
+  //       accessor: "email",
+  //       Filter: SelectColumnFilter,
+  //       filter: MultipleFilter,
+  //     },
+  //     {
+  //       Header: "Role",
+  //       accessor: "Role.name",
+  //       Filter: SelectColumnFilter,
+  //       filter: MultipleFilter,
+  //     },
+  //     {
+  //       Header: "Last Sign In",
+  //       accessor: "last_sign_in_at",
+  //       Filter: SelectColumnFilter,
+  //       filter: MultipleFilter,
+  //     },
+  //   ],
+  //   []
+  // );
+  let navigate = useNavigate();
+  const routeChange = (row) => {
+    // console.log(path);
+    navigate(row.id);
+  };
+  const headers = [
+    {
+      id: 0,
+      name: "First Name",
+      accessor: "firstname",
+      enabled: true,
+      cell_style: null,
+    },
+    {
+      id: 1,
+      name: "Last Name",
+      accessor: "lastname",
+      enabled: true,
+      cell_style: null,
+    },
+    {
+      id: 2,
+      name: "Email",
+      accessor: "email",
+      enabled: true,
+      cell_style: null,
+    },
+    {
+      id: 3,
+      name: "Role",
+      accessor: "Role.name",
+      enabled: true,
+      cell_style: null,
+    },
+    {
+      id: 4,
+      name: "Last Sign In",
+      accessor: "last_sign_in_at",
+      enabled: true,
+      cell_style: null,
+    },
+  ];
 
   const fetchUsersQuery = useFetchUsersGql();
   const createUserQuery = useCreateUserGql();
-
 
   // const { token } = useToken();
 
@@ -123,11 +166,14 @@ export const Users = () => {
       {fetchUsersQuery.isLoading && <p>Loading...</p>}
       {fetchUsersQuery.isError && <p>Error</p>}
       {fetchUsersQuery.isSuccess && (
-        <ReactTable
-          columns={columns}
+        <Table
+          initHeaders={headers}
           data={fetchUsersQuery.data.allUsers}
-          buttonMethod={newUserClick}
-          modalTitle="New User"
+          createMethod={newUserClick}
+          createTitle="New User"
+          onRowClick={routeChange}
+          search="user"
+          pageNumber={1}
         />
       )}
       <ReactModal show={show}>

@@ -2,7 +2,7 @@
 import React, { useState } from "react";
 import { UGSidebar } from "components/sidebars/UGSidebar/UGSidebar";
 import { SplitHorizontal } from "components/layouts";
-import { TextField } from "components/inputs";
+import { TextFieldSimple } from "components/inputs";
 import styles from "./AccessGroups.module.scss";
 import {
   TeamsList,
@@ -174,20 +174,20 @@ export const AccessGroups = () => {
               <>
                 <div className={styles.container}>
                   <Form onSave={onSave} onDelete={onDelete}>
-                    <TextField
+                    <TextFieldSimple
                       name="name"
                       label="Name"
                       type="text"
                       placeholder="type here..."
                       value={currRole.name}
-                    ></TextField>
-                    <TextField
+                    ></TextFieldSimple>
+                    <TextFieldSimple
                       name="description"
                       label="Description"
                       type="text"
                       placeholder="type here..."
                       value={currRole.description}
-                    ></TextField>
+                    ></TextFieldSimple>
                     <TeamsList
                       organization_id={currRole.organization_id}
                       type="userlist"

@@ -10,16 +10,8 @@ export const ContactRoutes = () => {
     <Routes>
       <Route path="/" element={<Navigate to="audiences" />} />
       <Route path="audiences" element={<Audiences />} />
-      <Route path="all-contacts" element={<AllContacts />} />
-    </Routes>
-  );
-};
-
-export const allContactsRoutes = () => {
-  return (
-    <Routes>
-      <Route path="/" element={<Navigate to="" />} />
-      <Route path="addContacts" element={<AddContacts />} />
+      <Route path="all-contacts/" element={<AllContacts />} />
+      <Route path="all-contacts/addContacts/*" element={<AddContacts />} />
     </Routes>
   );
 };

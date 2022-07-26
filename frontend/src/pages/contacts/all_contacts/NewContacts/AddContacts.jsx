@@ -13,7 +13,7 @@ export const AddContacts = () => {
     {
       id: 0,
       name: "Import From File",
-      to: `uploadcontacts`,
+      to: `uploadContacts`,
       iconClassName: "bi bi-person",
     },
     {

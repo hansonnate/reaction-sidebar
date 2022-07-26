@@ -2,7 +2,7 @@
 import React, { useState } from "react";
 import { UGSidebar } from "components/sidebars/UGSidebar/UGSidebar";
 import { SplitHorizontal } from "components/layouts";
-import { TextField } from "components/inputs";
+import { TextFieldSimple } from "components/inputs";
 import styles from "./Roles.module.scss";
 import { UGAccordion } from "components/UGAccordion/UGAccordion";
 import { Form } from "components/inputs/ClickSaveForm/ClickSaveForm";
@@ -109,20 +109,20 @@ export const Roles = () => {
             <div className={`flex-grow-1 ${styles.page}`}>
               {currRole !== undefined && (
                 <Form onSave={onSave} onDelete={onDelete}>
-                  <TextField
+                  <TextFieldSimple
                     name="name"
                     label="Name"
                     type="text"
                     placeholder="type here..."
                     value={currRole.name}
-                  ></TextField>
-                  <TextField
+                  ></TextFieldSimple>
+                  <TextFieldSimple
                     name="description"
                     label="Description"
                     type="text"
                     placeholder="type here..."
                     value={currRole.description}
-                  ></TextField>
+                  ></TextFieldSimple>
                   <UGAccordion
                     name="permissions"
                     label="Name"
