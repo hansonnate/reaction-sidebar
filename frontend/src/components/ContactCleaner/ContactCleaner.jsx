@@ -6,6 +6,7 @@ import styles from "./ContactCleaner.module.scss";
 import "./style.css";
 import ReactModal from "components/ReactModal/ReactModal";
 import { TextField } from "components/inputs/index.js";
+import Button from "components/buttons/Button/Button.jsx";
 // import exampleFile from "./Images/fileFormat.png";
 // import {submitted} from "./CleanerFunctionality.js"
 
@@ -174,25 +175,51 @@ export const ContactCleaner = () => {
           </div>
 
           <div className={styles.aboutbox}>
-            <div className={styles.container1}>
-              <h2>Before Upload...</h2>
-              <p>
-                ONLY IMPORT .csv FILES, ALL OTHER FILE TYPES WILL NOT WORK!{" "}
-                <br /> First three header fields must be in the following
-                format: firstname,lastname,email
-              </p>
-              <p>
-                Remove all quotation marks in your file. Example: William
-                &quot;Bill&quot;
-              </p>
-              <p>
-                Configure the settings below to change how annoying you want
-                this program to be. Click the switches to turn a setting on or
-                off. All settings are initially enabled. Each setting, when
-                enabled, will flag each row that has those issues and will
-                remove them from the final clean audience until those issues are
-                fixed
-              </p>
+            <div>
+              <div className={styles.container1}>
+                <h2>How to upload</h2>
+                <p>
+                  ONLY IMPORT .csv FILES, ALL OTHER FILE TYPES WILL NOT WORK!
+                  <br /> First three header fields must be in the following
+                  format: firstname,lastname,email
+                </p>
+                <p>
+                  Please remove all quotation marks in your file. Example: William
+                  &quot;Bill&quot;
+                </p>
+              </div>
+              <div id="menubox" className={styles.menubox}>
+                <div className={styles.uploadbox} id="uploadBoxid">
+                  <p>Upload File Here</p>
+                  <form id="myForm" className={styles.myForm}>
+                    <input
+                      type="file"
+                      id="csvFile"
+                      accept=".csv"
+                      className={styles.csvFile}
+                      onChange={handleOnChange}
+                    />
+                    <div className={styles.setting}>
+                      <label
+                        className="form-check-label"
+                        htmlFor="flexSwitchCheckDefault"
+                      >
+                        Use Contact Cleaner
+                      </label>
+                      <ToggleSwitch startChecked={useCleaner} handleCheck={setUseCleaner} />
+                    </div>
+                    <button
+                      onClick={(e) => {
+                        submitted(e, file, setShow);
+                      }}
+                      id="submitButton"
+                      className={styles.submitButton}
+                    >
+                      Submit
+                    </button>
+                  </form>
+                </div>
+              </div>
             </div>
             <div className={styles.settingsbox} id="settingsboxid">
               <div id="switchbox" className={styles.switchbox}>
@@ -299,38 +326,6 @@ export const ContactCleaner = () => {
           </div>
         </>
       )}
-      <div id="menubox" className={styles.menubox}>
-        <div className={styles.uploadbox} id="uploadBoxid">
-          <p>Upload File Here</p>
-          <form id="myForm" className={styles.myForm}>
-            <input
-              type="file"
-              id="csvFile"
-              accept=".csv"
-              className={styles.csvFile}
-              onChange={handleOnChange}
-            />
-            <div className={styles.setting}>
-              <label
-                className="form-check-label"
-                htmlFor="flexSwitchCheckDefault"
-              >
-                Use Contact Cleaner
-              </label>
-              <ToggleSwitch startChecked={useCleaner} handleCheck={setUseCleaner}/>
-            </div>
-            <button
-              onClick={(e) => {
-                submitted(e, file, setShow);
-              }}
-              id="submitButton"
-              className={styles.submitButton}
-            >
-              Submit
-            </button>
-          </form>
-        </div>
-      </div>
       <div className={styles.bodybox} id="outputbox">
         <p id="arrayOutput"></p>
         <div id="warningBox">
@@ -338,7 +333,11 @@ export const ContactCleaner = () => {
           <p id="changes"></p>
           <h5 id="errorHeader"></h5>
           <p id="errorOutput"></p>
-          <p id="download"></p>
+          <div id="download" className={styles.footer}>
+            <Button id="uploadCleanList">Upload Clean List</Button>
+            <Button id="cleanList" blue></Button>
+            <Button id="badList"></Button>
+          </div>
         </div>
       </div>
     </div>

@@ -17,7 +17,7 @@ $reactdarkorange: #ed9146;
   flex-direction: row;
   justify-content: center;
   padding: 10px 10px;
-  gap: 10em;
+  gap: 1em;
 //   border-bottom: 2px solid #e3f2fd;
 }
 .container1 {
@@ -25,6 +25,12 @@ $reactdarkorange: #ed9146;
   flex-direction: column;
   max-width: 1000px;
   margin-right: 30px;
+  p {
+    font-size: 1.2em;
+  }
+  border: 2px solid $gray30;
+  border-radius: 5px;
+  padding: 5px 10px;
 }
 .container2 img {
   max-width: 300px;
@@ -55,10 +61,10 @@ text-align: left;
 }
 .submitButton {
     cursor: pointer;
-    background-color: $orange100;
+    background-color: $blue100;
     border-style: none;
     border-radius: 5px;
-    border: 2px solid $orange100;
+    border: 2px solid $blue100;
     color: white;
     padding:  8px 30px;
     font-size: 20px;
@@ -67,8 +73,8 @@ text-align: left;
   }
   .submitButton:hover {
       background-color: white;
-      border: 2px solid $orange100;
-      color: $orange100;
+      border: 2px solid $blue100;
+      color: $blue100;
       transition: all .3s;
   }
 
@@ -100,7 +106,7 @@ text-align: left;
   padding: 5px 20px;
 //   box-shadow: 0px 0px 15px rgba(0, 0, 0, 0.25);
   border-radius: 5px;
-  border: 2px solid #efefef;
+  border: 2px solid $gray30;
   min-width: 330px;
   height: fit-content;
 }
@@ -196,5 +202,14 @@ text-align: left;
 
 .myForm {
 
+}
+
+.footer {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  height: 3em;
+  gap: 10px;
+  width: 100%
 }
 

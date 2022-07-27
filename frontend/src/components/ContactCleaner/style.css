@@ -167,28 +167,28 @@ nav.navbar {
 }
 
 /*Download Clean List*/
-#cleanList {
+/* #cleanList {
   display: inline-block;
   border-radius: 5px;
   background-color: #ed9146;
   border: 2px solid #ed9146;
   color: #FFFFFF;
   text-align: center;
-  font-size: 18px;
+  font-size: 18px; */
   /*padding: 20px;*/
-  width: 130px;
+  /* width: 130px;
 
   transition: all 0.5s;
   cursor: pointer;
-  margin: 5px;
+  margin: 5px; */
   /* box-shadow: 2px 5px 10px rgba(0, 0, 0, 0.5); */
-}
+/* } */
 
-#cleanList:hover {
+/* #cleanList:hover {
   background-color: white;
-}
+} */
 
-#cleanList span {
+/* #cleanList span {
   cursor: pointer;
   display: inline-block;
   position: relative;
@@ -199,12 +199,12 @@ nav.navbar {
 
 #cleanList:hover span {
   color: #ed9146;
-}
+} */
 
 
 
 /*Download Bad List*/
-#badList {
+/* #badList {
   display: inline-block;
   border-radius: 5px;
   background-color: #ed9146;
@@ -212,29 +212,29 @@ nav.navbar {
   color: #FFFFFF;
   text-align: center;
   font-size: 18px;
-  /*padding: 20px;*/
+  padding: 20px;
   width: 130px;
 
   transition: all 0.5s;
   cursor: pointer;
   margin: 5px;
-}
+} */
 
-#badList:hover {
+/* #badList:hover {
   background-color: white;
-}
+} */
 
-#badList span {
+/* #badList span {
   cursor: pointer;
   display: inline-block;
   position: relative;
   transition: 0.5s;
   font-family: 'Poppins', sans-serif;
-}
+} */
 
-#badList:hover span {
+/* #badList:hover span {
   color: #ed9146;
-}
+} */
 
 
 /*Download Duplicate  List*/

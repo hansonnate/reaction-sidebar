@@ -258,7 +258,7 @@ function Editor({ buttonName, setList}) {
           dispatch={dispatch}
           skipReset={state.skipReset}
         />
-        {buttonName && <Button onClick={onButtonClick}>{buttonName}</Button>}
+        {buttonName && <div style={{width: "100%", height: "2.5em"}}><Button onClick={onButtonClick}>{buttonName}</Button></div>}
       </div>
     </div>
   );

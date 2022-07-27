@@ -1307,25 +1307,27 @@ export const submitted = (e, file, setShow) => {
       });
     }
     //download final clean list without bad contacts / warnings
-    let btn = document.createElement("button");
-    btn.id = "cleanList";
+    let btn = document.getElementById("cleanList");
+    // btn.id = "cleanList";
     btn.onclick = function () {
       downloadCSVFile(finalArray, "Clean Audience");
     };
     btn.innerHTML = "<span>Download Clean List</span>";
-    download.appendChild(btn);
+    // download.appendChild(btn);
     //download bad contacts / warnings
-    let btnBad = document.createElement("button");
-    btnBad.id = "badList";
+    let btnBad = document.getElementById("badList");
+    // btnBad.id = "badList";
     btnBad.onclick = function () {
       downloadCSVFile(badContacts, "Bad Contacts");
     };
     btnBad.innerHTML = "<span>Download Error List</span>";
-    download.appendChild(btnBad);
-    let btnRetry = document.createElement("span");
-    btnRetry.innerHTML =
-      '<a href="https://audiencecleaner.theresearchcloud.com/audiencecleaner2.0/clean.html" target="_blank" id="retrybtn"><u>Submit new list</u>';
-    download.appendChild(btnRetry);
+    // download.appendChild(btnBad);
+    // let btnRetry = document.createElement("span");
+    // btnRetry.innerHTML =
+    //   '<a href="https://audiencecleaner.theresearchcloud.com/audiencecleaner2.0/clean.html" target="_blank" id="retrybtn"><u>Submit new list</u>';
+    // download.appendChild(btnRetry);
+
+
 
     console.log("Old Audience:");
     console.log(data);

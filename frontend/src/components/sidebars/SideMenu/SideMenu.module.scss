@@ -205,13 +205,19 @@
 // }
 
 
-.avatar {
+.sideMenu.collapsed .avatar {
   width: 40px;
   height: 40px;
   overflow: hidden;
   border-radius: 50%;
   display: inline-block;
-//   margin: 5px 0px;
+}
+.sideMenu.expanded .avatar {
+  width: 40px;
+  height: 40px;
+  overflow: hidden;
+  border-radius: 50%;
+  display: inline-block;
 }
 .avatar img {
   max-width: 100%;

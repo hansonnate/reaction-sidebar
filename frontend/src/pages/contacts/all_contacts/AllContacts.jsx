@@ -111,7 +111,7 @@ export const AllContacts = () => {
           initHeaders={headers}
           data={fetchContactsQuery.data.allContacts}
           createMethod={routeChangeContacts}
-          createTitle="Add Contacts(s)"
+          createTitle="Add Contact(s)"
           // deleteSelected={deleteSelected}
           onRowClick={routeChange}
           search="contact"
