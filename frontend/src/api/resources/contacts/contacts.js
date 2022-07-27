@@ -121,6 +121,7 @@ export const useCreateManyContactGql = () => {
     onSettled: () => {
       queryClient.invalidateQueries("contacts");
     },
+    
   };
 
   return useGqlMutation(mutation, options);
@@ -206,5 +207,41 @@ export const useDeleteContactGql = () => {
     },
   };
 
+  return useGqlMutation(mutation, options);
+};
+
+export const useCreateContactImportGql = () => {
+  const mutation = gql`
+  mutation CreateContactImport(
+    $organization_id: ID!
+    $user_id: ID!
+    $clean_contacts: [Boolean]!
+    $bad_contacts: [Boolean]!
+    $duplicates: [Boolean]!
+    $warnings_map: [Boolean]!
+    $total_warnings: [Boolean]!
+    ) {
+    createContactImport(
+      organization_id: $organization_id,
+      user_id: $user_id,
+      clean_contacts: $clean_contacts,
+      bad_contacts: $bad_contacts,
+      duplicates: $duplicates,
+      warnings_map: $warnings_map,
+      total_warnings: $total_warnings,
+      ) {
+      id
+    }
+  }
+  `;
+  const queryClient = useQueryClient();
+  const options = {
+    onError: (err, _project, rollback) => {
+      if (rollback) rollback();
+    },
+    onSettled: () => {
+      queryClient.invalidateQueries("contacts");
+    },
+  };
   return useGqlMutation(mutation, options);
 };

@@ -1,11 +1,5 @@
 // External
 import React from "react";
-// import ReactTable, {
-//   SelectColumnFilter,
-//   MultipleFilter,
-// } from "components/tables/BasicTable/ReactTable.jsx";
-// import styles from "./AllContacts.module.scss";
-
 import { useNavigate } from "react-router-dom";
 
 // Internal

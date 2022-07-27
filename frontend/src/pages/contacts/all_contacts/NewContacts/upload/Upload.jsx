@@ -1,6 +1,6 @@
 // External
 import React from "react";
-import { ContactCleaner } from "components/ContactCleaner/ContactCleaner";
+import { ContactCleaner } from "components/ContactCleaner2.0/ContactCleaner";
 
 
 

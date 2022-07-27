@@ -1,6 +1,13 @@
 import { GraphQLClient } from "graphql-request";
 import { useQuery, useMutation, useSubscription } from "react-query";
 
+// import bodyParser from 'body-parser';
+
+// var jsonParser       = bodyParser.json({limit:1024*1024*2000, type:'application/json'});
+// var urlencodedParser = bodyParser.urlencoded({ extended:true,limit:1024*1024*20,type:'application/x-www-form-urlencoding' })
+
+// GraphQLClient.use(jsonParser);
+// GraphQLClient.use(urlencodedParser);
 
 // GRAPHQL - REACTION SERVER
 const endpoint = "http://localhost:8002/";

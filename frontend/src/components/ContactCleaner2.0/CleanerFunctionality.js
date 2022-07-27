@@ -17,14 +17,14 @@
 // import { useCreateManyContactGql } from "api/resources/contacts/contacts";
 
 //let csvString = "";
-let warnCount = 0;
-let badContacts = new Array();
-let duplicates = new Array();
-let warningsMap = new Map();
-let fieldHeaders = new Array();
+export let warnCount = 0;
+export let badContacts = new Array();
+export let duplicates = new Array();
+export let warningsMap = new Map();
+export let fieldHeaders = new Array();
 console.log(fieldHeaders);
 
-function openSuccess() {
+export function openSuccess() {
   document.getElementById("successalert").style.display = "block";
   window.setTimeout(function () {
     document.getElementById("successalert").style.opacity = 1;
@@ -34,7 +34,7 @@ function openSuccess() {
     closeSuccess();
   }, 1500);
 }
-function closeSuccess() {
+export function closeSuccess() {
   document.getElementById("successalert").style.opacity = 0;
   document.getElementById("successalert").style.transform = "scale(0)";
   window.setTimeout(function () {
@@ -43,7 +43,7 @@ function closeSuccess() {
   //document.getElementById("successalert").style.display = "none";
 }
 //function that activates ignore alert
-function openIgnoreAlert() {
+export function openIgnoreAlert() {
   document.getElementById("ignorealert").style.display = "block";
   window.setTimeout(function () {
     document.getElementById("ignorealert").style.opacity = 1;
@@ -54,7 +54,7 @@ function openIgnoreAlert() {
   }, 1500);
 }
 //function that closes ignore alert.
-function closeIgnoreAlert() {
+export function closeIgnoreAlert() {
   document.getElementById("ignorealert").style.opacity = 0;
   document.getElementById("ignorealert").style.transform = "scale(0)";
   window.setTimeout(function () {
@@ -162,10 +162,10 @@ export function csvToArray(str, delimiter = ",") {
 }
 
 //this function capitalizes the first letter of each field
-function capitalize(fullArray) {
-  let textToAdd = document.createTextNode("First and Last names capitalized");
-  document.getElementById("changes").appendChild(textToAdd);
-  document.getElementById("changes").appendChild(document.createElement("br"));
+export function capitalize(fullArray) {
+  // let textToAdd = document.createTextNode("First and Last names capitalized");
+  // document.getElementById("changes").appendChild(textToAdd);
+  // document.getElementById("changes").appendChild(document.createElement("br"));
   for (let i = 0; i < fullArray.length; i++) {
     fullArray[i]["firstname"] = fullArray[i]["firstname"].toLowerCase();
     fullArray[i]["firstname"] =
@@ -245,7 +245,12 @@ let numHeaders = 0;
 //   });
 // }
 //function to find a value and replace it
-function findandreplace(valuestofind, valuestoreplace, headers, fullArray) {
+export function findandreplace(
+  valuestofind,
+  valuestoreplace,
+  headers,
+  fullArray
+) {
   headers.forEach((header) => {
     fullArray.forEach((contact) => {
       for (let k = 0; k < valuestofind.length; k++) {
@@ -258,7 +263,7 @@ function findandreplace(valuestofind, valuestoreplace, headers, fullArray) {
 }
 
 //this function checks for suffixes
-function hasSuffix(fullArray) {
+export function hasSuffix(fullArray) {
   //   let regexSpecial = /^[~`!#$%\^&*+=\\[\]\\';,/{}|\\":<>\?]/g;
   let regexAlpha = /^[a-z A-Z]+$/;
   for (let i = 0; i < fullArray.length; i++) {
@@ -390,7 +395,7 @@ function hasSuffix(fullArray) {
 }
 
 //checks if object is in array
-function containsObject(obj, list) {
+export function containsObject(obj, list) {
   for (let i = 0; i < list.length; i++) {
     if (list[i].record === obj.record) {
       return true;
@@ -400,7 +405,7 @@ function containsObject(obj, list) {
 }
 
 //this function checks for prefixes
-function hasPrefix(fullArray) {
+export function hasPrefix(fullArray) {
   for (let i = 0; i < fullArray.length; i++) {
     if (
       fullArray[i]["firstname"].includes("Dr.") ||
@@ -486,32 +491,32 @@ function hasPrefix(fullArray) {
 }
 
 //this function counts the characters in firstname and lastname of each row and gives a warning if over 20 char
-function charCount(fullArray) {
-  let charLengthNum = document.getElementById("charlengthnum");
+export function charCount(fullArray, value) {
+  // let charLengthNum = document.getElementById("charlengthnum");
   for (let i = 0; i < fullArray.length; i++) {
     //if first or last names are over charLengthNum characters
     if (
-      fullArray[i]["firstname"].length > charLengthNum.value &&
-      fullArray[i]["lastname"].length > charLengthNum.value
+      fullArray[i]["firstname"].length > value &&
+      fullArray[i]["lastname"].length > value
     ) {
       //First Name
       addWarning(
-        "First name over " + charLengthNum.value + " characters",
+        "First name over " + value + " characters",
         fullArray[i]
       );
       //Last Name
       addWarning(
-        "Last name over " + charLengthNum.value + " characters",
+        "Last name over " + value + " characters",
         fullArray[i]
       );
-    } else if (fullArray[i]["firstname"].length > charLengthNum.value) {
+    } else if (fullArray[i]["firstname"].length > value) {
       addWarning(
-        "First name over " + charLengthNum.value + " characters",
+        "First name over " + value + " characters",
         fullArray[i]
       );
-    } else if (fullArray[i]["lastname"].length > charLengthNum.value) {
+    } else if (fullArray[i]["lastname"].length > value) {
       addWarning(
-        "Last name over " + charLengthNum.value + " characters",
+        "Last name over " + value + " characters",
         fullArray[i]
       );
     }
@@ -519,7 +524,7 @@ function charCount(fullArray) {
 }
 
 //if first or last names are just one character
-function singleCharCount(fullArray) {
+export function singleCharCount(fullArray) {
   for (let i = 0; i < fullArray.length; i++) {
     if (
       fullArray[i]["firstname"].length === 1 &&
@@ -571,7 +576,7 @@ function singleCharCount(fullArray) {
 }
 
 //this function checks to see if there is an @ symbol in the email on each row
-function emailCheckAt(fullArray) {
+export function emailCheckAt(fullArray) {
   for (let i = 0; i < fullArray.length; i++) {
     //console.log(fullArray[i]["email\r"]);
     let text = fullArray[i]["email"].toLowerCase();
@@ -581,7 +586,7 @@ function emailCheckAt(fullArray) {
   }
 }
 //function checks for valid email domains
-function emailDomain(fullArray) {
+export function emailDomain(fullArray) {
   for (let i = 0; i < fullArray.length; i++) {
     let text = fullArray[i]["email"].toLowerCase();
     //this part is not complete
@@ -601,15 +606,19 @@ function emailDomain(fullArray) {
       text.substr(text.length - 7).includes(".health") ||
       text.substr(text.length - 5).includes(".us")
     ) {
-      console.log("No Invalid Emails");
+      // console.log("No Invalid Email");
     } else {
       addWarning("Invalid email domain", fullArray[i]);
     }
   }
 }
 
+export function minusWarning(number) {
+  warnCount -= number;
+}
+
 //this function creates a warning and adds it to the warnings array and adds the contact to badContacts arrayOutput
-function addWarning(warningText, badContact) {
+export function addWarning(warningText, badContact) {
   warnCount += 1;
   let a = badContact;
   let b = new Object();
@@ -639,7 +648,7 @@ function addWarning(warningText, badContact) {
 }
 
 //this function gets rid of any leading or following spaces
-function spaceRemoval(fullArray) {
+export function spaceRemoval(fullArray) {
   //this needs to be edited
   let newArray = fullArray;
   for (let i = 0; i < fullArray.length; i++) {
@@ -647,16 +656,16 @@ function spaceRemoval(fullArray) {
     newArray[i]["lastname"] = newArray[i]["lastname"].trim();
     newArray[i]["email"] = newArray[i]["email"].trim();
   }
-  let textToAdd = document.createTextNode("Whitespace Removed");
-  document.getElementById("changes").appendChild(textToAdd);
-  document.getElementById("changes").appendChild(document.createElement("br"));
+  // let textToAdd = document.createTextNode("Whitespace Removed");
+  // document.getElementById("changes").appendChild(textToAdd);
+  // document.getElementById("changes").appendChild(document.createElement("br"));
   return newArray;
 }
 
 //function to remove duplicates from an array returns array and dupes
-function dedupe(a) {
-  let isDeduped = false;
-  let numDupes = 0;
+export function dedupe(a) {
+  // let isDeduped = false;
+  // let numDupes = 0;
   let seen = [];
   let out = [];
   //   let j = 0;
@@ -666,47 +675,16 @@ function dedupe(a) {
       seen[item] = 1;
       out.push(a[i]);
     } else {
-      isDeduped = true;
-      numDupes++;
+      // isDeduped = true;
+      // numDupes++;
       duplicates.push(a[i]);
     }
   }
-  if (isDeduped === true) {
-    let changeDisplay = document.getElementById("changes");
-    let textToAdd = document.createTextNode(
-      numDupes.toString() + " Duplicate Emails Removed"
-    );
-    changeDisplay.appendChild(textToAdd);
-
-    //download Duplicates if option is checked
-    let remDupesCheck = document.getElementById("removeDupes");
-    if (remDupesCheck.checked) {
-      let btnDupes = document.createElement("button");
-      btnDupes.id = "dupeList";
-      btnDupes.onclick = function () {
-        downloadCSVFile(duplicates, "Duplicate Contacts");
-      };
-      btnDupes.innerHTML = "<span>Download Duplicates</span>";
-      changeDisplay.appendChild(btnDupes);
-    }
-
-    document
-      .getElementById("changes")
-      .appendChild(document.createElement("br"));
-  } else {
-    let textToAdd = document.createTextNode("No Duplicate Emails Found");
-    document.getElementById("changes").appendChild(textToAdd);
-    document
-      .getElementById("changes")
-      .appendChild(document.createElement("br"));
-  }
-  //console.log(out);
-  //create array to be outputted
   return out;
 }
 
 //this function creates a csv string to be able to export the new Audience
-function toCSV(
+export function toCSV(
   fullArray,
   fileName,
   columnDelimiter = ",",
@@ -744,7 +722,7 @@ function toCSV(
 }
 
 //this function allows you to download the new CSV file
-function downloadCSVFile(array, fileName) {
+export function downloadCSVFile(array, fileName) {
   // Create CSV file object and feed our
   // csv_data into it
   let csvText = toCSV(array, fileName);
@@ -814,14 +792,12 @@ function downloadCSVFile(array, fileName) {
 //   }
 // }
 
-
-
 /* eslint-disable */
 //this activates when the submit button is pressed
 export function submitted(e, file, setShow) {
   e.preventDefault();
   const input = file;
-  // let arrayList = []
+  let arrayList = [];
   const reader = new FileReader();
   reader.onload = function (e) {
     // debugger; // eslint-disable-line no-debugger
@@ -995,7 +971,7 @@ export function submitted(e, file, setShow) {
               '<button type="button" ' +
               'id="' +
               key.toString() +
-              'warning"' + 
+              'warning"' +
               ' class="editbutton"><u>Edit<u></button>';
           }
           //ignore action
@@ -1041,7 +1017,9 @@ export function submitted(e, file, setShow) {
           // parOutput.appendChild(buttonBox);
           // debugger; // eslint-disable-line no-debugger
           let editButt = document.getElementById(key.toString() + "warning");
-          editButt.addEventListener("click", function () {setShow(true)})
+          editButt.addEventListener("click", function () {
+            setShow(true);
+          });
           //edit button functionality
           editButt.addEventListener("click", function () {
             let div = document.getElementById("modalinfo");
@@ -1161,7 +1139,7 @@ export function submitted(e, file, setShow) {
           let row_2_data_2 = document.createElement("td");
           row_2_data_2.innerHTML = value[0].warning;
           let row_2_data_3 = document.createElement("td");
-          
+
           //print out info depending on error for quick edit
           if (value[0].warning.includes("email")) {
             //print email accoording to warning
@@ -1246,7 +1224,9 @@ export function submitted(e, file, setShow) {
           // }
           //parOutput.appendChild(buttonBox);
           let editButt = document.getElementById(key.toString() + "warning");
-          editButt.addEventListener("click", function () {setShow(true)})
+          editButt.addEventListener("click", function () {
+            setShow(true);
+          });
           // edit button functionality
           editButt.addEventListener("click", function () {
             let div = document.getElementById("modalinfo");
@@ -1377,7 +1357,7 @@ export function submitted(e, file, setShow) {
     // upload.onclick = function () {
     //   handleCreateContacts(finalArray);
     // }
-    // arrayList = finalArray;
+    arrayList = finalArray;
     console.log("Old Audience:");
     console.log(data);
     console.log("Clean Audience:");
@@ -1388,13 +1368,11 @@ export function submitted(e, file, setShow) {
     console.log(badContacts);
     console.log("Duplicates:");
     console.log(duplicates);
-    
   };
-  
+
   reader.readAsText(input);
-  // return arrayList;
-  
-};
+  return arrayList;
+}
 // let findreplacecheck = document.getElementById("findandreplacecheck");
 // findreplacecheck.addEventListener('change', function () {
 //     if (this.checked) {
@@ -1411,3 +1389,56 @@ export function submitted(e, file, setShow) {
 // myModal.addEventListener('shown.bs.modal', function () {
 //   myInput.focus()
 // });
+
+export function submitFile(file, checkedList) {
+  const reader = new FileReader();
+  let inputFile = file;
+  return new Promise((resolve, reject) => {
+    reader.onerror = () => {
+      reader.abort();
+      reject(new DOMException("Problem parsing input file."));
+    };
+
+
+
+    reader.onload = (e) => {
+      const text = e.target.result;
+      const data = csvToArray(text);
+      let cleanArray = JSON.parse(JSON.stringify(data));
+      cleanArray = spaceRemoval(cleanArray);
+      cleanArray = capitalize(cleanArray);
+      if (checkedList.domain_checked.checked) {
+        emailDomain(cleanArray);
+      }
+      if (checkedList.char_length_checked.checked && checkedList.char_length_num.value > 0) {
+        charCount(cleanArray, checkedList.char_length_num.value);
+      }
+      if (checkedList.single_char_checked.checked) {
+        singleCharCount(cleanArray);
+      }
+      if (checkedList.prefix_checked.checked) {
+        hasPrefix(cleanArray);
+      }
+      if (checkedList.suffix_checked.checked) {
+        hasSuffix(cleanArray);
+      }
+      if (checkedList.at_checked.checked) {
+        emailCheckAt(cleanArray);
+      }
+      //build final array without badContacts
+      let finalArray = [];
+      for (let i = 0; i < cleanArray.length; i++) {
+        if (!containsObject(cleanArray[i], badContacts)) {
+          finalArray.push(cleanArray[i]);
+        }
+      }
+      //dedupe final clean list
+      if (checkedList.remove_duplicates_checked.checked) {
+        finalArray = dedupe(finalArray);
+      }
+      resolve({finalArray, badContacts, warnCount, warningsMap, duplicates});
+    };
+    reader.readAsText(inputFile);
+  });
+
+}

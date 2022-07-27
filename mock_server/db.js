@@ -225,6 +225,13 @@ module.exports = {
       last_sign_in_at: "2020-01-01",
     },
   ],
+  notifications: [
+    {
+      id: "0",
+      user_id: "563",
+      notification: "Contacts have been uploaded",
+    }
+  ],
   emails: [
     {
       id: 0,
@@ -528,4 +535,16 @@ module.exports = {
       data: null,
     },
   ],
+  contactimports: [
+    {
+      id: "213",
+      organization_id: "0684348415",
+      user_id: "563",
+      clean_contacts: [],
+      bad_contacts: [],
+      duplicates: [],
+      warnings_map: [],
+      total_warnings: [],
+    },
+  ]
 };

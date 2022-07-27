@@ -7,6 +7,7 @@ import "./style.css";
 import ReactModal from "components/ReactModal/ReactModal";
 import { TextField } from "components/inputs/index.js";
 import Button from "components/buttons/Button/Button.jsx";
+import { useCreateManyContactGql } from "api/resources/contacts/contacts.js";
 // import exampleFile from "./Images/fileFormat.png";
 // import {submitted} from "./CleanerFunctionality.js"
 
@@ -14,12 +15,68 @@ export const ContactCleaner = () => {
   const [file, setFile] = useState();
   const [show, setShow] = useState(false);
   const [useCleaner, setUseCleaner] = useState(true);
+  const [finalList, setFinalList] = useState([]);
   // const fileReader = new FileReader();
 
   const handleOnChange = (e) => {
     console.log(file);
     setFile(e.target.files[0]);
   };
+
+  const createManyContact = useCreateManyContactGql();
+
+  function shortId() {
+    return "_" + Math.random().toString(36).substr(2, 9);
+  }
+
+  //create contacts in query
+  function handleCreateContacts() {
+    console.log(finalList);
+    if (finalList.length > 0) {
+      //if there is no data don't do anything and prompt user to add a new row for contacts
+      // console.log(data);
+      let contacts = [];
+      //take the given contacts and format them to be right for the query
+      finalList.map((contact) => {
+        contacts.push({
+          id: shortId(),
+          organization_id: "0684348415",
+          survey_participation_count: 0,
+          survey_completion_count: 0,
+          survey_noncompletion_count: 0,
+          last_surveyed_at: "never",
+          created_at: "2020-01-01",
+          updated_at: "2020-01-01",
+          prefix: contact.prefix,
+          first_name: contact.firstname,
+          middle_name: contact.middlename ? contact.middlename : "none",
+          last_name: contact.lastname,
+          email: contact.email,
+          gender: contact.gender ? contact.gender : "none",
+          locale: contact.locale ? contact.locale : "en",
+          company: contact.company,
+          position: contact.position,
+          position_category: contact.positioncategory
+            ? contact.positioncategory
+            : "none",
+          date_of_birth: contact.dateofbirth ? contact.dateofbirth : "none",
+          last_survey_completed: "never",
+          last_survey_invitation: "never",
+        });
+      });
+      //create contacts and add them to database
+      createManyContact.mutate({
+        data: contacts,
+      });
+    }
+  }
+
+  function handleOnSubmit(e, file) {
+    let finalArray = submitted(e, file, setShow);
+    console.log("File Passed through: ");
+    console.log(finalArray);
+    setFinalList(finalArray);
+  }
 
   // const handleOnSubmit = (e) => {
   //     e.preventDefault();
@@ -184,8 +241,8 @@ export const ContactCleaner = () => {
                   format: firstname,lastname,email
                 </p>
                 <p>
-                  Please remove all quotation marks in your file. Example: William
-                  &quot;Bill&quot;
+                  Please remove all quotation marks in your file. Example:
+                  William &quot;Bill&quot;
                 </p>
               </div>
               <div id="menubox" className={styles.menubox}>
@@ -206,11 +263,16 @@ export const ContactCleaner = () => {
                       >
                         Use Contact Cleaner
                       </label>
-                      <ToggleSwitch startChecked={useCleaner} handleCheck={setUseCleaner} />
+                      <ToggleSwitch
+                        startChecked={useCleaner}
+                        handleCheck={setUseCleaner}
+                      />
                     </div>
                     <button
                       onClick={(e) => {
-                        submitted(e, file, setShow);
+                        handleOnSubmit(e, file)
+                        // setFinalList(submitted(e, file, setShow));
+                        // console.log(finalList);
                       }}
                       id="submitButton"
                       className={styles.submitButton}
@@ -334,7 +396,7 @@ export const ContactCleaner = () => {
           <h5 id="errorHeader"></h5>
           <p id="errorOutput"></p>
           <div id="download" className={styles.footer}>
-            <Button id="uploadCleanList">Upload Clean List</Button>
+            <Button id="uploadCleanList" onClick={handleCreateContacts}> Upload Clean List</Button>
             <Button id="cleanList" blue></Button>
             <Button id="badList"></Button>
           </div>

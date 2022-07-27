@@ -3,7 +3,7 @@ import React from "react";
 import { Routes, Route, Navigate } from "react-router-dom";
 
 // Internal
-import { Audiences, AllContacts, AddContacts, Manual, Upload } from "pages";
+import { Audiences, AllContacts, AddContacts, Manual, Upload, ImportedCleaner } from "pages";
 
 export const ContactRoutes = () => {
   return (
@@ -22,6 +22,7 @@ export const AddContactRoutes = () => {
       <Route path="/" element={<Navigate to="uploadcontacts"/>} />
       <Route path="manual" element={<Manual />} />
       <Route path="uploadcontacts" element={<Upload />} />
+      <Route path="/uploadcontacts/:id" element={<ImportedCleaner />} />
     </Routes>
   );
 };
