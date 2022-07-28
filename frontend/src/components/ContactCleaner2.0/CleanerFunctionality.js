@@ -630,13 +630,13 @@ export function addWarning(warningText, badContact) {
     contact: b,
   };
   if (!containsObject(b, badContacts)) {
-    b.warnings = "";
-    b.warnings += warningText;
+    b.warnings = [];
+    b.warnings.push(warningText);
     badContacts.push(b);
   } else {
     for (let i = 0; i < badContacts.length; i++) {
       if (badContacts[i].record === b.record) {
-        badContacts[i].warnings += " : " + warningText;
+        badContacts[i].warnings.push(warningText);
       }
     }
   }
@@ -1439,6 +1439,9 @@ export function submitFile(file, checkedList) {
       resolve({finalArray, badContacts, warnCount, warningsMap, duplicates});
     };
     reader.readAsText(inputFile);
+    badContacts = [];
+    warnCount = 0;
+    warningsMap = new Map();
+    duplicates = [];
   });
-
 }

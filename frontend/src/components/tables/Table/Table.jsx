@@ -12,6 +12,8 @@ function Table({
   onRowClick,
   setPageNumber,
   pageNumber,
+  bottomLeft,
+  bottomRight,
 }) {
   //if they dont have any data yet display no data page
   if (data.length === 0) {
@@ -180,8 +182,9 @@ function Table({
               </td>
               {headers.map((head) => (
                 <td key={head.id} onClick={() => onRowClick(rowdata)}>
-                  {head.cell_style && head.cell_style(rowdata[head.accessor])}
-                  {!head.cell_style && rowdata[head.accessor]}
+                  {head.objectAccessor && rowdata[head.accessor][head.objectAccessor]}
+                  {head.cell_style && !head.objectAccessor && head.cell_style(rowdata[head.accessor])}
+                  {!head.cell_style && !head.objectAccessor && rowdata[head.accessor]}
                 </td>
               ))}
               <td></td>
@@ -190,7 +193,9 @@ function Table({
         </tbody>
       </table>
       <div className={styles.underTable}>
+        {bottomLeft && (bottomLeft)}
         <div className={styles.pages}>
+        {bottomRight && (bottomRight)}
           <button className={styles.nextButton} onClick={() => previousPage()}>
             <i className="bi bi-chevron-left"></i>
           </button>

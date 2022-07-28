@@ -16,7 +16,7 @@ import {
   useFetchAudiencesGql,
 } from "api/resources/contacts/audiences";
 // import { Label } from "components/layouts/Label/Label.jsx";
-import { ContactCleaner } from "components/ContactCleaner/ContactCleaner.jsx";
+import { ContactCleaner } from "components/ContactCleaner2.0/ContactCleaner";
 import Editor from "components/tables/EditableTable/App.jsx";
 import { DynamicUpload } from "components/DynamicUpload/DynamicUpload.jsx";
 import Button from "components/buttons/Button/Button.jsx";
@@ -60,6 +60,10 @@ export const Audiences = () => {
 
   //to be able to navigate to the project. onClick in the row
   let navigate = useNavigate();
+  const routeChangePath = (path) => {
+    // let path = `addContacts`;
+    navigate(path);
+  };
   const routeChange = (row) => {
     // console.log(path);
     navigate(row.id);
@@ -230,6 +234,7 @@ export const Audiences = () => {
             search="project"
             // setPageNumber={handlePageChange}
             pageNumber={1}
+            bottomLeft={<Button blue onClick={() => routeChangePath("/contacts/previous-imports")}>Previous Imports</Button>}
           />
           <div className={styles.footer}>
             <i className="bi bi-life-preserver"></i> Need Help?{" "}

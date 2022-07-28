@@ -6,8 +6,11 @@ import React, { useState } from "react";
 import styles from "./ContactCleaner.module.scss";
 // import ReactModal from "components/ReactModal/ReactModal";
 // import { TextField } from "components/inputs/index.js";
-import Button from "components/buttons/Button/Button.jsx";
-import { useCreateContactImportGql, useCreateManyContactGql } from "api/resources/contacts/contacts.js";
+// import Button from "components/buttons/Button/Button.jsx";
+import {
+  useCreateContactImportGql,
+  useCreateManyContactGql,
+} from "api/resources/contacts/contacts.js";
 import { submitFile } from "./CleanerFunctionality";
 import { useNavigate } from "react-router-dom";
 
@@ -19,7 +22,7 @@ export const ContactCleaner = () => {
   const [showUploads, setShowUploads] = useState(true);
   //eslint-disable-next-line no-unused-vars
   const [errorList, setErrorList] = useState([]);
-    //eslint-disable-next-line no-unused-vars
+  //eslint-disable-next-line no-unused-vars
   const [waitingForFileUpload, setWaitingForFileUpload] = useState(false);
   // const [showErrors, setShowErrors] = useState(false);
   const [useCleaner, setUseCleaner] = useState(true);
@@ -38,52 +41,9 @@ export const ContactCleaner = () => {
     navigate(path);
   };
 
-  //function creates a short ID to use
+  //creates a random short ID to be used
   function shortId() {
     return "_" + Math.random().toString(36).substr(2, 9);
-  }
-
-  //create contacts in query
-  function handleCreateContacts(data) {
-    console.log(data);
-    if (data.length > 0) {
-      //if there is no data don't do anything and prompt user to add a new row for contacts
-      // console.log(data);
-      let contacts = [];
-      //take the given contacts and format them to be right for the query
-      data.map((contact) => {
-        contacts.push({
-          id: shortId(),
-          organization_id: "0684348415",
-          survey_participation_count: 0,
-          survey_completion_count: 0,
-          survey_noncompletion_count: 0,
-          last_surveyed_at: "never",
-          created_at: "2020-01-01",
-          updated_at: "2020-01-01",
-          prefix: contact.prefix,
-          first_name: contact.firstname,
-          middle_name: contact.middlename ? contact.middlename : "none",
-          last_name: contact.lastname,
-          email: contact.email,
-          gender: contact.gender ? contact.gender : "none",
-          locale: contact.locale ? contact.locale : "en",
-          company: contact.company ? contact.company : "none",
-          position: contact.position ? contact.position : "none",
-          position_category: contact.positioncategory
-            ? contact.positioncategory
-            : "none",
-          date_of_birth: contact.dateofbirth ? contact.dateofbirth : "none",
-          last_survey_completed: "never",
-          last_survey_invitation: "never",
-        });
-      });
-      console.log(contacts);
-      //create contacts and add them to database
-      createManyContact.mutate({
-        data: contacts,
-      });
-    }
   }
 
   //function is called when you click submit to manipulate the data
@@ -121,12 +81,45 @@ export const ContactCleaner = () => {
       char_length_checked,
       char_length_num,
       single_char_checked,
-    }
-
+    };
 
     try {
       //this will all be replaced with a call the the server middleware that handles the cleaning
       const fileContents = await submitFile(file, checkedList);
+
+      //create each contact to be imported
+      let contacts = [];
+      fileContents.finalArray.map((contact) => {
+        contacts.push({
+          id: shortId(),
+          organization_id: "0684348415",
+          survey_participation_count: 0,
+          survey_completion_count: 0,
+          survey_noncompletion_count: 0,
+          last_surveyed_at: "never",
+          created_at: "2020-01-01",
+          updated_at: "2020-01-01",
+          prefix: contact.prefix ? contact.prefix : "none",
+          first_name: contact.firstname,
+          middle_name: contact.middlename ? contact.middlename : "none",
+          last_name: contact.lastname,
+          email: contact.email,
+          gender: contact.gender ? contact.gender : "none",
+          locale: contact.locale ? contact.locale : "en",
+          company: contact.company ? contact.company : "none",
+          position: contact.position ? contact.position : "none",
+          position_category: contact.positioncategory
+            ? contact.positioncategory
+            : "none",
+          date_of_birth: contact.dateofbirth ? contact.dateofbirth : "none",
+          last_survey_completed: "never",
+          last_survey_invitation: "never",
+        });
+      });
+      //create contacts and add them to database
+      createManyContact.mutate({
+        data: contacts,
+      });
       //create the contact import here
       createContactImport.mutate({
         organization_id: "0684348415",
@@ -134,160 +127,24 @@ export const ContactCleaner = () => {
         clean_contacts: fileContents.finalArray,
         bad_contacts: fileContents.badContacts,
         duplicates: fileContents.duplicates,
-        warnings_map: fileContents.warnings_map,
+        // warnings_map: fileContents.warnings_map,
         total_warnings: fileContents.warnCount,
+        status: fileContents.warnCount > 0 ? "Has Errors" : "Imported",
+        uploaded_at: "2020-01-01",
       });
+
       console.log("FileContents");
       console.log(fileContents);
       setWaitingForFileUpload(false);
-      routeChangePath("3424");
-
+      // routeChangePath("3424");
     } catch (e) {
       console.log(e);
       setWaitingForFileUpload(false);
-
     }
-
   }
 
   return (
     <div className={styles.body}>
-      {/* <!-- success alert --> */}
-      {/* <div
-            className={`${styles.alert} ${styles.success}`}
-            id="successalert"
-          >
-            <strong>Success!</strong> Changes have been saved and the contact
-            was added to the clean list and removed from error list
-          </div> */}
-      {/* <!-- ignored alert --> */}
-      {/* <div className={`${styles.alert} ${styles.success}`} id="ignorealert">
-            <strong>Success!</strong> Contact warnings have been ignored and
-            added to clean list
-          </div> */}
-      {/* <!-- Modal --> */}
-      {/* <ReactModal
-            show={show}
-            onClose={() => setShow(false)}
-            onSave={() => {
-              setShow(false);
-            }}
-            saveID="savebutton"
-          >
-            <h5 className="modal-title" id="staticBackdropLabel">
-              Modal title
-            </h5>
-
-            <div className="modal-body">
-              <div className={styles.modalcontent} id="modalinfo"></div>
-              <Label>First Name:</Label>
-              <TextField inputID="editFName"></TextField>
-              <Label>Last Name:</Label>
-              <TextField inputID="editLName"></TextField>
-              <Label>Email:</Label>
-              <TextField inputID="editEmail"></TextField>
-              <button
-                type="button"
-                className="btn"
-                data-bs-dismiss="modal"
-                id="ignoremodalbutton"
-                onClick={() => setShow(false)}
-              >
-                <u>Ignore Errors</u>
-              </button>
-            </div>
-          </ReactModal> */}
-      {/* <!-- Modal configure --> */}
-      {/* <div
-            className="modal fade"
-            id="exampleModalCenter"
-            tabIndex="-1"
-            aria-labelledby="exampleModalCenterTitle"
-            aria-hidden="true"
-          >
-            <div className="modal-dialog modal-dialog-centered">
-              <div className="modal-content">
-                <div className="modal-header">
-                  <h5 className="modal-title" id="exampleModalLabel">
-                    Find and Replace Settings
-                  </h5>
-                  <button
-                    type="button"
-                    className="btn-close"
-                    data-bs-dismiss="modal"
-                    aria-label="Close"
-                  ></button>
-                </div>
-                <div className="modal-bodyfar" id="modalfindreplace">
-                  <div className="modalbox" id="modalboxheader">
-                    <input
-                      className="farinput"
-                      id="farHeader"
-                      type="text"
-                      placeholder="Header"
-                      aria-label="default input example"
-                    />
-                    <button
-                      type="button"
-                      id="addheader"
-                      className="btn btn-primary"
-                    >
-                      Add
-                    </button>
-                    <button
-                      type="button"
-                      id="removeheader"
-                      className="btn btn-primary"
-                    >
-                      Remove
-                    </button>
-                  </div>
-                  <div className="modalbox" id="moreheaders"></div>
-                  <div className="modalbox">
-                    <input
-                      className="farinput"
-                      id="findinput"
-                      type="text"
-                      placeholder="Find"
-                      aria-label="default input example"
-                    />
-                    <input
-                      className="farinput"
-                      id="replaceinput"
-                      type="text"
-                      placeholder="Replace"
-                      aria-label="default input example"
-                    />
-                    <button
-                      type="button"
-                      id="addreplace"
-                      className="btn btn-primary"
-                    >
-                      Add
-                    </button>
-                    <button
-                      type="button"
-                      id="removereplace"
-                      className="btn btn-primary"
-                    >
-                      Remove
-                    </button>
-                  </div>
-                  <div className="modalbox" id="moreFars"></div>
-                </div>
-                <div className="modal-footer">
-                  <button
-                    type="button"
-                    className="btn btn-primary"
-                    data-bs-dismiss="modal"
-                  >
-                    Save
-                  </button>
-                </div>
-              </div>
-            </div>
-          </div> */}
-
       <div className={styles.aboutbox}>
         <div>
           {useCleaner && (
@@ -448,25 +305,22 @@ export const ContactCleaner = () => {
             </div>
           </div>
         )}
-        {waitingForFileUpload && (<div>Your upload is being processed, we will notify you when it is finsished. You may leave this page if you so wish</div>)}
-      </div>
-      <div className={styles.bodybox} id="outputbox">
-        <p id="arrayOutput"></p>
-        <div id="warningBox">
-          <h5 id="changeHeader"></h5>
-          <p id="changes"></p>
-          <h5 id="errorHeader"></h5>
-          <div id="errorOutput"></div>
-          <div id="download" className={styles.footer}>
-            <Button id="uploadCleanList" onClick={handleCreateContacts}>
-              {" "}
-              Upload Clean List
-            </Button>
-            <Button id="cleanList" blue></Button>
-            <Button id="badList"></Button>
+        {waitingForFileUpload && (
+          <div>
+            Your upload is being processed, we will notify you when it is
+            finsished. You may leave this page if you so wish
           </div>
-        </div>
+        )}
       </div>
+
+      {createContactImport.isSuccess && createManyContact && (
+        <div>
+          {routeChangePath(
+            "/contacts/previous-imports/" +
+              createContactImport.data.createContactimport.id
+          )}
+        </div>
+      )}
     </div>
   );
 };

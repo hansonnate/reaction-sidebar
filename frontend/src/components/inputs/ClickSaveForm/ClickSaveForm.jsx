@@ -8,7 +8,7 @@ import { TeamsList } from "components/TeamsList/TeamsList";
 import { SelectField } from "../input_fields";
 import Button from "components/buttons/Button/Button";
 
-export const Form = ({ onSave, onDelete, onClose, children }) => {
+export const Form = ({ onSave, onDelete, onClose, children, saveText }) => {
   const { control, handleSubmit, register, setValue, getValues } = useForm();
   // eslint-disable-next-line
 
@@ -70,8 +70,14 @@ export const Form = ({ onSave, onDelete, onClose, children }) => {
     {
       set_name: "Distribution",
       permissions: [
-        { label: "See distribution settings", db_field: "can_see_distribution_settings" },
-        { label: "Edit distribution settings", db_field: "can_edit_distribution_settings" },
+        {
+          label: "See distribution settings",
+          db_field: "can_see_distribution_settings",
+        },
+        {
+          label: "Edit distribution settings",
+          db_field: "can_edit_distribution_settings",
+        },
       ],
     },
   ];
@@ -104,41 +110,46 @@ export const Form = ({ onSave, onDelete, onClose, children }) => {
     <div className={styles.formpage}>
       <form>
         {/* <div className={styles.fullform}> */}
-          <div className={styles.formbody}>
-            {children.map((item, i) => (
-              <div key={i}>
-                <div key={i} className={styles.container}>
-                  {item.props.type === "text" && (
-                    <>
-                      {item.props.label && (
-                        <label className={styles.inputlabel}>
-                          {item.props.label}
-                        </label>
+        <div className={styles.formbody}>
+          {children.map((item, i) => (
+            <div key={i}>
+              <div key={i} className={`${item.props.labelTop ? styles.container2 : styles.container}`}>
+                {item.props.type === "text" && (
+                  <>
+                    {item.props.label && (
+                      <label className={styles.inputlabel}>
+                        {item.props.label}
+                      </label>
+                    )}
+                    {item.props.labelTop && (
+                      <label className={styles.inputlabelTop}>
+                        {item.props.labelTop}
+                      </label>
+                    )}
+                    <Controller
+                      render={({ field }) => (
+                        <item.type
+                          {...field}
+                          placeholder={item.props.placeholder}
+                          className={styles.textinput}
+                        ></item.type>
                       )}
-                      <Controller
-                        render={({ field }) => (
-                          <item.type
-                            {...field}
-                            placeholder={item.props.placeholder}
-                            className={styles.textinput}
-                          ></item.type>
-                        )}
-                        control={control}
-                        // defaultValue="yeh"
-                        {...register(`${item.props.name}`)}
-                        {...setValue(`${item.props.name}`, item.props.value, {
-                          shouldTouch: true,
-                        })}
-                      />
-                    </>
-                  )}
-                </div>
-                {item.props.type === "accordion" && (
-                  <UGAccordion>
-                    {/* {item.props.data.map((item) => ( */}
-                    {permissions.map((set) => (
-                      <AccordionItem key={set.set_name} name={set.set_name}>
-                        {set.permissions.map((permission) => (
+                      control={control}
+                      // defaultValue="yeh"
+                      {...register(`${item.props.name}`)}
+                      {...setValue(`${item.props.name}`, item.props.value, {
+                        shouldTouch: true,
+                      })}
+                    />
+                  </>
+                )}
+              </div>
+              {item.props.type === "accordion" && (
+                <UGAccordion>
+                  {/* {item.props.data.map((item) => ( */}
+                  {permissions.map((set) => (
+                    <AccordionItem key={set.set_name} name={set.set_name}>
+                      {set.permissions.map((permission) => (
                         <div key={permission.db_field} className={styles.item}>
                           <Controller
                             render={({ field }) => (
@@ -160,8 +171,8 @@ export const Form = ({ onSave, onDelete, onClose, children }) => {
                           />
                           <span>{permission.label}</span>
                         </div>
-                        ))}
-                        {/* {Object.keys(item).map((key) => (
+                      ))}
+                      {/* {Object.keys(item).map((key) => (
                         {Object.keys(item.props.data).map((key) => (
                           <>
                             {key !== "id" &&
@@ -190,67 +201,68 @@ export const Form = ({ onSave, onDelete, onClose, children }) => {
                               )}
                           </>
                         ))} */}
-                      </AccordionItem>
-                    ))}
-                  </UGAccordion>
-                )}
-                {item.props.type === "userlist" && (
-                  <TeamsList
-                    organization_id={item.props.organization_id}
-                    columns={item.props.columns}
-                    data={item.props.data}
-                    title={item.props.title}
-                    onSave={item.props.onSave}
-                  ></TeamsList>
-                )}
-                {item.props.type === "select" && (
-                  <Controller
-                    render={({ field }) => (
-                      <SelectField
-                        {...field}
-                        options={item.props.options}
-                        onChange={(value) => ({
-                          ...setValue(`${item.props.name}`, value, {
-                            shouldTouch: true,
-                          }),
-                        })}
-                      ></SelectField>
-                    )}
-                    control={control}
-                    // defaultValue="yeh"
-                    {...register(`${item.props.name}`)}
-                  />
-                )}
-              </div>
-            ))}
-          </div>
+                    </AccordionItem>
+                  ))}
+                </UGAccordion>
+              )}
+              {item.props.type === "userlist" && (
+                <TeamsList
+                  organization_id={item.props.organization_id}
+                  columns={item.props.columns}
+                  data={item.props.data}
+                  title={item.props.title}
+                  onSave={item.props.onSave}
+                ></TeamsList>
+              )}
+              {item.props.type === "select" && (
+                <Controller
+                  render={({ field }) => (
+                    <SelectField
+                      {...field}
+                      options={item.props.options}
+                      onChange={(value) => ({
+                        ...setValue(`${item.props.name}`, value, {
+                          shouldTouch: true,
+                        }),
+                      })}
+                    ></SelectField>
+                  )}
+                  control={control}
+                  // defaultValue="yeh"
+                  {...register(`${item.props.name}`)}
+                />
+              )}
+            </div>
+          ))}
+        </div>
 
-          <div className={styles.submitcontainer}>
-            {onClose && (
-              <Button
-                // className={styles.submitbutton}
-                onClick={handleSubmit(onQuit)}
-              >
-                Close
-              </Button>
-            )}
-            {onDelete && (
-              <Button
-                className={styles.submitbutton}
-                onClick={handleSubmit(onRemove)}
-              >
-                Delete
-              </Button>
-            )}
-            {onSave && (
-              <Button
-                className={styles.submitbutton}
-                onClick={handleSubmit(onSubmit)}
-              >
-                Save
-              </Button>
-            )}
-          </div>
+        <div className={styles.submitcontainer}>
+          {onClose && (
+            <Button
+              // className={styles.submitbutton}
+              onClick={handleSubmit(onQuit)}
+            >
+              Close
+            </Button>
+          )}
+          {onDelete && (
+            <Button
+              className={styles.submitbutton}
+              onClick={handleSubmit(onRemove)}
+            >
+              Delete
+            </Button>
+          )}
+          {onSave && (
+            <Button
+              className={styles.submitbutton}
+              onClick={handleSubmit(onSubmit)}
+            >
+              {saveText && saveText}
+              {!saveText && "Save"}
+            </Button>
+          )}
+        </div>
         {/* </div> */}
       </form>
     </div>

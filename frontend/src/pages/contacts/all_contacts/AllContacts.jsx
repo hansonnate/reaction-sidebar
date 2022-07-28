@@ -7,11 +7,12 @@ import { useNavigate } from "react-router-dom";
 import { useFetchContacts } from "api/resources/contacts/contacts";
 import Table from "components/tables/Table/Table";
 import styles from "./AllContacts.module.scss";
+import Button from "components/buttons/Button/Button";
 
 export const AllContacts = () => {
   let navigate = useNavigate();
-  const routeChangeContacts = () => {
-    let path = `addContacts`;
+  const routeChangePath = (path) => {
+    // let path = `addContacts`;
     navigate(path);
   };
   const routeChange = (row) => {
@@ -104,13 +105,14 @@ export const AllContacts = () => {
         <Table
           initHeaders={headers}
           data={fetchContactsQuery.data.allContacts}
-          createMethod={routeChangeContacts}
+          createMethod={() => routeChangePath("addContacts")}
           createTitle="Add Contact(s)"
           // deleteSelected={deleteSelected}
           onRowClick={routeChange}
           search="contact"
           // setPageNumber={handlePageChange}
           pageNumber={1}
+          bottomLeft={<Button blue onClick={() => routeChangePath("/contacts/previous-imports")}>Previous Imports</Button>}
         />
         <div className={styles.footer}>
           <i className="bi bi-life-preserver"></i> Need Help?{" "}

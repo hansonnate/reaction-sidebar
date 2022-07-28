@@ -4,4 +4,5 @@ export { Audiences } from "./audiences/Audiences";
 export { AddContacts } from "./all_contacts/NewContacts/AddContacts";
 export { Manual } from "./all_contacts/NewContacts/manual/Manual";
 export { Upload } from "./all_contacts/NewContacts/upload/Upload";
-export { ImportedCleaner } from "./all_contacts/NewContacts/upload/ImportedCleaner/ImportedCleaner"
+export { ImportedCleaner } from "./all_contacts/NewContacts/upload/ImportedCleaner/ImportedCleaner";
+export { PreviousImports } from "./previous_imports/PreviousImports";

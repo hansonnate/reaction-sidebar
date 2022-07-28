@@ -540,11 +540,12 @@ module.exports = {
       id: "213",
       organization_id: "0684348415",
       user_id: "563",
-      clean_contacts: [],
-      bad_contacts: [],
-      duplicates: [],
-      warnings_map: [],
-      total_warnings: [],
+      status: "Test",
+      clean_contacts: [{firstname: "nate", lastname: "hanson"}],
+      bad_contacts: [{firstname: "yeet", lastname: "skirt"}],
+      duplicates: [{firstname: "yeet", lastname: "skirt"}],
+      total_warnings: 15,
+      uploaded_at: "2020-01-01",
     },
   ]
 };
