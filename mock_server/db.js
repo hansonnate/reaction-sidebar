@@ -537,7 +537,7 @@ module.exports = {
   ],
   contactimports: [
     {
-      id: "213",
+      id: 0,
       organization_id: "0684348415",
       user_id: "563",
       status: "Test",

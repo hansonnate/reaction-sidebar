@@ -1,5 +1,5 @@
 // External
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import styles from "./Projects.module.scss";
 import ReactModal from "../../components/ReactModal/ReactModal.jsx";
 import { useNavigate } from "react-router-dom";
@@ -89,8 +89,10 @@ export const Projects = () => {
       cell_style: null,
     },
   ];
-    // eslint-disable-next-line no-unused-vars
+  console.log("Initial Page Number")
   const [pageNumber, setPageNumber] = useState(0);
+  // eslint-disable-next-line no-unused-vars
+  const [lastProject, setLastProject] = useState(0);
   const fetchProjectsQuery = useFetchProjectsGql(pageNumber, 5);
   const createProjectQuery = useCreateProjectGql();
   const deleteProjectQuery = useDeleteProjectGql();
@@ -100,8 +102,11 @@ export const Projects = () => {
   // const { token } = useToken();
   const [show, setShow] = useState(false);
 
+  useEffect(() => {
+    fetchProjectsQuery.refetch();
+  }, [pageNumber])
 
-  // console.log(fetchProjectsQuery)
+  console.log(fetchProjectsQuery)
 
   const deleteSelected = (selected) => {
     // console.log(selected);
@@ -121,7 +126,11 @@ export const Projects = () => {
 
   function handlePageChange(integer) {
     // let newPage = pageNumber + integer;
-    setPageNumber(prevState => prevState + integer)
+    setPageNumber(integer - 1);
+    // fetchProjectsQuery = useFetchProjectsGql(pageNumber + integer, 5);
+    if (integer > 0) {
+      setLastProject(fetchProjectsQuery.data.surveys[fetchProjectsQuery.data.surveys.length - 1])
+    }
     // fetchProjectsQuery.refetch();
     // setShow(show => show);
   }
@@ -175,7 +184,8 @@ export const Projects = () => {
             onRowClick={routeChange}
             search="project"
             setPageNumber={handlePageChange}
-            pageNumber={pageNumber}
+            pageNumber={pageNumber + 1}
+            maxPage={5}
           ></Table>
           <div className={styles.footer}><i className="bi bi-life-preserver"></i> Need Help? <a href="">Learn More</a> about creating a project</div>
         </>

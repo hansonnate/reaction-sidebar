@@ -88,24 +88,30 @@
   justify-content: space-between;
   height: 2.5em;
   align-items: center;
+  padding: 0 20px;
 }
 
 .pages {
   display: flex;
   flex-direction: row;
-  gap: 0.5em;
+  gap: 0.25em;
 }
 
 .nextButton {
   border-radius: 5px;
-  background-color: $gray30;
+  border: 2px solid $gray30;
+  background-color: white;
   padding: 0px 4px;
-  height: 1.5em;
+  height: 100%;
+  width: 100%;
 }
 
 .pageButton {
-  padding: 0px 4px;
-  height: 1.5em;
+  padding: 0px 10px;
+  border: 2px solid white;
+  height: 100%;
+  width: 100%;
+  font-family: $poppins;
 }
 
 .editHeaders {
@@ -129,4 +135,10 @@
 }
 .editableHeader:hover {
     background-color: $gray20;
+}
+.currPage {
+  background-color: $blue100;
+  border: 2px solid $blue100;
+  border-radius: 5px;
+  color: white;
 }

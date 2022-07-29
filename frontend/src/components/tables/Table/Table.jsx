@@ -14,17 +14,37 @@ function Table({
   pageNumber,
   bottomLeft,
   bottomRight,
+  maxPage,
 }) {
   //if they dont have any data yet display no data page
-  if (data.length === 0) {
-    return <div>No Data</div>;
-  }
   let array = [];
+  if (data.length === 0) {
+    //no d
+    data.push({
+      id: "0",
+      organization_id: "0684348415",
+      name: "NONE",
+      description: "This is project 1",
+      created_at: "NONE",
+      updated_at: "NONE",
+      status: "Closed",
+      responses: 3,
+      owner: "NONE",
+      default_language: "en",
+      supported_languages: ["en", "sp"],
+      accessgroup_ids: ["552224"],
+    });
+  }
   data.map((row) => array.push({ id: row.id, checked: false }));
   //set headers
-
-  // const [page, setPage] = useState(pageNumber);
+// eslint-disable-next-line no-unused-vars
+  const [currPage, setCurrPage] = useState(pageNumber);
   // eslint-disable-next-line no-unused-vars
+  const [page, setPage] = useState(pageNumber);
+  // eslint-disable-next-line no-unused-vars
+  const [page2, setPage2] = useState(pageNumber + 1 > maxPage ? null : pageNumber + 1);
+  // eslint-disable-next-line no-unused-vars
+  const [page3, setPage3] = useState(pageNumber + 2 > maxPage ? null : pageNumber + 2);
   const [headers, setHeaders] = useState(initHeaders);
   const [editHeaders, setEditHeaders] = useState(false);
   // eslint-disable-next-line no-unused-vars
@@ -86,20 +106,36 @@ function Table({
     setMasterChecked(e.target.checked);
   };
 
-  function nextPage() {
-    // let newPage = page + 1;
-    // setPage(newPage);
-
-    setPageNumber(1);
-    // let tempList = [...checkboxes];
-    // setCheckboxes(tempList);
-    // setRows(data);
+  function nextPage(pageNum) {
+    if (currPage === maxPage) {
+      //do nothing
+    } else {
+      if (pageNum === currPage) {
+        setPageNumber(currPage + 1);
+        setCurrPage(currPage + 1);
+      } else if (pageNum === page) {
+        setCurrPage(page);
+        setPageNumber(page);
+      } else if(pageNum === page2) {
+        setCurrPage(page2);
+        setPageNumber(page2);
+      } else if(pageNum === page3) {
+        setCurrPage(page3);
+        setPageNumber(page3);
+      }
+      // setPage(page + 1);
+      // setPageNumber(1);
+    }
   }
-  function previousPage() {
-    // let newPage = pageNumber - 1;
-    // setPage(page - 1);
-    setPageNumber(-1);
-    // setRows(data);
+  function previousPage(pageNum) {
+    if (currPage === 1) {
+      //do nothing
+    } else {
+      if (pageNum === currPage) {
+        setPageNumber(currPage - 1);
+        setCurrPage(currPage - 1);
+      }
+    }
   }
 
   function handleEditHeader(head) {
@@ -132,9 +168,11 @@ function Table({
             placeholder="Search..."
             searchType={"project"}
           ></SearchField>
-          <Button blue onClick={createMethod}>
-            {createTitle}
-          </Button>
+          {createTitle && (
+            <Button blue onClick={createMethod}>
+              {createTitle}
+            </Button>
+          )}
         </div>
       </div>
       <table className={`${styles.fulltable}`}>
@@ -160,7 +198,10 @@ function Table({
                 <div className={styles.editHeaders}>
                   {initHeaders.map((head) => (
                     <div className={styles.editableHeader} key={head.id}>
-                      <Checkbox checked={headers.includes(head)} onChange={() => handleEditHeader(head)}></Checkbox>
+                      <Checkbox
+                        checked={headers.includes(head)}
+                        onChange={() => handleEditHeader(head)}
+                      ></Checkbox>
                       <div>{head.name}</div>
                     </div>
                   ))}
@@ -182,9 +223,14 @@ function Table({
               </td>
               {headers.map((head) => (
                 <td key={head.id} onClick={() => onRowClick(rowdata)}>
-                  {head.objectAccessor && rowdata[head.accessor][head.objectAccessor]}
-                  {head.cell_style && !head.objectAccessor && head.cell_style(rowdata[head.accessor])}
-                  {!head.cell_style && !head.objectAccessor && rowdata[head.accessor]}
+                  {head.objectAccessor &&
+                    rowdata[head.accessor][head.objectAccessor]}
+                  {head.cell_style &&
+                    !head.objectAccessor &&
+                    head.cell_style(rowdata[head.accessor])}
+                  {!head.cell_style &&
+                    !head.objectAccessor &&
+                    rowdata[head.accessor]}
                 </td>
               ))}
               <td></td>
@@ -193,16 +239,20 @@ function Table({
         </tbody>
       </table>
       <div className={styles.underTable}>
-        {bottomLeft && (bottomLeft)}
+        <div style={{ height: "100%" }}>{bottomLeft && bottomLeft}</div>
         <div className={styles.pages}>
-        {bottomRight && (bottomRight)}
-          <button className={styles.nextButton} onClick={() => previousPage()}>
+          {bottomRight && bottomRight}
+          <button className={styles.nextButton} onClick={() => previousPage(currPage)}>
             <i className="bi bi-chevron-left"></i>
           </button>
-          <button className={styles.pageButton}>{pageNumber}</button>
-          <button className={styles.pageButton}>...</button>
-          <button className={styles.pageButton}>10</button>
-          <button className={styles.nextButton} onClick={() => nextPage()}>
+          <button className={`${styles.pageButton} ${currPage === page ? styles.currPage : ""}`} onClick={() => nextPage(page)}>
+            {page}
+          </button>
+          <button className={`${styles.pageButton} ${currPage === page2 ? styles.currPage : ""}`} onClick={() => nextPage(page2)}>{page2}</button>
+          <button className={`${styles.pageButton} ${currPage === page3 ? styles.currPage : ""}`} onClick={() => nextPage(page3)}>{page3}</button>
+          <span className={styles.pageButton}>...</span>
+          <button className={styles.pageButton} onClick={() => nextPage(maxPage)}>{maxPage}</button>
+          <button className={styles.nextButton} onClick={() => nextPage(currPage)}>
             <i className="bi bi-chevron-right"></i>
           </button>
         </div>

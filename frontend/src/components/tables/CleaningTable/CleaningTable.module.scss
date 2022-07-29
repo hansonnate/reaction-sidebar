@@ -109,3 +109,21 @@
 .actionCell {
     // white-space: nowrap;
 }
+
+.noErrorsBox {
+  border: 2px solid $gray30;
+  border-radius: 5px;
+  width: 100%;
+  height: 20em;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  margin: 2em 0;
+  font-family: $poppins;
+  color: $gray110;
+  span {
+    color: $blue100;
+    cursor: pointer;
+  }
+}

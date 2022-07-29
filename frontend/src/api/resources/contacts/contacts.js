@@ -246,12 +246,19 @@ export const useFetchContactImportGql = (id) => {
   const query = gql`
     query {
         Contactimport(id: "${id}") {
-        id
-        organization_id
-        clean_contacts
-        bad_contacts
-        duplicates
-        total_warnings
+          id
+          organization_id
+          clean_contacts
+          bad_contacts
+          duplicates
+          total_warnings
+          status
+          uploaded_at
+          User {
+            firstname
+            lastname
+            id
+          }
       }
     }
   `;
@@ -273,10 +280,51 @@ export const useFetchContactImportsGql = () => {
         User {
           firstname
           lastname
+          id
         }
       }
     }
   `;
 
   return useGqlQuery(["contactimports"], query, {});
+};
+
+export const useUpdateContactImportGql = () => {
+  const mutation = gql`
+    mutation UpdateContactImport(
+      $id: ID!
+      $organization_id: ID!
+      $user_id: ID!
+      $clean_contacts: JSON!
+      $bad_contacts: JSON!
+      $duplicates: JSON!
+      $total_warnings: Int!
+      $status: String!
+      $uploaded_at: String!
+    ) {
+      updateContactimport(
+        id: $id
+        organization_id: $organization_id
+        user_id: $user_id
+        clean_contacts: $clean_contacts
+        bad_contacts: $bad_contacts
+        duplicates: $duplicates
+        total_warnings: $total_warnings
+        status: $status
+        uploaded_at: $uploaded_at
+      ) {
+        id
+      }
+    }
+  `;
+  const queryClient = useQueryClient();
+  const options = {
+    onError: (err, _project, rollback) => {
+      if (rollback) rollback();
+    },
+    onSettled: () => {
+      queryClient.invalidateQueries("contacts");
+    },
+  };
+  return useGqlMutation(mutation, options);
 };

@@ -24,7 +24,6 @@ export const Form = ({ onSave, onDelete, onClose, children, saveText }) => {
   const onQuit = () => {
     onClose();
   };
-
   // function capitalizeFirstLetter(string) {
   //   return string.charAt(0).toUpperCase() + string.slice(1);
   // }
