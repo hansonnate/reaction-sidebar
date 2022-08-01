@@ -1,14 +1,14 @@
 import { SelectField, TextField } from "components/inputs";
 import React from "react";
-import { useParams } from "react-router-dom";
+// import { useParams } from "react-router-dom";
 
 import styles from "./EditQuestionDialog.module.scss";
 import { ToggleSwitch } from "components/inputs/input_fields/ToggleSwitch/ToggleSwitch";
-import { useUpdateQuestion } from "api/resources/projects/questions";
+// import { useUpdateQuestion } from "api/resources/projects/questions";
 
 export const EditQuestionDialog = ({ question, onTypeChange }) => {
-  const { id } = useParams();
-  const updateQuestionQuery = useUpdateQuestion(id);
+  // const { id } = useParams();
+  // const updateQuestionQuery = useUpdateQuestion(id);
 
   const questionTypes = {
     MultipleChoice: { label: "Multiple Choice", value: "MultipleChoice" },
@@ -20,53 +20,53 @@ export const EditQuestionDialog = ({ question, onTypeChange }) => {
   };
 
   const handleMultiSelectToggle = () => {
-    updateQuestionQuery.mutate({
-      id: question.id,
-      isMultiSelect: !question.isMultiSelect,
-    });
+    // updateQuestionQuery.mutate({
+    //   id: question.id,
+    //   isMultiSelect: !question.isMultiSelect,
+    // });
   };
 
   const handleOtherOptionToggle = () => {
-    updateQuestionQuery.mutate({
-      id: question.id,
-      otherOption: !question.otherOption,
-      otherOptionText: ""
-    });
+    // updateQuestionQuery.mutate({
+    //   id: question.id,
+    //   otherOption: !question.otherOption,
+    //   otherOptionText: ""
+    // });
   };
 
   const handleNaOptionToggle = () => {
-    updateQuestionQuery.mutate({
-      id: question.id,
-      naOption: !question.naOption,
-    });
+    // updateQuestionQuery.mutate({
+    //   id: question.id,
+    //   naOption: !question.naOption,
+    // });
   };
 
   const handleRandomizeOptionsToggle = () => {
-    updateQuestionQuery.mutate({
-      id: question.id,
-      isRandomized: !question.isRandomized,
-    });
+    // updateQuestionQuery.mutate({
+    //   id: question.id,
+    //   isRandomized: !question.isRandomized,
+    // });
   };
 
-  const handleMinChange = (min) => {
-    updateQuestionQuery.mutate({
-      id: question.id,
-      min: min,
-    });
+  const handleMinChange = () => {
+    // updateQuestionQuery.mutate({
+    //   id: question.id,
+    //   min: min,
+    // });
   };
 
-  const handleMaxChange = (max) => {
-    updateQuestionQuery.mutate({
-      id: question.id,
-      max: max,
-    });
+  const handleMaxChange = () => {
+    // updateQuestionQuery.mutate({
+    //   id: question.id,
+    //   max: max,
+    // });
   };
 
-  const handleStepChange = (step) => {
-    updateQuestionQuery.mutate({
-      id: question.id,
-      step: step,
-    });
+  const handleStepChange = () => {
+    // updateQuestionQuery.mutate({
+    //   id: question.id,
+    //   step: step,
+    // });
   };
 
   return (

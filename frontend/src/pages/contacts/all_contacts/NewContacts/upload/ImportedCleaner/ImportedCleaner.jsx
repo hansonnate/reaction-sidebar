@@ -55,6 +55,8 @@ export function ImportedCleaner() {
       total_warnings: data.total_warnings,
       status: data.status,
       uploaded_at: fetchContactImport.data.Contactimport.uploaded_at,
+      type: fetchContactImport.data.Contactimport.type,
+      audience: fetchContactImport.data.Contactimport.audience,
     });
 
   }

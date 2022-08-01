@@ -7,10 +7,10 @@ import { useGqlQuery, useGqlMutation } from "api/Api";
 
 // GRAPHQL API
 
-export const useFetchContacts = () => {
+export const useFetchContacts = (page, perPage) => {
   const query = gql`
     query {
-      allContacts {
+      allContacts(page: ${page}, perPage: ${perPage}) {
         id
         first_name
         last_name
@@ -215,6 +215,8 @@ export const useCreateContactImportGql = () => {
       $total_warnings: Int!
       $status: String!
       $uploaded_at: String!
+      $type: String!
+      $audience: String!
     ) {
       createContactimport(
         organization_id: $organization_id
@@ -225,6 +227,8 @@ export const useCreateContactImportGql = () => {
         total_warnings: $total_warnings
         status: $status
         uploaded_at: $uploaded_at
+        audience: $audience
+        type: $type
       ) {
         id
       }
@@ -254,6 +258,8 @@ export const useFetchContactImportGql = (id) => {
           total_warnings
           status
           uploaded_at
+          audience
+          type
           User {
             firstname
             lastname
@@ -277,6 +283,8 @@ export const useFetchContactImportsGql = () => {
         total_warnings
         status
         uploaded_at
+        type
+        audience
         User {
           firstname
           lastname
@@ -301,6 +309,8 @@ export const useUpdateContactImportGql = () => {
       $total_warnings: Int!
       $status: String!
       $uploaded_at: String!
+      $audience: String!
+      $type: String!
     ) {
       updateContactimport(
         id: $id
@@ -312,6 +322,8 @@ export const useUpdateContactImportGql = () => {
         total_warnings: $total_warnings
         status: $status
         uploaded_at: $uploaded_at
+        audience: $audience
+        type: $type
       ) {
         id
       }
@@ -323,7 +335,7 @@ export const useUpdateContactImportGql = () => {
       if (rollback) rollback();
     },
     onSettled: () => {
-      queryClient.invalidateQueries("contacts");
+      queryClient.invalidateQueries("contactimports");
     },
   };
   return useGqlMutation(mutation, options);

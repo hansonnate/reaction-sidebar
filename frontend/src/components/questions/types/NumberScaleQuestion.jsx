@@ -1,10 +1,10 @@
 import React from "react";
 import { NumChoices } from "components/inputs/input_fields/NumChoices/NumChoices";
 import { TextField } from "components/inputs";
-import { useUpdateQuestion } from "api/resources/projects/questions";
+// import { useUpdateQuestion } from "api/resources/projects/questions";
 
 export const NumberScaleQuestion = ({ question, active }) => {
-  const updateQuestionQuery = useUpdateQuestion();
+  // const updateQuestionQuery = useUpdateQuestion();
 
   const showMinDescription = () => {
     return question.minDescription || active;
@@ -14,18 +14,18 @@ export const NumberScaleQuestion = ({ question, active }) => {
     return question.maxDescription || active;
   };
 
-  const handleMinDescriptionChange = (minDescription) => {
-    updateQuestionQuery.mutate({
-      id: question.id,
-      minDescription: minDescription,
-    });
+  const handleMinDescriptionChange = () => {
+    // updateQuestionQuery.mutate({
+    //   id: question.id,
+    //   minDescription: minDescription,
+    // });
   };
 
-  const handleMaxDescriptionChange = (maxDescription) => {
-    updateQuestionQuery.mutate({
-      id: question.id,
-      maxDescription: maxDescription,
-    });
+  const handleMaxDescriptionChange = () => {
+    // updateQuestionQuery.mutate({
+    //   id: question.id,
+    //   maxDescription: maxDescription,
+    // });
   };
 
   return (

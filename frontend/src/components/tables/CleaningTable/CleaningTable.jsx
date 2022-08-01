@@ -208,7 +208,6 @@ export function CleaningTable({
     setCleanContacts(tempArray);
     updateImport(data);
     setCurrContact(0);
-    // alert("There are some errors but we are importing anyways")
   }
 
   function handleRevertImports() {
@@ -314,7 +313,7 @@ export function CleaningTable({
                   </td>
                   <td className={styles.actionCell}>
                     <Button gray onClick={() => handleImportAnyways(contact)}>
-                      Import Anyways
+                      Import Anyway
                     </Button>
                   </td>
                 </tr>
@@ -364,7 +363,9 @@ export function CleaningTable({
           // onRowClick={routeChange}
           search="contact"
           // setPageNumber={handlePageChange}
+          // pageNumber={pageNumber + 1}
           pageNumber={1}
+          maxPage={5}
           // bottomLeft={<Button blue onClick={() => routeChangePath("/contacts/previous-imports")}>Previous Imports</Button>}
         />
         </ReactModal>

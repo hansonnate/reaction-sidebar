@@ -91,8 +91,6 @@ export const Projects = () => {
   ];
   console.log("Initial Page Number")
   const [pageNumber, setPageNumber] = useState(0);
-  // eslint-disable-next-line no-unused-vars
-  const [lastProject, setLastProject] = useState(0);
   const fetchProjectsQuery = useFetchProjectsGql(pageNumber, 5);
   const createProjectQuery = useCreateProjectGql();
   const deleteProjectQuery = useDeleteProjectGql();
@@ -125,14 +123,7 @@ export const Projects = () => {
   };
 
   function handlePageChange(integer) {
-    // let newPage = pageNumber + integer;
     setPageNumber(integer - 1);
-    // fetchProjectsQuery = useFetchProjectsGql(pageNumber + integer, 5);
-    if (integer > 0) {
-      setLastProject(fetchProjectsQuery.data.surveys[fetchProjectsQuery.data.surveys.length - 1])
-    }
-    // fetchProjectsQuery.refetch();
-    // setShow(show => show);
   }
 
   const handlePostProject = (data) => {

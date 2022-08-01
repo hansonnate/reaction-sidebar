@@ -290,12 +290,8 @@ module.exports = {
       is_hidden: false,
       created_at: "2020-01-01",
       updated_at: "2020-01-01",
-      description: "This is a scale question",
       name: "On a scale of 1-5 how much do you like bananas?",
       instructions: "1=Yuck; 5=Yay!",
-      isMultiSelect: null,
-      otherOption: null,
-      otherOptionText: null,
       question_type_config: {
         scale_question: {
           min: 1,
@@ -541,11 +537,13 @@ module.exports = {
       organization_id: "0684348415",
       user_id: "563",
       status: "Test",
-      clean_contacts: [{firstname: "nate", lastname: "hanson"}],
-      bad_contacts: [{firstname: "yeet", lastname: "skirt"}],
-      duplicates: [{firstname: "yeet", lastname: "skirt"}],
+      type: "Manual",
+      clean_contacts: [{firstname: "nate", lastname: "hanson"}], //list of ids
+      bad_contacts: [{firstname: "yeet", lastname: "skirt"}],//list of ids
+      duplicates: [{firstname: "yeet", lastname: "skirt"}],//list of ids
       total_warnings: 15,
       uploaded_at: "2020-01-01",
+      audience: "Patients",
     },
   ]
 };

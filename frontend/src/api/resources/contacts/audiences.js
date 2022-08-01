@@ -7,10 +7,10 @@ import { useGqlQuery, useGqlMutation } from "api/Api";
 
 // GRAPHQL API
 
-export const useFetchAudiencesGql = () => {
+export const useFetchAudiencesGql = (page, perPage) => {
   const query = gql`
     query {
-      allAudiences {
+      allAudiences(page: ${page}, perPage: ${perPage}) {
         id
         name
         description

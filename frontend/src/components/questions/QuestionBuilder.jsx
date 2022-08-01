@@ -7,57 +7,83 @@ import styles from "./QuestionBuilder.module.scss";
 import {
   useCreateQuestionGql,
   useFetchQuestionsGql,
-  useUpdateQuestionGql,
+  // useUpdateQuestionGql,
 } from "api/resources/projects/questions";
+import { useEffect } from "react";
 
 /* eslint-disable no-unused-vars */
 export const QuestionBuilder = () => {
   const { id } = useParams();
   const fetchQuestionsQuery = useFetchQuestionsGql(id);
-  const updateQuestionQuery = useUpdateQuestionGql(id);
+  // const updateQuestionQuery = useUpdateQuestionGql(id);
   const createQuestionQuery = useCreateQuestionGql(id);
   const [active, setActive] = useState();
 
   const activeQuestion = () => {
-    return fetchQuestionsQuery.data.Questions?.find((q) => q.id == active);
+    return fetchQuestionsQuery.data.Project.Questions?.find(
+      (q) => q.id === active
+    );
   };
 
-  const handleQuestionTypeChange = (type) => {
-    updateQuestionQuery.mutate({
-      id: active,
-      type: type,
-    });
-  };
+  // const handleQuestionTypeChange = (type) => {
+  //   updateQuestionQuery.mutate({
+  //     id: active,
+  //     type: type,
+  //   });
+  // };
+  useEffect(() => {
+    // console.log("HEck YEAH")
+    fetchQuestionsQuery.refetch();
+  }, [active]);
 
-  const handleCreateQuestion = (question) => {
-    console.log(fetchQuestionsQuery.data);
-    createQuestionQuery.mutate({
-      projectId: parseInt(id),
-      type: "Text",
-    });
-    setActive(createQuestionQuery.data.id);
+  // console.log(createQuestionQuery);
+
+  const handleCreateQuestion = () => {
+    createQuestionQuery.mutate(
+      {
+        project_id: id,
+        type: "MultipleChoice",
+        page_order_index: 0,
+        page_number: 1,
+        is_hidden: false,
+        created_at: "2020-01-01",
+        updated_at: "2020-01-01",
+        name: "New Question",
+        instructions: "New Instructions",
+        question_type_config: {
+          choice_question: {
+            isMultiSelect: false,
+            isRandomized: false,
+            hasOtherOption: false,
+            otherOptionText: "",
+            choices: ["Choice 1"],
+          },
+        },
+      },
+      {
+        onSuccess: (data) => {
+          setActive(data.createQuestion.id);
+        },
+      }
+    );
   };
 
   return (
     <>
-
       <SplitHorizontal fullHeight leftWidth={8}>
         <>
-        {fetchQuestionsQuery.isLoading && <p>Loading...</p>}
-        {fetchQuestionsQuery.isError && <p>{fetchQuestionsQuery.error}</p>}
+          {fetchQuestionsQuery.isLoading && <p>Loading...</p>}
+          {fetchQuestionsQuery.isError && <p>{fetchQuestionsQuery.error}</p>}
           {fetchQuestionsQuery.isSuccess && (
             <div className={`${styles.scrollPane}`}>
               {/* {console.log(fetchQuestionsQuery.data.Project.Questions)} */}
               {fetchQuestionsQuery.data.Project.Questions?.map((question) => (
-                <>
-                
                 <Question
                   key={question.id}
                   question={question}
                   active={active == question.id}
                   activate={(id) => setActive(id)}
                 />
-                </>
               ))}
               <button
                 className={`ml-2`}
@@ -73,7 +99,7 @@ export const QuestionBuilder = () => {
         {fetchQuestionsQuery.isSuccess && active != null && (
           <EditQuestionDialog
             question={activeQuestion()}
-            onTypeChange={handleQuestionTypeChange}
+            // onTypeChange={handleQuestionTypeChange}
           />
         )}
       </SplitHorizontal>

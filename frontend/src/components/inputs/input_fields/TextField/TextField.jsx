@@ -1,37 +1,37 @@
-import React from "react";
+import React, { useState } from "react";
 import { TextField } from "@mui/material";
 import { styled } from "@mui/material/styles";
 
 import styles from "./TextField.module.scss";
 
 export const EditableTextField = ({
-  // value,
+  value,
   placeholder,
-  // onSave,
+  onSave,
   align = "left",
   customStyles,
   disabled,
   inputID,
 }) => {
-  // const [val, setVal] = useState(value);
+  const [val, setVal] = useState(value);
 
-  // const saveTimer = null;
+  const saveTimer = null;
 
   // TODO: add a save timer while focusing on the input
-  // const handleChange = (event) => {
-  //   setVal(event.target.value);
-  //   if (onSave) {
-  //     clearTimeout(saveTimer);
-  //     setTimeout(onSave(event.target.value), 7000);
-  //   }
-  // };
+  const handleChange = (event) => {
+    setVal(event.target.value);
+    if (onSave) {
+      clearTimeout(saveTimer);
+      setTimeout(onSave(event.target.value), 7000);
+    }
+  };
 
   // TODO: call onSave method when user leaves the input
-  // const handleFocusOut = (event) => {
-  //   if (onSave) {
-  //     onSave(event.target.value);
-  //   }
-  // };
+  const handleFocusOut = (event) => {
+    if (onSave) {
+      onSave(event.target.value);
+    }
+  };
 
   return (
     <input
@@ -39,10 +39,10 @@ export const EditableTextField = ({
         align === "right" && "text-right"
       } ${align === "center" && "text-center"}`}
       type="text"
-      // value={value}
+      value={val}
       placeholder={placeholder}
-      // onChange={handleChange}
-      // onBlur={handleFocusOut}
+      onChange={handleChange}
+      onBlur={handleFocusOut}
       disabled={disabled}
       id={inputID}
     />
@@ -83,27 +83,27 @@ export const TextInputField = ({
   value,
   placeholder,
   label,
-  // onSave,
-  onChange,
+  onSave,
+  // onChange,
   disabled,
   inactive,
   align = "left",
   customStyles,
 }) => {
-  // const [val, setVal] = useState(value);
+  const [val, setVal] = useState(value);
 
-  // const handleChange = (event) => {
-  //   setVal(event.target.value);
-    // if (onSave) {
-    //   onSave(event.target.value);
-    // }
-  // };
+  const handleChange = (event) => {
+    setVal(event.target.value);
+    if (onSave) {
+      onSave(event.target.value);
+    }
+  };
 
-  // const handleFocusOut = (event) => {
-  //   if (onSave) {
-  //     onSave(event.target.value);
-  //   }
-  // };
+  const handleFocusOut = (event) => {
+    if (onSave) {
+      onSave(event.target.value);
+    }
+  };
 
   const sx = {};
   if (inactive) {
@@ -128,9 +128,9 @@ export const TextInputField = ({
       }`}
       label={label}
       placeholder={placeholder}
-      value={value}
-      onChange={onChange}
-      // onBlur={handleFocusOut}
+      value={val}
+      onChange={handleChange}
+      onBlur={handleFocusOut}
       fullWidth
       sx={sx}
       size="small"

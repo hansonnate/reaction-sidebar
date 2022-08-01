@@ -1,8 +1,8 @@
-import {
-  useDeleteQuestion,
-  useUpdateQuestion,
-} from "api/resources/projects/questions";
-import { IconButton } from "components/buttons/IconButton/IconButton";
+// import {
+//   useDeleteQuestion,
+//   useUpdateQuestion,
+// } from "api/resources/projects/questions";
+import { useUpdateQuestionGql } from "api/resources/projects/questions";
 import { TextField } from "components/inputs";
 import React from "react";
 import { useParams } from "react-router-dom";
@@ -26,8 +26,9 @@ import {
  */
 export const Question = ({ question, active, activate }) => {
   const { id } = useParams();
-  const updateQuestionQuery = useUpdateQuestion(id);
-  const deleteQuestionQuery = useDeleteQuestion(id);
+  const updateQuestionQuery = useUpdateQuestionGql(id);
+  // const [questionName, setQuestionName] = useState(question.name);
+  // const deleteQuestionQuery = useDeleteQuestion(id);
 
   const showInstructions = () => {
     return question.instructions || active;
@@ -38,19 +39,20 @@ export const Question = ({ question, active, activate }) => {
       id: question.id,
       name: name,
     });
+    // setQuestionName(name);
   };
 
-  const handleUpdateInstructions = (instructions) => {
-    updateQuestionQuery.mutate({
-      id: question.id,
-      instructions: instructions,
-    });
+  const handleUpdateInstructions = () => {
+    // updateQuestionQuery.mutate({
+    //   id: question.id,
+    //   instructions: instructions,
+    // });
   };
 
-  const handleDeleteQuestion = () => {
-    activate(null);
-    deleteQuestionQuery.mutate(question.id);
-  };
+  // const handleDeleteQuestion = () => {
+  //   activate(null);
+  //   // deleteQuestionQuery.mutate(question.id);
+  // };
 
   return (
     <div
@@ -58,15 +60,14 @@ export const Question = ({ question, active, activate }) => {
       onClick={() => activate(question.id)}
     >
       <div className={styles.item}>
-        <TextField
-          value={question.name}
-          placeholder="Enter question"
-          label="Question"
-          inactive={!active}
-          onSave={handleUpdateName}
-          autoFocus
-          customStyles={!active && styles.headerText}
-        />
+      <TextField
+            value={question.name}
+            placeholder="Enter question name"
+            label="Quesiton Name"
+            inactive={!active}
+            onSave={handleUpdateName}
+            customStyles={!active && styles.headerText}
+          />
       </div>
       {showInstructions() && (
         <div className={styles.item}>
@@ -103,14 +104,6 @@ export const Question = ({ question, active, activate }) => {
       )}
       {question.type === "Text" && (
         <TextQuestion question_id={question.id} active={active} />
-      )}
-      {active && (
-        <div className="d-flex justify-content-end mt-3">
-          <IconButton onClick={handleDeleteQuestion}>
-            <i className="bi bi-trash3"></i>
-            <span> Delete Question</span>
-          </IconButton>
-        </div>
       )}
     </div>
   );

@@ -28,17 +28,17 @@ export default function makeData() {
       options: []
     },
     {
-      id: "firstName",
+      id: "firstname",
       label: "First Name",
-      accessor: "firstName",
+      accessor: "firstname",
       minWidth: 100,
       dataType: "text",
       options: []
     },
     {
-      id: "lastName",
+      id: "lastname",
       label: "Last Name",
-      accessor: "lastName",
+      accessor: "lastname",
       minWidth: 100,
       dataType: "text",
       options: []

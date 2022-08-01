@@ -13,7 +13,7 @@ export const Form = ({ onSave, onDelete, onClose, children, saveText }) => {
   // eslint-disable-next-line
 
   const onSubmit = (data) => {
-    alert(JSON.stringify(data));
+    // alert(JSON.stringify(data));
     // handleUpdate(data.name, data.description);
     onSave(data);
   };

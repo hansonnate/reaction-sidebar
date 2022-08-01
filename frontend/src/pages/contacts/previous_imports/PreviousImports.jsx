@@ -32,6 +32,22 @@ export function PreviousImports() {
       cell_style: null,
     },
     {
+      id: 4,
+      name: "Audience",
+      accessor: "audience",
+      objectAccessor: null,
+      enabled: true,
+      cell_style: null,
+    },
+    {
+      id: 5,
+      name: "Type",
+      accessor: "type",
+      objectAccessor: null,
+      enabled: true,
+      cell_style: null,
+    },
+    {
         id: 2,
         name: "Status",
         accessor: "status",

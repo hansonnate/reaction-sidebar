@@ -7,14 +7,14 @@ import styles from "./ContactCleaner.module.scss";
 // import ReactModal from "components/ReactModal/ReactModal";
 // import { TextField } from "components/inputs/index.js";
 // import Button from "components/buttons/Button/Button.jsx";
-import {
-  useCreateContactImportGql,
-  useCreateManyContactGql,
-} from "api/resources/contacts/contacts.js";
+// import {
+//   useCreateContactImportGql,
+//   useCreateManyContactGql,
+// } from "api/resources/contacts/contacts.js";
 import { submitFile } from "./CleanerFunctionality";
-import { useNavigate } from "react-router-dom";
+// import { useNavigate } from "react-router-dom";
 
-export const ContactCleaner = () => {
+export const ContactCleaner = ({uploadContacts, buttonName}) => {
   //States
   const [file, setFile] = useState();
   //eslint-disable-next-line no-unused-vars
@@ -27,24 +27,24 @@ export const ContactCleaner = () => {
   // const [showErrors, setShowErrors] = useState(false);
   const [useCleaner, setUseCleaner] = useState(true);
   // const [finalList, setFinalList] = useState([]);
-  const createManyContact = useCreateManyContactGql();
-  const createContactImport = useCreateContactImportGql();
+  // const createManyContact = useCreateManyContactGql();
+  // const createContactImport = useCreateContactImportGql();
 
   //handle onChange when you upload file
   const handleOnChange = (e) => {
     setFile(e.target.files[0]);
   };
 
-  let navigate = useNavigate();
-  const routeChangePath = (id) => {
-    let path = id;
-    navigate(path);
-  };
+  // let navigate = useNavigate();
+  // const routeChangePath = (id) => {
+  //   let path = id;
+  //   navigate(path);
+  // };
 
-  //creates a random short ID to be used
-  function shortId() {
-    return "_" + Math.random().toString(36).substr(2, 9);
-  }
+  // //creates a random short ID to be used
+  // function shortId() {
+  //   return "_" + Math.random().toString(36).substr(2, 9);
+  // }
 
   //function is called when you click submit to manipulate the data
   async function handleOnSubmit(e, file) {
@@ -88,50 +88,53 @@ export const ContactCleaner = () => {
       const fileContents = await submitFile(file, checkedList);
 
       //create each contact to be imported
-      let contacts = [];
-      fileContents.finalArray.map((contact) => {
-        contacts.push({
-          id: shortId(),
-          organization_id: "0684348415",
-          survey_participation_count: 0,
-          survey_completion_count: 0,
-          survey_noncompletion_count: 0,
-          last_surveyed_at: "never",
-          created_at: "2020-01-01",
-          updated_at: "2020-01-01",
-          prefix: contact.prefix ? contact.prefix : "none",
-          first_name: contact.firstname,
-          middle_name: contact.middlename ? contact.middlename : "none",
-          last_name: contact.lastname,
-          email: contact.email,
-          gender: contact.gender ? contact.gender : "none",
-          locale: contact.locale ? contact.locale : "en",
-          company: contact.company ? contact.company : "none",
-          position: contact.position ? contact.position : "none",
-          position_category: contact.positioncategory
-            ? contact.positioncategory
-            : "none",
-          date_of_birth: contact.dateofbirth ? contact.dateofbirth : "none",
-          last_survey_completed: "never",
-          last_survey_invitation: "never",
-        });
-      });
-      //create contacts and add them to database
-      createManyContact.mutate({
-        data: contacts,
-      });
-      //create the contact import here
-      createContactImport.mutate({
-        organization_id: "0684348415",
-        user_id: "563",
-        clean_contacts: fileContents.finalArray,
-        bad_contacts: fileContents.badContacts,
-        duplicates: fileContents.duplicates,
-        // warnings_map: fileContents.warnings_map,
-        total_warnings: fileContents.warnCount,
-        status: fileContents.warnCount > 0 ? "Has Errors" : "Imported",
-        uploaded_at: "2020-01-01",
-      });
+      uploadContacts(fileContents)
+      // let contacts = [];
+      // fileContents.finalArray.map((contact) => {
+      //   contacts.push({
+      //     id: shortId(),
+      //     organization_id: "0684348415",
+      //     survey_participation_count: 0,
+      //     survey_completion_count: 0,
+      //     survey_noncompletion_count: 0,
+      //     last_surveyed_at: "never",
+      //     created_at: "2020-01-01",
+      //     updated_at: "2020-01-01",
+      //     prefix: contact.prefix ? contact.prefix : "none",
+      //     first_name: contact.firstname,
+      //     middle_name: contact.middlename ? contact.middlename : "none",
+      //     last_name: contact.lastname,
+      //     email: contact.email,
+      //     gender: contact.gender ? contact.gender : "none",
+      //     locale: contact.locale ? contact.locale : "en",
+      //     company: contact.company ? contact.company : "none",
+      //     position: contact.position ? contact.position : "none",
+      //     position_category: contact.positioncategory
+      //       ? contact.positioncategory
+      //       : "none",
+      //     date_of_birth: contact.dateofbirth ? contact.dateofbirth : "none",
+      //     last_survey_completed: "never",
+      //     last_survey_invitation: "never",
+      //   });
+      // });
+      // //create contacts and add them to database
+      // createManyContact.mutate({
+      //   data: contacts,
+      // });
+      // //create the contact import here
+      // createContactImport.mutate({
+      //   organization_id: "0684348415",
+      //   user_id: "563",
+      //   clean_contacts: fileContents.finalArray,
+      //   bad_contacts: fileContents.badContacts,
+      //   duplicates: fileContents.duplicates,
+      //   // warnings_map: fileContents.warnings_map,
+      //   total_warnings: fileContents.warnCount,
+      //   status: fileContents.warnCount > 0 ? "Has Errors" : "Imported",
+      //   uploaded_at: "2020-01-01",
+      //   type: "Upload",
+      //   audience: "none",
+      // });
 
       console.log("FileContents");
       console.log(fileContents);
@@ -194,7 +197,7 @@ export const ContactCleaner = () => {
                     id="submitButton"
                     className={styles.submitButton}
                   >
-                    Submit
+                    {buttonName ? buttonName : "Submit"}
                   </button>
                 </form>
               </div>
@@ -307,20 +310,19 @@ export const ContactCleaner = () => {
         )}
         {waitingForFileUpload && (
           <div>
-            Your upload is being processed, we will notify you when it is
-            finsished. You may leave this page if you so wish
+            Contacts are being cleaned...
           </div>
         )}
       </div>
 
-      {createContactImport.isSuccess && createManyContact && (
+      {/* {createContactImport.isSuccess && createManyContact && (
         <div>
           {routeChangePath(
             "/contacts/previous-imports/" +
               createContactImport.data.createContactimport.id
           )}
         </div>
-      )}
+      )} */}
     </div>
   );
 };

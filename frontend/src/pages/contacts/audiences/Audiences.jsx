@@ -1,12 +1,12 @@
 // External
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 // import ReactTable, {
 //   SelectColumnFilter,
 //   MultipleFilter,
 // } from "components/tables/BasicTable/ReactTable.jsx";
 import styles from "./Audiences.module.scss";
 // import ReactModal from "../../../components/ReactModal/ReactModal.jsx";
-import { TextField, SaveForm, SelectField } from "components/inputs";
+import { SaveForm, SelectField, TextFieldSimple } from "components/inputs";
 
 // Internal
 // import { Header } from "components/layouts";
@@ -20,7 +20,10 @@ import { ContactCleaner } from "components/ContactCleaner2.0/ContactCleaner";
 import Editor from "components/tables/EditableTable/App.jsx";
 import { DynamicUpload } from "components/DynamicUpload/DynamicUpload.jsx";
 import Button from "components/buttons/Button/Button.jsx";
-import { useCreateManyContactGql } from "api/resources/contacts/contacts";
+import {
+  useCreateContactImportGql,
+  useCreateManyContactGql,
+} from "api/resources/contacts/contacts";
 import Table from "components/tables/Table/Table";
 import { useNavigate } from "react-router-dom";
 // import Header from "components/EditableTable/Header.jsx";
@@ -98,11 +101,12 @@ export const Audiences = () => {
       cell_style: null,
     },
   ];
-
-  const fetchAudiencesQuery = useFetchAudiencesGql();
+  const [pageNumber, setPageNumber] = useState(0);
+  const fetchAudiencesQuery = useFetchAudiencesGql(pageNumber, 10);
   const createAudienceQuery = useCreateAudienceGql();
   const deleteAudienceQuery = useDeleteAudienceGql();
   const createManyContact = useCreateManyContactGql();
+  const createContactImport = useCreateContactImportGql();
 
   // const [show, setShow] = useState(false);
   // eslint-disable-next-line
@@ -111,6 +115,14 @@ export const Audiences = () => {
   const [newName, setNewName] = useState("");
   const [newDescription, setNewDescription] = useState("");
   const [audience, setAudience] = useState([]);
+
+  useEffect(() => {
+    fetchAudiencesQuery.refetch();
+  }, [pageNumber]);
+
+  function handlePageChange(integer) {
+    setPageNumber(integer - 1);
+  }
 
   const options = [
     { value: "dynamic", label: "Dynamic" },
@@ -122,9 +134,9 @@ export const Audiences = () => {
     setChosenOption(value);
   };
 
-  function refreshPage() {
-    window.location.reload(false);
-  }
+  // function refreshPage() {
+  //   window.location.reload(false);
+  // }
 
   const finalButtons = () => {
     return (
@@ -138,75 +150,84 @@ export const Audiences = () => {
     return "_" + Math.random().toString(36).substr(2, 9);
   }
 
-  function handleCreateAudience(data) {
-    if (data.length > 0) {
-      //if there is no data don't do anything and prompt user to add a new row for contacts
-      // console.log(data);
-      let contacts = [];
-      //take the given contacts and format them to be right for the query
-      data.map((contact) => {
-        contacts.push({
-          id: shortId(),
-          organization_id: "0684348415",
-          survey_participation_count: 0,
-          survey_completion_count: 0,
-          survey_noncompletion_count: 0,
-          last_surveyed_at: "never",
-          created_at: "2020-01-01",
-          updated_at: "2020-01-01",
-          prefix: contact.prefix,
-          first_name: contact.firstName,
-          middle_name: contact.middleName ? contact.middleName : "none",
-          last_name: contact.lastName,
-          email: contact.email,
-          gender: contact.gender ? contact.gender : "none",
-          locale: contact.locale ? contact.locale : "en",
-          company: contact.company,
-          position: contact.position,
-          position_category: contact.positioncategory
-            ? contact.positioncategory
-            : "none",
-          date_of_birth: contact.dateofbirth ? contact.dateofbirth : "none",
-          last_survey_completed: "never",
-          last_survey_invitation: "never",
-        });
-      });
-      //create contacts and add them to database
-      createManyContact.mutate({
-        data: contacts,
-      });
-      if (createManyContact.isLoading) {
-        console.log("Loading");
-      }
-      let arrayOfIds = [];
-      if (createManyContact.isSuccess) {
-        for (
-          let i = 0;
-          i < createManyContact.data.createManyContact.length;
-          i++
-        ) {
-          arrayOfIds.push(createManyContact.data.createManyContact[i].id);
-        }
-        console.log(arrayOfIds);
-        setAudience(arrayOfIds);
-        console.log(audience);
-      }
-      //create the audience and add to database
-      createAudienceQuery.mutate({
-        name: newName,
-        description: newDescription,
-        members: arrayOfIds.length,
-        contact_ids: arrayOfIds,
+  function handleUploadContacts(fileContents) {
+    //create each contact to be imported
+    let contacts = [];
+    fileContents.finalArray.map((contact) => {
+      contacts.push({
+        id: shortId(),
+        organization_id: "0684348415",
+        survey_participation_count: 0,
+        survey_completion_count: 0,
+        survey_noncompletion_count: 0,
+        last_surveyed_at: "never",
         created_at: "2020-01-01",
-        modified_at: "2020-01-01",
-        type: "static",
+        updated_at: "2020-01-01",
+        prefix: contact.prefix ? contact.prefix : "none",
+        first_name: contact.firstname,
+        middle_name: contact.middlename ? contact.middlename : "none",
+        last_name: contact.lastname,
+        email: contact.email,
+        gender: contact.gender ? contact.gender : "none",
+        locale: contact.locale ? contact.locale : "en",
+        company: contact.company ? contact.company : "none",
+        position: contact.position ? contact.position : "none",
+        position_category: contact.positioncategory
+          ? contact.positioncategory
+          : "none",
+        date_of_birth: contact.dateofbirth ? contact.dateofbirth : "none",
+        last_survey_completed: "never",
+        last_survey_invitation: "never",
       });
-      if (createAudienceQuery.isSuccess) {
-        refreshPage();
+    });
+    //create contacts and add them to database
+    createManyContact.mutate({
+      data: contacts,
+    });
+
+    //create the contact import here
+    createContactImport.mutate({
+      organization_id: "0684348415",
+      user_id: "563",
+      clean_contacts: fileContents.finalArray,
+      bad_contacts: fileContents.badContacts,
+      duplicates: fileContents.duplicates,
+      // warnings_map: fileContents.warnings_map,
+      total_warnings: fileContents.warnCount,
+      status: fileContents.warnCount > 0 ? "Has Errors" : "Imported",
+      uploaded_at: "2020-01-01",
+      type: "Upload",
+      audience: newName,
+    });
+    handleCreateAudience();
+  }
+
+  function handleCreateAudience() {
+    //create Audience
+    let arrayOfIds = [];
+    console.log(createManyContact);
+    if (createManyContact.isSuccess) {
+      for (
+        let i = 0;
+        i < createManyContact.data.createManyContact.length;
+        i++
+      ) {
+        arrayOfIds.push(createManyContact.data.createManyContact[i].id);
       }
-    } else {
-      alert("Click + New to add a new row");
+      console.log(arrayOfIds);
+      setAudience(arrayOfIds);
+      console.log(audience);
     }
+    //create the audience and add to database
+    createAudienceQuery.mutate({
+      name: newName,
+      description: newDescription,
+      members: arrayOfIds.length,
+      contact_ids: arrayOfIds,
+      created_at: "2020-01-01",
+      modified_at: "2020-01-01",
+      type: "static",
+    });
   }
 
   const deleteSelected = (selected) => {
@@ -232,9 +253,17 @@ export const Audiences = () => {
             deleteSelected={deleteSelected}
             onRowClick={routeChange}
             search="project"
-            // setPageNumber={handlePageChange}
-            pageNumber={1}
-            bottomLeft={<Button blue onClick={() => routeChangePath("/contacts/previous-imports")}>Previous Imports</Button>}
+            setPageNumber={handlePageChange}
+            pageNumber={pageNumber + 1}
+            maxPage={5}
+            bottomLeft={
+              <Button
+                blue
+                onClick={() => routeChangePath("/contacts/previous-imports")}
+              >
+                Previous Imports
+              </Button>
+            }
           />
           <div className={styles.footer}>
             <i className="bi bi-life-preserver"></i> Need Help?{" "}
@@ -251,21 +280,21 @@ export const Audiences = () => {
                 {
                   label: "Name",
                   field: (
-                    <TextField
+                    <TextFieldSimple
                       value={newName}
                       placeholder="Audience Name"
                       onChange={(e) => setNewName(e.target.value)}
-                    ></TextField>
+                    ></TextFieldSimple>
                   ),
                 },
                 {
                   label: "Description",
                   field: (
-                    <TextField
+                    <TextFieldSimple
                       value={newDescription}
                       placeholder="Description"
                       onChange={(e) => setNewDescription(e.target.value)}
-                    ></TextField>
+                    ></TextFieldSimple>
                   ),
                 },
                 {
@@ -281,8 +310,20 @@ export const Audiences = () => {
             ></SaveForm>
             {chosenOption === "fileupload" && (
               <div>
-                <ContactCleaner setList={() => setAudience}></ContactCleaner>
-                {finalButtons()}
+                <ContactCleaner
+                  uploadContacts={handleUploadContacts}
+                  buttonName="Save"
+                ></ContactCleaner>
+                {createAudienceQuery.isSuccess &&
+                  createContactImport.isSuccess && (
+                    <div>
+                      {routeChangePath(
+                        "/contacts/previous-imports/" +
+                          createContactImport.data.createContactimport.id
+                      )}
+                    </div>
+                  )}
+                {/* {finalButtons()} */}
               </div>
             )}
             {chosenOption === "dynamic" && (

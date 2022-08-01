@@ -1,5 +1,5 @@
 // External
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 
 // Internal
@@ -93,8 +93,16 @@ export const AllContacts = () => {
       cell_style: null,
     },
   ];
+  const [pageNumber, setPageNumber] = useState(0);
+  const fetchContactsQuery = useFetchContacts(pageNumber, 10);
 
-  const fetchContactsQuery = useFetchContacts();
+  useEffect(() => {
+    fetchContactsQuery.refetch();
+  }, [pageNumber])
+
+  function handlePageChange(integer) {
+    setPageNumber(integer - 1);
+  }
 
   return (
     <>
@@ -110,8 +118,9 @@ export const AllContacts = () => {
           // deleteSelected={deleteSelected}
           onRowClick={routeChange}
           search="contact"
-          // setPageNumber={handlePageChange}
-          pageNumber={1}
+          setPageNumber={handlePageChange}
+          pageNumber={pageNumber + 1}
+          maxPage={5}
           bottomLeft={<Button blue onClick={() => routeChangePath("/contacts/previous-imports")}>Previous Imports</Button>}
         />
         <div className={styles.footer}>

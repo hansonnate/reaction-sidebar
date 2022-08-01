@@ -37,14 +37,18 @@ function Table({
   }
   data.map((row) => array.push({ id: row.id, checked: false }));
   //set headers
-// eslint-disable-next-line no-unused-vars
+  // eslint-disable-next-line no-unused-vars
   const [currPage, setCurrPage] = useState(pageNumber);
   // eslint-disable-next-line no-unused-vars
   const [page, setPage] = useState(pageNumber);
   // eslint-disable-next-line no-unused-vars
-  const [page2, setPage2] = useState(pageNumber + 1 > maxPage ? null : pageNumber + 1);
+  const [page2, setPage2] = useState(
+    pageNumber + 1 > maxPage ? null : pageNumber + 1
+  );
   // eslint-disable-next-line no-unused-vars
-  const [page3, setPage3] = useState(pageNumber + 2 > maxPage ? null : pageNumber + 2);
+  const [page3, setPage3] = useState(
+    pageNumber + 2 > maxPage ? null : pageNumber + 2
+  );
   const [headers, setHeaders] = useState(initHeaders);
   const [editHeaders, setEditHeaders] = useState(false);
   // eslint-disable-next-line no-unused-vars
@@ -106,25 +110,17 @@ function Table({
     setMasterChecked(e.target.checked);
   };
 
-  function nextPage(pageNum) {
+  function nextPage() {
     if (currPage === maxPage) {
       //do nothing
     } else {
-      if (pageNum === currPage) {
-        setPageNumber(currPage + 1);
-        setCurrPage(currPage + 1);
-      } else if (pageNum === page) {
-        setCurrPage(page);
-        setPageNumber(page);
-      } else if(pageNum === page2) {
-        setCurrPage(page2);
-        setPageNumber(page2);
-      } else if(pageNum === page3) {
-        setCurrPage(page3);
-        setPageNumber(page3);
+      if (currPage === page3) {
+        setPage(page3 + 1);
+        setPage2(page3 + 2 > maxPage ? null : page3 + 2);
+        setPage3(page3 + 3 > maxPage ? null : page3 + 3);
       }
-      // setPage(page + 1);
-      // setPageNumber(1);
+      setPageNumber(currPage + 1);
+      setCurrPage(currPage + 1);
     }
   }
   function previousPage(pageNum) {
@@ -132,9 +128,37 @@ function Table({
       //do nothing
     } else {
       if (pageNum === currPage) {
+        if (currPage === page) {
+          console.log(page);
+          console.log(page2);
+          console.log(page3);
+          setPage(page - 3);
+          setPage2(page - 2 > maxPage ? null : page - 2);
+          setPage3(page - 1 > maxPage ? null : page - 1);
+        }
         setPageNumber(currPage - 1);
         setCurrPage(currPage - 1);
       }
+    }
+  }
+  function onPageClick(pageNum) {
+    if (pageNum === currPage) {
+      if (currPage === page3) {
+        setPage(page3 + 1);
+        setPage2(page3 + 2 > maxPage ? null : page3 + 2);
+        setPage3(page3 + 3 > maxPage ? null : page3 + 3);
+      }
+      setPageNumber(currPage + 1);
+      setCurrPage(currPage + 1);
+    } else if (pageNum === page) {
+      setCurrPage(page);
+      setPageNumber(page);
+    } else if (pageNum === page2) {
+      setCurrPage(page2);
+      setPageNumber(page2);
+    } else if (pageNum === page3) {
+      setCurrPage(page3);
+      setPageNumber(page3);
     }
   }
 
@@ -242,17 +266,51 @@ function Table({
         <div style={{ height: "100%" }}>{bottomLeft && bottomLeft}</div>
         <div className={styles.pages}>
           {bottomRight && bottomRight}
-          <button className={styles.nextButton} onClick={() => previousPage(currPage)}>
+          {/* <span>1-5 of 10</span> */}
+          <button
+            className={styles.nextButton}
+            onClick={() => previousPage(currPage)}
+          >
             <i className="bi bi-chevron-left"></i>
           </button>
-          <button className={`${styles.pageButton} ${currPage === page ? styles.currPage : ""}`} onClick={() => nextPage(page)}>
-            {page}
+          {page && (
+            <button
+              className={`${styles.pageButton} ${
+                currPage === page ? styles.currPage : ""
+              }`}
+              onClick={() => onPageClick(page)}
+            >
+              {page}
+            </button>
+          )}
+          {page2 && (
+            <button
+              className={`${styles.pageButton} ${
+                currPage === page2 ? styles.currPage : ""
+              }`}
+              onClick={() => onPageClick(page2)}
+            >
+              {page2}
+            </button>
+          )}
+          {page3 && (
+            <button
+              className={`${styles.pageButton} ${
+                currPage === page3 ? styles.currPage : ""
+              }`}
+              onClick={() => onPageClick(page3)}
+            >
+              {page3}
+            </button>
+          )}
+          <a>...</a>
+          <button
+            className={styles.pageButton}
+            onClick={() => onPageClick(maxPage)}
+          >
+            {maxPage}
           </button>
-          <button className={`${styles.pageButton} ${currPage === page2 ? styles.currPage : ""}`} onClick={() => nextPage(page2)}>{page2}</button>
-          <button className={`${styles.pageButton} ${currPage === page3 ? styles.currPage : ""}`} onClick={() => nextPage(page3)}>{page3}</button>
-          <span className={styles.pageButton}>...</span>
-          <button className={styles.pageButton} onClick={() => nextPage(maxPage)}>{maxPage}</button>
-          <button className={styles.nextButton} onClick={() => nextPage(currPage)}>
+          <button className={styles.nextButton} onClick={() => nextPage()}>
             <i className="bi bi-chevron-right"></i>
           </button>
         </div>
