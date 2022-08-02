@@ -1,0 +1,15 @@
+@import "assets/styles/globals.scss";
+.tabBarItem {
+  color: #738c91;
+  font-weight: 700;
+  font-family: "Montserrat", sans-serif;
+  
+  padding: 5px 30px;
+
+  &.activeItem {
+    color: $sapphire100;
+    background-color: white;
+    border-radius: 10px;
+    padding: 5px 30px;
+  }
+}

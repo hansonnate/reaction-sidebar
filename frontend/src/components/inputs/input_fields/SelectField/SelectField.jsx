@@ -1,5 +1,5 @@
 // External
-import React, { useState } from "react";
+import React from "react";
 import makeAnimated from "react-select/animated";
 import CreatableSelect from "react-select/creatable";
 // Internal
@@ -40,38 +40,39 @@ const animatedComponents = makeAnimated();
  */
 export const SelectField = ({
   options,
-  defaultValue,
+  // defaultValue,
+  value,
   selectMultiple,
   onChange,
   placeholder,
 }) => {
-  const value = () => {
-    let values = [];
-    if (defaultValue) {
-    // console.log(selectMultiple);
-    for (let i = 0; i < options.length; i++) {
-      if (selectMultiple) {
-        for (let j = 0; j < defaultValue.length; j++) {
-          if (options[i].value === defaultValue[j]) {
-            values.push(options[i]);
-          }
-        }
-      } else {
-        if (options[i].value === defaultValue) {
-          values.push(options[i]);
-        }
-      }
-    }
-    if (values.length === 1) {
-      values = values[0];
-    }
-  } 
-    return values;
-  };
-  const [val, setVal] = useState(value);
+  // const value = () => {
+  //   let values = [];
+  //   if (defaultValue) {
+  //   // console.log(selectMultiple);
+  //   for (let i = 0; i < options.length; i++) {
+  //     if (selectMultiple) {
+  //       for (let j = 0; j < defaultValue.length; j++) {
+  //         if (options[i].value === defaultValue[j]) {
+  //           values.push(options[i]);
+  //         }
+  //       }
+  //     } else {
+  //       if (options[i].value === defaultValue) {
+  //         values.push(options[i]);
+  //       }
+  //     }
+  //   }
+  //   if (values.length === 1) {
+  //     values = values[0];
+  //   }
+  // } 
+  //   return values;
+  // };
+  // const [val, setVal] = useState(value);
 
   const handleChange = (option) => {
-    setVal(option);
+    // setVal(option);
     if (onChange) {
       onChange(option.value);
     }
@@ -84,7 +85,7 @@ export const SelectField = ({
         styles={customStyles}
         className={``}
         options={options}
-        value={val}
+        value={value}
         isMulti={selectMultiple}
         onChange={handleChange}
         components={animatedComponents}

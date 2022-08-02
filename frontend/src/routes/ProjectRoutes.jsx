@@ -29,6 +29,7 @@ export const ProjectRoutes = () => {
       <Route path="survey-build/*" element={<SurveyBuild />} />
       <Route path="delivery/*" element={<Delivery />} />
       <Route path="results/*" element={<Results />} />
+      <Route path="survey-details" element={<SurveyDetails />} />
     </Routes>
   );
 };
@@ -36,8 +37,8 @@ export const ProjectRoutes = () => {
 export const SurveyBuildRoutes = () => {
   return (
     <Routes>
-      <Route path="/" element={<Navigate to="survey-details" />} />
-      <Route path="survey-details" element={<SurveyDetails />} />
+      <Route path="/" element={<Navigate to="questions" />} />
+      {/* <Route path="survey-details" element={<SurveyDetails />} /> */}
       <Route path="questions" element={<Questions />} />
       <Route path="design" element={<Design />} />
     </Routes>

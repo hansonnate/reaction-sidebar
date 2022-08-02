@@ -50,9 +50,9 @@ export const EditableTextField = ({
 };
 
 const StyledTextField = styled(TextField)`
-  background-color: #efefef;
+  background-color: white;
   border-radius: 5px;
-  border: none !important;
+  border: 2px solid #efefef;
   outline: none !important;
 
   .MuiInputBase-root {
@@ -94,9 +94,7 @@ export const TextInputField = ({
 
   const handleChange = (event) => {
     setVal(event.target.value);
-    if (onSave) {
-      onSave(event.target.value);
-    }
+
   };
 
   const handleFocusOut = (event) => {
@@ -110,6 +108,7 @@ export const TextInputField = ({
     sx["& .MuiInputLabel-root[data-shrink='true']"] = { opacity: "0" };
     sx["& .MuiInputBase-input"] = { padding: "0" };
     sx.backgroundColor = "transparent";
+    sx.border = "none";
   }
   if (disabled) {
     sx.backgroundColor = "transparent";

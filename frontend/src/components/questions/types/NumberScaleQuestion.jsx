@@ -1,10 +1,10 @@
 import React from "react";
 import { NumChoices } from "components/inputs/input_fields/NumChoices/NumChoices";
 import { TextField } from "components/inputs";
-// import { useUpdateQuestion } from "api/resources/projects/questions";
+import { useUpdateQuestionConfig } from "api/resources/projects/questions";
 
 export const NumberScaleQuestion = ({ question, active }) => {
-  // const updateQuestionQuery = useUpdateQuestion();
+  const updateQuestionQuery = useUpdateQuestionConfig();
 
   const showMinDescription = () => {
     return question.minDescription || active;
@@ -14,28 +14,47 @@ export const NumberScaleQuestion = ({ question, active }) => {
     return question.maxDescription || active;
   };
 
-  const handleMinDescriptionChange = () => {
-    // updateQuestionQuery.mutate({
-    //   id: question.id,
-    //   minDescription: minDescription,
-    // });
+  const handleMinDescriptionChange = (min) => {
+    updateQuestionQuery.mutate({
+      id: question.id,
+      question_type_config: {
+        scale_question: {
+          min: min,
+          max: question.question_type_config.scale_question.max,
+          min_description:
+            question.question_type_config.scale_question.min_description,
+          max_description:
+            question.question_type_config.scale_question.max_description,
+          step: question.question_type_config.scale_question.step,
+        },
+      },
+    });
   };
 
-  const handleMaxDescriptionChange = () => {
-    // updateQuestionQuery.mutate({
-    //   id: question.id,
-    //   maxDescription: maxDescription,
-    // });
+  const handleMaxDescriptionChange = (max) => {
+    updateQuestionQuery.mutate({
+      id: question.id,
+      question_type_config: {
+        scale_question: {
+          min: question.question_type_config.scale_question.min,
+          max: max,
+          min_description:
+            question.question_type_config.scale_question.min_description,
+          max_description:
+            question.question_type_config.scale_question.max_description,
+          step: question.question_type_config.scale_question.step,
+        },
+      },
+    });
   };
-
   return (
     <>
       <div className="d-flex mb-3">
         <NumChoices
           value={0}
-          min={Number(question.min)}
-          max={Number(question.max)}
-          step={Number(question.step)}
+          min={Number(question.question_type_config.scale_question.min)}
+          max={Number(question.question_type_config.scale_question.max)}
+          step={Number(question.question_type_config.scale_question.step)}
         />
       </div>
 
@@ -43,7 +62,9 @@ export const NumberScaleQuestion = ({ question, active }) => {
         <div className="w-60 mr-3">
           {showMinDescription() && (
             <TextField
-              value={question.minDescription}
+              value={
+                question.question_type_config.scale_question.min_description
+              }
               placeholder={"Min Description"}
               inactive={!active}
               onSave={handleMinDescriptionChange}
@@ -53,7 +74,9 @@ export const NumberScaleQuestion = ({ question, active }) => {
         <div className="w-60 ml-3">
           {showMaxDescription() && (
             <TextField
-              value={question.maxDescription}
+              value={
+                question.question_type_config.scale_question.max_description
+              }
               placeholder={"Max Description"}
               inactive={!active}
               align="right"

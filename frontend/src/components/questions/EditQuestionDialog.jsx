@@ -4,11 +4,15 @@ import React from "react";
 
 import styles from "./EditQuestionDialog.module.scss";
 import { ToggleSwitch } from "components/inputs/input_fields/ToggleSwitch/ToggleSwitch";
-// import { useUpdateQuestion } from "api/resources/projects/questions";
+import {
+  useUpdateQuestionConfig,
+  useUpdateQuestionNAOption,
+} from "api/resources/projects/questions";
 
-export const EditQuestionDialog = ({ question, onTypeChange }) => {
+export const EditQuestionDialog = ({ question, onTypeChange, refetch }) => {
   // const { id } = useParams();
-  // const updateQuestionQuery = useUpdateQuestion(id);
+  const updateQuestionQuery = useUpdateQuestionConfig();
+  const updateQuestionNAOption = useUpdateQuestionNAOption();
 
   const questionTypes = {
     MultipleChoice: { label: "Multiple Choice", value: "MultipleChoice" },
@@ -19,54 +23,130 @@ export const EditQuestionDialog = ({ question, onTypeChange }) => {
     Matrix: { label: "Matrix", value: "Matrix" },
   };
 
-  const handleMultiSelectToggle = () => {
-    // updateQuestionQuery.mutate({
-    //   id: question.id,
-    //   isMultiSelect: !question.isMultiSelect,
-    // });
+  const handleMultiSelectToggle = (isMulti) => {
+    updateQuestionQuery.mutate(
+      {
+        id: question.id,
+        question_type_config: {
+          choice_question: {
+            isMultiSelect: !isMulti,
+            isRandomized:
+              question.question_type_config.choice_question.isRandomized,
+            hasOtherOption:
+              question.question_type_config.choice_question.hasOtherOption,
+            otherOptionText:
+              question.question_type_config.choice_question.otherOptionText,
+            choices: question.question_type_config.choice_question.choices,
+          },
+        },
+      },
+      {
+        onSuccess: () => {
+          refetch();
+        },
+      }
+    );
   };
 
-  const handleOtherOptionToggle = () => {
-    // updateQuestionQuery.mutate({
-    //   id: question.id,
-    //   otherOption: !question.otherOption,
-    //   otherOptionText: ""
-    // });
+  const handleOtherOptionToggle = (hasOther) => {
+    updateQuestionQuery.mutate(
+      {
+        id: question.id,
+        question_type_config: {
+          choice_question: {
+            isMultiSelect:
+              question.question_type_config.choice_question.isMultiSelect,
+            isRandomized:
+              question.question_type_config.choice_question.isRandomized,
+            hasOtherOption: !hasOther,
+            otherOptionText:
+              question.question_type_config.choice_question.otherOptionText,
+            choices: question.question_type_config.choice_question.choices,
+          },
+        },
+      },
+      {
+        onSuccess: () => {
+          refetch();
+        },
+      }
+    );
   };
 
   const handleNaOptionToggle = () => {
-    // updateQuestionQuery.mutate({
-    //   id: question.id,
-    //   naOption: !question.naOption,
-    // });
+    updateQuestionNAOption.mutate({
+      id: question.id,
+      naOption: !question.naOption,
+    });
   };
 
-  const handleRandomizeOptionsToggle = () => {
-    // updateQuestionQuery.mutate({
-    //   id: question.id,
-    //   isRandomized: !question.isRandomized,
-    // });
+  const handleRandomizeOptionsToggle = (isRandomized) => {
+    updateQuestionQuery.mutate({
+      id: question.id,
+      question_type_config: {
+        choice_question: {
+          isMultiSelect:
+            question.question_type_config.choice_question.isMultiSelect,
+          isRandomized: !isRandomized,
+          hasOtherOption:
+            question.question_type_config.choice_question.hasOtherOption,
+          otherOptionText:
+            question.question_type_config.choice_question.otherOptionText,
+          choices: question.question_type_config.choice_question.choices,
+        },
+      },
+    });
   };
 
-  const handleMinChange = () => {
-    // updateQuestionQuery.mutate({
-    //   id: question.id,
-    //   min: min,
-    // });
+  const handleMinChange = (min) => {
+    updateQuestionQuery.mutate({
+      id: question.id,
+      question_type_config: {
+        scale_question: {
+          min: min,
+          max: question.question_type_config.scale_question.max,
+          min_description:
+            question.question_type_config.scale_question.min_description,
+          max_description:
+            question.question_type_config.scale_question.max_description,
+          step: question.question_type_config.scale_question.step,
+        },
+      },
+    });
   };
 
-  const handleMaxChange = () => {
-    // updateQuestionQuery.mutate({
-    //   id: question.id,
-    //   max: max,
-    // });
+  const handleMaxChange = (max) => {
+    updateQuestionQuery.mutate({
+      id: question.id,
+      question_type_config: {
+        scale_question: {
+          min: question.question_type_config.scale_question.min,
+          max: max,
+          min_description:
+            question.question_type_config.scale_question.min_description,
+          max_description:
+            question.question_type_config.scale_question.max_description,
+          step: question.question_type_config.scale_question.step,
+        },
+      },
+    });
   };
 
-  const handleStepChange = () => {
-    // updateQuestionQuery.mutate({
-    //   id: question.id,
-    //   step: step,
-    // });
+  const handleStepChange = (step) => {
+    updateQuestionQuery.mutate({
+      id: question.id,
+      question_type_config: {
+        scale_question: {
+          min: question.question_type_config.scale_question.min,
+          max: question.question_type_config.scale_question.max,
+          min_description:
+            question.question_type_config.scale_question.min_description,
+          max_description:
+            question.question_type_config.scale_question.max_description,
+          step: step,
+        },
+      },
+    });
   };
 
   return (
@@ -76,20 +156,22 @@ export const EditQuestionDialog = ({ question, onTypeChange }) => {
           <SelectField
             options={Object.values(questionTypes)}
             value={questionTypes[question.type]}
-            handleSelection={onTypeChange}
+            onChange={onTypeChange}
           />
 
-          {/* Other Option Toggle */}
+          {/* isMulti Option Toggle */}
           {question.type === "MultipleChoice" && (
             <>
               <div className="d-flex flex-row mt-3 align-items-center">
                 <ToggleSwitch
                   handleCheck={handleMultiSelectToggle}
-                  startChecked={question.isMultiSelect}
+                  startChecked={
+                    question.question_type_config.choice_question.isMultiSelect
+                  }
                 />
                 <p className={styles.label}>Select Multiple</p>
               </div>
-              {question.isMultiSelect && (
+              {question.question_type_config.choice_question.isMultiSelect && (
                 <div className="d-flex row w-40 align-items-center">
                   Max Selections
                   <TextField placeholder="Max" />
@@ -104,7 +186,9 @@ export const EditQuestionDialog = ({ question, onTypeChange }) => {
             <div className="d-flex flex-row mt-3 align-items-center">
               <ToggleSwitch
                 handleCheck={handleOtherOptionToggle}
-                startChecked={question.otherOption}
+                startChecked={
+                  question.question_type_config.choice_question.hasOtherOption
+                }
               />
               <p className={styles.label}>Other Option</p>
             </div>
@@ -116,7 +200,9 @@ export const EditQuestionDialog = ({ question, onTypeChange }) => {
             <div className="d-flex flex-row mt-3 align-items-center">
               <ToggleSwitch
                 handleCheck={handleRandomizeOptionsToggle}
-                startChecked={question.isRandomized}
+                startChecked={
+                  question.question_type_config.choice_question.isRandomized
+                }
               />
               <p className={styles.label}>Randomize answers</p>
             </div>
@@ -132,18 +218,31 @@ export const EditQuestionDialog = ({ question, onTypeChange }) => {
           </div>
 
           {/* Num scale min, max, and step */}
-          {(question.type === "NumberScale" || question.type === "NumberSlider") && (
+          {(question.type === "NumberScale" ||
+            question.type === "NumberSlider") && (
             <>
               <div className="d-flex flex-row mt-3 align-items-center">
                 <div className="mr-1">
-                  <TextField value={question.min} placeholder="Min" onSave={handleMinChange} />
+                  <TextField
+                    value={question.question_type_config.scale_question.min}
+                    placeholder="Min"
+                    onSave={handleMinChange}
+                  />
                 </div>
                 <div className="ml-1">
-                  <TextField value={question.max} placeholder="Max" onSave={handleMaxChange} />
+                  <TextField
+                    value={question.question_type_config.scale_question.max}
+                    placeholder="Max"
+                    onSave={handleMaxChange}
+                  />
                 </div>
               </div>
               <div className="d-flex flex-row mt-2 align-items-center">
-                <TextField value={question.step} placeholder="Step" onSave={handleStepChange} />
+                <TextField
+                  value={question.question_type_config.scale_question.step}
+                  placeholder="Step"
+                  onSave={handleStepChange}
+                />
               </div>
             </>
           )}

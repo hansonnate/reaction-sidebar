@@ -7,6 +7,7 @@ export const MultipleChoice = ({
   options,
   handleNameChange,
   handleChoiceChange,
+  handleOtherChange,
   handleDelete,
   active,
   isMultiSelect,
@@ -23,6 +24,9 @@ export const MultipleChoice = ({
 
   const handleChoiceNameChange = (value, id) => {
     handleNameChange({ id: id, name: value });
+  };
+  const handleOtherNameChange = (value) => {
+    handleOtherChange(value);
   };
 
   const handleDeleteChoice = (id) => {
@@ -105,7 +109,7 @@ export const MultipleChoice = ({
             <TextField
               value={otherOption}
               placeholder="Enter other option placeholder"
-              onSave={(val) => handleChoiceNameChange(val, 0)}
+              onSave={(val) => handleOtherNameChange(val)}
               inactive={!active}
             />
           </div>

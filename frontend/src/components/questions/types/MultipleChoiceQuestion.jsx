@@ -1,68 +1,114 @@
 import React from "react";
 // import { useParams } from "react-router-dom";
-// import {
-//   useFetchQuestionChoices,
-//   useUpdateQuestionChoices,
-//   useCreateQuestionChoice,
-//   useDeleteQuestionChoice,
-// } from "api/resources/projects/questions";
-// import { MultipleChoice } from "components/inputs/input_fields/MultipleChoice/MultipleChoice";
 
-export const MultipleChoiceQuestion = ( ) => {
+import { MultipleChoice } from "components/inputs/input_fields/MultipleChoice/MultipleChoice";
+import { useUpdateQuestionConfig } from "api/resources/projects/questions";
+
+export const MultipleChoiceQuestion = ({
+  question,
+  active,
+  isMultiSelect,
+  otherOption,
+}) => {
   // const { id } = useParams();
-  // const fetchQuestionChoicesQuery = useFetchQuestionChoices(id, question_id);
-  // const updateQuestionChoicesQuery = useUpdateQuestionChoices(id, question_id);
-  // const createQuestionChoiceQuery = useCreateQuestionChoice(id, question_id);
-  // const deleteQuestionChoiceQuery = useDeleteQuestionChoice(id, question_id);
+  const updateQuestionConfig = useUpdateQuestionConfig();
 
-  // const handleUpdateQuestionChoices = (choice) => {
-    // updateQuestionChoicesQuery.mutate({
-    //   questionId: question_id,
-    //   id: choice.id,
-    //   name: choice.name,
-    // });
-  // };
+  const handleUpdateQuestionChoices = (choice) => {
+    let choices = question.question_type_config.choice_question.choices;
+    let index = choices.findIndex((x) => x.id === choice.id);
+    choices[index] = choice;
+    updateQuestionConfig.mutate({
+      id: question.id,
+      question_type_config: {
+        choice_question: {
+          isMultiSelect: question.question_type_config.choice_question.isMultiSelect,
+          isRandomized: question.question_type_config.choice_question.isRandomized,
+          hasOtherOption: question.question_type_config.choice_question.hasOtherOption,
+          otherOptionText: question.question_type_config.choice_question.otherOptionText,
+          choices: choices,
+        },
+      },
+    });
+  };
 
-  // const handleCreateQuestionChoice = () => {
-    // createQuestionChoiceQuery.mutate({
-    //   questionId: question_id,
-    //   name: "",
-    // });
-  // };
+  function shortId() {
+    return "_" + Math.random().toString(36).substr(2, 9);
+  }
 
-  // const handleDeleteQuestionChoice = (choiceId) => {
-  //   console.log(choiceId)
-    // deleteQuestionChoiceQuery.mutate(choiceId);
+  const handleCreateQuestionChoice = () => {
+    let choices = question.question_type_config.choice_question.choices;
+    choices.push({id: shortId(), name: ""})
+    updateQuestionConfig.mutate({
+      id: question.id,
+      question_type_config: {
+        choice_question: {
+          isMultiSelect: question.question_type_config.choice_question.isMultiSelect,
+          isRandomized: question.question_type_config.choice_question.isRandomized,
+          hasOtherOption: question.question_type_config.choice_question.hasOtherOption,
+          otherOptionText: question.question_type_config.choice_question.otherOptionText,
+          choices: choices,
+        },
+      }
+    });
+  };
+
+  const handleDeleteQuestionChoice = (choiceId) => {
+    console.log(choiceId);
+    let choices = question.question_type_config.choice_question.choices;
+    let index = choices.findIndex((x) => x.id === choiceId);
+    choices.splice(index, 1);
+    updateQuestionConfig.mutate({
+      id: question.id,
+      question_type_config: {
+        choice_question: {
+          isMultiSelect: question.question_type_config.choice_question.isMultiSelect,
+          isRandomized: question.question_type_config.choice_question.isRandomized,
+          hasOtherOption: question.question_type_config.choice_question.hasOtherOption,
+          otherOptionText: question.question_type_config.choice_question.otherOptionText,
+          choices: choices,
+        },
+      }
+    });
+  };
+
+  const handleUpdateOtherText = (text) => {
+    updateQuestionConfig.mutate({
+      id: question.id,
+      question_type_config: {
+        choice_question: {
+          isMultiSelect: question.question_type_config.choice_question.isMultiSelect,
+          isRandomized: question.question_type_config.choice_question.isRandomized,
+          hasOtherOption: question.question_type_config.choice_question.hasOtherOption,
+          otherOptionText: text,
+          choices: question.question_type_config.choice_question.choices,
+        },
+      }
+    });
+  };
+
+  return (
+    <>
+      <MultipleChoice
+        name={question.id}
+        options={question.question_type_config.choice_question.choices}
+        handleNameChange={handleUpdateQuestionChoices}
+        handleDelete={handleDeleteQuestionChoice}
+        handleOtherChange={handleUpdateOtherText}
+        active={active}
+        isMultiSelect={isMultiSelect}
+        otherOption={otherOption}
+      />
+      {active && (
+        <button
+          className={`ml-2`}
+          style={{ color: "#A3A4A8" }}
+          onClick={handleCreateQuestionChoice}
+        >
+          <i className="bi bi-plus-lg mr-3"></i>
+          Add Option
+        </button>
+      )}
+    </>
+  );
   // }
-
-  // if (fetchQuestionChoicesQuery.isLoading) {
-  //   return <div>Loading...</div>;
-  // }
-
-  // if (fetchQuestionChoicesQuery.isError) {
-  //   return <div>Error</div>;
-  // }
-
-  // if (fetchQuestionChoicesQuery.isSuccess) {
-  //   return (
-  //     <>
-  //       <MultipleChoice
-  //         name={question_id}
-  //         options={fetchQuestionChoicesQuery.data}
-  //         handleNameChange={handleUpdateQuestionChoices}
-  //         handleDelete={handleDeleteQuestionChoice}
-  //         active={active}
-  //         isMultiSelect={isMultiSelect}
-  //         otherOption={otherOption}
-  //       />
-  //       {active && (
-  //         <button className={`ml-2`} style={{color: "#A3A4A8"}} onClick={handleCreateQuestionChoice}>
-  //           <i className="bi bi-plus-lg mr-3"></i>
-  //           Add Option
-  //         </button>
-  //       )}
-  //     </>
-  //   );
-  // }
-  return <div>nothing</div>
 };

@@ -15,18 +15,24 @@ import { ErrorPage } from "pages";
 const menuItems = [
   {
     id: 0,
+    name: "Survey Details",
+    to: `survey-details`,
+    iconClassName: "bi bi-gear",
+  },
+  {
+    id: 1,
     name: "Survey Build",
     to: `survey-build`,
     iconClassName: "bi bi-file-earmark-plus",
   },
   {
-    id: 1,
+    id: 2,
     name: "Delivery",
     to: `delivery`,
     iconClassName: "bi bi-truck",
   },
   {
-    id: 2,
+    id: 3,
     name: "Results",
     to: `results`,
     iconClassName: "bi bi-graph-up",

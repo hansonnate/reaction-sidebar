@@ -2,7 +2,7 @@
 //   useDeleteQuestion,
 //   useUpdateQuestion,
 // } from "api/resources/projects/questions";
-import { useUpdateQuestionGql } from "api/resources/projects/questions";
+import { useUpdateQuestionInstructions, useUpdateQuestionName } from "api/resources/projects/questions";
 import { TextField } from "components/inputs";
 import React from "react";
 import { useParams } from "react-router-dom";
@@ -24,9 +24,10 @@ import {
  * @property {boolean} active Whether or not the question is active
  * @returns {React.ReactElement} A question component
  */
-export const Question = ({ question, active, activate }) => {
+export const Question = ({ question, active, activate}) => {
   const { id } = useParams();
-  const updateQuestionQuery = useUpdateQuestionGql(id);
+  const updateQuestionName = useUpdateQuestionName(id);
+  const updateQuestionInstructions = useUpdateQuestionInstructions();
   // const [questionName, setQuestionName] = useState(question.name);
   // const deleteQuestionQuery = useDeleteQuestion(id);
 
@@ -35,18 +36,18 @@ export const Question = ({ question, active, activate }) => {
   };
 
   const handleUpdateName = (name) => {
-    updateQuestionQuery.mutate({
+    updateQuestionName.mutate({
       id: question.id,
       name: name,
     });
     // setQuestionName(name);
   };
 
-  const handleUpdateInstructions = () => {
-    // updateQuestionQuery.mutate({
-    //   id: question.id,
-    //   instructions: instructions,
-    // });
+  const handleUpdateInstructions = (instructions) => {
+    updateQuestionInstructions.mutate({
+      id: question.id,
+      instructions: instructions,
+    });
   };
 
   // const handleDeleteQuestion = () => {
@@ -59,6 +60,7 @@ export const Question = ({ question, active, activate }) => {
       className={`${styles.questionContainer} ${active && styles.active}`}
       onClick={() => activate(question.id)}
     >
+      <div className={styles.iconContainer}><i className="bi bi-grip-horizontal"></i></div>
       <div className={styles.item}>
       <TextField
             value={question.name}
@@ -84,10 +86,10 @@ export const Question = ({ question, active, activate }) => {
       <div className={styles.spacer} />
       {question.type === "MultipleChoice" && (
         <MultipleChoiceQuestion
-          question_id={question.id}
+          question={question}
           active={active}
-          isMultiSelect={question.isMultiSelect}
-          otherOption={question.otherOption ? question.otherOptionText : null}
+          isMultiSelect={question.question_type_config.choice_question.isMultiSelect}
+          otherOption={question.question_type_config.choice_question.hasOtherOption ? question.question_type_config.choice_question.otherOptionText : null}
         />
       )}
       {question.type === "Matrix" && (

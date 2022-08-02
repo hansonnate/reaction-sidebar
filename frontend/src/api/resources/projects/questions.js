@@ -1,4 +1,5 @@
 
+
 import { useQueryClient } from "react-query";
 import { gql } from "graphql-request";
 
@@ -21,9 +22,8 @@ export const useFetchQuestionsGql = (projectId) => {
           project_id
           type
           instructions
-          otherOption
-          otherOptionText
-          isMultiSelect
+          question_type_config
+          naOption
         }
       }
     }
@@ -43,10 +43,12 @@ export const useFetchQuestionGql = (questionId, projectId = null) => {
         instructions
         otherOptionText
         project_id
+        naOption
         Choices {
           id
           choice_value
         }
+        question_type_config
       }
     }`;
 
@@ -78,6 +80,7 @@ export const useCreateQuestionGql = () => {
       $name: String!
       $instructions: String!
       $question_type_config: JSON!
+      $naOption: Boolean!
     ) {
       createQuestion(
         project_id: $project_id
@@ -90,6 +93,7 @@ export const useCreateQuestionGql = () => {
         name: $name
         instructions: $instructions
         question_type_config: $question_type_config
+        naOption: $naOption
       ) {
         id
       }
@@ -112,7 +116,7 @@ export const useCreateQuestionGql = () => {
   return useGqlMutation(mutation, options);
 };
 
-export const useUpdateQuestionGql = () => {
+export const useUpdateQuestionName = () => {
   const mutation = gql`
     mutation UpdateQuestion(
       $id: ID!
@@ -142,6 +146,156 @@ export const useUpdateQuestionGql = () => {
 
   return useGqlMutation(mutation, options);
 };
+
+export const useUpdateQuestionInstructions = () => {
+  const mutation = gql`
+    mutation UpdateQuestion(
+      $id: ID!
+      $instructions: String
+    ) {
+      updateQuestion(
+        id: $id
+        instructions: $instructions
+      ) {
+        id
+      }
+    }
+  `;
+  const queryClient = useQueryClient();
+  const options = {
+    onError: (err, _project, rollback) => {
+      if (rollback) rollback();
+    },
+    onSettled: () => {
+      queryClient.invalidateQueries("questions");
+    },
+    // onSuccess: (data) => {
+    //   console.log("Heck Yeah!");
+    //   console.log(data);
+    // },
+  };
+
+  return useGqlMutation(mutation, options);
+};
+
+export const useUpdateQuestionConfig = () => {
+  const mutation = gql`
+    mutation UpdateQuestion(
+      $id: ID!
+      $question_type_config: JSON
+    ) {
+      updateQuestion(
+        id: $id
+        question_type_config: $question_type_config
+      ) {
+        id
+      }
+    }
+  `;
+  const queryClient = useQueryClient();
+  const options = {
+    onError: (err, _project, rollback) => {
+      if (rollback) rollback();
+    },
+    onSettled: () => {
+      queryClient.invalidateQueries("questions");
+    },
+    // onSuccess: (data) => {
+    //   console.log("Heck Yeah!");
+    //   console.log(data);
+    // },
+  };
+
+  return useGqlMutation(mutation, options);
+};
+
+export const useUpdateQuestionNAOption = () => {
+  const mutation = gql`
+    mutation UpdateQuestion(
+      $id: ID!
+      $naOption: Boolean
+    ) {
+      updateQuestion(
+        id: $id
+        naOption: $naOption
+      ) {
+        id
+      }
+    }
+  `;
+  const queryClient = useQueryClient();
+  const options = {
+    onError: (err, _project, rollback) => {
+      if (rollback) rollback();
+    },
+    onSettled: () => {
+      queryClient.invalidateQueries("questions");
+    },
+    // onSuccess: (data) => {
+    //   console.log("Heck Yeah!");
+    //   console.log(data);
+    // },
+  };
+
+  return useGqlMutation(mutation, options);
+};
+export const useUpdateQuestionType = () => {
+  const mutation = gql`
+    mutation UpdateQuestion(
+      $id: ID!
+      $type: String
+      $question_type_config: JSON
+    ) {
+      updateQuestion(
+        id: $id
+        type: $type
+        question_type_config: $question_type_config
+      ) {
+        id
+      }
+    }
+  `;
+  const queryClient = useQueryClient();
+  const options = {
+    onError: (err, _project, rollback) => {
+      if (rollback) rollback();
+    },
+    onSettled: () => {
+      queryClient.invalidateQueries("questions");
+    },
+    // onSuccess: (data) => {
+    //   console.log("Heck Yeah!");
+    //   console.log(data);
+    // },
+  };
+
+  return useGqlMutation(mutation, options);
+};
+
+export const useUpdateQuestionGql = () => {
+  const mutation = gql`
+    mutation UpdateQuestion($values: QuestionInput!) {
+      updateQuestion(values: $values) {
+        title
+        instructions
+      }
+    }
+  `;
+
+  const queryClient = useQueryClient();
+  const options = {
+    onError: (err, _project, rollback) => {
+      console.log(err);
+      if (rollback) rollback();
+    },
+    onSettled: () => {
+      queryClient.invalidateQueries("questions");
+    },
+  };
+
+  return useGqlMutation(mutation, [], options);
+};
+
 
 // REST API METHODS
 // const uri = "/questions";
@@ -304,3 +458,5 @@ export const useUpdateQuestionGql = () => {
 //     }
 //   );
 // };
+
+

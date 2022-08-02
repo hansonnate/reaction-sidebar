@@ -1,24 +1,20 @@
 // External
 import React, { useState } from "react";
+import styles from "./SurveyBuild.module.scss";
 
 // Internal
-import { TabBar } from "components/layouts";
+import { TabPill } from "components/layouts";
 import { SurveyBuildRoutes } from "routes";
 
 export const SurveyBuild = ({ project }) => {
   const tabBarItems = [
     {
       id: 0,
-      name: "Survey Details",
-      to: `survey-details`,
-    },
-    {
-      id: 1,
       name: "Questions",
       to: `questions`,
     },
     {
-      id: 2,
+      id: 1,
       name: "Design",
       to: `design`,
     },
@@ -28,13 +24,16 @@ export const SurveyBuild = ({ project }) => {
     setActive(item);
   };
   return (
-    <>
-      <TabBar
-        tabBarItems={tabBarItems}
-        active={active}
-        updateActive={handleActiveUpdate}
-      ></TabBar>
-      <SurveyBuildRoutes project={project} />
-    </>
+    <div className={styles.page}>
+      <div className={styles.content}>
+        <TabPill
+          tabBarItems={tabBarItems}
+          active={active}
+          updateActive={handleActiveUpdate}
+        ></TabPill>
+        <SurveyBuildRoutes project={project} />
+      </div>
+      <div className={styles.footer}><i className="bi bi-life-preserver"></i> Need Help? <a href="">Learn More</a> about designing a survey</div>
+    </div>
   );
 };
