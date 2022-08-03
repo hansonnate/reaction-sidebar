@@ -8,6 +8,7 @@ import {
   useUpdateQuestionConfig,
   useUpdateQuestionNAOption,
 } from "api/resources/projects/questions";
+import { SelectFieldCustom } from "components/inputs/input_fields/SelectFieldCustom/SelectFieldCustom";
 
 export const EditQuestionDialog = ({ question, onTypeChange, refetch }) => {
   // const { id } = useParams();
@@ -15,12 +16,12 @@ export const EditQuestionDialog = ({ question, onTypeChange, refetch }) => {
   const updateQuestionNAOption = useUpdateQuestionNAOption();
 
   const questionTypes = {
-    MultipleChoice: { label: "Multiple Choice", value: "MultipleChoice" },
-    Text: { label: "Text", value: "Text" },
-    NumberScale: { label: "Number Scale", value: "NumberScale" },
-    NumberSlider: { label: "Number Slider", value: "NumberSlider" },
-    Ranking: { label: "Ranking", value: "Ranking" },
-    Matrix: { label: "Matrix", value: "Matrix" },
+    MultipleChoice: { label: "Multiple Choice", value: "MultipleChoice", icon: <i className="bi bi-list-check"></i> },
+    Text: { label: "Text", value: "Text", icon: <i className="bi bi-chat-left-text"></i> },
+    NumberScale: { label: "Number Scale", value: "NumberScale", icon: <i className="bi bi-123"></i> },
+    NumberSlider: { label: "Number Slider", value: "NumberSlider", icon: <i className="bi bi-sliders"></i> },
+    Ranking: { label: "Ranking", value: "Ranking", icon: <i className="bi bi-list-ol"></i> },
+    Matrix: { label: "Matrix", value: "Matrix", icon: <i className="bi bi-grid-3x3"></i> },
   };
 
   const handleMultiSelectToggle = (isMulti) => {
@@ -154,6 +155,11 @@ export const EditQuestionDialog = ({ question, onTypeChange, refetch }) => {
       {question != null && (
         <div className={`${styles.dialog}`}>
           <SelectField
+            options={Object.values(questionTypes)}
+            value={questionTypes[question.type]}
+            onChange={onTypeChange}
+          />
+          <SelectFieldCustom
             options={Object.values(questionTypes)}
             value={questionTypes[question.type]}
             onChange={onTypeChange}

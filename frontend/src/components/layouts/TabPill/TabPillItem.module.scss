@@ -3,9 +3,9 @@
   color: #738c91;
   font-weight: 700;
   font-family: "Montserrat", sans-serif;
-  
-  padding: 5px 30px;
-
+  width: 150px;
+  padding: 5px 0px;
+  text-align: center;
   &.activeItem {
     color: $sapphire100;
     background-color: white;

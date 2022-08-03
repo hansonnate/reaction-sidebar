@@ -1,0 +1,68 @@
+@import "assets/styles/globals.scss";
+
+.selectContainer {
+    width: 100%;
+    max-width: 300px;
+    position: relative;
+}
+.select {
+    width: 100%;
+    height: fit-content;
+    border: 2px solid $gray30;
+    border-radius: 5px;
+    padding: 5px 10px;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    color: $gray110;
+    i {
+        color: $gray60;
+    }
+    align-items: center;
+    transition: all .1s;
+    
+}
+.select:hover {
+    border: 2px solid $blue100;
+    cursor: pointer;
+    i {
+        color: $gray110;
+    }
+}
+
+.activeOption {
+    display: flex;
+    flex-direction: row;
+    gap: 10px;
+    align-items: center;
+    i {
+        font-size: 25px;
+        color: $gray110
+    }
+}
+
+.dropdown {
+    height: fit-content;
+    width: 100%;
+    position: absolute;
+    top: 3.7em;
+    background-color: white;
+    border-radius: 5px;
+    z-index: 100000000000000000;
+    box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
+    padding: 10px 0px;
+}
+
+.option {
+    width: 100%;
+    padding: 10px 20px;
+    color: $gray110;
+    
+}
+.option:hover {
+    background-color: $blue20;
+}
+
+.optionActive {
+    background-color: $blue100;
+}

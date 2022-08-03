@@ -10,10 +10,11 @@ import {
   useUpdateQuestionType,
   // useUpdateQuestionGql,
 } from "api/resources/projects/questions";
-import { useEffect } from "react";
+import { useEffect, useRef } from "react";
 
 /* eslint-disable no-unused-vars */
 export const QuestionBuilder = () => {
+  const messagesEndRef = useRef(null);
   const { id } = useParams();
   const fetchQuestionsQuery = useFetchQuestionsGql(id);
   // const updateQuestionQuery = useUpdateQuestionGql(id);
@@ -100,6 +101,9 @@ export const QuestionBuilder = () => {
       {
         onSuccess: (data) => {
           setActive(data.createQuestion.id);
+          // window.scrollTo(0, document.getElementByID("scrollPane").scrollHeight);
+          // scrollTo(0, document.getElementByID("scrollPane").scrollHeight);
+          messagesEndRef.current?.scrollIntoView({ behavior: "smooth" })
         },
       }
     );
@@ -113,7 +117,7 @@ export const QuestionBuilder = () => {
           {fetchQuestionsQuery.isError && <p>{fetchQuestionsQuery.error}</p>}
           {fetchQuestionsQuery.isSuccess && (
             <div className={`${styles.questionsContainer}`}>
-              <div className={`${styles.scrollPane}`}>
+              <div className={`${styles.scrollPane}`} id="scrollPane" >
                 {/* {console.log(fetchQuestionsQuery.data.Project.Questions)} */}
                 {fetchQuestionsQuery.data.Project.Questions?.map((question) => (
                   <Question
@@ -123,6 +127,7 @@ export const QuestionBuilder = () => {
                     activate={(id) => setActive(id)}
                   />
                 ))}
+                <div ref={messagesEndRef}></div>
               </div>
               <div div className={`${styles.questionAdditions}`}>
                 <button

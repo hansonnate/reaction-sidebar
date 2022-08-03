@@ -25,7 +25,7 @@ import {
 export const ProjectRoutes = () => {
   return (
     <Routes>
-      <Route path="/" element={<Navigate to="survey-build" />} />
+      <Route path="/" element={<Navigate to="survey-details" />} />
       <Route path="survey-build/*" element={<SurveyBuild />} />
       <Route path="delivery/*" element={<Delivery />} />
       <Route path="results/*" element={<Results />} />
