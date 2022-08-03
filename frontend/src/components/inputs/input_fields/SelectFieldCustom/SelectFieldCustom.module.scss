@@ -61,8 +61,13 @@
 }
 .option:hover {
     background-color: $blue20;
+    cursor:pointer;
 }
 
 .optionActive {
     background-color: $blue100;
+    width: 100%;
+    padding: 10px 20px;
+    color: $gray110;
+    cursor:pointer;
 }

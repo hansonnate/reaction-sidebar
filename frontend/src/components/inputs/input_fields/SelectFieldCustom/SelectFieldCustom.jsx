@@ -1,5 +1,5 @@
 // External
-import React, { useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 // Internal
 import styles from "./SelectFieldCustom.module.scss";
 
@@ -24,6 +24,21 @@ export const SelectFieldCustom = ({
   // placeholder,
 }) => {
   const [show, setShow] = useState(false);
+
+  const ref = useRef(null);
+
+  const handleClickOutside = (event) => {
+    if (ref.current && !ref.current.contains(event.target)) {
+      setShow(false);
+    }
+  };
+
+  useEffect(() => {
+    document.addEventListener("click", handleClickOutside, true);
+    return () => {
+      document.removeEventListener("click", handleClickOutside, true);
+    };
+  }, []);
   // const value = () => {
   //   let values = [];
   //   if (defaultValue) {
@@ -51,13 +66,16 @@ export const SelectFieldCustom = ({
 
   const handleChange = (option) => {
     // setVal(option);
-    if (onChange) {
-      onChange(option.value);
+    if (option.value !== value.value) {
+      if (onChange) {
+        onChange(option.value);
+        setShow(false);
+      }
     }
     // console.log(val);
   };
   return (
-    <div className={styles.selectContainer}>
+    <div className={styles.selectContainer} ref={ref}>
       <div className={styles.select} onClick={() => setShow(!show)}>
         <div className={styles.activeOption}>
           {value.icon}
@@ -68,7 +86,13 @@ export const SelectFieldCustom = ({
       {show && (
         <div className={styles.dropdown}>
           {options.map((option) => (
-            <div key={value.value} className={`${styles.option} ${value === option ? styles.optionActive : ""}`} onClick={() => handleChange(option)}>
+            <div
+              key={value.value}
+              className={`${
+                value === option ? styles.optionActive : styles.option
+              }`}
+              onClick={() => handleChange(option)}
+            >
               {option.label}
             </div>
           ))}
