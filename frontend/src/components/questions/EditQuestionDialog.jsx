@@ -1,27 +1,54 @@
-import { SelectField, TextField } from "components/inputs";
+import { TextField, SelectFieldCustom } from "components/inputs";
 import React from "react";
 // import { useParams } from "react-router-dom";
 
 import styles from "./EditQuestionDialog.module.scss";
 import { ToggleSwitch } from "components/inputs/input_fields/ToggleSwitch/ToggleSwitch";
 import {
+  useDeleteQuestion,
   useUpdateQuestionConfig,
   useUpdateQuestionNAOption,
 } from "api/resources/projects/questions";
-import { SelectFieldCustom } from "components/inputs/input_fields/SelectFieldCustom/SelectFieldCustom";
+import Button from "components/buttons/Button/Button";
+// import { SelectFieldCustom } from "components/inputs/input_fields/SelectFieldCustom/SelectFieldCustom";
 
 export const EditQuestionDialog = ({ question, onTypeChange, refetch }) => {
   // const { id } = useParams();
   const updateQuestionQuery = useUpdateQuestionConfig();
   const updateQuestionNAOption = useUpdateQuestionNAOption();
+  const deleteQuestion = useDeleteQuestion();
 
   const questionTypes = {
-    MultipleChoice: { label: "Multiple Choice", value: "MultipleChoice", icon: <i className="bi bi-list-check"></i> },
-    Text: { label: "Text", value: "Text", icon: <i className="bi bi-chat-left-text"></i> },
-    NumberScale: { label: "Number Scale", value: "NumberScale", icon: <i className="bi bi-123"></i> },
-    NumberSlider: { label: "Number Slider", value: "NumberSlider", icon: <i className="bi bi-sliders"></i> },
-    Ranking: { label: "Ranking", value: "Ranking", icon: <i className="bi bi-list-ol"></i> },
-    Matrix: { label: "Matrix", value: "Matrix", icon: <i className="bi bi-grid-3x3"></i> },
+    MultipleChoice: {
+      label: "Multiple Choice",
+      value: "MultipleChoice",
+      icon: <i className="bi bi-list-check"></i>,
+    },
+    Text: {
+      label: "Text",
+      value: "Text",
+      icon: <i className="bi bi-chat-left-text"></i>,
+    },
+    NumberScale: {
+      label: "Number Scale",
+      value: "NumberScale",
+      icon: <i className="bi bi-123"></i>,
+    },
+    NumberSlider: {
+      label: "Number Slider",
+      value: "NumberSlider",
+      icon: <i className="bi bi-sliders"></i>,
+    },
+    Ranking: {
+      label: "Ranking",
+      value: "Ranking",
+      icon: <i className="bi bi-list-ol"></i>,
+    },
+    Matrix: {
+      label: "Matrix",
+      value: "Matrix",
+      icon: <i className="bi bi-grid-3x3"></i>,
+    },
   };
 
   const handleMultiSelectToggle = (isMulti) => {
@@ -150,15 +177,21 @@ export const EditQuestionDialog = ({ question, onTypeChange, refetch }) => {
     });
   };
 
+  const handleDeleteQuestion = () => {
+    deleteQuestion.mutate({
+      id: question.id
+    },
+    {
+      onSuccess: () => {
+        refetch();
+      },
+    })
+  }
+
   return (
     <>
       {question != null && (
         <div className={`${styles.dialog}`}>
-          <SelectField
-            options={Object.values(questionTypes)}
-            value={questionTypes[question.type]}
-            onChange={onTypeChange}
-          />
           <SelectFieldCustom
             options={Object.values(questionTypes)}
             value={questionTypes[question.type]}
@@ -196,9 +229,18 @@ export const EditQuestionDialog = ({ question, onTypeChange, refetch }) => {
                   question.question_type_config.choice_question.hasOtherOption
                 }
               />
-              <p className={styles.label}>Other Option</p>
+              <p className={styles.label}>Include &quot;Other&quot; Option</p>
             </div>
           )}
+
+          {/* NA Option Toggle */}
+          <div className="d-flex flex-row mt-3 align-items-center">
+            <ToggleSwitch
+              handleCheck={handleNaOptionToggle}
+              startChecked={question.naOption}
+            />
+            <p className={styles.label}>Include &quot;N/A&quot; Option</p>
+          </div>
 
           {/* Randomize Options Toggle */}
           {(question.type === "MultipleChoice" ||
@@ -213,15 +255,6 @@ export const EditQuestionDialog = ({ question, onTypeChange, refetch }) => {
               <p className={styles.label}>Randomize answers</p>
             </div>
           )}
-
-          {/* NA Option Toggle */}
-          <div className="d-flex flex-row mt-3 align-items-center">
-            <ToggleSwitch
-              handleCheck={handleNaOptionToggle}
-              startChecked={question.naOption}
-            />
-            <p className={styles.label}>NA Option</p>
-          </div>
 
           {/* Num scale min, max, and step */}
           {(question.type === "NumberScale" ||
@@ -252,6 +285,15 @@ export const EditQuestionDialog = ({ question, onTypeChange, refetch }) => {
               </div>
             </>
           )}
+
+          <div className={styles.dialogButtons}>
+            <Button width="120px" gray>
+              <i className="bi bi-layers"></i> Duplicate
+            </Button>
+            <Button width="120px" red onClick={handleDeleteQuestion}>
+              <i className="bi bi-trash"></i> Delete
+            </Button>
+          </div>
         </div>
       )}
     </>

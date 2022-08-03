@@ -13,6 +13,7 @@ module.exports = {
       default_language: "en",
       supported_languages: ["en", "sp"],
       accessgroup_ids: ["552224"],
+      num_pages: 2,
     },
     {
       id: "1",
@@ -27,6 +28,7 @@ module.exports = {
       default_language: "en",
       supported_languages: ["en", "sp"],
       accessgroup_ids: ["552224"],
+      num_pages: 1,
     },
     {
       id: "2",
@@ -41,6 +43,7 @@ module.exports = {
       default_language: "en",
       supported_languages: ["en", "sp"],
       accessgroup_ids: ["552224"],
+      num_pages: 1,
     },
     {
       id: "3",
@@ -55,6 +58,7 @@ module.exports = {
       default_language: "en",
       supported_languages: ["en", "sp"],
       accessgroup_ids: ["552224"],
+      num_pages: 1,
     },
     {
       id: "4",
@@ -69,6 +73,7 @@ module.exports = {
       default_language: "en",
       supported_languages: ["en", "sp"],
       accessgroup_ids: ["552224"],
+      num_pages: 1,
     },
   ],
   organizations: [
@@ -338,7 +343,7 @@ module.exports = {
       project_id: 0,
       type: "Text",
       page_order_index: 1,
-      page_number: 1,
+      page_number: 2,
       is_hidden: false,
       created_at: "2020-01-01",
       updated_at: "2020-01-01",

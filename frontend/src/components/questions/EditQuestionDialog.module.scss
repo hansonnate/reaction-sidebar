@@ -5,7 +5,21 @@
 }
 
 .label {
+  font-family: $poppins;
   font-size: 1em;
-  font-weight: 600;
+  font-weight: 400;
   margin: 0 0 0 10px;
+  color: $gray110
+}
+
+.dialogButtons {
+  display: flex;
+  flex-direction: row;
+  width: 100%;
+  justify-content: center;
+  gap: 20px;
+  margin-top: 20px;
+  height: 2.5em;
+  // max-width: 300px;
+  // border: 2px solid black;
 }

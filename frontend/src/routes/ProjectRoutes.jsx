@@ -34,12 +34,12 @@ export const ProjectRoutes = () => {
   );
 };
 
-export const SurveyBuildRoutes = () => {
+export const SurveyBuildRoutes = (project) => {
   return (
     <Routes>
       <Route path="/" element={<Navigate to="questions" />} />
       {/* <Route path="survey-details" element={<SurveyDetails />} /> */}
-      <Route path="questions" element={<Questions />} />
+      <Route path="questions" element={<Questions project={project}/>} />
       <Route path="design" element={<Design />} />
     </Routes>
   );

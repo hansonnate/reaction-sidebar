@@ -7,39 +7,39 @@ import { useParams } from "react-router-dom";
 import { SaveForm } from "components/inputs/SaveForm/SaveForm";
 import {
   useFetchProjectGql,
-  useUpdateProjectGql,
+  // useUpdateProjectGql,
 } from "api/resources/projects/projects";
-import { useToken } from "components/Login/Login";
+// import { useToken } from "components/Login/Login";
 
 export const SurveyDetails = () => {
   const { id } = useParams();
   const fetchProjectQuery = useFetchProjectGql(id);
   // eslint-disable-next-line
-  const updateProjectQuery = useUpdateProjectGql();
-  const { token } = useToken();
+  // const updateProjectQuery = useUpdateProjectGql();
+  // const { token } = useToken();
 
   // const handleSave = (values) => {
   //   updateProjectQuery.mutate(values);
   // };
 
-  const updateTitle = (newTitle) => {
-    updateProjectQuery.mutate({
-      id: id,
-      input: {
-        name: newTitle,
-      },
-      token: token,
-    });
+  const updateTitle = () => {
+    // updateProjectQuery.mutate({
+    //   id: id,
+    //   input: {
+    //     name: newTitle,
+    //   },
+    //   token: token,
+    // });
   };
 
-  const updateDescription = (newDesc) => {
-    updateProjectQuery.mutate({
-      id: id,
-      input: {
-        description: newDesc,
-      },
-      token: token,
-    });
+  const updateDescription = () => {
+    // updateProjectQuery.mutate({
+    //   id: id,
+    //   input: {
+    //     description: newDesc,
+    //   },
+    //   token: token,
+    // });
   };
 
   const tags = [

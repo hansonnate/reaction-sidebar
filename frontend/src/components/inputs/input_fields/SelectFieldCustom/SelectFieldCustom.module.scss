@@ -2,7 +2,7 @@
 
 .selectContainer {
     width: 100%;
-    max-width: 300px;
+    // max-width: 300px;
     position: relative;
 }
 .select {
@@ -68,6 +68,6 @@
     background-color: $blue100;
     width: 100%;
     padding: 10px 20px;
-    color: $gray110;
+    color: $white;
     cursor:pointer;
 }

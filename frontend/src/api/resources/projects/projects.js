@@ -39,6 +39,7 @@ export const useFetchProjectGql = (id) => {
         default_language
         supported_languages
         accessgroup_ids
+        num_pages
       }
     }
   `;
@@ -88,6 +89,7 @@ export const useCreateProjectGql = () => {
       $default_language: String!
       $supported_languages: [String]!
       $accessgroup_ids:[String]!
+      $num_pages: Int!
     ) {
       createProject(
         organization_id: $organization_id
@@ -101,6 +103,7 @@ export const useCreateProjectGql = () => {
         default_language: $default_language
         supported_languages: $supported_languages
         accessgroup_ids: $accessgroup_ids
+        num_pages: $num_pages
       ) {
         id
         name
@@ -120,33 +123,15 @@ export const useCreateProjectGql = () => {
   return useGqlMutation(mutation, options);
 };
 
-export const useUpdateProjectGql = () => {
+export const useUpdateNumPages = () => {
   const mutation = gql`
-    mutation CreateProject(
-      $organization_id: ID!
-      $name: String!
-      $description: String!
-      $created_at: String!
-      $updated_at: String!
-      $status: String!
-      $responses: Int!
-      $owner: String!
-      $default_language: String!
-      $supported_languages: JSON!
-      $accessgroup_ids: JSON!
+    mutation UpdateProject(
+      $id: ID!
+      $num_pages: Int!
     ) {
-      createProject(
-        organization_id: $organization_id
-        name: $name
-        description: $description
-        created_at: $created_at
-        updated_at: $updated_at
-        status: $status
-        responses: $responses
-        owner: $owner
-        default_language: $default_language
-        supported_languages: $supported_languages
-        accessgroup_ids: $accessgroup_ids
+      updateProject(
+        id: $id
+        num_pages: $num_pages
       ) {
         id
       }

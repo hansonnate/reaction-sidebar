@@ -6,7 +6,7 @@ import styles from "./SurveyBuild.module.scss";
 import { TabPill } from "components/layouts";
 import { SurveyBuildRoutes } from "routes";
 
-export const SurveyBuild = ({ project }) => {
+export const SurveyBuild = () => {
   const tabBarItems = [
     {
       id: 0,
@@ -23,17 +23,23 @@ export const SurveyBuild = ({ project }) => {
   const handleActiveUpdate = (item) => {
     setActive(item);
   };
+
   return (
-    <div className={styles.page}>
-      <div className={styles.content}>
-        <TabPill
-          tabBarItems={tabBarItems}
-          active={active}
-          updateActive={handleActiveUpdate}
-        ></TabPill>
-        <SurveyBuildRoutes project={project} />
+    <div className={styles.pageContainer}>
+      <div className={styles.page}>
+        <div className={styles.content}>
+          <TabPill
+            tabBarItems={tabBarItems}
+            active={active}
+            updateActive={handleActiveUpdate}
+          ></TabPill>
+          <SurveyBuildRoutes />
+        </div>
+        <div className={styles.footer}>
+          <i className="bi bi-life-preserver"></i> Need Help?{" "}
+          <a href="">Learn More</a> about designing a survey
+        </div>
       </div>
-      <div className={styles.footer}><i className="bi bi-life-preserver"></i> Need Help? <a href="">Learn More</a> about designing a survey</div>
     </div>
   );
 };

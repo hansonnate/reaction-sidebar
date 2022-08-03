@@ -139,6 +139,7 @@ export const Projects = () => {
       default_language: "en",
       supported_languages: ["en"],
       accessgroup_ids: [],
+      num_pages: 1,
     });
     console.log(createProjectQuery);
     setShow(false);

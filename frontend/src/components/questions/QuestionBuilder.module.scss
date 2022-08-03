@@ -1,71 +1,88 @@
-
 @import "assets/styles/globals.scss";
 
 .scrollPane {
-    overflow-y: scroll;
-    height: 100%;
-    padding: 20px 15px 30px 0;
+  overflow-y: scroll;
+  height: 100%;
+  padding: 20px 15px 30px 0;
 }
 .questionsContainer {
-    display: flex;
-    flex-direction: column;
-    height: 100%;
+  display: flex;
+  flex-direction: column;
+  height: 100%;
 }
 
 .questionAdditions {
-    display: flex;
-    flex-direction: row;
-    justify-content: space-between;
-    padding: 20px 5px;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  padding: 20px 5px;
+  gap: 10px;
 }
 
 .addition {
-    color: $gray100;
-    border: 2px solid $gray30;
-    border-radius: 5px;
-    padding: 0px 5px;
-    font-weight: 700;
+  color: $gray100;
+  border: 2px solid $gray30;
+  border-radius: 5px;
+  padding: 0px 5px;
+  font-weight: 700;
 }
 
 .pages {
-    display: flex;
-    flex-direction: row;
-    gap: 10px;
+  display: flex;
+  flex-direction: row;
+  gap: 10px;
 }
 
 .changePage {
-    display: flex;
-    flex-direction: row;
-    gap: 0.25em;
-    align-items: center;
-    span {
-      white-space: nowrap;
-      font-family: $poppins;
-      margin-right: 10px;
-    }
-  }
-
-  .nextButton {
-    border-radius: 5px;
-    border: 2px solid $gray30;
-    background-color: white;
-    padding: 0px 4px;
-    height: 30px;
-    width: 30px;
-  }
-  
-  .pageButton {
-    padding: 0px 8px;
-    border: 2px solid $gray30;
-    border-radius: 5px;
-    height: 30px;
-    width: 30px;
+  display: flex;
+  flex-direction: row;
+  gap: 0.25em;
+  align-items: center;
+  span {
+    white-space: nowrap;
     font-family: $poppins;
+    margin-right: 10px;
   }
+}
 
-  .currPage {
-    background-color: $blue100;
-    border: 2px solid $blue100;
-    border-radius: 5px;
-    color: white;
+.nextButton {
+  border-radius: 5px;
+  border: 2px solid $gray30;
+  background-color: white;
+  padding: 0px 4px;
+  height: 30px;
+  width: 30px;
+}
+
+.pageButton {
+  padding: 0px 8px;
+  border: 2px solid $gray30;
+  border-radius: 5px;
+  height: 30px;
+  width: 30px;
+  font-family: $poppins;
+}
+
+.currPage {
+  background-color: $blue100;
+  border: 2px solid $blue100;
+  border-radius: 5px;
+  color: white;
+}
+
+.noQuestions {
+  border: 2px solid $gray30;
+  border-radius: 5px;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  font-family: $poppins;
+  color: $gray110;
+
+  span {
+    color: $blue100;
+    cursor: pointer;
   }
+}

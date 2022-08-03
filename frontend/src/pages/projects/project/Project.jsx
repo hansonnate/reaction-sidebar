@@ -55,7 +55,7 @@ export const Project = () => {
         <>
           <Header
             title={fetchProjectQuery.data.survey.name || "Untitled Project"}
-            backPath="/projects"
+            // backPath="/projects"
           />
           <SplitHorizontal className="flex-grow" leftShrink divider fullHeight>
             <Sidebar2

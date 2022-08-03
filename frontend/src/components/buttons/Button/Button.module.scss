@@ -11,10 +11,11 @@
     background-color: $blue100;
     color: white;
     border-radius: 5px;
-    padding: 0px 20px;
+    // padding: 0px 20px;
     transition: 0.5s all;
     font-weight: 600;
     font-size: 0.9em;
+    text-align: center;
   }
   button:hover {
     background-color: white;
@@ -32,10 +33,11 @@
     background-color: white;
     color: $blue100;
     border-radius: 5px;
-    padding: 0px 20px;
+    // padding: 0px 20px;
     transition: 0.5s all;
     font-weight: 600;
     font-size: 0.9em;
+    text-align: center;
   }
   button:hover {
     background-color: $blue100;
@@ -53,10 +55,33 @@
       background-color: white;
       color: $gray100;
       border-radius: 5px;
-      padding: 0px 20px;
+      // padding: 0px 20px;
       transition: 0.5s all;
       font-weight: 600;
       font-size: 0.9em;
+      text-align: center;
+    }
+    // button:hover {
+    //   background-color: $gray30;
+    //   color: white;
+    // }
+  }
+
+  .buttonboxred {
+    height: 100%;
+    button {
+      overflow: hidden;
+      white-space: nowrap;
+      height: 100%;
+      border: 2px solid $red60;
+      background-color: white;
+      color: $red60;
+      border-radius: 5px;
+      // padding: 0px 20px;
+      transition: 0.5s all;
+      font-weight: 600;
+      font-size: 0.9em;
+      text-align: center;
     }
     // button:hover {
     //   background-color: $gray30;

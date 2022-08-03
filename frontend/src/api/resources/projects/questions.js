@@ -15,6 +15,7 @@ export const useFetchQuestionsGql = (projectId) => {
           id
           name
           description
+          page_number
           Choices {
             id
             choice_value
@@ -94,6 +95,35 @@ export const useCreateQuestionGql = () => {
         instructions: $instructions
         question_type_config: $question_type_config
         naOption: $naOption
+      ) {
+        id
+      }
+    }
+  `;
+  const queryClient = useQueryClient();
+  const options = {
+    onError: (err, _project, rollback) => {
+      if (rollback) rollback();
+    },
+    onSettled: () => {
+      queryClient.invalidateQueries("questions");
+    },
+    // onSuccess: (data) => {
+    //   console.log("Heck Yeah!");
+    //   console.log(data);
+    // },
+  };
+
+  return useGqlMutation(mutation, options);
+};
+
+export const useDeleteQuestion = () => {
+  const mutation = gql`
+    mutation RemoveQuestion(
+      $id: ID!
+    ) {
+      removeQuestion(
+        id: $id
       ) {
         id
       }
