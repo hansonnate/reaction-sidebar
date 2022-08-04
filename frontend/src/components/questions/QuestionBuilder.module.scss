@@ -86,3 +86,12 @@
     cursor: pointer;
   }
 }
+
+.messageBox {
+  position: fixed;
+  left: 90%;
+  top: 10%;
+  background-color: black;
+  z-index: 10000000000000;
+  color: black;
+}

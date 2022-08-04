@@ -1,18 +1,22 @@
 import React from "react";
 // import { useParams } from "react-router-dom";
-
+  // eslint-disable-next-line no-unused-vars
 import { MultipleChoice } from "components/inputs/input_fields/MultipleChoice/MultipleChoice";
 import { useUpdateQuestionConfig } from "api/resources/projects/questions";
 
 export const MultipleChoiceQuestion = ({
   question,
+   // eslint-disable-next-line no-unused-vars
   active,
+   // eslint-disable-next-line no-unused-vars
   isMultiSelect,
+   // eslint-disable-next-line no-unused-vars
   otherOption,
 }) => {
   // const { id } = useParams();
   const updateQuestionConfig = useUpdateQuestionConfig();
 
+   // eslint-disable-next-line no-unused-vars
   const handleUpdateQuestionChoices = (choice) => {
     let choices = question.question_type_config.choice_question.choices;
     let index = choices.findIndex((x) => x.id === choice.id);
@@ -35,6 +39,7 @@ export const MultipleChoiceQuestion = ({
     return "_" + Math.random().toString(36).substr(2, 9);
   }
 
+ // eslint-disable-next-line no-unused-vars
   const handleCreateQuestionChoice = () => {
     let choices = question.question_type_config.choice_question.choices;
     choices.push({id: shortId(), name: ""})
@@ -52,6 +57,7 @@ export const MultipleChoiceQuestion = ({
     });
   };
 
+   // eslint-disable-next-line no-unused-vars
   const handleDeleteQuestionChoice = (choiceId) => {
     console.log(choiceId);
     let choices = question.question_type_config.choice_question.choices;
@@ -71,6 +77,7 @@ export const MultipleChoiceQuestion = ({
     });
   };
 
+   // eslint-disable-next-line no-unused-vars
   const handleUpdateOtherText = (text) => {
     updateQuestionConfig.mutate({
       id: question.id,

@@ -11,15 +11,25 @@ export const useFetchQuestionsGql = (projectId) => {
     query {
       Project(id: "${projectId}") {
         name
+        Pages {
+          id 
+          Questions {
+            id
+            name
+            description
+            page_number
+            project_id
+            type
+            instructions
+            question_type_config
+            naOption
+          }
+        }
         Questions {
           id
           name
           description
           page_number
-          Choices {
-            id
-            choice_value
-          }
           project_id
           type
           instructions
@@ -82,6 +92,7 @@ export const useCreateQuestionGql = () => {
       $instructions: String!
       $question_type_config: JSON!
       $naOption: Boolean!
+      $page_id: ID!
     ) {
       createQuestion(
         project_id: $project_id
@@ -95,6 +106,7 @@ export const useCreateQuestionGql = () => {
         instructions: $instructions
         question_type_config: $question_type_config
         naOption: $naOption
+        page_id: $page_id
       ) {
         id
       }
@@ -302,6 +314,34 @@ export const useUpdateQuestionType = () => {
   return useGqlMutation(mutation, options);
 };
 
+
+export const useCreatePage = () => {
+  const mutation = gql`
+    mutation CreatePage(
+      $project_id: ID!
+      $page_num: Int!
+    ) {
+      createPage(
+        project_id: $project_id
+        page_num: $page_num
+      ) {
+        id
+      }
+    }
+  `;
+  const queryClient = useQueryClient();
+  const options = {
+    onError: (err, _project, rollback) => {
+      if (rollback) rollback();
+    },
+    onSuccess: () => {
+      queryClient.invalidateQueries(["projects"]);
+    },
+  };
+
+  return useGqlMutation(mutation, options);
+};
+
 export const useUpdateQuestionGql = () => {
   const mutation = gql`
     mutation UpdateQuestion($values: QuestionInput!) {
@@ -325,6 +365,7 @@ export const useUpdateQuestionGql = () => {
 
   return useGqlMutation(mutation, [], options);
 };
+
 
 
 // REST API METHODS

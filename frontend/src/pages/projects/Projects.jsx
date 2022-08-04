@@ -17,6 +17,7 @@ import {
 import { Form } from "components/inputs/ClickSaveForm/ClickSaveForm.jsx";
 import Table from "components/tables/Table/Table.jsx";
 import { TextFieldSimple } from "components/inputs";
+import { useCreatePage } from "api/resources/projects/questions";
 // import BulkActionButton from "components/buttons/BulkActionButton/BulkActionButton.jsx";
 // import ActionDropdown from "components/buttons/BulkActionButton/ActionDropdown.jsx";
 // import { useToken } from "components/Login/Login";
@@ -89,22 +90,22 @@ export const Projects = () => {
       cell_style: null,
     },
   ];
-  console.log("Initial Page Number")
+
   const [pageNumber, setPageNumber] = useState(0);
   const fetchProjectsQuery = useFetchProjectsGql(pageNumber, 5);
   const createProjectQuery = useCreateProjectGql();
   const deleteProjectQuery = useDeleteProjectGql();
+  const createFirstPage = useCreatePage();
       // eslint-disable-next-line no-unused-vars
   const [data, setData] = useState();
   // const searchProjectQuery = useSearchProjectGql();
   // const { token } = useToken();
   const [show, setShow] = useState(false);
-
+  
   useEffect(() => {
     fetchProjectsQuery.refetch();
   }, [pageNumber])
 
-  console.log(fetchProjectsQuery)
 
   const deleteSelected = (selected) => {
     // console.log(selected);
@@ -140,21 +141,19 @@ export const Projects = () => {
       supported_languages: ["en"],
       accessgroup_ids: [],
       num_pages: 1,
+    },{
+      onSuccess: (data) => {
+        console.log(data);
+        createFirstPage.mutate({
+          project_id: data.createProject.id,
+          page_num: 1,
+        })
+      }
     });
+
+
     console.log(createProjectQuery);
     setShow(false);
-    if (createProjectQuery.isIdle) {
-      console.log("Idling...");
-    }
-    if (createProjectQuery.isLoading) {
-      console.log("Loading...");
-      console.log(createProjectQuery);
-    }
-    if (createProjectQuery.isSuccess) {
-      // routeChange(createProjectQuery.data.createProject)
-      console.log("success...");
-      console.log(createProjectQuery);
-    }
   };
   
   return (

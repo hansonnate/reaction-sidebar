@@ -235,7 +235,7 @@ module.exports = {
       id: "0",
       user_id: "563",
       notification: "Contacts have been uploaded",
-    }
+    },
   ],
   emails: [
     {
@@ -265,9 +265,7 @@ module.exports = {
       name: "Patients",
       description: "Only Patients",
       members: 350,
-      contact_ids: [
-        "0", "1", "2"
-      ],
+      contact_ids: ["0", "1", "2"],
       type: "dynamic",
       created_at: "2020-01-01",
       modified_at: "2020-01-01",
@@ -277,12 +275,42 @@ module.exports = {
       name: "Doctors",
       description: "Only Doctors",
       members: 202,
-      contact_ids: [
-        "0", "1", "2"
-      ],
+      contact_ids: ["0", "1", "2"],
       type: "static",
       created_at: "2020-01-01",
       modified_at: "2020-01-01",
+    },
+  ],
+  pages: [
+    {
+      id: 0,
+      project_id: 0,
+      page_num: 1,
+    },
+    { 
+      id: 1, 
+      project_id: 0, 
+      page_num: 2,
+    },
+    { 
+      id: 2, 
+      project_id: 1, 
+      page_num: 1,
+    },
+    { 
+      id: 3, 
+      project_id: 2, 
+      page_num: 1,
+    },
+    { 
+      id: 4, 
+      project_id: 3, 
+      page_num: 1,
+    },
+    { 
+      id: 5, 
+      project_id: 4, 
+      page_num: 1,
     },
   ],
   questions: [
@@ -292,6 +320,7 @@ module.exports = {
       type: "NumberScale",
       page_order_index: 2,
       page_number: 1,
+      page_id: 0,
       is_hidden: false,
       created_at: "2020-01-01",
       updated_at: "2020-01-01",
@@ -304,7 +333,7 @@ module.exports = {
           max: 5,
           min_description: "Yuck",
           max_description: "Yum",
-          step: 1
+          step: 1,
         },
       },
     },
@@ -314,6 +343,7 @@ module.exports = {
       type: "MultipleChoice",
       page_order_index: 1,
       page_number: 1,
+      page_id: 0,
       is_hidden: false,
       created_at: "2020-01-01",
       updated_at: "2020-01-01",
@@ -328,12 +358,12 @@ module.exports = {
           hasOtherOption: true,
           otherOptionText: "Other Color",
           choices: [
-            {id: 0, name: "Red"},
-            {id: 1, name: "Blue"},
-            {id: 2, name: "Green"},
-            {id: 3, name: "Yellow"},
-            {id: 4, name: "Black"},
-            {id: 5, name: "Very dark grey"},
+            { id: 0, name: "Red" },
+            { id: 1, name: "Blue" },
+            { id: 2, name: "Green" },
+            { id: 3, name: "Yellow" },
+            { id: 4, name: "Black" },
+            { id: 5, name: "Very dark grey" },
           ],
         },
       },
@@ -344,6 +374,7 @@ module.exports = {
       type: "Text",
       page_order_index: 1,
       page_number: 2,
+      page_id: 1,
       is_hidden: false,
       created_at: "2020-01-01",
       updated_at: "2020-01-01",
@@ -541,12 +572,12 @@ module.exports = {
       user_id: "563",
       status: "Test",
       type: "Manual",
-      clean_contacts: [{firstname: "nate", lastname: "hanson"}], //list of ids
-      bad_contacts: [{firstname: "yeet", lastname: "skirt"}],//list of ids
-      duplicates: [{firstname: "yeet", lastname: "skirt"}],//list of ids
+      clean_contacts: [{ firstname: "nate", lastname: "hanson" }], //list of ids
+      bad_contacts: [{ firstname: "yeet", lastname: "skirt" }], //list of ids
+      duplicates: [{ firstname: "yeet", lastname: "skirt" }], //list of ids
       total_warnings: 15,
       uploaded_at: "2020-01-01",
       audience: "Patients",
     },
-  ]
+  ],
 };

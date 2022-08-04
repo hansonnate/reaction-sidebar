@@ -287,10 +287,10 @@ export const EditQuestionDialog = ({ question, onTypeChange, refetch }) => {
           )}
 
           <div className={styles.dialogButtons}>
-            <Button width="120px" gray>
+            <Button width="110px" gray>
               <i className="bi bi-layers"></i> Duplicate
             </Button>
-            <Button width="120px" red onClick={handleDeleteQuestion}>
+            <Button width="110px" red onClick={handleDeleteQuestion}>
               <i className="bi bi-trash"></i> Delete
             </Button>
           </div>
